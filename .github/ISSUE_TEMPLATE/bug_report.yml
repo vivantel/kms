@@ -1,0 +1,46 @@
+name: Bug report
+description: A skill misbehaves, or a manifest/plugin fails to install or load.
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Affected skill (if applicable)
+      options:
+        - clarify
+        - roadmap
+        - bootstrap
+        - steward
+        - attribute
+        - changelog
+        - Not skill-specific (manifest, marketplace, packaging)
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened, per the skill's SKILL.md or this repo's docs/ conventions?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Paste the relevant output if you have it.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: How you invoked the skill, and any relevant repo state (e.g. existing docs/ structure).
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and version
+      description: e.g. Claude Code x.y.z, Codex CLI x.y.z
+    validations:
+      required: false
