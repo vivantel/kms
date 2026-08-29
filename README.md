@@ -6,8 +6,11 @@ maintained automatically as the project evolves. Works for software
 repos, technical documentation, even long-form writing like research
 papers, not just code.
 
-`kms` ships as a Claude Code plugin marketplace, with the same six
-skills also packaged as a native Codex plugin:
+The skill content itself is agent-neutral — no product-specific language
+or tooling assumptions — so any AI coding agent that can read and follow
+instructions from a file can use it. `kms` additionally ships one-command
+install packaging for two: a Claude Code plugin marketplace, and a native
+Codex plugin.
 
 | Skill | What it does |
 |---|---|
