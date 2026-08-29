@@ -16,13 +16,11 @@ scratch each time.
 ### 1. Confirm the agent's actual manifest format from primary sources
 
 Don't trust search-engine-summarized SEO content for this — it produces
-specific-sounding but uncorroborated claims (this repo's own interview
-history has an example: a batch of low-trust sites all claiming broad
-`SKILL.md` support that turned out to be unverifiable, versus OpenAI's
-own docs which gave a precise, citable schema). Fetch the agent vendor's
-own developer documentation directly. Record what you find as a fact in
-`docs/facts/`, including anything you could *not* confirm with
-confidence — don't silently drop the uncertain parts.
+specific-sounding but uncorroborated claims (per
+`docs/facts/0003-codex-plugin-manifest-schema.md`'s own note on this).
+Fetch the agent vendor's own developer documentation directly. Record
+what you find as a fact in `docs/facts/`, including anything you could
+*not* confirm with confidence — don't silently drop the uncertain parts.
 
 ### 2. Check for the two failure modes that force a restructure
 

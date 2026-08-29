@@ -1,0 +1,5 @@
+interface:
+  display_name: "Bootstrap"
+  short_description: "One-time setup of a project's knowledge system"
+policy:
+  allow_implicit_invocation: false

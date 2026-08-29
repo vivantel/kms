@@ -10,11 +10,11 @@ This skill only runs when explicitly invoked. Never apply its conventions to a p
 ## Writing a commit message
 
 1. Inspect the staged diff with `git diff --staged`.
-2. Propose one or more candidate knowledge artifacts the change appears to relate to, based on what the diff touches. Confirm the candidate list with the user before committing — never guess silently, and let the user add, remove, or reject all candidates.
+2. Propose candidate knowledge artifacts based on what the diff touches, then confirm the list with the user before committing — never guess silently; they may add, remove, or reject any.
 3. Draft the message:
    - Summary line: `type: summary`, where `type` is one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
    - Blank line.
-   - A body paragraph explaining the *why* — the intent or rationale behind the change. A message that only restates what changed, with no why, does not satisfy this skill.
+   - A body paragraph explaining the intent — not merely what changed.
    - Blank line.
    - One `Refs: <repo-relative-path>` git trailer per confirmed artifact (e.g. `Refs: docs/decisions/0003-commit-trailer-traceability.md`). Never use an issue number or a prose mention in place of this trailer.
 
@@ -23,6 +23,6 @@ This skill only runs when explicitly invoked. Never apply its conventions to a p
 1. Determine the branch's base (e.g. `main`) and run `git log <base>..HEAD`.
 2. Build the `Refs` section by collecting the union of `Refs:` trailers already present on those commits. Do not re-inspect the full branch diff or re-ask the user — the commits are the source of truth.
 3. Render three sections:
-   - `Why` — the intent, drawn from the commits' Why-bodies.
+   - `Intent` — drawn from the commits' body paragraphs.
    - `What changed` — a brief factual summary.
    - `Refs` — the collected artifact paths.

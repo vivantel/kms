@@ -39,6 +39,12 @@ file, it wasn't pursued further — see
 `docs/decisions/0008-native-codex-plugin-support.md`, which defers the
 marketplace manifest rather than committing to an unconfirmed path.
 
+**Why primary docs, not search results**: an earlier search-engine pass
+for this same question returned a batch of low-trust sites all claiming
+broad `SKILL.md` support, none of them corroborating each other or citable
+back to Codex's own docs — those claims were discarded once the primary
+docs above gave a precise, citable schema instead.
+
 This is the descriptive basis for
 `docs/decisions/0008-native-codex-plugin-support.md` and
 `docs/plans/codex-plugin-support.md`. Because this is a fast-evolving,

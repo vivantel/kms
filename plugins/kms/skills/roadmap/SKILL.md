@@ -31,7 +31,7 @@ Never invent a directory convention that doesn't match what the project already 
 
 ## Numbering facts and decisions
 
-Facts and decisions are filed as `docs/{facts,decisions}/NNNN-slug.md`, where `NNNN` is a 4-digit, 1-based sequence number local to that directory (`0001`, `0002`, ...). Find the next number by counting the existing files in the target directory; the first file in a fresh directory starts at `0001`. Guardrails and skill prescriptions are filed by slug only (`docs/{guardrails,skills}/slug.md`), with no numeric prefix — they're looked up by topic, not by creation order.
+Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md` — 4-digit, 1-based, per directory; count existing files to find the next number (`0001` in a fresh directory). Guardrails and skill prescriptions: `docs/{guardrails,skills}/slug.md`, no numeric prefix — looked up by topic, not creation order.
 
 ## Classify at the end, not during
 

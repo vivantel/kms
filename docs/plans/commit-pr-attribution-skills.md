@@ -5,6 +5,13 @@ status: done (all 6 steps complete — see commit 58b6f4c for the smoke test)
 date: 2026-07-29
 ---
 
+> **Note (2026-08-29)**: this plan's source spec named
+> `docs/skills/attribute-skill-behavior.md` and
+> `docs/skills/changelog-skill-behavior.md`. Both were later deleted —
+> they duplicated the shipped `SKILL.md` bodies they were transcribed
+> into. Left unedited below as the historical record of what this
+> plan's session actually read; the links no longer resolve.
+
 # Implement the attribute and changelog skills
 
 ## Context for a fresh session

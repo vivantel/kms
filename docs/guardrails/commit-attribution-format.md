@@ -13,10 +13,8 @@ Whenever the `attribute` skill writes a commit message, it MUST:
 1. Prefix the summary line with a Conventional Commit type from the set
    `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`,
    `ci`, `chore` (`type: summary`).
-2. Include a body paragraph explaining the **why** — the intent or
-   rationale behind the change — before any trailers. A commit message
-   that only restates *what* changed, with no *why*, does not satisfy
-   this guardrail.
+2. Include a body paragraph explaining the intent — not merely what
+   changed — before any trailers.
 3. Reference any related knowledge artifact using a `Refs:
    <repo-relative-path>` git trailer — never an issue number, never a
    prose mention in the body. One `Refs:` trailer per referenced artifact.
