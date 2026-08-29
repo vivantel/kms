@@ -1,0 +1,5 @@
+interface:
+  display_name: "Clarify"
+  short_description: "Interview to stress-test a plan or decision"
+policy:
+  allow_implicit_invocation: false

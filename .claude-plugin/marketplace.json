@@ -1,0 +1,14 @@
+{
+  "name": "kms",
+  "owner": {
+    "name": "vivantel"
+  },
+  "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+  "plugins": [
+    {
+      "name": "kms",
+      "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+      "source": "./plugins/kms"
+    }
+  ]
+}

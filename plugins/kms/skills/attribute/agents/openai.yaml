@@ -1,0 +1,5 @@
+interface:
+  display_name: "Attribute"
+  short_description: "Write intent-first commit messages and PR descriptions"
+policy:
+  allow_implicit_invocation: false

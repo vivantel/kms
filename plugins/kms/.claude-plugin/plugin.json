@@ -1,0 +1,9 @@
+{
+  "name": "kms",
+  "displayName": "KMS Dev Skills",
+  "description": "A growing toolkit of everyday development skills.",
+  "version": "2.1.0",
+  "author": {
+    "name": "sergemso"
+  }
+}
