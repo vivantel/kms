@@ -1,14 +1,13 @@
 # kms
 
-A knowledge-management system for any codebase — capture decisions,
-facts, and guardrails as durable, traceable artifacts, maintained
-automatically as your project evolves. Works for any git-based project
-where decisions and facts are worth tracking durably — software repos,
-technical documentation, even long-form writing like research papers,
-not just code.
+A knowledge-management system for any git-based project — capture
+decisions, facts, and guardrails as durable, traceable artifacts,
+maintained automatically as the project evolves. Works for software
+repos, technical documentation, even long-form writing like research
+papers, not just code.
 
-A curated marketplace of Claude Code plugins for everyday development
-workflows. The `kms` plugin bundles six knowledge-management skills:
+`kms` ships as a Claude Code plugin marketplace, with the same six
+skills also packaged as a native Codex plugin:
 
 | Skill | What it does |
 |---|---|
