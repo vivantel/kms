@@ -11,6 +11,8 @@ If the project has no knowledge system yet, run `bootstrap` first — this skill
 
 **One statement, one job:** if a fact, guardrail, or derivation-note does two things, split it.
 
+**No redundant guardrails:** before writing a guardrail, check it isn't only true "whenever skill X does Y" — if it is, that content belongs in skill X's own body, not a second file.
+
 ## Artifact formats
 
 Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md`. Guardrails and skill prescriptions: `docs/{guardrails,skills}/slug.md`. Base frontmatter on all four: `id, title, status, date, tags`.
@@ -29,6 +31,7 @@ Derivation recipe: `Decision (why) + Fact (what is) → Guardrail (ought)`. If e
 4. **Contradiction found?** Block. Don't close the session until resolved or explicitly deferred with a written note (decision, fact, or stub).
 5. **Human-doc drift?** If watched paths overlap what changed this session, propose the specific update; if the doc's still accurate, bump its verified date.
 6. **Derived artifact stale?** For every guardrail grounded in a superseded decision or changed fact: re-apply the recipe, propose updated text inline. Never leave a stale norm standing silently.
+7. **Guardrail redundant?** If a guardrail only ever applies "whenever skill X does Y," with no claim broader than that skill's own procedure, flag it for removal — or reword it to state the system-wide invariant directly, if the underlying policy was never meant to be skill-specific.
 
 ## Recommending a new skill
 

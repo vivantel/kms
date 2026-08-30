@@ -8,10 +8,10 @@ tags: [kms, knowledge-management, guardrail]
 
 ## Guardrail
 
-Any fact file the `bootstrap` or `steward` skill writes or updates MUST
-carry `kind` (`environmental | decision | derived | mixed`) and
-`governed-by` (a decision id, or `TBD` when no decision has been recorded
-yet — itself debt, but declared debt).
+Any fact file MUST carry `kind` (`environmental | decision | derived | mixed`)
+and `governed-by` (a decision id, or `TBD` when no decision has been
+recorded yet — itself debt, but declared debt) — whether written by
+`bootstrap`/`steward` or by hand.
 
 ## Derivation
 
@@ -22,5 +22,5 @@ yet — itself debt, but declared debt).
 - **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base `id/title/status/date/tags` frontmatter this
   guardrail extends.
-- **Normative conclusion**: therefore any fact `bootstrap`/`steward`
-  produces carries `kind` and `governed-by`.
+- **Normative conclusion**: therefore any fact file carries `kind` and
+  `governed-by`, regardless of how it was created.

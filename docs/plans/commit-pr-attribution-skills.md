@@ -11,6 +11,10 @@ date: 2026-07-29
 > they duplicated the shipped `SKILL.md` bodies they were transcribed
 > into. Left unedited below as the historical record of what this
 > plan's session actually read; the links no longer resolve.
+>
+> **Note (2026-08-30)**: this plan also references
+> `docs/guardrails/commit-attribution-format.md`, later deleted for the
+> same reason — see `docs/decisions/0012-no-redundant-guardrails.md`.
 
 # Implement the attribute and changelog skills
 

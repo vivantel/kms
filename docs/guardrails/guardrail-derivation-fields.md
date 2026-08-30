@@ -8,9 +8,9 @@ tags: [kms, knowledge-management, guardrail]
 
 ## Guardrail
 
-Any guardrail file the `bootstrap` or `steward` skill writes or updates
-MUST carry `governed-by`, `grounded-in`, and `derivation-note`
-frontmatter. Missing any of the three makes the guardrail undeclared — a
+Any guardrail file MUST carry `governed-by`, `grounded-in`, and
+`derivation-note` frontmatter — whether written by `bootstrap`/`steward`
+or by hand. Missing any of the three makes the guardrail undeclared — a
 norm with no stated basis — and it MUST be flagged as debt rather than
 left silent.
 
@@ -24,5 +24,5 @@ left silent.
   already carry `## Derivation` sections in prose — this makes that
   existing pattern a structured, machine-checkable frontmatter
   requirement rather than only a prose convention.
-- **Normative conclusion**: therefore any guardrail `bootstrap`/`steward`
-  produces carries these three fields.
+- **Normative conclusion**: therefore any guardrail file carries these
+  three fields, regardless of how it was created.
