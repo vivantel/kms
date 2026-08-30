@@ -4,6 +4,7 @@ title: Use a "Refs:" git trailer to link commits to knowledge artifacts, one-dir
 status: accepted
 date: 2026-07-29
 tags: [kms, git, traceability]
+track: process
 ---
 
 ## Decision

@@ -4,6 +4,7 @@ title: Add bootstrap and steward as two skills, not one combined skill
 status: accepted
 date: 2026-08-29
 tags: [kms, knowledge-management]
+track: process
 ---
 
 ## Decision

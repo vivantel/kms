@@ -1,7 +1,7 @@
 ---
 id: product-process-track-and-domain-agnostic-scope
 title: Add the decision track field; generalize bootstrap beyond software
-status: pending
+status: done (all 4 steps complete)
 date: 2026-08-30
 ---
 
@@ -39,7 +39,7 @@ this plan is a separate, later action, per that skill's own hard limit
 
 ## Steps
 
-### 1. [pending] Add `track` to the 9 existing decisions
+### 1. [done] Add `track` to the 9 existing decisions
 
 For each file below, add `track: <value>` to the YAML frontmatter,
 immediately after the `tags:` line (matching the field order other
@@ -61,7 +61,7 @@ Do not touch any other field or the body prose of any of these files.
 **Done when**: all 9 files have a `track` field with the value listed
 above, and each file's frontmatter is still valid YAML.
 
-### 2. [pending] Update `roadmap`'s classification step
+### 2. [done] Update `roadmap`'s classification step
 
 In `plugins/kms/skills/roadmap/SKILL.md`, under "## Classify at the end,
 not during", after the four-item mode list (Descriptive/Axiomatic/
@@ -83,7 +83,7 @@ design; keep it that way.
 `docs/decisions/0010` in `plugins/kms/skills/roadmap/SKILL.md` returns
 nothing.
 
-### 3. [pending] Update `bootstrap`: track field, stub format, generalized wording
+### 3. [done] Update `bootstrap`: track field, stub format, generalized wording
 
 All edits are to `plugins/kms/skills/bootstrap/SKILL.md`.
 
@@ -171,7 +171,7 @@ Domains governing irreversible decisions (published APIs, binary ABI, irreversib
 frontmatter is still valid YAML, and a grep for "architecture notes" or
 "code/config" in `plugins/kms/skills/bootstrap/SKILL.md` returns nothing.
 
-### 4. [pending] Update `steward`: track field and stub format
+### 4. [done] Update `steward`: track field and stub format
 
 Both edits are to `plugins/kms/skills/steward/SKILL.md`.
 

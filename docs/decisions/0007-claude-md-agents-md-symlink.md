@@ -4,6 +4,7 @@ title: Rewrite CLAUDE.md as AGENTS.md, keep CLAUDE.md as a symlink
 status: accepted
 date: 2026-07-29
 tags: [kms, agent-agnostic, claude-md, agents-md]
+track: process
 ---
 
 ## Decision

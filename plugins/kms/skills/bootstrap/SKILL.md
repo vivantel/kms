@@ -29,7 +29,10 @@ Fact — add `kind: environmental | decision | derived | mixed` (mixed = file ha
 
 Guardrail — add `governed-by: <decision-id>`, `grounded-in: <fact-id[, ...]>`, and `derivation-note: <one sentence: given decision X and fact Y, Z must/must not follow>`. Missing any of the three = undeclared, flag as debt.
 
-Decision — optionally add `governed-facts: [<fact-id>, ...]` and `fitness-functions: [<check description>, ...]`.
+Decision — add `track: product | process` (required: product = what the
+project is for and who it serves; process = how it's built, organized,
+or shipped); optionally `governed-facts: [<fact-id>, ...]` and
+`fitness-functions: [<check description>, ...]`.
 
 **Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
 
@@ -45,9 +48,9 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 ### 1. Intent extraction from history
 
-Scan git log and existing docs (README, architecture notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
+Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `status: draft`.
+- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process`, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
@@ -57,7 +60,7 @@ For every table, value list, or configuration default embedded in a skill or gua
 
 ### 3. Doc manifest bootstrap
 
-For every human-facing doc (README, architecture notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the code/config/decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `steward` fills it in later.
+For every human-facing doc (README, planning notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the content and decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `steward` fills it in later.
 
 ### 4. Guardrail derivation audit
 
@@ -65,7 +68,7 @@ For every existing guardrail file, check whether `governed-by`, `grounded-in`, a
 
 ### 5. Fitness function inventory
 
-Scan CI/build config for checks already enforcing a rule and record them. Scan skill/guardrail files for rules that *could* be automated but aren't, and log each as debt: rule text, why not automated yet, governing decision (or `TBD`).
+Scan existing checks (CI/build config, review checklists, approval gates) for rules already enforced, and record them. Scan skill/guardrail files for rules that *could* be automated but aren't, and log each as debt: rule text, why not automated yet, governing decision (or `TBD`).
 
 ### 6. Skill gap detection
 
@@ -78,8 +81,11 @@ Propose domains that need their own skill, based on what's in the repo:
 | Multi-repo boundary, subtree/submodule sync | Integration contracts, public APIs |
 | Test suite, quality gates | Correctness verification, release criteria |
 | Roadmap, pricing tiers, access control | Product scope, positioning |
+| Recurring manual process, no written procedure | Process/procedure documentation |
+| External compliance, regulatory, or ethical requirement | Compliance/review skill |
+| Repeated reviewer or stakeholder feedback pattern | Review/quality skill |
 
-For each: one paragraph on what it would own, one hard constraint, one fitness-function candidate. Proposals — the team decides adoption and naming. Domains governing irreversible decisions (published APIs, binary ABI, irreversible schema changes) are the highest priority to formalize first.
+For each: one paragraph on what it would own, one hard constraint, one fitness-function candidate. Proposals — the team decides adoption and naming. Domains governing irreversible decisions (published APIs, binary ABI, irreversible schema changes, legal/compliance commitments, public claims) are the highest priority to formalize first.
 
 ## Out of scope
 

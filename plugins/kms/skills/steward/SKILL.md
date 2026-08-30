@@ -11,7 +11,7 @@ If the project has no knowledge system yet, run `bootstrap` first — this skill
 
 **One statement, one job:** if a fact, guardrail, or derivation-note does two things, split it.
 
-**No redundant guardrails:** before writing a guardrail, check it isn't only true "whenever skill X does Y" — if it is, that content belongs in skill X's own body, not a second file.
+**No redundant guardrails:** before writing a guardrail, check it doesn't only apply "whenever skill X does Y" — if it does, that content belongs in skill X's own body, not a second file.
 
 ## Artifact formats
 
@@ -19,19 +19,22 @@ Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md`. Guardrails and skill
 
 - **Fact** — add `kind: environmental | decision | derived | mixed` and `governed-by: <decision-id>` (`TBD` = debt).
 - **Guardrail** — add `governed-by: <decision-id>`, `grounded-in: <fact-id[, ...]>`, `derivation-note: <one sentence: given decision X and fact Y, Z must/must not follow>`. Missing any of the three = undeclared, flag as debt.
-- **Decision** — optionally `governed-facts: [...]`, `fitness-functions: [...]`.
+- **Decision** — add `track: product | process` (required: product =
+  what the project is for and who it serves; process = how it's built,
+  organized, or shipped); optionally `governed-facts: [...]`,
+  `fitness-functions: [...]`.
 
 Derivation recipe: `Decision (why) + Fact (what is) → Guardrail (ought)`. If either source changes, re-apply and propose updated guardrail text — never leave wording unchanged when its basis moved.
 
 ## Checks, one pass per invocation
 
-1. **New decision?** Draft a stub: next id, title, one-line motivation, `status: draft`. Don't finalize without the owning domain's sign-off.
+1. **New decision?** Draft a stub: next id, title, one-line motivation, `track: product | process`, `status: draft`. Don't finalize without the owning domain's sign-off.
 2. **Fact changed?** Update the fact file and its `last-verified`. If the governing decision is no longer current, surface the contradiction now.
 3. **New automatable rule?** Log as debt in the fitness-function inventory: rule text, governing decision, why not automated yet.
 4. **Contradiction found?** Block. Don't close the session until resolved or explicitly deferred with a written note (decision, fact, or stub).
 5. **Human-doc drift?** If watched paths overlap what changed this session, propose the specific update; if the doc's still accurate, bump its verified date.
 6. **Derived artifact stale?** For every guardrail grounded in a superseded decision or changed fact: re-apply the recipe, propose updated text inline. Never leave a stale norm standing silently.
-7. **Guardrail redundant?** If a guardrail only ever applies "whenever skill X does Y," with no claim broader than that skill's own procedure, flag it for removal — or reword it to state the system-wide invariant directly, if the underlying policy was never meant to be skill-specific.
+7. **Guardrail redundant?** If a guardrail only ever applies "whenever skill X does Y" with no broader claim, flag it for removal — or reword it as a system-wide invariant, if the underlying policy was never meant to be skill-specific.
 
 ## Recommending a new skill
 

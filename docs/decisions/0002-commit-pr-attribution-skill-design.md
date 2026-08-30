@@ -4,6 +4,7 @@ title: Split commit/PR/changelog work into two skills, added to the kms plugin
 status: accepted
 date: 2026-07-29
 tags: [kms, git, commit-messages, pull-requests]
+track: process
 ---
 
 ## Decision

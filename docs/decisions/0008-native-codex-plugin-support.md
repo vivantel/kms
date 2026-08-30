@@ -4,6 +4,7 @@ title: Ship a native Codex plugin manifest for the kms skill set; keep the curre
 status: accepted
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
+track: product
 ---
 
 ## Decision

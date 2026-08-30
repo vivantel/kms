@@ -4,6 +4,7 @@ title: "Agent-agnostic" pass is scoped to skill content, not packaging
 status: superseded by 0008-native-codex-plugin-support
 date: 2026-07-29
 tags: [kms, agent-agnostic, scope]
+track: product
 ---
 
 > **Superseded 2026-07-29** by

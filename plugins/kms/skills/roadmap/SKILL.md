@@ -41,6 +41,10 @@ Do not tag or classify decisions while the interview is running — keep the int
 - **Normative** — this is what must or must not happen, derived from an axiomatic commitment plus a descriptive fact (a guardrail)
 - **Procedural** — this is how to decide or act (a skill prescription)
 
+Decisions additionally carry a `track`: **product** — what the project
+is for and who it serves; or **process** — how it's built, organized,
+or shipped.
+
 ## What must be captured
 
 - Every explicit or implicit intent (a presupposition unambiguous enough to count as a commitment) must be captured as a record — never silently dropped.
