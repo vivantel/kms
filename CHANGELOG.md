@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0] - 2026-08-30
+
+### Added
+
+- `quickstart` — runs `bootstrap`'s setup, then immediately captures one real, current decision as a full artifact in the same sitting, so a first-time user feels the value before deciding whether to keep using the system.
+- A Claude Code `SessionStart` hook (`plugins/kms/hooks/hooks.json`, logic in `plugins/kms/hooks/steward-nudge.sh`) that surfaces a note to the agent when `HEAD`'s commit is under 4 hours old, suggesting it mention running `steward` to the user — auto-activates for anyone who installs the plugin, no manual setup. Documented in the new `docs/skills/automating-steward.md`, including its known imprecision and a manual recipe for non–Claude-Code agents.
+- README gained static license/plugin badges and GitHub repo topics/description were synced (previously empty/stale) — cheap discoverability wins with no CI or moving-number maintenance cost.
+
 ## [0.3.0] - 2026-08-30
 
 ### Added

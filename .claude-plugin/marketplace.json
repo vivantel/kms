@@ -3,11 +3,11 @@
   "owner": {
     "name": "vivantel"
   },
-  "description": "Vivantel KMS (Knowledge Management System): everyday development skills for Claude Code. Brainstorm approaches to a problem, or rigorously clarify a plan through interrogation and turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, query it for answers with citations, onboard a role from it, or plan a refactor against it; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+  "description": "Vivantel KMS (Knowledge Management System): everyday development skills for Claude Code. Get started fast with quickstart, brainstorm approaches to a problem, or rigorously clarify a plan through interrogation and turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, query it for answers with citations, onboard a role from it, or plan a refactor against it; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
   "plugins": [
     {
       "name": "kms",
-      "description": "Vivantel KMS (Knowledge Management System): everyday development skills for Claude Code. Brainstorm approaches to a problem, or rigorously clarify a plan through interrogation and turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, query it for answers with citations, onboard a role from it, or plan a refactor against it; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+      "description": "Vivantel KMS (Knowledge Management System): everyday development skills for Claude Code. Get started fast with quickstart, brainstorm approaches to a problem, or rigorously clarify a plan through interrogation and turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, query it for answers with citations, onboard a role from it, or plan a refactor against it; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
       "source": "./plugins/kms"
     }
   ]

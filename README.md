@@ -1,5 +1,8 @@
 # Vivantel KMS
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-5A32FB.svg)](https://code.claude.com/docs/en/plugins.md)
+
 Vivantel KMS (Knowledge Management System) — for any git-based
 project, capture decisions, facts, and guardrails as durable, traceable artifacts,
 maintained automatically as the project evolves. Works for software
@@ -14,6 +17,7 @@ Codex plugin.
 
 | Skill | What it does | Examples |
 |---|---|---|
+| `quickstart` | Sets up the knowledge system and captures one real decision live, in the same sitting — for a first-time user. | [examples](plugins/kms/skills/quickstart/examples.md) |
 | `brainstorm` | Generates and synthesizes distinct approaches to a problem or feature — writes nothing, never consults the knowledge base. | [examples](plugins/kms/skills/brainstorm/examples.md) |
 | `clarify` | Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. | [examples](plugins/kms/skills/clarify/examples.md) |
 | `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, skill prescriptions) plus a self-sufficient implementation plan. | [examples](plugins/kms/skills/roadmap/examples.md) |

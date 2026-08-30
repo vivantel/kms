@@ -1,0 +1,5 @@
+interface:
+  display_name: "Quickstart"
+  short_description: "Set up and capture your first real decision, live"
+policy:
+  allow_implicit_invocation: false
