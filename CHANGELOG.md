@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.0] - 2026-08-30
+
+### Added
+
+- Decisions now carry a required `track` (`product` = what kms is for and who it serves; `process` = how it's built) — the two were being conflated, making a mission-scope commitment indistinguishable from an implementation choice at a glance.
+- `clarify`/`roadmap`/`bootstrap`/`steward` generalized to work for any git-based project, not only software ones; `attribute`/`changelog` and the git+Markdown storage substrate stay as they are, since both require commit history to act on at all.
+- Decisions may carry optional `scope`/`expires` fields for work that's bounded or provisional (a hypothesis test, a temporary workaround), instead of being treated as permanent once accepted.
+- `bootstrap` compiles two AI-agent role lists (`product`/`process` track) from its existing skill-gap scan; `roadmap` consults them while drafting a decision of that track, when they exist.
+- Facts that read as ungrounded, unreferenced event logs are now explicitly out of bounds — kms is a knowledge base, not a dashboard or log.
+- `lint` — full-repo, on-demand validation (dangling references, missing fields, expired decisions, redundant guardrails, audit-log-style facts), independent of what changed in any one session.
+- `query` — answers a question from the knowledge base with citations, instead of leaving that to manual grep.
+
+### Changed
+
+- Removed two guardrails that only restated what `attribute`'s and `clarify`/`roadmap`'s own skill bodies already said in full — kms authoring duplicate copies of its own skills' behavior is exactly the clutter `bootstrap`/`steward` must not leave behind in a target repo either. Two more with the same skill-name-scoping issue but a genuinely system-wide policy underneath were reworded instead of deleted.
+- `steward` gained a principle and checks so a guardrail is never left unenforced: a guardrail describing behavior a shipped skill should enforce now gets that skill updated in the same pass, not deferred.
+- Added `LICENSE` (MIT), `README`, `CONTRIBUTING`, `CODE_OF_CONDUCT`, and issue/PR templates tailored to this repo's actual issue types, so it's set up for outside contribution and use as a public marketplace, not just internal reference.
+- Fixed stale Claude-Code-only framing and duplicate intro paragraphs in the README; stated that the skill content itself is agent-neutral, not tied to the two packaged agents.
+- Synced the plugin manifest descriptions and README with the current 8 skills.
+
 ## [0.1.0] - 2026-08-29
 
 ### Added
