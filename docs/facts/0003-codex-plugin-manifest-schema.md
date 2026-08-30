@@ -52,3 +52,21 @@ This is the descriptive basis for
 `docs/plans/codex-plugin-support.md`. Because this is a fast-evolving,
 externally-owned spec, re-verify against the primary docs before relying
 on it again if much time has passed.
+
+**Re-verified 2026-08-30, install-command claim retracted**: attempting
+to resolve the marketplace-manifest gap above, `developers.openai.com/
+codex/plugins` now 308-redirects to `learn.chatgpt.com/docs/plugins`, a
+page covering both ChatGPT plugins and Codex CLI plugins as one shared
+catalog. It documents no `codex plugin marketplace add owner/repo`
+command at all — the only corroborated end-user install path is the
+interactive `codex /plugins` browser (browse/install/uninstall from
+configured marketplace sources; no documented flag or config syntax for
+adding a git URL or local path directly as an end user — "workspace"
+marketplace sources are described as admin-imported, not end-user-added).
+This means the original `local path / git URL (ref/sha) / npm package`
+install claim above is now also unconfirmed, not just the marketplace-
+manifest path — it wasn't corroborated by this second source either, and
+this fact should not be treated as settling how a `kms` user actually
+installs the Codex plugin. `docs/decisions/0008-native-codex-plugin-
+support.md`'s manifest-file claims (location, schema, required fields)
+are unaffected — only the *installation command* was ever in question.

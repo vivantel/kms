@@ -10,10 +10,12 @@ This repo is a **Claude Code plugin marketplace**: a git repo that Claude Code c
 
 ```
 .claude-plugin/marketplace.json                     # marketplace manifest — lists available plugins
+kilo.jsonc                                           # Kilo Code CLI config, points skills.urls at the published plugins/kms/skills/index.json (see docs/decisions/0035-native-kilo-code-support.md)
 plugins/<plugin-name>/.claude-plugin/plugin.json     # Claude Code plugin manifest (name, description, version, author)
 plugins/<plugin-name>/.codex-plugin/plugin.json      # Codex plugin manifest (name, version, description, skills path)
 plugins/<plugin-name>/skills/<skill>/SKILL.md        # one skill definition per subdirectory
 plugins/<plugin-name>/skills/<skill>/examples.md     # 2-3 worked usage examples, linked from the README
+plugins/<plugin-name>/skills/index.json              # Kilo Code CLI remote-skills manifest (see docs/facts/0008-kilo-code-skills-spec.md)
 plugins/<plugin-name>/skills/<skill>/agents/<agent>.yaml  # optional per-agent interface/policy overrides (e.g. agents/openai.yaml)
 plugins/<plugin-name>/hooks/hooks.json               # optional Claude Code plugin hooks, auto-activated on install (see docs/facts/0006-claude-code-plugin-hooks-mechanism.md)
 plugins/<plugin-name>/templates/<artifact-type>/     # shippable seed content, synced into an adopting project by bootstrap/capture/lint — distinct from this repo's own docs/ (see docs/decisions/0027-baseline-guardrail-seeding.md)
@@ -26,6 +28,7 @@ Currently there is one plugin, `kms` (source `./plugins/kms`), containing fourte
 - `.claude-plugin/marketplace.json`'s top-level `plugins` array is the registry: each entry needs `name` and `source`. For plugins living in this same repo, `source` must be a relative path starting with `./` (e.g. `"./plugins/kms"`), resolved from the repo root (the directory containing `.claude-plugin/`).
 - The Claude Code plugin manifest (`plugin.json`) must live inside a `.claude-plugin/` subdirectory under the plugin root — a `plugin.json` at the plugin root directly is not recognized.
 - The `kms` plugin also ships a Codex plugin manifest at `plugins/kms/.codex-plugin/plugin.json`, pointing at the same `plugins/kms/skills/` directory via a single relative `skills` path (Codex's manifest format accepts a path string, not an array — see `docs/facts/0003-codex-plugin-manifest-schema.md`). Any manifest's `version` field must be bumped in lockstep with every other manifest's, per `docs/guardrails/plugin-manifest-version-sync.md`.
+- Kilo Code CLI needs no manifest at all — it reads `SKILL.md` folders directly in the same open Agent Skills format. `plugins/kms/skills/index.json` is a remote-skills manifest for Kilo's `skills.urls` config mechanism, letting Kilo users track this repo without copying files into their own project (see `docs/facts/0008-kilo-code-skills-spec.md`, `docs/decisions/0035-native-kilo-code-support.md`).
 - A plugin's `skills/` directory is scanned for subdirectories containing a `SKILL.md`; there is no separate per-skill registration file. A skill directory may optionally include `agents/<agent-name>.yaml` sidecars for per-agent interface/policy overrides (e.g. `agents/openai.yaml`); see `docs/skills/adding-agent-support.md` for when to add one.
 
 ## Adding a new skill

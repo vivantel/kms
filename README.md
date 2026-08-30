@@ -12,8 +12,8 @@ papers, not just code.
 The skill content itself is agent-neutral — no product-specific language
 or tooling assumptions — so any AI coding agent that can read and follow
 instructions from a file can use it. `kms` additionally ships one-command
-install packaging for two: a Claude Code plugin marketplace, and a native
-Codex plugin.
+install packaging for three: a Claude Code plugin marketplace, a native
+Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 
 | Skill | What it does | Examples |
 |---|---|---|
@@ -45,8 +45,23 @@ If that plugin name doesn't resolve (e.g. you have another marketplace
 with a same-named plugin), run `/plugin marketplace list` to find this
 marketplace's registered name and install as `kms@<that-name>` instead.
 
-Codex users can install the same skill set via the plugin manifest at
-`plugins/kms/.codex-plugin/plugin.json`.
+Codex ships the same skill set via the plugin manifest at
+`plugins/kms/.codex-plugin/plugin.json`. The exact end-user install
+command isn't confirmed (Codex's own docs describe an interactive
+`codex /plugins` browser, with no documented git-URL/local-path syntax
+for adding a custom source) — see
+`docs/facts/0003-codex-plugin-manifest-schema.md` for what is and isn't
+verified.
+
+Kilo Code CLI users can track this skill set with no per-project
+copying by adding to `kilo.jsonc`:
+
+```json
+{ "skills": { "urls": ["https://raw.githubusercontent.com/vivantel/kms/master/plugins/kms/skills"] } }
+```
+
+Kilo re-fetches automatically whenever a skill's version changes — see
+`plugins/kms/skills/index.json`.
 
 ## Repo structure
 
@@ -54,6 +69,7 @@ Codex users can install the same skill set via the plugin manifest at
 .claude-plugin/marketplace.json                     # marketplace manifest
 plugins/kms/.claude-plugin/plugin.json               # Claude Code plugin manifest
 plugins/kms/.codex-plugin/plugin.json                # Codex plugin manifest
+plugins/kms/skills/index.json                        # Kilo Code CLI remote-skills manifest
 plugins/kms/skills/<skill>/SKILL.md                  # one skill definition per subdirectory
 docs/{facts,decisions,guardrails,skills}/            # this repo's own knowledge base — see below
 ```
