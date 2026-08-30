@@ -63,6 +63,13 @@ above, and each file's frontmatter is still valid YAML.
 
 ### 2. [done] Update `roadmap`'s classification step
 
+> **Note (2026-08-30)**: the paragraph below no longer matches
+> `roadmap`'s body verbatim — later work (`docs/decisions/0013`,
+> `0014`) trimmed the parentheticals for token economy and added a
+> `scope`/`expires` sentence. The "done when" criterion below is stale;
+> treat `plugins/kms/skills/roadmap/SKILL.md` as the current source of
+> truth, not this quote.
+
 In `plugins/kms/skills/roadmap/SKILL.md`, under "## Classify at the end,
 not during", after the four-item mode list (Descriptive/Axiomatic/
 Normative/Procedural), add this paragraph:

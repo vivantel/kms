@@ -14,6 +14,7 @@ Scan every fact, decision, guardrail, and skill prescription in the project — 
 5. **Redundant guardrails** — a guardrail only ever true "whenever skill X does Y," with no claim broader than that skill's own procedure.
 6. **Audit-log facts** — a fact that only records a timestamped event, grounds nothing, and is referenced by nothing.
 7. **Orphaned artifacts** — a fact or guardrail nothing references at all.
+8. **Unenforced guardrails** — a guardrail describing behavior a shipped skill should perform, where that skill's own body doesn't actually say it.
 
 ## Output
 

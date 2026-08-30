@@ -41,6 +41,7 @@ Derivation recipe: `Decision (why) + Fact (what is) → Guardrail (ought)`. If e
 8. **Decision expired?** For every decision with `expires`: if the date has passed, or the condition has plausibly been met, surface it for re-evaluation — don't leave it standing as current.
 9. **Fact reads like a log?** If a fact only records a timestamped event, grounds nothing, and nothing references it, flag it for removal or rewrite.
 10. **Role list stale?** If recent decisions of a track suggest a role not on that track's role list (`docs/skills/{product,process}-track-roles.md`, if present), or a listed role hasn't matched anything in a while, propose an addition or removal.
+11. **Guardrail unenforced?** For every guardrail describing behavior a shipped skill should perform, check that skill's own body actually says it. If it doesn't, update the skill now — a guardrail alone never reaches that skill's users.
 
 ## Recommending a new skill
 

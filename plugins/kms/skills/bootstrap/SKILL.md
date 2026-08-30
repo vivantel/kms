@@ -92,11 +92,17 @@ For each: one paragraph on what it would own, one hard constraint, one fitness-f
 
 From the "Likely review role" column above, write
 `docs/skills/product-track-roles.md` and
-`docs/skills/process-track-roles.md`: one role per line, name plus a
-one-line scope (what kind of decision it should weigh in on). Sort each
-role by whether it bears on what the project is for (product) or how
-it's built (process) — a role can appear on both lists if it's relevant
-to both. These are review perspectives an agent considers while
+`docs/skills/process-track-roles.md` — base frontmatter (`id`, `title`,
+`status`, `date`, `tags`) like any other skill prescription, then one
+role per line: name plus a one-line scope (what kind of decision it
+should weigh in on). Sort each role by whether it bears on what the
+project is for (product) or how it's built (process) — a role can
+appear on both lists if it's relevant to both. When a role's track is
+genuinely ambiguous (e.g. a compliance, quality, or process-documentation
+role), default to process: these typically govern how something is
+built or reviewed, not what the project is for; only place a role on
+product if its scope is explicitly about mission, audience, or
+positioning. These are review perspectives an agent considers while
 drafting or reviewing a decision of that track, not a staffing
 assignment.
 
