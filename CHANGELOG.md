@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.0] - 2026-08-30
+
+### Added
+
+- `brainstorm` — generates 5-7 distinct approaches to a problem or feature (pros/cons/risks/effort each), then synthesizes 2-3 recommended directions. Writes nothing and never consults the knowledge base, unlike every other skill in this plugin — deliberately unanchored ideation.
+- `onboard` — reads the knowledge base to produce a role-tailored, 5-day onboarding plan (daily goals, skills to run, links to specific artifacts). Warns explicitly if critical artifact types (most importantly facts) are missing, rather than producing a plan that looks more complete than the knowledge base actually is.
+- `refactor-plan` — produces a phased refactor plan grounded in existing decisions and guardrails: queries the knowledge base, maps dependencies directly (no runtime dependency on `lint` running as a sub-step), lays out steps with verification checkpoints and rollback strategies per phase, and flags any step that would violate a guardrail for explicit confirmation rather than dropping or working around it silently.
+- Every skill now ships a colocated `examples.md` with 2-3 worked usage examples, linked from the README's new "Examples" column — retrofitted onto all 8 pre-existing skills, not just the 3 above, so the plugin doesn't ship in a half-documented state. Required for every future skill by the new `docs/guardrails/every-skill-ships-examples.md`, enforced by a new `lint` check.
+
+### Changed
+
+- Display name changed from "KMS Dev Skills" to "Vivantel KMS", expanded on first mention as "Vivantel KMS (Knowledge Management System)" in the README, `CONTRIBUTING.md`, and both plugin manifests' descriptions — "KMS" alone read as an unexplained acronym to a first-time reader. The technical identifier (`name: "kms"`, the `/plugin install kms` slug, the `plugins/kms/` directory) is unchanged.
+
+### Fixed
+
+- `CLAUDE.md` had drifted into a plain stale copy of `AGENTS.md` (still describing "eight skills") instead of the symlink `docs/decisions/0007-claude-md-agents-md-symlink.md` requires — restored as a symlink so there's exactly one copy of the text on disk again.
+
 ## [0.2.1] - 2026-08-30
 
 ### Fixed

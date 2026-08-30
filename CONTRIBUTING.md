@@ -1,6 +1,7 @@
 # Contributing
 
-Thanks for considering a contribution to `kms`. This repo is a Claude Code
+Thanks for considering a contribution to Vivantel KMS (Knowledge
+Management System, package name `kms`). This repo is a Claude Code
 plugin marketplace — the entire product is JSON manifests and Markdown
 skill definitions under `plugins/kms/skills/`. There's no build step and
 no test suite, so contributing is mostly about writing clear, well-scoped

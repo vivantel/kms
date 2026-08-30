@@ -1,0 +1,5 @@
+interface:
+  display_name: "Onboard"
+  short_description: "Role-tailored onboarding plan from the knowledge base"
+policy:
+  allow_implicit_invocation: false

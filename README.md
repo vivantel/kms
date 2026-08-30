@@ -1,7 +1,7 @@
-# kms
+# Vivantel KMS
 
-A knowledge-management system for any git-based project — capture
-decisions, facts, and guardrails as durable, traceable artifacts,
+Vivantel KMS (Knowledge Management System) — for any git-based
+project, capture decisions, facts, and guardrails as durable, traceable artifacts,
 maintained automatically as the project evolves. Works for software
 repos, technical documentation, even long-form writing like research
 papers, not just code.
@@ -12,16 +12,19 @@ instructions from a file can use it. `kms` additionally ships one-command
 install packaging for two: a Claude Code plugin marketplace, and a native
 Codex plugin.
 
-| Skill | What it does |
-|---|---|
-| `clarify` | Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. |
-| `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, skill prescriptions) plus a self-sufficient implementation plan. |
-| `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. |
-| `steward` | The ongoing, session-to-session maintenance pass for that system: new decisions, changed facts, contradictions, doc drift, stale guardrails. |
-| `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions — independent of what changed this session. |
-| `query` | Answers a question from the knowledge base, with citations, instead of from memory. |
-| `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. |
-| `changelog` | Generates a `CHANGELOG.md` entry from commit history on demand. |
+| Skill | What it does | Examples |
+|---|---|---|
+| `brainstorm` | Generates and synthesizes distinct approaches to a problem or feature — writes nothing, never consults the knowledge base. | [examples](plugins/kms/skills/brainstorm/examples.md) |
+| `clarify` | Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. | [examples](plugins/kms/skills/clarify/examples.md) |
+| `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, skill prescriptions) plus a self-sufficient implementation plan. | [examples](plugins/kms/skills/roadmap/examples.md) |
+| `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. | [examples](plugins/kms/skills/bootstrap/examples.md) |
+| `steward` | The ongoing, session-to-session maintenance pass for that system: new decisions, changed facts, contradictions, doc drift, stale guardrails. | [examples](plugins/kms/skills/steward/examples.md) |
+| `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions — independent of what changed this session. | [examples](plugins/kms/skills/lint/examples.md) |
+| `query` | Answers a question from the knowledge base, with citations, instead of from memory. | [examples](plugins/kms/skills/query/examples.md) |
+| `onboard` | Reads the knowledge base to produce a role-tailored, 5-day onboarding plan — writes nothing. | [examples](plugins/kms/skills/onboard/examples.md) |
+| `refactor-plan` | Produces a phased refactor plan that respects existing decisions and guardrails — writes nothing. | [examples](plugins/kms/skills/refactor-plan/examples.md) |
+| `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. | [examples](plugins/kms/skills/attribute/examples.md) |
+| `changelog` | Generates a `CHANGELOG.md` entry from commit history on demand. | [examples](plugins/kms/skills/changelog/examples.md) |
 
 ## Installing
 

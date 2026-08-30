@@ -1,8 +1,8 @@
 {
   "name": "kms",
-  "displayName": "KMS Dev Skills",
-  "description": "Clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system — plus attribute commits and generate changelogs from it.",
-  "version": "0.2.1",
+  "displayName": "Vivantel KMS",
+  "description": "Brainstorm approaches or clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system, onboard a role or plan a refactor from it — plus attribute commits and generate changelogs from it.",
+  "version": "0.3.0",
   "author": {
     "name": "sergemso"
   }

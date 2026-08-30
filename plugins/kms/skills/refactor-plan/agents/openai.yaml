@@ -1,0 +1,5 @@
+interface:
+  display_name: "Refactor Plan"
+  short_description: "Phased refactor plan respecting existing decisions"
+policy:
+  allow_implicit_invocation: false

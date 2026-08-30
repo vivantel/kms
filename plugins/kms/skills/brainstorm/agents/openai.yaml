@@ -1,0 +1,5 @@
+interface:
+  display_name: "Brainstorm"
+  short_description: "Generate approaches to a problem, without writing anything"
+policy:
+  allow_implicit_invocation: false
