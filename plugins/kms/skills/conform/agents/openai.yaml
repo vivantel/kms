@@ -1,0 +1,5 @@
+interface:
+  display_name: "Conform"
+  short_description: "Check a pending change against existing guardrails"
+policy:
+  allow_implicit_invocation: false

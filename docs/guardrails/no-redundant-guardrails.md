@@ -28,8 +28,7 @@ to be specific to X, in which case reword it as a system-wide invariant.
   `docs/decisions/0012-no-redundant-guardrails.md`.
 - **Descriptive basis**: TBD.
 - **Normative conclusion**: therefore any guardrail found only true
-  "whenever skill X does Y" is flagged, matching `steward` check 7 and
-  `lint` check 5.
+  "whenever skill X does Y" is flagged, matching `lint` check 5.
 
 ## Note
 

@@ -1,9 +1,9 @@
 ---
 name: lint
-description: Full-repo validation pass over a project's fact/decision/guardrail/skill knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, and verbosity — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems".
+description: Full-repo validation pass over a project's fact/decision/guardrail/skill knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, verbosity, and stale derived artifacts — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems".
 ---
 
-Scan every fact, decision, guardrail, and skill prescription in the project — not just what changed recently — and report every structural violation found. Complements `steward`'s per-session checks with a full, on-demand sweep; `steward` can't catch rot that predates the session it happens to run in.
+Scan every fact, decision, guardrail, and skill prescription in the project — not just what changed recently — and report every structural violation found. `capture` handles what a session just produced (new decisions, changed facts, contradictions, doc drift); this is everything else — the whole knowledge base's structural health, checked here and only here.
 
 ## What to check
 
@@ -18,7 +18,9 @@ Scan every fact, decision, guardrail, and skill prescription in the project — 
 9. **Stale prose references** — any inline mention (not just `governed-by`/`grounded-in` fields, covered by check 1) of a `docs/{facts,decisions,guardrails,skills}/` path that doesn't exist, typically left behind after a rename or deletion. Not a violation: a placeholder pattern (`NNNN-slug.md`), a conditionally-optional file ("if X exists..."), or a reference a plan already annotates as deliberately-preserved history.
 10. **Verbose artifacts** — a fact, guardrail, or skill prescription (decisions/plans exempt) saying in several sentences what one would do, or restating something already said elsewhere in the same file — every one of these gets read into an agent's context, so unnecessary length is a real, recurring cost.
 11. **Unsplit statements** — a fact, guardrail, or derivation-note doing two distinct things that should be two files.
-12. **Baseline guardrails out of sync** — compare this skill's sibling `../../templates/guardrails/` against this project's `docs/guardrails/`, matching by `id`: a template missing here, a `kms-seeded: true` file behind its template's `template-version`, or a `kms-seeded: true` file whose template no longer exists. A file without `kms-seeded: true` is project-owned (possibly a deliberately-detached former template) — never flag it. If proposing a fix, only its `## Guardrail` rule text is ever refreshed from the template — never `## Derivation`/other sections a team has since filled in.
+12. **Baseline artifacts out of sync** — this skill's sibling `../../templates/` has one subdirectory per artifact type (currently just `guardrails/`); for each `<type>/`, compare it against this project's `docs/<type>/`, matching by `id`: a template missing here, a `kms-seeded: true` file behind its template's `template-version`, or a `kms-seeded: true` file whose template no longer exists. A file without `kms-seeded: true` is project-owned (possibly a deliberately-detached former template) — never flag it. If proposing a fix, only the section stating the artifact's actual content (for a guardrail, `## Guardrail`) is ever refreshed from the template — never `## Derivation` or any other section a team has since filled in beyond the template's own `TBD`.
+13. **Derived artifact stale** — a guardrail grounded in a decision that's since been superseded, or a fact that's since changed, anywhere in the project's history — not just from this session. Re-apply the derivation recipe and propose updated text; never leave a stale norm standing silently.
+14. **Role list gone cold** — a role on `docs/skills/{product,process}-track-roles.md` that hasn't matched any decision in a long while, judged against the project's whole decision history, not just recent ones.
 
 ## Output
 

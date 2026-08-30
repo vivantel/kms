@@ -1,0 +1,5 @@
+interface:
+  display_name: "Capture"
+  short_description: "Turn a session's work into decisions and facts"
+policy:
+  allow_implicit_invocation: false

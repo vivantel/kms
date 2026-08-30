@@ -26,8 +26,7 @@ governed, verified, or superseded independently.
   adopting project.
 - **Descriptive basis**: TBD.
 - **Normative conclusion**: therefore any fact/guardrail/derivation-note
-  found doing two jobs in this repo is split, matching `steward` check
-  13 and `lint` check 11.
+  found doing two jobs in this repo is split, matching `lint` check 11.
 
 ## Note
 

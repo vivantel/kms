@@ -30,13 +30,13 @@ is stale.
   — the team committed to every skill shipping worked examples,
   applied retroactively to the whole set, not just new additions.
 - **Descriptive basis**: TBD — no existing fact currently documents the
-  full skill roster; `bootstrap`/`steward` would generate one
+  full skill roster; `bootstrap`/`capture` would generate one
   (`docs/facts/0001-kms-skill-names.md`-style) as the natural grounding
   fact for this guardrail once the roster changes again.
 - **Normative conclusion**: therefore any skill added to this plugin
   going forward ships `examples.md` in the same change that adds
   `SKILL.md`. This is `kms`'s own packaging-layer convention
-  (`plugins/kms/skills/*/`), out of `lint`/`steward`'s scope
+  (`plugins/kms/skills/*/`), out of `lint`/`capture`'s scope
   (`docs/{facts,guardrails,skills}/`, not `plugins/kms/skills/`) per
   `docs/skills/scoping-shipped-vs-repo-rules.md` — checked by review via
   `AGENTS.md`/`CONTRIBUTING.md`'s "Adding a new skill" instructions, not

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Uninstall"
+  short_description: "Find and remove/detach everything kms added"
+policy:
+  allow_implicit_invocation: false

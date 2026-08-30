@@ -39,10 +39,10 @@ already draws.
   matters specifically; a future fact could ground this more precisely.
 - **Normative conclusion**: therefore any fact, guardrail, or skill
   prescription in a project's own `docs/{facts,guardrails,skills}/` found
-  more verbose than needed is flagged — by `lint`'s full-repo sweep and
-  `steward`'s per-session check, each restating this rule inline (a
-  shipped check can't safely reference this file, which only exists in
-  the `kms` marketplace repo itself, not in an adopting project).
+  more verbose than needed is flagged by `lint`'s full-repo sweep, which
+  restates this rule inline (a shipped check can't safely reference this
+  file, which only exists in the `kms` marketplace repo itself, not in
+  an adopting project).
 
 ## Note
 

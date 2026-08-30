@@ -10,7 +10,7 @@
 
 **Prompt:** "Check the whole docs/ tree for problems."
 
-**What happens:** A decision with an `expires` date that passed months ago, which no `steward` run happened to catch because no session touched it since, is flagged as expired and needing re-evaluation — exactly the gap `steward`'s session-diff scoping can't close on its own.
+**What happens:** A decision with an `expires` date that passed months ago, which no session has touched since (so `capture` never had a reason to look at it), is flagged as expired and needing re-evaluation — exactly the gap a session-scoped check can't close on its own.
 
 ## 3. Structural gaps `lint` won't judge
 

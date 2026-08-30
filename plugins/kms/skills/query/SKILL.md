@@ -14,4 +14,4 @@ Search `docs/{facts,decisions,guardrails,skills}/` for the artifacts relevant to
 
 ## Out of scope
 
-Writing or editing any artifact — this skill only reads and cites. Use `roadmap` to capture new knowledge, `steward` to maintain it, `bootstrap` to set it up.
+Writing or editing any artifact — this skill only reads and cites. Use `roadmap` to capture new knowledge, `capture` to maintain it, `bootstrap` to set it up.

@@ -19,7 +19,7 @@ Run `roadmap`'s interview and artifact-writing process on that one decision, in 
 
 ## Step 4: show what just happened
 
-Close by pointing at the artifact(s) written and naming 2-3 next skills relevant to what just happened (typically `query` to retrieve what was just captured, `steward` for next session, `onboard` if a teammate needs ramping up).
+Close by pointing at the artifact(s) written and naming 2-3 next skills relevant to what just happened (typically `query` to retrieve what was just captured, `capture` for next session, `onboard` if a teammate needs ramping up).
 
 ## Out of scope
 

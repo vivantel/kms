@@ -15,7 +15,7 @@ derivation-note: >
 ## Guardrail
 
 Any guardrail file MUST carry `governed-by`, `grounded-in`, and
-`derivation-note` frontmatter — whether written by `bootstrap`/`steward`
+`derivation-note` frontmatter — whether written by `bootstrap`/`capture`
 or by hand. Missing any of the three makes the guardrail undeclared — a
 norm with no stated basis — and it MUST be flagged as debt rather than
 left silent.

@@ -24,7 +24,7 @@ A reasonable shape (adjust to what actually exists for this role — don't force
 2. Role-specific decisions and guardrails — what this role must not violate and why.
 3. Role-specific facts and current state.
 4. First real task, using `query` to resolve anything unclear from days 1-3.
-5. Practice a decision end-to-end with `clarify`, run `steward` afterward if they touched anything.
+5. Practice a decision end-to-end with `clarify`, run `capture` afterward if they touched anything.
 
 Tailor content, not just headings — two roles should get visibly different reading lists and goals, not the same plan with the role name swapped in.
 

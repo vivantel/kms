@@ -24,7 +24,7 @@ Ordered phases, each with:
 
 ## Phase 4: recommend post-refactor updates
 
-List facts or decisions that will be stale once the refactor lands, and recommend they be updated via `roadmap` or `steward` — not by this skill directly.
+List facts or decisions that will be stale once the refactor lands, and recommend they be updated via `roadmap` or `capture` — not by this skill directly.
 
 ## Out of scope
 

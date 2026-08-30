@@ -27,5 +27,5 @@ not left standing as current.
 - **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base frontmatter this guardrail's field extends.
 - **Normative conclusion**: therefore any decision past its `expires`
-  bound is re-evaluated, regardless of whether `steward` or a human
+  bound is re-evaluated, regardless of whether `lint` or a human
   catches it.

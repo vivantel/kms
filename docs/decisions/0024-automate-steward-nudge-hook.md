@@ -57,6 +57,12 @@ Two bugs in the original shell logic were also fixed in the same pass:
 the time window, how to disable it, and a manual recipe for
 non–Claude-Code agents.
 
+> **Note (2026-08-30)**: `steward` was later renamed `capture`
+> (`docs/decisions/0031`); the file above was renamed
+> `docs/skills/automating-capture.md` and the hook script
+> `capture-nudge.sh` to match. Left unedited above as the historical
+> record of what this decision actually built at the time.
+
 ## Why
 
 The single biggest reason a knowledge-management workflow goes unused is

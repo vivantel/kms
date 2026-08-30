@@ -3,41 +3,11 @@ name: bootstrap
 description: One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract intents from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
 ---
 
-Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and skill prescriptions (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `steward` maintains them across sessions.
+Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and skill prescriptions (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
 
-## Artifact types
+## Artifact model
 
-| Type | Mode | Origin | Where | Verified by |
-|------|------|--------|-------|-------------|
-| Environmental fact | descriptive | original | `facts/` | Observe from the world (tool output, docs, benchmarks) |
-| Decision fact | descriptive | original | `facts/` | Check the governing decision is still current |
-| Decision | axiomatic | original | `decisions/` | Expert review; immutable once accepted |
-| Skill prescription | procedural | original | `skills/` | Expert review; can be refined |
-| Guardrail | normative | derived | `guardrails/` | Re-derive from its sources; compare |
-
-**Mode** is the kind of claim: descriptive — true right now; axiomatic — what the team commits to, with context and rationale; normative — must or must not happen, derived from an axiomatic commitment plus a descriptive fact; procedural — how to decide or act.
-
-A guardrail is only valid while its sources are current — a source change invalidates it.
-
-## File formats
-
-Facts and decisions are filed as `docs/{facts,decisions}/NNNN-slug.md` (4-digit, 1-based, per directory); guardrails and skill prescriptions as `docs/{guardrails,skills}/slug.md`, no numeric prefix.
-
-All four carry the base frontmatter `id, title, status, date, tags`, plus these type-specific fields:
-
-Fact — add `kind: environmental | decision | derived | mixed` (mixed = file has both; label each section inline) and `governed-by: <decision-id>` (`TBD` = debt).
-
-Guardrail — add `governed-by: <decision-id>`, `grounded-in: <fact-id[, ...]>`, and `derivation-note: <one sentence: given decision X and fact Y, Z must/must not follow>`. Missing any of the three = undeclared, flag as debt.
-
-Decision — add `track: product | process` (required: product = what the
-project is for and who it serves; process = how it's built, organized,
-or shipped); optionally `scope: <what it applies to>`,
-`expires: <date or condition>`, `governed-facts: [<fact-id>, ...]`, and
-`fitness-functions: [<check description>, ...]`.
-
-**Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
-
-Fact and guardrail stubs written here use the shortest phrasing that preserves meaning — decisions and plans are exempt.
+This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, and the derivation recipe — read it before drafting anything. Fact and guardrail stubs written here use the shortest phrasing that preserves meaning — decisions and plans are exempt.
 
 ## Before starting
 
@@ -59,11 +29,11 @@ Scan git log and existing docs (README, planning notes, guardrail/skill files) f
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see Artifact types above). Write one fact stub per finding, `governed-by: TBD` when none exists yet.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Write one fact stub per finding, `governed-by: TBD` when none exists yet.
 
 ### 3. Doc manifest bootstrap
 
-For every human-facing doc (README, planning notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the content and decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `steward` fills it in later.
+For every human-facing doc (README, planning notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the content and decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `capture` fills it in later. Mark the file `kms-generated: true` — it's constructed from this project's own docs, not copied from a template, but `uninstall` still needs to recognize it as this skill's output.
 
 ### 4. Guardrail derivation audit
 
@@ -95,7 +65,9 @@ For each: one paragraph on what it would own, one hard constraint, one fitness-f
 From the "Likely review role" column above, write
 `docs/skills/product-track-roles.md` and
 `docs/skills/process-track-roles.md` — base frontmatter (`id`, `title`,
-`status`, `date`, `tags`) like any other skill prescription, then one
+`status`, `date`, `tags`) plus `kms-generated: true` (constructed from
+this project's own signals, not a template, but still `uninstall`'s to
+recognize), like any other skill prescription, then one
 role per line: name plus a one-line scope (what kind of decision it
 should weigh in on). Sort each role by whether it bears on what the
 project is for (product) or how it's built (process) — a role can
@@ -108,9 +80,29 @@ positioning. These are review perspectives an agent considers while
 drafting or reviewing a decision of that track, not a staffing
 assignment.
 
-### 8. Seed baseline guardrails
+### 8. Seed baseline artifacts
 
-This skill's sibling `../../templates/guardrails/` holds kms's standard starter guardrails. For each template not yet present (by `id`) in this project's `docs/guardrails/`, write it directly, like any other stub this skill produces: copy the template as-is, replace `date: TBD` with today's date, drop its `template-version` field, and add `kms-seeded: true` and `kms-template-version: <the template's own template-version>`. `governed-by`/`grounded-in` stay `TBD` (debt) unless the team later drafts a decision for it.
+This skill's sibling `../../templates/` holds one subdirectory per artifact type kms ships seed content for (currently just `guardrails/`). For each `<type>/` subdirectory and each template not yet present (by `id`) in this project's `docs/<type>/`, write it directly, like any other stub this skill produces: copy the template as-is, replace `date: TBD` with today's date, drop its `template-version` field, and add `kms-seeded: true` and `kms-template-version: <the template's own template-version>`. Leave whichever debt-marking fields apply to that artifact type (see `../../shared/artifact-model.md` — e.g. `governed-by`/`grounded-in` for a guardrail, `governed-by` alone for a fact) as `TBD` unless the team later drafts a decision for it.
+
+### 9. Wire into the project's own agent-instructions file
+
+If the `<!-- kms:start -->` marker isn't already present, insert a marked section into the project's `AGENTS.md` (or whatever host-specific equivalent filename it uses instead of that cross-agent convention; create a minimal `AGENTS.md` if neither exists) — this is a gap-fill step like the rest of this skill, not something to duplicate on a repeat run:
+
+```
+<!-- kms:start -->
+## Knowledge base
+
+This project uses kms's fact/decision/guardrail/skill knowledge system.
+See `docs/{facts,decisions,guardrails,skills}/` — facts (what's true),
+decisions (what's committed to and why), guardrails (what must/must not
+happen), skill prescriptions (how to act). Maintained via `capture`
+after work sessions; validated via `lint` on demand; queried via
+`query`.
+<!-- kms:end -->
+```
+
+The markers let `uninstall` remove exactly this block later without
+touching anything else in the file.
 
 ## Out of scope
 

@@ -22,13 +22,15 @@ Codex plugin.
 | `clarify` | Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. | [examples](plugins/kms/skills/clarify/examples.md) |
 | `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, skill prescriptions) plus a self-sufficient implementation plan. | [examples](plugins/kms/skills/roadmap/examples.md) |
 | `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. | [examples](plugins/kms/skills/bootstrap/examples.md) |
-| `steward` | The ongoing, session-to-session maintenance pass for that system: new decisions, changed facts, contradictions, doc drift, stale guardrails. | [examples](plugins/kms/skills/steward/examples.md) |
-| `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions — independent of what changed this session. | [examples](plugins/kms/skills/lint/examples.md) |
+| `capture` | Turns a work session's output into decisions and facts: new decisions, changed facts, contradictions, doc drift. | [examples](plugins/kms/skills/capture/examples.md) |
+| `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions, stale derived artifacts — independent of what changed this session. | [examples](plugins/kms/skills/lint/examples.md) |
 | `query` | Answers a question from the knowledge base, with citations, instead of from memory. | [examples](plugins/kms/skills/query/examples.md) |
 | `onboard` | Reads the knowledge base to produce a role-tailored, 5-day onboarding plan — writes nothing. | [examples](plugins/kms/skills/onboard/examples.md) |
 | `refactor-plan` | Produces a phased refactor plan that respects existing decisions and guardrails — writes nothing. | [examples](plugins/kms/skills/refactor-plan/examples.md) |
+| `conform` | Checks whether a pending changeset conforms to existing decisions and guardrails before it lands. | [examples](plugins/kms/skills/conform/examples.md) |
 | `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. | [examples](plugins/kms/skills/attribute/examples.md) |
 | `changelog` | Generates a `CHANGELOG.md` entry from commit history on demand. | [examples](plugins/kms/skills/changelog/examples.md) |
+| `uninstall` | Finds everything `bootstrap`/`capture` added and offers to detach or remove it — run manually before uninstalling the plugin. | [examples](plugins/kms/skills/uninstall/examples.md) |
 
 ## Installing
 
@@ -61,7 +63,7 @@ docs/{facts,decisions,guardrails,skills}/            # this repo's own knowledge
 `kms`'s design rationale — why each skill works the way it does, what
 must or must not happen, and what's currently true about the repo — is
 recorded as knowledge artifacts under `docs/`, maintained with the same
-`bootstrap`/`steward` skills this plugin ships, and checkable with the
+`bootstrap`/`capture` skills this plugin ships, and checkable with the
 same `lint`/`query` skills too. See [`AGENTS.md`](AGENTS.md) for the
 full structure and conventions.
 

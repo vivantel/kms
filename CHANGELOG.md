@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.8.0] - 2026-08-30
+
+### Changed
+
+- `bootstrap` and `capture` no longer each fully restate the fact/decision/guardrail/skill-prescription field model — it moved to `plugins/kms/shared/artifact-model.md`, read via the same sibling-reference mechanism the templates-sync feature already depends on reliably. Reverses part of the reasoning in `docs/decisions/0016-lint-skill.md` (full duplication over cross-referencing), now that a real precedent exists for a shipped skill reading a sibling file at runtime. `clarify`/`roadmap`'s shared interview mechanics were considered for the same treatment and left alone — that content differs in voice (first-person vs. third-person) between the two, not just location, so extracting it would force a real rewrite rather than a pure duplication removal.
+
+## [0.7.0] - 2026-08-30
+
+### Changed
+
+- **`steward` renamed to `capture`, and narrowed.** Every check duplicated between `steward` and `lint` (redundant/unenforced guardrails, expired decisions, audit-log facts, verbosity, statement-split, baseline-artifact sync) now lives only in `lint` — one source of truth per check, instead of two copies that had to be edited identically. `capture` keeps only the genuinely session-driven checks: new decision, fact changed, new automatable rule, contradiction found, human-doc drift, and the session-scoped half of the old role-list check. The hook (`capture-nudge.sh`) and its doc (`docs/skills/automating-capture.md`) are renamed to match. This is a breaking rename for anyone invoking `/kms:steward` directly.
+
+### Added
+
+- `conform` — checks whether a pending changeset (staged diff, a commit range, or a flexible target like "the last 3 PRs") conforms to existing decisions and guardrails before it lands. Read-only; excludes changes to the knowledge base's own artifacts entirely, which stays `lint`/`capture`'s job.
+- `docs/skills/kms-architecture.md` — one reference doc synthesizing kms's own layers (`docs/` internal knowledge vs. `plugins/kms/skills/` packaging vs. `plugins/kms/templates/` shippable product content vs. `plugins/kms/hooks/` automation) and marker conventions (`kms-seeded`, `kms-generated`, `<!-- kms:start/end -->`) in one place, linked from `AGENTS.md`.
+
+## [0.6.0] - 2026-08-30
+
+### Added
+
+- `uninstall` — finds everything `bootstrap`/`steward` added to a project (seeded guardrails, generated track-role-lists/doc-manifest, the AGENTS.md knowledge-base pointer, still-draft stubs nobody finalized) and offers to detach or remove each, reported up front rather than one at a time. Run manually before actually uninstalling the plugin — Claude Code has no uninstall lifecycle hook, so nothing here can ever be automatic.
+- `bootstrap` now wires a marked `<!-- kms:start -->`/`<!-- kms:end -->` section into the target project's own `AGENTS.md`/`CLAUDE.md`, pointing at its knowledge base — mirroring how `kms`'s own `AGENTS.md` documents itself — and stamps `kms-generated: true` on the three files it dynamically constructs per project (`docs-manifest.md` and both product/process track-role-lists), so `uninstall` can find them.
+- The baseline-artifact sync mechanism (`bootstrap`/`steward`/`lint`) generalized from hardcoding `templates/guardrails/` to scanning every subdirectory of `templates/`, ready for a second template type without touching all three again.
+
 ## [0.5.0] - 2026-08-30
 
 ### Added

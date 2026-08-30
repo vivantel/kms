@@ -29,7 +29,7 @@ whoever only reads or runs the skill itself.
 - **Descriptive basis**: TBD.
 - **Normative conclusion**: therefore any guardrail found describing
   shipped behavior a skill's own body doesn't state is flagged, matching
-  `steward` check 11 and `lint` check 8.
+  `lint` check 8.
 
 ## Note
 

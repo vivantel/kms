@@ -17,7 +17,7 @@ derivation-note: >
 Any fact file MUST carry `kind` (`environmental | decision | derived | mixed`)
 and `governed-by` (a decision id, or `TBD` when no decision has been
 recorded yet — itself debt, but declared debt) — whether written by
-`bootstrap`/`steward` or by hand.
+`bootstrap`/`capture` or by hand.
 
 ## Derivation
 
