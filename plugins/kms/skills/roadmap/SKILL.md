@@ -43,7 +43,14 @@ Do not tag or classify decisions while the interview is running — keep the int
 
 Decisions additionally carry a `track`: **product** — what the project
 is for and who it serves; or **process** — how it's built, organized,
-or shipped.
+or shipped. If the decision is bounded or provisional, also note
+`scope` (what it applies to) and `expires` (a date or condition — when
+it stops being current).
+
+If `docs/skills/product-track-roles.md` or `process-track-roles.md`
+exists for the decision's track, read it and weigh those perspectives
+before finalizing the recommendation. If it doesn't exist, proceed as
+today — don't require it.
 
 ## What must be captured
 

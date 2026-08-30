@@ -1,20 +1,20 @@
 ---
 id: 0002-skill-bodies-already-agent-neutral
-title: The six SKILL.md bodies contain no Claude/Anthropic/tool-specific language
+title: The eight SKILL.md bodies contain no Claude/Anthropic/tool-specific language
 status: current
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
 ---
 
-As of 2026-08-30, an audit of all six skill instruction bodies —
-`plugins/kms/skills/{clarify,roadmap,bootstrap,steward,attribute,changelog}/SKILL.md`
+As of 2026-08-30, an audit of all eight skill instruction bodies —
+`plugins/kms/skills/{clarify,roadmap,bootstrap,steward,lint,query,attribute,changelog}/SKILL.md`
 — found no occurrences of "Claude", "Claude Code", "Anthropic", specific
 tool names (e.g. "Bash tool", "Read tool"), slash-command syntax
 (`/kms:...`), or any other agent-product-specific term, in either the
 YAML frontmatter (`name`, `description`) or the instruction body.
 Re-verified after every round of edits to these bodies since the
 original 2026-07-29 audit (originally four skills; `bootstrap`/`steward`
-added and included from `0009` onward).
+added from `0009` onward, `lint`/`query` from `0016`/`0017`).
 
 Search performed: `grep -rniE "claude|anthropic|slash command|/kms:|bash
 tool|read tool|edit tool|write tool|tool use" plugins/kms/skills/*/SKILL.md`

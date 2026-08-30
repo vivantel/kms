@@ -31,7 +31,8 @@ Guardrail — add `governed-by: <decision-id>`, `grounded-in: <fact-id[, ...]>`,
 
 Decision — add `track: product | process` (required: product = what the
 project is for and who it serves; process = how it's built, organized,
-or shipped); optionally `governed-facts: [<fact-id>, ...]` and
+or shipped); optionally `scope: <what it applies to>`,
+`expires: <date or condition>`, `governed-facts: [<fact-id>, ...]`, and
 `fitness-functions: [<check description>, ...]`.
 
 **Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
@@ -50,7 +51,7 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process`, `status: draft`.
+- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (add `scope`/`expires` if the decision is bounded or provisional), `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
@@ -74,18 +75,30 @@ Scan existing checks (CI/build config, review checklists, approval gates) for ru
 
 Propose domains that need their own skill, based on what's in the repo:
 
-| Signal in the repo | Domain to cover |
-|---|---|
-| Build manifests, compiled language | Build tooling, runtime constraints |
-| CI workflows, deployment config | Pipeline structure, release process |
-| Multi-repo boundary, subtree/submodule sync | Integration contracts, public APIs |
-| Test suite, quality gates | Correctness verification, release criteria |
-| Roadmap, pricing tiers, access control | Product scope, positioning |
-| Recurring manual process, no written procedure | Process/procedure documentation |
-| External compliance, regulatory, or ethical requirement | Compliance/review skill |
-| Repeated reviewer or stakeholder feedback pattern | Review/quality skill |
+| Signal in the repo | Domain to cover | Likely review role |
+|---|---|---|
+| Build manifests, compiled language | Build tooling, runtime constraints | Build Engineer |
+| CI workflows, deployment config | Pipeline structure, release process | Release Engineer |
+| Multi-repo boundary, subtree/submodule sync | Integration contracts, public APIs | Architect |
+| Test suite, quality gates | Correctness verification, release criteria | QA/Test Owner |
+| Roadmap, pricing tiers, access control | Product scope, positioning | Product Strategist |
+| Recurring manual process, no written procedure | Process/procedure documentation | Process Owner |
+| External compliance, regulatory, or ethical requirement | Compliance/review skill | Compliance Reviewer |
+| Repeated reviewer or stakeholder feedback pattern | Review/quality skill | Quality Reviewer |
 
 For each: one paragraph on what it would own, one hard constraint, one fitness-function candidate. Proposals — the team decides adoption and naming. Domains governing irreversible decisions (published APIs, binary ABI, irreversible schema changes, legal/compliance commitments, public claims) are the highest priority to formalize first.
+
+### 7. Compile the track role lists
+
+From the "Likely review role" column above, write
+`docs/skills/product-track-roles.md` and
+`docs/skills/process-track-roles.md`: one role per line, name plus a
+one-line scope (what kind of decision it should weigh in on). Sort each
+role by whether it bears on what the project is for (product) or how
+it's built (process) — a role can appear on both lists if it's relevant
+to both. These are review perspectives an agent considers while
+drafting or reviewing a decision of that track, not a staffing
+assignment.
 
 ## Out of scope
 

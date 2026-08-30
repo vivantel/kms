@@ -3,11 +3,11 @@
   "owner": {
     "name": "vivantel"
   },
-  "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+  "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, and query it for answers with citations; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
   "plugins": [
     {
       "name": "kms",
-      "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
+      "description": "Everyday development skills for Claude Code: rigorously clarify a plan through interrogation, or turn one into durable knowledge artifacts and a standalone roadmap; bootstrap and steward a project's fact/decision/guardrail system across sessions, lint it for structural rot, and query it for answers with citations; attribute commits and PRs to their underlying intent, and generate changelogs from commit history.",
       "source": "./plugins/kms"
     }
   ]

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Query"
+  short_description: "Answer a question from the knowledge base, with citations"
+policy:
+  allow_implicit_invocation: false

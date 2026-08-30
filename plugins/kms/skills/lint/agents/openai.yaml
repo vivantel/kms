@@ -1,0 +1,5 @@
+interface:
+  display_name: "Lint"
+  short_description: "Full-repo validation of the knowledge base"
+policy:
+  allow_implicit_invocation: false

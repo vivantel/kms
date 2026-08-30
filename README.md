@@ -18,6 +18,8 @@ Codex plugin.
 | `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, skill prescriptions) plus a self-sufficient implementation plan. |
 | `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. |
 | `steward` | The ongoing, session-to-session maintenance pass for that system: new decisions, changed facts, contradictions, doc drift, stale guardrails. |
+| `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions — independent of what changed this session. |
+| `query` | Answers a question from the knowledge base, with citations, instead of from memory. |
 | `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. |
 | `changelog` | Generates a `CHANGELOG.md` entry from commit history on demand. |
 
