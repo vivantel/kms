@@ -4,6 +4,12 @@ title: A decision past its expires date or condition must be re-evaluated
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
+governed-by: 0014-decision-scope-and-expires-fields
+grounded-in: TBD
+derivation-note: >
+  Given decision 0014 (bounded/provisional decisions get an expires
+  field), a decision past its bound must be re-evaluated, not left
+  standing as current.
 ---
 
 ## Guardrail

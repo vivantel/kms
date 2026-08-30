@@ -4,6 +4,8 @@ title: Names of the commit/PR attribution and changelog skills
 status: current
 date: 2026-07-29
 tags: [kms, naming]
+kind: decision
+governed-by: 0002-commit-pr-attribution-skill-design
 ---
 
 The two skills designed in `docs/decisions/0002-commit-pr-attribution-skill-design.md`

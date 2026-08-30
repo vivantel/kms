@@ -4,6 +4,12 @@ title: Every plugin manifest's version field must be bumped together
 status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging, guardrail]
+governed-by: 0008-native-codex-plugin-support
+grounded-in: 0003-codex-plugin-manifest-schema
+derivation-note: >
+  Given decision 0008 (one skill set, many manifests) and fact 0003
+  (Codex's manifest has its own independent version field), every
+  manifest's version must move together.
 ---
 
 ## Guardrail

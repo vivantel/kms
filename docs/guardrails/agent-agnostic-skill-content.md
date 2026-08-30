@@ -4,6 +4,12 @@ title: Skill instruction bodies must stay agent-neutral
 status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, guardrail]
+governed-by: 0006-agent-agnostic-scope
+grounded-in: 0002-skill-bodies-already-agent-neutral
+derivation-note: >
+  Given decision 0006 (skill content stays agent-neutral across agents)
+  and fact 0002 (bodies already meet that bar), future skill bodies must
+  not regress it.
 ---
 
 ## Guardrail

@@ -4,6 +4,8 @@ title: The eight SKILL.md bodies contain no Claude/Anthropic/tool-specific langu
 status: current
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
+kind: environmental
+governed-by: 0006-agent-agnostic-scope
 ---
 
 As of 2026-08-30, an audit of all eight skill instruction bodies —

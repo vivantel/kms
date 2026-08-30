@@ -4,6 +4,8 @@ title: Result of auditing existing artifacts against the global writing principl
 status: current
 date: 2026-08-29
 tags: [kms, knowledge-management, audit]
+kind: environmental
+governed-by: TBD
 ---
 
 As of 2026-08-29, every artifact under `docs/{facts,decisions,guardrails,skills}/`
@@ -11,7 +13,7 @@ and every `plugins/kms/skills/*/SKILL.md` was checked against the global
 principles stated in `plugins/kms/skills/steward/SKILL.md` (token
 economy, one statement one job). Two violations found and fixed:
 
-- `docs/guardrails/knowledge-artifact-derivation-fields.md` bundled three
+- `docs/guardrails/knowledge-artifact-derivation-fields.md` (since deleted) bundled three
   distinct normative claims (guardrail frontmatter, fact frontmatter,
   re-derivation-on-change) in one file — split into
   `guardrail-derivation-fields.md`, `fact-governance-fields.md`, and

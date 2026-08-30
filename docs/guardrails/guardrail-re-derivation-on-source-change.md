@@ -4,6 +4,12 @@ title: A guardrail must be re-derived when its governing decision or grounding f
 status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
+governed-by: 0009-bootstrap-and-steward-skills
+grounded-in: TBD
+derivation-note: >
+  Given decision 0009 (norms must not outlive the decisions that
+  justified them), a guardrail's source changing must trigger
+  re-derivation, not silence.
 ---
 
 ## Guardrail

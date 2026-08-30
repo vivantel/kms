@@ -4,6 +4,12 @@ title: Guardrails must declare their derivation
 status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
+governed-by: 0009-bootstrap-and-steward-skills
+grounded-in: TBD
+derivation-note: >
+  Given decision 0009 (every normative artifact must trace to its
+  sources), every guardrail must declare governed-by, grounded-in, and
+  derivation-note.
 ---
 
 ## Guardrail

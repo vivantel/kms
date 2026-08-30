@@ -28,7 +28,8 @@ already used to split `attribute` from `changelog`:
 git-history mining, the full skill-gap-detection table); `steward` carries
 only what matters on every single invocation (the six checks, the artifact
 frontmatter formats, the derivation recipe), kept as lean as the four
-existing skills.
+existing skills. See `docs/facts/0004-kms-skill-names-steward-bootstrap.md`
+for how these two names were settled.
 
 ## Why
 
