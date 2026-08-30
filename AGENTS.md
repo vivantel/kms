@@ -10,6 +10,7 @@ This repo is a **Claude Code plugin marketplace**: a git repo that Claude Code c
 
 ```
 .claude-plugin/marketplace.json                     # marketplace manifest — lists available plugins
+INSTALLING.md                                        # per-agent install steps, one section per agent, linked from README
 kilo.jsonc                                           # Kilo Code CLI config, points skills.urls at the published plugins/kms/skills/index.json (see docs/decisions/0035-native-kilo-code-support.md)
 plugins/<plugin-name>/.claude-plugin/plugin.json     # Claude Code plugin manifest (name, description, version, author)
 plugins/<plugin-name>/.codex-plugin/plugin.json      # Codex plugin manifest (name, version, description, skills path)

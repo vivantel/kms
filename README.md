@@ -34,39 +34,19 @@ Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 
 ## Installing
 
-Add this repo as a marketplace source, then install the `kms` plugin:
+Supports Claude Code, Codex, and Kilo Code CLI — full per-agent steps
+in [`INSTALLING.md`](INSTALLING.md). Quick start for Claude Code:
 
 ```
 /plugin marketplace add vivantel/kms
 /plugin install kms
 ```
 
-If that plugin name doesn't resolve (e.g. you have another marketplace
-with a same-named plugin), run `/plugin marketplace list` to find this
-marketplace's registered name and install as `kms@<that-name>` instead.
-
-Codex ships the same skill set via the plugin manifest at
-`plugins/kms/.codex-plugin/plugin.json`. The exact end-user install
-command isn't confirmed (Codex's own docs describe an interactive
-`codex /plugins` browser, with no documented git-URL/local-path syntax
-for adding a custom source) — see
-`docs/facts/0003-codex-plugin-manifest-schema.md` for what is and isn't
-verified.
-
-Kilo Code CLI users can track this skill set with no per-project
-copying by adding to `kilo.jsonc`:
-
-```json
-{ "skills": { "urls": ["https://raw.githubusercontent.com/vivantel/kms/master/plugins/kms/skills"] } }
-```
-
-Kilo re-fetches automatically whenever a skill's version changes — see
-`plugins/kms/skills/index.json`.
-
 ## Repo structure
 
 ```
 .claude-plugin/marketplace.json                     # marketplace manifest
+INSTALLING.md                                        # per-agent install steps (Claude Code, Codex, Kilo Code CLI)
 plugins/kms/.claude-plugin/plugin.json               # Claude Code plugin manifest
 plugins/kms/.codex-plugin/plugin.json                # Codex plugin manifest
 plugins/kms/skills/index.json                        # Kilo Code CLI remote-skills manifest
