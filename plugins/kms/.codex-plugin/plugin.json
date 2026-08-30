@@ -1,6 +1,6 @@
 {
   "name": "kms",
   "version": "0.2.0",
-  "description": "A growing toolkit of everyday development skills.",
+  "description": "Clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system — plus attribute commits and generate changelogs from it.",
   "skills": "./skills"
 }

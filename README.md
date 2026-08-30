@@ -54,8 +54,9 @@ docs/{facts,decisions,guardrails,skills}/            # this repo's own knowledge
 `kms`'s design rationale — why each skill works the way it does, what
 must or must not happen, and what's currently true about the repo — is
 recorded as knowledge artifacts under `docs/`, maintained with the same
-`bootstrap`/`steward` skills this plugin ships. See
-[`AGENTS.md`](AGENTS.md) for the full structure and conventions.
+`bootstrap`/`steward` skills this plugin ships, and checkable with the
+same `lint`/`query` skills too. See [`AGENTS.md`](AGENTS.md) for the
+full structure and conventions.
 
 ## Contributing
 
