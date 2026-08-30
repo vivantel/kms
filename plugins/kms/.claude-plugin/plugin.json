@@ -2,7 +2,7 @@
   "name": "kms",
   "displayName": "KMS Dev Skills",
   "description": "Clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system — plus attribute commits and generate changelogs from it.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "sergemso"
   }

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.1] - 2026-08-30
+
+### Fixed
+
+- Every guardrail in this repo stated its derivation only in prose, never as the `governed-by`/`grounded-in`/`derivation-note` frontmatter `guardrail-derivation-fields.md` itself requires — including that guardrail, about itself. All 5 pre-existing facts were missing `kind`/`governed-by` the same way. Caught by running `lint` (this plugin's own new skill) against this repo's own knowledge base, then fixed across all 13 files.
+- One dangling reference (a fact pointing at a guardrail that was split and deleted) and one orphaned fact (referenced by nothing) found by the same `lint` pass.
+- `steward`'s "No unenforced guardrail" principle had no matching numbered check, unlike its sibling "No redundant guardrails"; added, and mirrored into `lint`'s checklist.
+- `bootstrap`'s role-list step never said to give the two files it writes their base frontmatter, and gave no tiebreaker for a role whose track is genuinely ambiguous (compliance, quality, process-documentation roles) — both added.
+- A historical plan's "done when" criterion quoted `roadmap`'s classification paragraph verbatim; later work changed that paragraph without updating the quote. Annotated as stale rather than left to confuse a future reader.
+
 ## [0.2.0] - 2026-08-30
 
 ### Added
