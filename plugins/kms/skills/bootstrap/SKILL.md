@@ -37,6 +37,8 @@ or shipped); optionally `scope: <what it applies to>`,
 
 **Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
 
+Fact and guardrail stubs written here use the shortest phrasing that preserves meaning — decisions and plans are exempt.
+
 ## Before starting
 
 Detect what the project already has, the same way `roadmap` does: look for an existing `decisions/`, `facts/`, `guardrails/`, or `skills/` directory and infer format from real examples there. If none exists, default to the structure above under `docs/`. Never invent a mismatched directory convention — extend what exists, don't duplicate.
@@ -105,6 +107,10 @@ product if its scope is explicitly about mission, audience, or
 positioning. These are review perspectives an agent considers while
 drafting or reviewing a decision of that track, not a staffing
 assignment.
+
+### 8. Seed baseline guardrails
+
+This skill's sibling `../../templates/guardrails/` holds kms's standard starter guardrails. For each template not yet present (by `id`) in this project's `docs/guardrails/`, write it directly, like any other stub this skill produces: copy the template as-is, replace `date: TBD` with today's date, drop its `template-version` field, and add `kms-seeded: true` and `kms-template-version: <the template's own template-version>`. `governed-by`/`grounded-in` stay `TBD` (debt) unless the team later drafts a decision for it.
 
 ## Out of scope
 

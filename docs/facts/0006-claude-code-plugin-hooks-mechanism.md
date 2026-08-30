@@ -1,5 +1,5 @@
 ---
-id: 0007-claude-code-plugin-hooks-mechanism
+id: 0006-claude-code-plugin-hooks-mechanism
 title: Claude Code plugin hooks — file location, schema, and event options
 status: current
 date: 2026-08-30

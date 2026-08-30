@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.5.0] - 2026-08-30
+
+### Added
+
+- Four of `steward`'s "Global principles" (token economy, one-statement-one-job, no-redundant-guardrails, no-unenforced-guardrail) are now real, checked guardrails instead of unenforced prose — `lint`/`steward` each gained matching checks, self-contained inline (never referencing a `kms`-repo-specific file, so they work correctly when run against an arbitrary adopting project).
+- `plugins/kms/templates/guardrails/` — these four guardrails ship as actual product assets, distinct from this repo's own `docs/{facts,decisions,guardrails,skills}/`. `bootstrap` seeds any missing one into a project's own `docs/guardrails/` at setup; `steward`/`lint` keep them synced afterward (add what's missing, update what's stale, remove what's retired upstream, never touch what a team has deliberately detached via a documented escape hatch).
+- `docs/skills/scoping-shipped-vs-repo-rules.md` — the general procedure this whole change follows for deciding whether a new rule belongs in a shipped skill, `kms`'s own contributor docs, or both, with a concrete grep to catch the exact bug pattern this session hit twice while designing it.
+
+### Fixed
+
+- `lint`'s "Out of scope" note named "Claude Code" explicitly, violating this repo's own agent-neutrality guardrail — caught by re-running `docs/facts/0002`'s own stated audit grep, not by inspection.
+- `docs/facts/0002` claimed an audit of "eight skill instruction bodies"; four more (`quickstart`, `brainstorm`, `onboard`, `refactor-plan`) had been added since and were never covered. Re-ran the audit against all twelve — still clean — and updated the fact.
+- `docs/guardrails/every-skill-ships-examples.md` claimed `lint` check 9 enforced it automatically; that check was later repurposed to "stale prose references" with no replacement, silently disabling enforcement. Corrected to state the real mechanism (`AGENTS.md`/`CONTRIBUTING.md` review, per `docs/skills/scoping-shipped-vs-repo-rules.md`), and annotated the one stale plan reference to the old check number rather than silently rewriting it.
+- `docs/guardrails/token-economy.md` was missing the `kms-seeded`/`kms-template-version` marker fields its three sibling seeded guardrails carry, making it permanently invisible to the new sync mechanism. Added, plus a clarification that a sync "refresh" only ever touches a seeded file's `## Guardrail` rule text, never a `## Derivation` section a team has since filled in.
+- Inconsistent token-economy exemption wording across `bootstrap`/`steward`/`roadmap`/the guardrail itself ("decisions" vs. "decisions and plans" exempt) — aligned.
+- `AGENTS.md` claimed "no application code" while this same batch ships `plugins/kms/hooks/steward-nudge.sh`, a real shell script — corrected.
+- A dead redundant guard clause in `steward-nudge.sh` (a case already covered by the age-bounds check two lines later) — removed.
+- Fact renumbering (`0005` removed as audit-log noise, `0006`→`0005`, `0007`→`0006`, from the previous release) was never recorded anywhere — noted here.
+
+### Known open risk
+
+Whether Codex's plugin install mechanism copies sibling directories like `templates/` (or `hooks/`) at all, versus only the `skills` path its manifest declares, is unconfirmed — flagged in `docs/decisions/0027-baseline-guardrail-seeding.md` rather than assumed away.
+
 ## [0.4.0] - 2026-08-30
 
 ### Added

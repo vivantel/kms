@@ -35,6 +35,8 @@ agreed before you invest time in it.
   (`plugins/kms/.claude-plugin/plugin.json` and
   `plugins/kms/.codex-plugin/plugin.json`) — see
   `docs/guardrails/plugin-manifest-version-sync.md`.
+- Keep the `SKILL.md` body itself economical — see
+  `docs/guardrails/token-economy.md`.
 
 ## This repo dogfoods its own skills
 
@@ -58,6 +60,9 @@ There's no CI. Before opening a PR:
 - Grep your skill body for agent-specific language before submitting:
   `grep -niE "claude|anthropic|bash tool|read tool|slash command" plugins/kms/skills/*/SKILL.md`
   should return nothing.
+- Grep for a shipped skill naming one of `kms`'s own files instead of
+  stating its check inline: `grep -nE "docs/(facts|decisions|guardrails|skills)/[A-Za-z0-9_-]+\.md" plugins/kms/skills/*/SKILL.md`,
+  then judge each hit per `docs/skills/scoping-shipped-vs-repo-rules.md`.
 
 ## Pull requests
 

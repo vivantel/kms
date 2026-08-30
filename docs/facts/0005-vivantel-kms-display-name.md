@@ -1,5 +1,5 @@
 ---
-id: 0006-vivantel-kms-display-name
+id: 0005-vivantel-kms-display-name
 title: Fields carrying the "Vivantel KMS" display name
 status: current
 date: 2026-08-30

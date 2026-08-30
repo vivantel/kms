@@ -7,13 +7,13 @@ If the project has no knowledge system yet, run `bootstrap` first — this skill
 
 ## Global principles
 
-**Token economy:** in every artifact except decisions and plans, use the shortest phrasing that preserves meaning and avoids ambiguity. If a statement needs explanation, it's not a fact or guardrail — it's context for a decision record.
+**Token economy:** in every artifact except decisions and plans, use the shortest phrasing that preserves meaning and avoids ambiguity — checked below (12). If a statement needs explanation, it's not a fact or guardrail — it's context for a decision record.
 
-**One statement, one job:** if a fact, guardrail, or derivation-note does two things, split it.
+**One statement, one job:** if a fact, guardrail, or derivation-note does two things, split it — checked below (13).
 
-**No redundant guardrails:** before writing a guardrail, check it doesn't only apply "whenever skill X does Y" — if it does, that content belongs in skill X's own body, not a second file.
+**No redundant guardrails:** before writing a guardrail, check it doesn't only apply "whenever skill X does Y" — if it does, that content belongs in skill X's own body, not a second file — checked below (7).
 
-**No unenforced guardrail:** a guardrail describing behavior a shipped skill should enforce is worthless to that skill's users until the skill's own body says it too — update the skill in the same pass, never defer it. A project's `docs/guardrails/` never ships to anyone who installs the skill; only the skill's own body does.
+**No unenforced guardrail:** a guardrail describing behavior a shipped skill should enforce is worthless to that skill's users until the skill's own body says it too — update the skill in the same pass, never defer it. A project's `docs/guardrails/` never ships to anyone who installs the skill; only the skill's own body does — checked below (11).
 
 ## Artifact formats
 
@@ -42,6 +42,9 @@ Derivation recipe: `Decision (why) + Fact (what is) → Guardrail (ought)`. If e
 9. **Fact reads like a log?** If a fact only records a timestamped event, grounds nothing, and nothing references it, flag it for removal or rewrite.
 10. **Role list stale?** If recent decisions of a track suggest a role not on that track's role list (`docs/skills/{product,process}-track-roles.md`, if present), or a listed role hasn't matched anything in a while, propose an addition or removal.
 11. **Guardrail unenforced?** For every guardrail describing behavior a shipped skill should perform, check that skill's own body actually says it. If it doesn't, update the skill now — a guardrail alone never reaches that skill's users.
+12. **Artifact economical?** For any fact, guardrail, or skill prescription touched this session (decisions/plans exempt): does it say in several sentences what one would do, or restate something said elsewhere? Tighten before closing the session, don't defer it.
+13. **Statement split?** For any fact, guardrail, or derivation-note touched this session doing two distinct things, split it into two.
+14. **Baseline guardrails synced?** Compare this skill's sibling `../../templates/guardrails/` against this project's `docs/guardrails/`, matching by `id`. For each template: missing here → propose adding it (stamp `kms-seeded: true`, `kms-template-version: <the template's own template-version>`, `date` today). Present with `kms-seeded: true` and a `kms-template-version` behind the template's → propose refreshing only its `## Guardrail` rule text and bumping the stamped version — never touch `## Derivation`/other sections a team has since filled in beyond the template's own `TBD`. `kms-seeded: true` here but no matching template anymore → propose removing it. Never touch a file without `kms-seeded: true` — that's project-owned, possibly a template someone deliberately detached by deleting that field. Always propose; never write or delete without confirmation.
 
 ## Recommending a new skill
 

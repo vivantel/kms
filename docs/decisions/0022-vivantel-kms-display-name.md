@@ -26,7 +26,7 @@ everywhere the plugin is *introduced* to a user or contributor:
 Every technical identifier is unchanged: `plugin.json`/`marketplace.json`
 `name: "kms"`, the `/plugin install kms` slug, and the `plugins/kms/`
 directory path.
-`docs/facts/0006-vivantel-kms-display-name.md` names the exact fields
+`docs/facts/0005-vivantel-kms-display-name.md` names the exact fields
 that carry the new display name, the same way
 `docs/facts/0001-kms-skill-names.md` names fields for a governed
 decision rather than re-arguing it.

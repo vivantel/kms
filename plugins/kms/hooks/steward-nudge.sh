@@ -14,7 +14,6 @@ inside_work_tree=$(git rev-parse --is-inside-work-tree 2>/dev/null)
 [ "$inside_work_tree" = "true" ] || exit 0
 
 last_commit_epoch=$(git log -1 --format=%ct 2>/dev/null || echo 0)
-[ "$last_commit_epoch" -gt 0 ] || exit 0
 
 now_epoch=$(date +%s)
 age=$(( now_epoch - last_commit_epoch ))

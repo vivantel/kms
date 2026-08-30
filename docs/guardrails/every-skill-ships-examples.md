@@ -35,7 +35,9 @@ is stale.
   fact for this guardrail once the roster changes again.
 - **Normative conclusion**: therefore any skill added to this plugin
   going forward ships `examples.md` in the same change that adds
-  `SKILL.md`. `lint` check 9 enforces this automatically — the same
-  way `lint` check 8 already crosses into `plugins/kms/skills/` to
-  verify shipped skill bodies enforce their governing guardrails, so a
-  missing `examples.md` doesn't rely on manual review to be caught.
+  `SKILL.md`. This is `kms`'s own packaging-layer convention
+  (`plugins/kms/skills/*/`), out of `lint`/`steward`'s scope
+  (`docs/{facts,guardrails,skills}/`, not `plugins/kms/skills/`) per
+  `docs/skills/scoping-shipped-vs-repo-rules.md` — checked by review via
+  `AGENTS.md`/`CONTRIBUTING.md`'s "Adding a new skill" instructions, not
+  by an automated `lint` check.

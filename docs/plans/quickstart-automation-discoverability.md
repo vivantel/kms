@@ -22,7 +22,7 @@ file rather than assuming anything from a prior conversation.
 
 ### 1. New fact — status: done
 
-`docs/facts/0007-claude-code-plugin-hooks-mechanism.md` — primary-sourced
+`docs/facts/0006-claude-code-plugin-hooks-mechanism.md` — primary-sourced
 facts about `hooks/hooks.json`, confirmed event fields, and the
 unconfirmed cross-hook-state gap (including a note that a subagent
 consulted for this returned harness-flagged output that was discarded,
@@ -42,8 +42,15 @@ not acted on).
 required by `docs/decisions/0008-native-codex-plugin-support.md` to ship
 an `agents/openai.yaml` sidecar, matching every other skill.
 
-Done when: `lint`'s check 9 (missing `examples.md`) would find nothing
-wrong with this skill.
+Done when: `plugins/kms/skills/quickstart/examples.md` exists.
+
+> **Note (2026-08-30)**: this step originally said "`lint`'s check 9
+> (missing `examples.md`) would find nothing wrong" — `lint` check 9 was
+> later repurposed to "stale prose references"; examples.md enforcement
+> moved to `AGENTS.md`/`CONTRIBUTING.md` review per
+> `docs/skills/scoping-shipped-vs-repo-rules.md`. Left annotated rather
+> than silently rewritten, matching
+> `docs/plans/commit-pr-attribution-skills.md`'s own precedent.
 
 ### 4. Steward-nudge hook — status: done (revised after /code-review)
 
@@ -126,7 +133,7 @@ the description and all 8 topics above.
 - **Committing or pushing any of this** — not requested for this
   session; check `git status`/`git log` before assuming otherwise.
 - **A confirmed Codex hook equivalent** — left as an open gap in
-  `docs/facts/0007` and `docs/skills/automating-steward.md`, not solved
+  `docs/facts/0006` and `docs/skills/automating-steward.md`, not solved
   here.
 - Higher-effort discoverability work considered in the brainstorm session
   but out of scope for a text-only session — screenshots/GIFs, an

@@ -9,7 +9,7 @@ tags: [kms, automation, claude-code, hooks, procedural]
 ## What ships today
 
 `plugins/kms/hooks/hooks.json` is a Claude Code plugin hook (see
-`docs/facts/0007-claude-code-plugin-hooks-mechanism.md`), auto-activated
+`docs/facts/0006-claude-code-plugin-hooks-mechanism.md`), auto-activated
 for anyone who installs this plugin — no manual `settings.json` edit
 needed. It fires on `SessionStart` and runs
 `plugins/kms/hooks/steward-nudge.sh`, which checks whether `HEAD`'s

@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents working in this repository.
 
 ## What this repo is
 
-This repo is a **Claude Code plugin marketplace**: a git repo that Claude Code can add as a marketplace source, from which users install plugins that bundle skills. There is no application code, no build step, and no test/lint tooling — the entire repo is JSON manifests and Markdown skill definitions.
+This repo is a **Claude Code plugin marketplace**: a git repo that Claude Code can add as a marketplace source, from which users install plugins that bundle skills. There is no build step and no test/lint tooling — the repo is almost entirely JSON manifests and Markdown skill definitions, plus one small POSIX shell script (`plugins/kms/hooks/steward-nudge.sh`) backing a Claude Code plugin hook.
 
 ## Structure
 
@@ -15,7 +15,8 @@ plugins/<plugin-name>/.codex-plugin/plugin.json      # Codex plugin manifest (na
 plugins/<plugin-name>/skills/<skill>/SKILL.md        # one skill definition per subdirectory
 plugins/<plugin-name>/skills/<skill>/examples.md     # 2-3 worked usage examples, linked from the README
 plugins/<plugin-name>/skills/<skill>/agents/<agent>.yaml  # optional per-agent interface/policy overrides (e.g. agents/openai.yaml)
-plugins/<plugin-name>/hooks/hooks.json               # optional Claude Code plugin hooks, auto-activated on install (see docs/facts/0007-claude-code-plugin-hooks-mechanism.md)
+plugins/<plugin-name>/hooks/hooks.json               # optional Claude Code plugin hooks, auto-activated on install (see docs/facts/0006-claude-code-plugin-hooks-mechanism.md)
+plugins/<plugin-name>/templates/<artifact-type>/     # shippable seed content, synced into an adopting project by bootstrap/steward/lint — distinct from this repo's own docs/ (see docs/decisions/0027-baseline-guardrail-seeding.md)
 ```
 
 Currently there is one plugin, `kms` (source `./plugins/kms`), containing twelve skills: `quickstart` (`plugins/kms/skills/quickstart/SKILL.md`), which runs `bootstrap` then captures one real decision live for a first-time user; `brainstorm` (`plugins/kms/skills/brainstorm/SKILL.md`), which generates and synthesizes distinct approaches to a problem without writing anything or consulting the knowledge base; `clarify` (`plugins/kms/skills/clarify/SKILL.md`), which interrogates the user to clarify a plan without writing anything; `roadmap` (`plugins/kms/skills/roadmap/SKILL.md`), which runs the same kind of interrogation but then writes durable knowledge-management artifacts and a standalone implementation roadmap; `bootstrap` (`plugins/kms/skills/bootstrap/SKILL.md`), which does the one-time setup of a project's fact/decision/guardrail/skill system (or gap-fills an incomplete one); `steward` (`plugins/kms/skills/steward/SKILL.md`), which maintains that system session to session — new decisions, stale facts, contradictions, doc drift, and re-derived guardrails; `lint` (`plugins/kms/skills/lint/SKILL.md`), which validates the whole knowledge base on demand, independent of any one session; `query` (`plugins/kms/skills/query/SKILL.md`), which answers a question from the knowledge base with citations; `onboard` (`plugins/kms/skills/onboard/SKILL.md`), which reads the knowledge base to produce a role-tailored onboarding plan without writing anything; `refactor-plan` (`plugins/kms/skills/refactor-plan/SKILL.md`), which produces a phased refactor plan that respects existing decisions and guardrails, without writing anything; `attribute` (`plugins/kms/skills/attribute/SKILL.md`), which writes intent-first commit messages and PR descriptions traceable to those knowledge artifacts; and `changelog` (`plugins/kms/skills/changelog/SKILL.md`), which renders a `CHANGELOG.md` entry from commit history on demand.
@@ -39,6 +40,8 @@ description: One-line description, including trigger phrases for when it should 
 Followed by the skill's instructions in the body. See `plugins/kms/skills/clarify/SKILL.md` for the pattern — it defines an interview-style skill with explicit turn-taking rules (ask one question at a time, prefer looking up facts over asking, only ask about genuine decisions).
 
 Also add a colocated `plugins/<plugin-name>/skills/<skill-name>/examples.md` with 2-3 worked usage examples (a realistic trigger prompt plus a sketch of the resulting interaction or output), and link it from the README's skill table — required for every skill per `docs/guardrails/every-skill-ships-examples.md`.
+
+Keep the `SKILL.md` body itself as short as possible while preserving meaning — it's loaded into every invocation's context, per `docs/guardrails/token-economy.md`. This is about `kms`'s own skill bodies specifically; it's not something `lint`/`steward` check (their scope is a project's own `docs/{facts,guardrails,skills}/`, not `kms`'s packaging layer). See `docs/skills/scoping-shipped-vs-repo-rules.md` before adding any new rule that could plausibly belong in a shipped skill's checks — most don't.
 
 ## Adding a new plugin
 

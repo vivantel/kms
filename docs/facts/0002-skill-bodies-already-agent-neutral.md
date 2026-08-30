@@ -1,6 +1,6 @@
 ---
 id: 0002-skill-bodies-already-agent-neutral
-title: The eight SKILL.md bodies contain no Claude/Anthropic/tool-specific language
+title: The twelve SKILL.md bodies contain no Claude/Anthropic/tool-specific language
 status: current
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
@@ -8,15 +8,19 @@ kind: environmental
 governed-by: 0006-agent-agnostic-scope
 ---
 
-As of 2026-08-30, an audit of all eight skill instruction bodies —
-`plugins/kms/skills/{clarify,roadmap,bootstrap,steward,lint,query,attribute,changelog}/SKILL.md`
+As of 2026-08-30, an audit of all twelve skill instruction bodies —
+`plugins/kms/skills/{clarify,roadmap,bootstrap,steward,lint,query,attribute,changelog,quickstart,brainstorm,onboard,refactor-plan}/SKILL.md`
 — found no occurrences of "Claude", "Claude Code", "Anthropic", specific
 tool names (e.g. "Bash tool", "Read tool"), slash-command syntax
 (`/kms:...`), or any other agent-product-specific term, in either the
 YAML frontmatter (`name`, `description`) or the instruction body.
 Re-verified after every round of edits to these bodies since the
 original 2026-07-29 audit (originally four skills; `bootstrap`/`steward`
-added from `0009` onward, `lint`/`query` from `0016`/`0017`).
+added from `0009` onward, `lint`/`query` from `0016`/`0017`,
+`quickstart`/`brainstorm`/`onboard`/`refactor-plan` from `0019`-`0023`)
+— including catching and fixing one real violation this same pass, in
+`lint`'s own "Out of scope" note (`plugins/kms/skills/lint/SKILL.md`),
+which had named "Claude Code" while describing the packaging layer.
 
 Search performed: `grep -rniE "claude|anthropic|slash command|/kms:|bash
 tool|read tool|edit tool|write tool|tool use" plugins/kms/skills/*/SKILL.md`

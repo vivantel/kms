@@ -1,6 +1,6 @@
 {
   "name": "kms",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Vivantel KMS (Knowledge Management System): get started fast with quickstart, brainstorm approaches, or clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system, onboard a role or plan a refactor from it — plus attribute commits and generate changelogs from it.",
   "skills": "./skills"
 }

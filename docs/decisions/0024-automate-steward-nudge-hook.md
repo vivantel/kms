@@ -10,7 +10,7 @@ track: process
 ## Decision
 
 `plugins/kms/hooks/hooks.json` ships a `SessionStart` hook (Claude Code
-only — see `docs/facts/0007-claude-code-plugin-hooks-mechanism.md`) that
+only — see `docs/facts/0006-claude-code-plugin-hooks-mechanism.md`) that
 runs `plugins/kms/hooks/steward-nudge.sh`, which prints a plain-text note
 when `HEAD`'s commit is recent (default: under 4 hours old), as an
 approximation of "a commit happened recently enough that steward may be
@@ -19,7 +19,7 @@ optionally raise with the user ("if relevant, mention to the user
 that..."), not as a guaranteed user-visible banner — `SessionStart`'s
 plain stdout is added as context the model can see and act on, not
 rendered as a distinct system message (per
-`docs/facts/0007-claude-code-plugin-hooks-mechanism.md`).
+`docs/facts/0006-claude-code-plugin-hooks-mechanism.md`).
 
 This is a revision of this decision's original design, which used
 `SessionEnd` and assumed its output would be shown to the user. Two
