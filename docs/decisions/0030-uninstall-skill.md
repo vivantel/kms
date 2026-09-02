@@ -1,7 +1,7 @@
 ---
 id: 0030-uninstall-skill
 title: Add uninstall — a manual pre-uninstall step that reverses everything bootstrap adds
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 track: process

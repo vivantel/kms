@@ -1,6 +1,6 @@
 ---
 name: roadmap
-description: Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, intents/decisions, guardrails, skill prescriptions) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. "interview me and save this as knowledge", "capture this as an ADR", "turn this into a roadmap".
+description: Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, intents/decisions, guardrails, procedures) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. "interview me and save this as knowledge", "capture this as an ADR", "turn this into a roadmap".
 ---
 
 Interview the user relentlessly about every aspect of the plan or decision until you reach a shared understanding, then convert that understanding into durable knowledge artifacts on disk. This skill shares its interview mechanics with the `clarify` skill but does not stop at shared understanding — its job is to generate and save new knowledge as artifacts, following whatever structure the project already uses.
@@ -31,7 +31,7 @@ Never invent a directory convention that doesn't match what the project already 
 
 ## Numbering facts and decisions
 
-Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md` — 4-digit, 1-based, per directory; count existing files to find the next number (`0001` in a fresh directory). Guardrails and skill prescriptions: `docs/{guardrails,skills}/slug.md`, no numeric prefix — looked up by topic, not creation order.
+Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md` — 4-digit, 1-based, per directory; count existing files to find the next number (`0001` in a fresh directory). Guardrails and procedures: `docs/{guardrails,skills}/slug.md`, no numeric prefix — looked up by topic, not creation order.
 
 ## Classify at the end, not during
 
@@ -39,13 +39,17 @@ Do not tag or classify decisions while the interview is running — keep the int
 - **Descriptive** — this is what is true right now (an environmental fact, or a value the team chose)
 - **Axiomatic** — this is what the team commits to, with context and rationale (an intent / decision record)
 - **Normative** — this is what must or must not happen, derived from an axiomatic commitment plus a descriptive fact (a guardrail)
-- **Procedural** — this is how to decide or act (a skill prescription)
+- **Procedural** — this is how to decide or act (a procedure)
 
 Decisions additionally carry a `track`: **product** — what the project
 is for and who it serves; or **process** — how it's built, organized,
-or shipped. If the decision is bounded or provisional, also note
-`scope` (what it applies to) and `expires` (a date or condition — when
-it stops being current).
+or shipped. Exactly one value, never both. Any of the four types may be
+bounded or provisional — note `expires` (a date or condition — when it
+stops being current). `status` is one of `draft | active | superseded |
+deprecated`; a decision moving to `superseded` also gets
+`superseded-by: <decision-id>`. If `docs/skills/tags.md` exists, check
+any tag against it before assigning; propose additions there when none
+fit.
 
 If `docs/skills/product-track-roles.md` or `process-track-roles.md`
 exists for the decision's track, read it and weigh those perspectives
@@ -56,8 +60,8 @@ today — don't require it.
 
 - Every explicit or implicit intent (a presupposition unambiguous enough to count as a commitment) must be captured as a record — never silently dropped.
 - An intent becomes a full ADR/decision-record entry only if it is hard to reverse, surprising without context, or the result of a genuine tradeoff. An intent that fails all three still gets saved, but as a lighter artifact (a decision fact or inline note) rather than a full record.
-- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, skill prescriptions respectively), in the detected format — not just labeled in a summary.
-- Facts, guardrails, and skill prescriptions written this way use the shortest phrasing that preserves meaning — decisions and the plan file are exempt.
+- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format — not just labeled in a summary.
+- Facts, guardrails, and procedures written this way use the shortest phrasing that preserves meaning — decisions and the plan file are exempt.
 
 ## Avoid duplicates
 
@@ -66,6 +70,10 @@ Before writing any artifact, search existing artifacts (by title, topic, frontma
 ## The changeset implementation plan
 
 Alongside the four knowledge artifacts, produce one more file: a changeset implementation plan for the change the interview was about. This file must be self-sufficient for a **completely fresh session with zero prior context** — not just a resumed one. Every step spells out the full context a cold agent would need: exact file paths, what to do, why it matters, and what "done" looks like — never a reference like "as discussed above." Each step carries a status marker (e.g. done / pending / blocked) updated in place as work progresses, so re-reading the file alone tells any session — the same one, a resumed one, or a brand new one — exactly what remains.
+
+A plan is not a 5th artifact type: it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket new content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it will always act on, it's actually a plan.
+
+Before finalizing this file, verify each step's Done-when against the actual current content of the files it names — not from memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan itself, the same as any other error.
 
 Follow the same structure-detection rule for this file: reuse an existing plans/tasks directory convention if the project has one; otherwise default to `docs/plans/<slug>.md`.
 

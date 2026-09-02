@@ -1,7 +1,7 @@
 ---
 id: 0029-bootstrap-full-traceability
 title: Make every bootstrap output traceable back to kms, and wire a pointer into the project's own agent-instructions file
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 track: process

@@ -1,7 +1,7 @@
 ---
 id: 0019-brainstorm-skill
 title: Add brainstorm — a generative, write-nothing ideation skill
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, ideation]
 track: process

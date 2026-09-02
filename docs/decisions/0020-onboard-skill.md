@@ -1,7 +1,7 @@
 ---
 id: 0020-onboard-skill
 title: Add onboard — a role-tailored, read-only onboarding-plan skill
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

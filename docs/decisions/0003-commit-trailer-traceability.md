@@ -1,7 +1,7 @@
 ---
 id: 0003-commit-trailer-traceability
 title: Use a "Refs:" git trailer to link commits to knowledge artifacts, one-directionally
-status: accepted
+status: active
 date: 2026-07-29
 tags: [kms, git, traceability]
 track: process

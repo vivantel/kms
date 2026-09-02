@@ -11,7 +11,7 @@ This skill's sibling `../../shared/artifact-model.md` defines the four artifact 
 
 ## Checks, one pass per invocation
 
-1. **New decision?** Draft a stub: next id, title, one-line motivation, `track: product | process`, `status: draft`. Don't finalize without the owning domain's sign-off.
+1. **New decision?** Draft a stub: next id, title, one-line motivation, `track: product | process`, `status: draft`. Don't finalize without the owning domain's sign-off. If this decision explicitly replaces an existing one, also update that decision's `status` to `superseded` and add `superseded-by: <new-decision-id>` — don't leave two `active` decisions on the same topic for a later `lint` pass to catch.
 2. **Fact changed?** Update the fact file and its `last-verified`. If the governing decision is no longer current, surface the contradiction now.
 3. **New automatable rule?** Log as debt in the fitness-function inventory: rule text, governing decision, why not automated yet.
 4. **Contradiction found?** Block. Don't close the session until resolved or explicitly deferred with a written note (decision, fact, or stub).

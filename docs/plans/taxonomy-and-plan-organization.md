@@ -1,7 +1,7 @@
 ---
 id: taxonomy-and-plan-organization
 title: Unify the lifecycle dimension, enforce track exclusivity, exclude plans from the governed model, rename skill prescription to procedure, add lint contradiction/staleness checks
-status: pending
+status: done (all 11 steps complete)
 date: 2026-09-01
 tags: [kms, taxonomy, lifecycle, knowledge-management, refactor]
 ---
@@ -69,7 +69,7 @@ prior context required.
 
 ## Steps
 
-### 1. Retrofit lifecycle fields on existing artifacts — status: pending
+### 1. Retrofit lifecycle fields on existing artifacts — status: done
 
 Per `docs/decisions/0039-unify-lifecycle-and-drop-scope.md`, migrate
 every existing decision and fact off the old ad hoc `status` vocabulary.
@@ -146,7 +146,7 @@ shows only `active`, `draft`, `superseded`, or `deprecated` values, and
 `docs/decisions/0006-agent-agnostic-scope.md` has both `status:
 superseded` and `superseded-by: 0008-native-codex-plugin-support`.
 
-### 2. Rewrite `plugins/kms/shared/artifact-model.md` — status: pending
+### 2. Rewrite `plugins/kms/shared/artifact-model.md` — status: done
 
 This is the runtime-operational copy of the artifact-type model, shipped
 inside `plugins/kms/` to every adopting project and read by `bootstrap`/
@@ -195,7 +195,7 @@ Done when: the file matches the text above exactly, and
 `python3 -c "import re,sys; t=open('plugins/kms/shared/artifact-model.md').read(); sys.exit('scope' in t or 'skill prescription' in t.lower())"`
 exits 0 (no leftover `scope` field or old terminology).
 
-### 3. Update `plugins/kms/skills/roadmap/SKILL.md` — status: pending
+### 3. Update `plugins/kms/skills/roadmap/SKILL.md` — status: done
 
 This file has 5 literal occurrences of "skill prescription" today (in
 its frontmatter `description`, its numbering section, its mode list,
@@ -257,7 +257,7 @@ with:
 **3f.** In "## The changeset implementation plan", after the existing
 paragraph ending "...exactly what remains.", insert two new paragraphs:
 ```
-A plan is not a 5th artifact type (`docs/decisions/0037-plans-not-a-governed-artifact-type.md`): it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket new content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it will always act on, it's actually a plan.
+A plan is not a 5th artifact type: it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket new content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it will always act on, it's actually a plan.
 
 Before finalizing this file, verify each step's Done-when against the actual current content of the files it names — not from memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan itself, the same as any other error.
 ```
@@ -266,7 +266,7 @@ Done when: all six edits (3a–3f) are applied verbatim and
 `grep -c "skill prescription" plugins/kms/skills/roadmap/SKILL.md`
 prints `0`.
 
-### 4. Update `plugins/kms/skills/bootstrap/SKILL.md` — status: pending
+### 4. Update `plugins/kms/skills/bootstrap/SKILL.md` — status: done
 
 **4a.** Replace the opening paragraph's "...and skill prescriptions
 (how to act)." with "...and procedures (how to act)."
@@ -291,7 +291,7 @@ Done when: all four edits are applied verbatim and
 `grep -c "skill prescription" plugins/kms/skills/bootstrap/SKILL.md`
 prints `0`.
 
-### 5. Update `plugins/kms/skills/capture/SKILL.md` — status: pending
+### 5. Update `plugins/kms/skills/capture/SKILL.md` — status: done
 
 `docs/guardrails/superseded-decision-requires-pointer.md` requires any
 decision with `status: superseded` to also carry `superseded-by`. Today
@@ -311,7 +311,7 @@ with:
 Done when: the edit is applied verbatim and no other check's number
 changed.
 
-### 6. Update `plugins/kms/skills/lint/SKILL.md` — status: pending
+### 6. Update `plugins/kms/skills/lint/SKILL.md` — status: done
 
 **6a.** Replace the opening line "Scan every fact, decision, guardrail,
 and skill prescription in the project" with "Scan every fact, decision,
@@ -341,7 +341,7 @@ with:
 ```
 with:
 ```
-4. **Expired decisions** — any of the four governed types carrying an `expires` field whose date has passed or condition has plausibly been met, still standing without re-evaluation (`docs/decisions/0039-unify-lifecycle-and-drop-scope.md` extends `expires` beyond decisions).
+4. **Expired decisions** — any of the four governed types carrying an `expires` field whose date has passed or condition has plausibly been met, still standing without re-evaluation.
 ```
 
 **6e.** In check 10 ("Verbose artifacts"), replace "a fact, guardrail,
@@ -350,23 +350,22 @@ or procedure (decisions/plans exempt)".
 
 **6f.** Immediately after check 14, insert four new checks:
 ```
-15. **Track exclusivity violation** — a `track` field storing a literal `both`/`mixed`/similar value instead of exactly one of `product`/`process` (`docs/decisions/0038-track-field-mutual-exclusivity.md`).
-16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, making contradictory claims on overlapping subject matter, anywhere in the project's history — not just what one session just produced. (`docs/plans/knowledge-base-scale.md`, if executed, narrows this check to tag-scoped pairs — see that plan before applying this check as written if it has already run.)
+15. **Track exclusivity violation** — a `track` field storing a literal `both`/`mixed`/similar value instead of exactly one of `product`/`process`.
+16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, making contradictory claims on overlapping subject matter, anywhere in the project's history — not just what one session just produced.
 17. **Stale unresolved debt** — a `governed-by: TBD`, `grounded-in: TBD`, or `status: draft` marker that has sat unresolved a long time, judged the same relative way check 14 judges a role gone cold.
 18. **Stale fitness-functions** — a decision's declared `fitness-functions` entries that haven't been verified or re-checked in a long time.
 ```
 
 **6g.** In "## Out of scope", after the existing paragraph, add a new
 sentence: "Also out of scope: `docs/plans/` — a plan is not a governed
-artifact type (`docs/decisions/0037-plans-not-a-governed-artifact-type.md`)
-and isn't structurally validated here; it keeps only its own per-step
-done/pending/blocked legend."
+artifact type and isn't structurally validated here; it keeps only its
+own per-step done/pending/blocked legend."
 
 Done when: all seven edits (6a–6g) are applied verbatim; the checklist
 runs 1 through 18 with no gaps; `grep -c "skill prescription"
 plugins/kms/skills/lint/SKILL.md` prints `0`.
 
-### 7. Update `plugins/kms/skills/lint/examples.md` — status: pending
+### 7. Update `plugins/kms/skills/lint/examples.md` — status: done
 
 Replace "Every fact, decision, guardrail, and skill prescription is
 scanned" with "Every fact, decision, guardrail, and procedure is
@@ -374,7 +373,7 @@ scanned".
 
 Done when: the edit is applied verbatim.
 
-### 8. Update `docs/skills/kms-architecture.md` — status: pending
+### 8. Update `docs/skills/kms-architecture.md` — status: done
 
 **8a.** Replace "For the 4-artifact-type model itself (fact/decision/
 guardrail/skill prescription, their fields, the derivation recipe)"
@@ -394,7 +393,7 @@ is the section's actual last content before the next heading.)
 
 Done when: both edits are applied verbatim, in that order.
 
-### 9. Update `README.md` — status: pending
+### 9. Update `README.md` — status: done
 
 In the `roadmap` row of the skills table, replace "(facts, decisions,
 guardrails, skill prescriptions)" with "(facts, decisions, guardrails,
@@ -405,7 +404,7 @@ Done when: the edit is applied verbatim. (Do not touch
 `docs/decisions/0031-consolidate-kb-checks-rename-capture.md`'s own
 precedent for not rewriting history.)
 
-### 10. Update the token-economy guardrail pair — status: pending
+### 10. Update the token-economy guardrail pair — status: done
 
 Two files carry the same "skill prescription" wording and must stay in
 sync (`docs/guardrails/token-economy.md` is `kms-seeded: true` from
@@ -438,7 +437,7 @@ Guardrail` sections differ only in the wording `lint` check 12 already
 permits to differ between a seeded file and its template (i.e., no new
 divergence introduced).
 
-### 11. Verify — status: pending
+### 11. Verify — status: done
 
 **11a.** Run `lint` against this repo's own knowledge base. Confirm zero
 new violations beyond any pre-existing, already-known debt (`TBD`
@@ -446,10 +445,12 @@ markers, etc.) — every check from 1 through 18 should pass on the
 retrofitted artifacts.
 
 **11b.** Run `grep -rl "skill prescription" --include="*.md" . | grep -v
-"^\./docs/plans/"` from the repo root. `docs/plans/` is excluded
-entirely from this check: plans aren't governed artifacts
-(`docs/decisions/0037-plans-not-a-governed-artifact-type.md`), so their
-own prose is out of scope here — this covers both this plan and
+"docs/plans/"` from the repo root (match on the substring, not an
+anchored `^./` prefix — this environment's `grep` doesn't prefix
+recursive results with `./`, so an anchored filter silently matches
+nothing). `docs/plans/` is excluded entirely from this check: plans
+aren't governed artifacts (`docs/decisions/0037-plans-not-a-governed-artifact-type.md`),
+so their own prose is out of scope here — this covers both this plan and
 `docs/plans/knowledge-base-scale.md` (which necessarily quote the
 phrase while documenting the rename itself) and the pre-existing
 historical plan `docs/plans/product-process-track-and-domain-agnostic-scope.md`
@@ -476,8 +477,10 @@ Done when: 11a and 11b both hold.
   not yet reviewed" vs. "under review, awaiting sign-off"). Considered
   and declined during the interview — this is workflow/kanban tracking,
   not knowledge management, the same category of scope this plan's
-  decisions already keep out (see `docs/decisions/0037-...`'s discussion
-  of the idea→goal→plan pipeline).
+  decisions already keep out (the interview separately worked through
+  an idea→goal→plan framing and reached the same conclusion; that
+  discussion isn't written into any decision file, only into this
+  plan's own reasoning here).
 - **A `reviewed-by`/`owner` field** linking a decision to which
   `docs/skills/{product,process}-track-roles.md` role(s) actually
   weighed in on it. Noted during the interview as a real but optional

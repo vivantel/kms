@@ -1,7 +1,7 @@
 ---
 id: 0034-shared-artifact-model
 title: Extract the shared artifact-type model into one file, read by sibling reference
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 track: process

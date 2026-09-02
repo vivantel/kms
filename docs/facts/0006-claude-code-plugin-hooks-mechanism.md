@@ -1,7 +1,7 @@
 ---
 id: 0006-claude-code-plugin-hooks-mechanism
 title: Claude Code plugin hooks — file location, schema, and event options
-status: current
+status: active
 date: 2026-08-30
 tags: [kms, packaging, claude-code, hooks]
 kind: environmental

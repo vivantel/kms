@@ -1,7 +1,7 @@
 ---
 id: 0008-kilo-code-skills-spec
 title: Kilo Code CLI's skill format and remote-skill-source schema
-status: current
+status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, kilo, packaging]
 kind: environmental

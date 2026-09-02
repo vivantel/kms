@@ -1,7 +1,7 @@
 ---
 template-version: 1
 id: token-economy
-title: Every fact, guardrail, and skill prescription must be maximally economical
+title: Every fact, guardrail, and procedure must be maximally economical
 status: active
 date: TBD
 tags: [knowledge-management, guardrail]
@@ -14,7 +14,7 @@ derivation-note: >
 
 ## Guardrail
 
-Every fact, guardrail, and skill prescription (decisions and plans
+Every fact, guardrail, and procedure (decisions and plans
 exempt) uses the shortest phrasing that preserves meaning and avoids
 ambiguity — these get read into an agent's context, so unnecessary
 length is a real, recurring cost.

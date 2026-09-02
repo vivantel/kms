@@ -4,7 +4,7 @@
 
 **Prompt:** "Lint the knowledge base."
 
-**What happens:** Every fact, decision, guardrail, and skill prescription is scanned, not just recently changed ones. Findings are grouped by check — e.g. a `governed-by` pointing at a decision id that no longer exists (dangling reference), a fact missing `kind` (missing required field). Nothing is fixed automatically; each finding is proposed with a fix, awaiting confirmation.
+**What happens:** Every fact, decision, guardrail, and procedure is scanned, not just recently changed ones. Findings are grouped by check — e.g. a `governed-by` pointing at a decision id that no longer exists (dangling reference), a fact missing `kind` (missing required field). Nothing is fixed automatically; each finding is proposed with a fix, awaiting confirmation.
 
 ## 2. Rot that predates any one session
 

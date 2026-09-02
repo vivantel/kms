@@ -1,7 +1,7 @@
 ---
 id: 0004-kms-skill-names-steward-bootstrap
 title: Names of the bootstrap and steward skills
-status: current
+status: active
 date: 2026-08-29
 tags: [kms, naming, knowledge-management]
 kind: decision

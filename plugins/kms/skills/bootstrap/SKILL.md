@@ -3,7 +3,7 @@ name: bootstrap
 description: One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract intents from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
 ---
 
-Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and skill prescriptions (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
+Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and procedures (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
 
 ## Artifact model
 
@@ -23,7 +23,7 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (add `scope`/`expires` if the decision is bounded or provisional), `status: draft`.
+- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
@@ -67,7 +67,7 @@ From the "Likely review role" column above, write
 `docs/skills/process-track-roles.md` — base frontmatter (`id`, `title`,
 `status`, `date`, `tags`) plus `kms-generated: true` (constructed from
 this project's own signals, not a template, but still `uninstall`'s to
-recognize), like any other skill prescription, then one
+recognize), like any other procedure, then one
 role per line: name plus a one-line scope (what kind of decision it
 should weigh in on). Sort each role by whether it bears on what the
 project is for (product) or how it's built (process) — a role can
@@ -95,7 +95,7 @@ If the `<!-- kms:start -->` marker isn't already present, insert a marked sectio
 This project uses kms's fact/decision/guardrail/skill knowledge system.
 See `docs/{facts,decisions,guardrails,skills}/` — facts (what's true),
 decisions (what's committed to and why), guardrails (what must/must not
-happen), skill prescriptions (how to act). Maintained via `capture`
+happen), procedures (how to act). Maintained via `capture`
 after work sessions; validated via `lint` on demand; queried via
 `query`.
 <!-- kms:end -->

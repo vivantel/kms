@@ -1,7 +1,7 @@
 ---
 id: 0002-skill-bodies-already-agent-neutral
 title: The fourteen SKILL.md bodies contain no Claude/Anthropic/tool-specific language
-status: current
+status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
 kind: environmental

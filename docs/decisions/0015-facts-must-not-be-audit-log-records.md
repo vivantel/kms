@@ -1,7 +1,7 @@
 ---
 id: 0015-facts-must-not-be-audit-log-records
 title: Facts must not be audit-log records
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

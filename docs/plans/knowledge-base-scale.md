@@ -93,7 +93,7 @@ responsibility `capture` gets in step 4 below — without it, every
 artifact `roadmap` writes directly (which is most of what it produces)
 would fail `lint` check 19 the moment it's added:
 ```
-After writing any fact, decision, guardrail, or procedure directly to disk, also add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format) — `docs/decisions/0041-index-and-archive-for-scale.md`.
+After writing any fact, decision, guardrail, or procedure directly to disk, also add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
 ```
 
 Done when: 2b's sentence is present verbatim; confirm 2a needs nothing
@@ -108,8 +108,8 @@ artifacts (or, in a fresh project, domain vocabulary drawn from existing
 docs), one tag per line with a one-line meaning. Mark any tag carried by
 more than half of active decisions as `(umbrella)` — computed from the
 scan, not asserted — since `lint` check 16 excludes umbrella tags from
-its contradiction-scoping test (`docs/decisions/0042-...`). Same
-frontmatter and `kms-generated: true` marking as the role lists above."
+its contradiction-scoping test. Same frontmatter and `kms-generated:
+true` marking as the role lists above."
 
 **3b.** Add a new step 10, "Seed the per-type index," after step 9
 ("Wire into the project's own agent-instructions file"): "For each of
@@ -130,7 +130,7 @@ Add a new check to "## Checks, one pass per invocation," after check 7
 (the supersession-pointer check added by the predecessor plan's step
 5):
 ```
-8. **Index entry?** After drafting or editing any fact, decision, guardrail, or procedure, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format) — `docs/decisions/0041-index-and-archive-for-scale.md`.
+8. **Index entry?** After drafting or editing any fact, decision, guardrail, or procedure, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
 ```
 
 Done when: check 8 is present verbatim, and no existing check's number
@@ -138,21 +138,21 @@ changed.
 
 ### 5. Update `plugins/kms/skills/lint/SKILL.md` — status: pending
 
-**5a.** Replace check 16 (as it reads after the predecessor plan,
-including its forward-reference parenthetical) — currently:
+**5a.** Replace check 16 (as it reads after the predecessor plan) —
+currently:
 ```
-16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, making contradictory claims on overlapping subject matter, anywhere in the project's history — not just what one session just produced. (`docs/plans/knowledge-base-scale.md`, if executed, narrows this check to tag-scoped pairs — see that plan before applying this check as written if it has already run.)
+16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, making contradictory claims on overlapping subject matter, anywhere in the project's history — not just what one session just produced.
 ```
 with the tag-scoped, umbrella-excluded version:
 ```
-16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, sharing at least one non-`(umbrella)` tag from `docs/skills/tags.md`, making contradictory claims on overlapping subject matter — anywhere in the project's history, not just what one session just produced. Bounded by non-umbrella tag-cluster size, not the full corpus; a tag marked `(umbrella)` (carried by more than half of active decisions) never counts toward this test, since otherwise a project-wide tag would put nearly everything in one cluster and defeat the scoping (`docs/decisions/0042-tag-vocabulary-and-scoped-contradiction-check.md`).
+16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, sharing at least one non-`(umbrella)` tag from `docs/skills/tags.md`, making contradictory claims on overlapping subject matter — anywhere in the project's history, not just what one session just produced. Bounded by non-umbrella tag-cluster size, not the full corpus; a tag marked `(umbrella)` (carried by more than half of active decisions) never counts toward this test, since otherwise a project-wide tag would put nearly everything in one cluster and defeat the scoping.
 ```
 
 **5b.** Immediately after check 18 (the last check added by the
 predecessor plan), insert four more:
 ```
 19. **Index out of sync** — any type's `INDEX.md` missing a row for a file that exists in its directory, containing a row for a file that doesn't, or a row whose `id`/`title`/`tags`/`status` no longer matches that file's frontmatter.
-20. **Archive candidate** — a `status: superseded` or `status: deprecated` artifact still in its live directory (not yet under `docs/<type>/archive/`) — propose the move, filename and `id` unchanged, and propose updating any literal (non-id) path references to it elsewhere in the repo to the new path (`docs/decisions/0041-...`).
+20. **Archive candidate** — a `status: superseded` or `status: deprecated` artifact still in its live directory (not yet under `docs/<type>/archive/`) — propose the move, filename and `id` unchanged, and propose updating any literal (non-id) path references to it elsewhere in the repo to the new path.
 21. **Tag off the list** — a tag in use on any of the four types that isn't in `docs/skills/tags.md`, when that file exists (`docs/guardrails/tags-from-canonical-list.md`).
 22. **Tag gone cold** — a tag on `docs/skills/tags.md` unused by any artifact in a long time, judged the same relative way check 14 judges a role gone cold.
 ```
@@ -167,9 +167,7 @@ whether a `governed-by`/`grounded-in`/`superseded-by` id exists always
 searches both the live directory and its `archive/` subdirectory,
 otherwise every reference into an archived artifact would start
 reading as a false-positive dangling reference the moment that artifact
-is archived — exactly what `docs/decisions/0041-...`'s 'references keep
-resolving regardless of which side of the move it's on' guarantee
-requires."
+is archived."
 
 Done when: 5a's replacement is applied verbatim; checks 19–22 are
 present immediately after 18 with no gaps; 5c's clause is present, with

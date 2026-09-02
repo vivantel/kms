@@ -1,7 +1,7 @@
 ---
 id: 0027-baseline-guardrail-seeding
 title: Ship kms's four Global Principles as templated, synced baseline guardrails
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail, packaging]
 track: process

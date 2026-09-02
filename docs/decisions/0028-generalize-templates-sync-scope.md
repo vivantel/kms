@@ -1,7 +1,7 @@
 ---
 id: 0028-generalize-templates-sync-scope
 title: Generalize the templates sync mechanism from guardrails-only to any artifact type
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 track: process
