@@ -78,7 +78,14 @@ built or reviewed, not what the project is for; only place a role on
 product if its scope is explicitly about mission, audience, or
 positioning. These are review perspectives an agent considers while
 drafting or reviewing a decision of that track, not a staffing
-assignment.
+assignment. Using the same repo-scan signals, compile
+`docs/skills/tags.md`: every tag already used across this project's
+artifacts (or, in a fresh project, domain vocabulary drawn from existing
+docs), one tag per line with a one-line meaning. Mark any tag carried by
+over half of active decisions as `(umbrella)` — computed from the
+scan, not asserted — since `lint` check 16 excludes umbrella tags from
+its contradiction-scoping test. Same frontmatter and `kms-generated:
+true` marking as the role lists above.
 
 ### 8. Seed baseline artifacts
 
@@ -103,6 +110,18 @@ after work sessions; validated via `lint` on demand; queried via
 
 The markers let `uninstall` remove exactly this block later without
 touching anything else in the file.
+
+### 10. Seed the per-type index
+
+For each of
+`docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md` in TOON
+format: one row per artifact in that directory (excluding `INDEX.md`
+itself and anything under an `archive/` subdirectory) with
+fields `id, title, tags, status`, extracted from each file's
+frontmatter. Mark it `kms-generated: true` in a leading comment line,
+since `uninstall` needs to recognize it as this skill's output. Verify
+the current TOON spec before finalizing exact syntax — this step only
+fixes the field set and source (frontmatter), not the literal encoding.
 
 ## Out of scope
 

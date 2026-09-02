@@ -5,6 +5,8 @@ description: Full-repo validation pass over a project's fact/decision/guardrail/
 
 Scan every fact, decision, guardrail, and procedure in the project — not just what changed recently — and report every structural violation found. `capture` handles what a session just produced (new decisions, changed facts, contradictions, doc drift); this is everything else — the whole knowledge base's structural health, checked here and only here.
 
+The default invocation's *health* checks (verbosity, staleness, contradiction-scanning) scan only the live set — artifacts under `docs/<type>/archive/` are excluded unless a deep pass is explicitly requested. This exclusion does NOT apply to check 1 (dangling references): resolving whether a `governed-by`/`grounded-in`/`superseded-by` id exists always searches both the live directory and its `archive/` subdirectory, otherwise archiving an artifact would immediately turn every reference to it into a false-positive dangling reference.
+
 ## What to check
 
 1. **Dangling references** — any `governed-by`, `grounded-in`, or `superseded-by` value pointing at a decision/fact id that doesn't exist.
@@ -22,9 +24,13 @@ Scan every fact, decision, guardrail, and procedure in the project — not just 
 13. **Derived artifact stale** — a guardrail grounded in a decision that's since been superseded, or a fact that's since changed, anywhere in the project's history — not just from this session. Re-apply the derivation recipe and propose updated text; never leave a stale norm standing silently.
 14. **Role list gone cold** — a role on `docs/skills/{product,process}-track-roles.md` that hasn't matched any decision in a long while, judged against the project's whole decision history, not just recent ones.
 15. **Track exclusivity violation** — a `track` field storing a literal `both`/`mixed`/similar value instead of exactly one of `product`/`process`.
-16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, making contradictory claims on overlapping subject matter, anywhere in the project's history — not just what one session just produced.
+16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, sharing at least one non-`(umbrella)` tag from `docs/skills/tags.md`, making contradictory claims on overlapping subject matter — anywhere in the project's history, not just this session. A tag marked `(umbrella)` (over half of active decisions) never counts as the shared tag, bounding the comparison by cluster size rather than the full corpus.
 17. **Stale unresolved debt** — a `governed-by: TBD`, `grounded-in: TBD`, or `status: draft` marker that has sat unresolved a long time, judged the same relative way check 14 judges a role gone cold.
 18. **Stale fitness-functions** — a decision's declared `fitness-functions` entries that haven't been verified or re-checked in a long time.
+19. **Index out of sync** — any type's `INDEX.md` missing a row for a file that exists in its directory, containing a row for a file that doesn't, or a row whose `id`/`title`/`tags`/`status` no longer matches that file's frontmatter.
+20. **Archive candidate** — a `status: superseded` or `status: deprecated` artifact still in its live directory (not yet under `docs/<type>/archive/`) — propose moving it, filename and `id` unchanged, and updating any literal (non-id) path references elsewhere in the repo to the new path.
+21. **Tag off the list** — a tag in use on any of the four types that isn't in `docs/skills/tags.md`, when that file exists (`docs/guardrails/tags-from-canonical-list.md`).
+22. **Tag gone cold** — a tag on `docs/skills/tags.md` unused by any artifact in a long time, judged the same relative way check 14 judges a role gone cold.
 
 ## Output
 

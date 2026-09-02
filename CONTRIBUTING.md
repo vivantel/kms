@@ -36,7 +36,9 @@ agreed before you invest time in it.
   `plugins/kms/.codex-plugin/plugin.json`) — see
   `docs/guardrails/plugin-manifest-version-sync.md`.
 - Keep the `SKILL.md` body itself economical — see
-  `docs/guardrails/token-economy.md`.
+  `docs/guardrails/token-economy.md`. Nothing automated checks this
+  here, so re-read the whole file after editing it, not just the lines
+  you touched; incremental edits compound unnoticed otherwise.
 
 ## This repo dogfoods its own skills
 

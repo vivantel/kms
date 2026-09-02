@@ -47,7 +47,7 @@ Followed by the skill's instructions in the body. See `plugins/kms/skills/clarif
 
 Also add a colocated `plugins/<plugin-name>/skills/<skill-name>/examples.md` with 2-3 worked usage examples (a realistic trigger prompt plus a sketch of the resulting interaction or output), and link it from the README's skill table — required for every skill per `docs/guardrails/every-skill-ships-examples.md`.
 
-Keep the `SKILL.md` body itself as short as possible while preserving meaning — it's loaded into every invocation's context, per `docs/guardrails/token-economy.md`. This is about `kms`'s own skill bodies specifically; it's not something `lint`/`capture` check (their scope is a project's own `docs/{facts,guardrails,skills}/`, not `kms`'s packaging layer). See `docs/skills/scoping-shipped-vs-repo-rules.md` before adding any new rule that could plausibly belong in a shipped skill's checks — most don't.
+Keep the `SKILL.md` body itself as short as possible while preserving meaning — it's loaded into every invocation's context, per `docs/guardrails/token-economy.md`. This is about `kms`'s own skill bodies specifically; it's not something `lint`/`capture` check (their scope is a project's own `docs/{facts,guardrails,skills}/`, not `kms`'s packaging layer). Unlike a project's own `docs/`, nothing automated checks this here — after any edit to a shipped `SKILL.md`, re-read the whole file once before considering the change done, not just the lines you touched; incremental edits compound unnoticed otherwise. See `docs/skills/scoping-shipped-vs-repo-rules.md` before adding any new rule that could plausibly belong in a shipped skill's checks — most don't.
 
 ## Adding a new plugin
 

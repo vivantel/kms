@@ -41,15 +41,14 @@ Do not tag or classify decisions while the interview is running — keep the int
 - **Normative** — this is what must or must not happen, derived from an axiomatic commitment plus a descriptive fact (a guardrail)
 - **Procedural** — this is how to decide or act (a procedure)
 
-Decisions additionally carry a `track`: **product** — what the project
-is for and who it serves; or **process** — how it's built, organized,
-or shipped. Exactly one value, never both. Any of the four types may be
-bounded or provisional — note `expires` (a date or condition — when it
-stops being current). `status` is one of `draft | active | superseded |
-deprecated`; a decision moving to `superseded` also gets
-`superseded-by: <decision-id>`. If `docs/skills/tags.md` exists, check
-any tag against it before assigning; propose additions there when none
-fit.
+Decisions carry a `track`: **product** — what the project is for and
+who it serves; or **process** — how it's built, organized, or shipped.
+Exactly one value, never both. Any of the four types may be bounded or
+provisional: add `expires` (a date or condition — when it stops being
+current). `status` is one of `draft | active | superseded | deprecated`;
+`superseded` also requires `superseded-by: <decision-id>`. If
+`docs/skills/tags.md` exists, check any tag against it before
+assigning; propose additions there when none fit.
 
 If `docs/skills/product-track-roles.md` or `process-track-roles.md`
 exists for the decision's track, read it and weigh those perspectives
@@ -71,9 +70,11 @@ Before writing any artifact, search existing artifacts (by title, topic, frontma
 
 Alongside the four knowledge artifacts, produce one more file: a changeset implementation plan for the change the interview was about. This file must be self-sufficient for a **completely fresh session with zero prior context** — not just a resumed one. Every step spells out the full context a cold agent would need: exact file paths, what to do, why it matters, and what "done" looks like — never a reference like "as discussed above." Each step carries a status marker (e.g. done / pending / blocked) updated in place as work progresses, so re-reading the file alone tells any session — the same one, a resumed one, or a brand new one — exactly what remains.
 
-A plan is not a 5th artifact type: it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket new content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it will always act on, it's actually a plan.
+A plan is not a 5th artifact type: it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it acts on, it's actually a plan.
 
-Before finalizing this file, verify each step's Done-when against the actual current content of the files it names — not from memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan itself, the same as any other error.
+Before finalizing this file, verify each step's Done-when against each named file's actual content — not memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan, like any other error.
+
+After writing any fact, decision, guardrail, or procedure to disk, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
 
 Follow the same structure-detection rule for this file: reuse an existing plans/tasks directory convention if the project has one; otherwise default to `docs/plans/<slug>.md`.
 

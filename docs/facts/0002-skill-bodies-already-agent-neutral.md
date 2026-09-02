@@ -36,7 +36,7 @@ generically, conditional on tool availability rather than naming a
 specific tool.
 
 This is the descriptive baseline behind
-`docs/decisions/0006-agent-agnostic-scope.md` and the guardrail in
+`docs/decisions/archive/0006-agent-agnostic-scope.md` and the guardrail in
 `docs/guardrails/agent-agnostic-skill-content.md`: no rewrite of existing
 skill bodies was needed to meet the agent-agnostic bar, only a standing
 rule to keep meeting it going forward.

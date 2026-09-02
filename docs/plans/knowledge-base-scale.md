@@ -1,7 +1,7 @@
 ---
 id: knowledge-base-scale
 title: Add a per-type TOON index, an archive mechanism, a canonical tag vocabulary, tag-scoped contradiction checking, and full supersession-chain citation
-status: pending
+status: done (all 9 steps complete)
 date: 2026-09-01
 tags: [kms, taxonomy, scale, knowledge-management, refactor]
 ---
@@ -80,7 +80,7 @@ went. Verify by confirming the paragraph beginning "For `tags`: if
 the predecessor plan hasn't actually finished and you should stop and
 run it first.
 
-### 2. Update `plugins/kms/skills/roadmap/SKILL.md` — status: pending
+### 2. Update `plugins/kms/skills/roadmap/SKILL.md` — status: done
 
 **2a.** In "## Classify at the end, not during", the paragraph produced
 by the predecessor plan already ends with "...propose additions there
@@ -99,7 +99,7 @@ After writing any fact, decision, guardrail, or procedure directly to disk, also
 Done when: 2b's sentence is present verbatim; confirm 2a needs nothing
 further per step 1's note.
 
-### 3. Update `plugins/kms/skills/bootstrap/SKILL.md` — status: pending
+### 3. Update `plugins/kms/skills/bootstrap/SKILL.md` — status: done
 
 **3a.** In step 7 ("Compile the track role lists"), after the existing
 paragraph, add: "Using the same repo-scan signals, also compile
@@ -124,7 +124,7 @@ fixes the field set and source (frontmatter), not the literal encoding."
 
 Done when: 3a and 3b are applied verbatim.
 
-### 4. Update `plugins/kms/skills/capture/SKILL.md` — status: pending
+### 4. Update `plugins/kms/skills/capture/SKILL.md` — status: done
 
 Add a new check to "## Checks, one pass per invocation," after check 7
 (the supersession-pointer check added by the predecessor plan's step
@@ -136,7 +136,7 @@ Add a new check to "## Checks, one pass per invocation," after check 7
 Done when: check 8 is present verbatim, and no existing check's number
 changed.
 
-### 5. Update `plugins/kms/skills/lint/SKILL.md` — status: pending
+### 5. Update `plugins/kms/skills/lint/SKILL.md` — status: done
 
 **5a.** Replace check 16 (as it reads after the predecessor plan) —
 currently:
@@ -173,7 +173,7 @@ Done when: 5a's replacement is applied verbatim; checks 19–22 are
 present immediately after 18 with no gaps; 5c's clause is present, with
 the check-1 carve-out stated explicitly.
 
-### 6. Update `plugins/kms/skills/query/SKILL.md` — status: pending
+### 6. Update `plugins/kms/skills/query/SKILL.md` — status: done
 
 **6a.** Replace:
 ```
@@ -195,7 +195,7 @@ with:
 
 Done when: both edits are applied verbatim.
 
-### 7. Update `plugins/kms/skills/onboard/SKILL.md` — status: pending
+### 7. Update `plugins/kms/skills/onboard/SKILL.md` — status: done
 
 Replace:
 ```
@@ -208,7 +208,7 @@ with:
 
 Done when: the edit is applied verbatim.
 
-### 8. Retrofit this repo's own knowledge base — status: pending
+### 8. Retrofit this repo's own knowledge base — status: done
 
 This repo dogfoods `kms` on itself, so it needs the same artifacts an
 adopting project's `bootstrap`/gap-fill pass would produce.
@@ -235,30 +235,44 @@ superseded` per the predecessor plan's retrofit). Move it to
 `docs/decisions/archive/0006-agent-agnostic-scope.md`, filename
 unchanged. Then update every literal (non-id) path reference to the old
 location — verified at plan-writing time to be exactly these four
-files, but re-grep at execution time in case something changed:
-`docs/guardrails/agent-agnostic-skill-content.md` (two occurrences),
-`docs/decisions/0007-claude-md-agents-md-symlink.md` (one occurrence),
-`docs/facts/0002-skill-bodies-already-agent-neutral.md` (one
-occurrence), and `docs/decisions/0008-native-codex-plugin-support.md`
-(one occurrence) — each currently reads
-`docs/decisions/0006-agent-agnostic-scope.md` and should read
-`docs/decisions/archive/0006-agent-agnostic-scope.md` instead. Do not
-edit the `governed-by: 0006-agent-agnostic-scope` id fields in the
-guardrail or fact — those are id references, not paths, and resolve
-correctly under 5c's carve-out regardless of which directory `0006`
-lives in. Update `docs/decisions/INDEX.md` accordingly (it moves out of
-the live index; either a separate archive index or an `archived: true`
-marker on the same row is fine — `0041` doesn't mandate one over the
-other).
+files, but re-grep at execution time in case something changed —
+**except decisions**: `docs/decisions/0007-claude-md-agents-md-symlink.md`
+and `docs/decisions/0008-native-codex-plugin-support.md` are both
+already-accepted decisions, and decisions are immutable once accepted
+(`plugins/kms/shared/artifact-model.md`'s own table) — leave their
+stale `docs/decisions/0006-agent-agnostic-scope.md` references
+untouched, exactly as `docs/decisions/0031-consolidate-kb-checks-rename-capture.md`
+already established for this repo's historical references generally
+("annotate, don't rewrite"). `lint` check 9 already tolerates this
+("a reference a plan already annotates as deliberately-preserved
+history") — this sentence is that annotation. Only update the two
+non-decision files: `docs/guardrails/agent-agnostic-skill-content.md`
+(two occurrences) and `docs/facts/0002-skill-bodies-already-agent-neutral.md`
+(one occurrence) — facts and guardrails are refined in place, so
+updating their path references is normal maintenance, not a violation.
+Do not edit the `governed-by: 0006-agent-agnostic-scope` id fields in
+the guardrail or fact either — those are id references, not paths, and
+resolve correctly under 5c's carve-out regardless of which directory
+`0006` lives in. Update `docs/decisions/INDEX.md` accordingly (it moves
+out of the live index) and add a `docs/decisions/archive/INDEX.md` with
+`0006`'s row, same TOON format, so archived artifacts stay discoverable
+through their own index rather than disappearing from all of them.
 
 Done when: `docs/skills/tags.md` and all four `INDEX.md` files exist and
 validate against checks 19/21/22; `0006` is under
-`docs/decisions/archive/`; a repo-wide grep for the literal string
-`docs/decisions/0006-agent-agnostic-scope.md` (not the bare id) returns
-zero results; every `governed-by`/`superseded-by` pointer naming `0006`
+`docs/decisions/archive/`; running
+`grep -rl "docs/decisions/0006-agent-agnostic-scope.md" --include="*.md" . | grep -v "docs/plans/"`
+(excluding `docs/plans/` — both this plan's own text and pre-existing
+historical plans legitimately still narrate the old path, same as the
+`skill prescription` rename check in the predecessor plan) returns
+exactly three results — `docs/decisions/0007-claude-md-agents-md-symlink.md`,
+`docs/decisions/0008-native-codex-plugin-support.md`, and
+`docs/decisions/0039-unify-lifecycle-and-drop-scope.md`, all three
+deliberately unchanged per the decision-immutability exception above —
+and no others; every `governed-by`/`superseded-by` pointer naming `0006`
 still resolves.
 
-### 9. Verify — status: pending
+### 9. Verify — status: done
 
 Run `lint` against this repo's own knowledge base (checks 1 through 22).
 Confirm zero new violations beyond pre-existing, already-known debt.
