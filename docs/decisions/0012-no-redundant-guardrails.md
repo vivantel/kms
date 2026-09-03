@@ -1,7 +1,7 @@
 ---
 id: 0012-no-redundant-guardrails
 title: A guardrail must not be a pure restatement of one skill's own procedure
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

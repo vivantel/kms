@@ -1,7 +1,7 @@
 ---
 id: 0022-vivantel-kms-display-name
 title: Display name becomes "Vivantel KMS", technical identifiers stay "kms"
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, naming, branding]
 track: product

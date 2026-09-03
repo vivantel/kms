@@ -1,7 +1,7 @@
 ---
 id: 0035-native-kilo-code-support
 title: Ship a self-hosted Kilo remote-skills index; list on kilo-marketplace; no directory restructuring
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, kilo, packaging]
 track: product

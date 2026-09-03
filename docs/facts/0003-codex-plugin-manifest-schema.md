@@ -1,7 +1,7 @@
 ---
 id: 0003-codex-plugin-manifest-schema
 title: Codex's plugin manifest schema and location
-status: current
+status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
 kind: environmental

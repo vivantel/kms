@@ -1,13 +1,5 @@
 {
-  // Dogfooding config: lets a Kilo agent working in this repo use kms's
-  // own skills against this repo itself, the same way Claude Code and
-  // Codex already do via AGENTS.md/CLAUDE.md. Points at the published
-  // remote-skills manifest (plugins/kms/skills/index.json) via raw
-  // GitHub content, exercising the same distribution path real Kilo
-  // users go through — not the in-tree working copy, so a pending edit
-  // here isn't visible until it's pushed and index.json's version is
-  // bumped. See docs/facts/0008-kilo-code-skills-spec.md and
-  // docs/decisions/0035-native-kilo-code-support.md.
+  "$schema": "https://app.kilo.ai/config.json",
   "skills": {
     "urls": ["https://raw.githubusercontent.com/vivantel/kms/master/plugins/kms/skills"]
   }

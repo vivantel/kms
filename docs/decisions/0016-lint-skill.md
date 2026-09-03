@@ -1,7 +1,7 @@
 ---
 id: 0016-lint-skill
 title: Add lint — an on-demand, full-repo validation skill, separate from steward
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

@@ -1,7 +1,7 @@
 ---
 id: 0001-knowledge-artifact-storage-convention
 title: Knowledge artifacts live under docs/{facts,decisions,guardrails,skills}/
-status: accepted
+status: active
 date: 2026-07-29
 tags: [kms, roadmap, knowledge-management]
 track: process

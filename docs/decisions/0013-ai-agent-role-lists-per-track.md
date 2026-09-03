@@ -1,7 +1,7 @@
 ---
 id: 0013-ai-agent-role-lists-per-track
 title: bootstrap creates, steward maintains, product/process role lists for reviewing decisions
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

@@ -1,7 +1,7 @@
 ---
 id: 0036-standalone-installing-doc
 title: Extract per-agent install steps into a standalone INSTALLING.md
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, discoverability, packaging]
 track: product

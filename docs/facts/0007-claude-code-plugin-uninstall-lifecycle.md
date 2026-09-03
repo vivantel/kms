@@ -1,7 +1,7 @@
 ---
 id: 0007-claude-code-plugin-uninstall-lifecycle
 title: Claude Code has no plugin uninstall/disable lifecycle hook
-status: current
+status: active
 date: 2026-08-30
 tags: [kms, packaging, claude-code, hooks]
 kind: environmental

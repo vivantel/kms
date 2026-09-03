@@ -1,7 +1,7 @@
 ---
 id: 0031-consolidate-kb-checks-rename-capture
 title: Permanently move duplicated KB checks into lint; narrow and rename steward to capture
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 track: process

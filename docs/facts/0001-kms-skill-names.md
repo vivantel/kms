@@ -1,7 +1,7 @@
 ---
 id: 0001-kms-skill-names
 title: Names of the commit/PR attribution and changelog skills
-status: current
+status: active
 date: 2026-07-29
 tags: [kms, naming]
 kind: decision

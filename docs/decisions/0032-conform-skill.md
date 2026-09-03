@@ -1,7 +1,7 @@
 ---
 id: 0032-conform-skill
 title: Add conform — validates a pending changeset against existing decisions and guardrails
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

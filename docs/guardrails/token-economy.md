@@ -1,6 +1,6 @@
 ---
 id: token-economy
-title: Every fact, guardrail, and skill prescription must be maximally economical
+title: Every fact, guardrail, and procedure must be maximally economical
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
@@ -10,14 +10,14 @@ kms-seeded: true
 kms-template-version: 1
 derivation-note: >
   Given decision 0026 (token economy is a real, checked guardrail, not
-  unenforced prose), any fact, guardrail, or skill prescription more
+  unenforced prose), any fact, guardrail, or procedure more
   verbose than needed is incomplete, the same way one missing a required
   field is incomplete.
 ---
 
 ## Guardrail
 
-Every fact, guardrail, and skill prescription (`docs/facts/`,
+Every fact, guardrail, and procedure (`docs/facts/`,
 `docs/guardrails/`, `docs/skills/`) in a project using this knowledge
 system MUST use the shortest phrasing that preserves meaning and avoids
 ambiguity — these get read into an agent's context, so unnecessary
@@ -37,8 +37,8 @@ already draws.
   rather than leaving it as unenforced aspiration.
 - **Descriptive basis**: TBD — no existing fact documents why this
   matters specifically; a future fact could ground this more precisely.
-- **Normative conclusion**: therefore any fact, guardrail, or skill
-  prescription in a project's own `docs/{facts,guardrails,skills}/` found
+- **Normative conclusion**: therefore any fact, guardrail, or procedure
+  in a project's own `docs/{facts,guardrails,skills}/` found
   more verbose than needed is flagged by `lint`'s full-repo sweep, which
   restates this rule inline (a shipped check can't safely reference this
   file, which only exists in the `kms` marketplace repo itself, not in

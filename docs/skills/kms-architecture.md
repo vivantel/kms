@@ -13,7 +13,9 @@ tags: [kms, knowledge-management, procedural]
 - **`plugins/kms/templates/<artifact-type>/`** — shippable product assets, distinct from this repo's own `docs/`. `bootstrap` seeds them into an adopting project's `docs/<artifact-type>/`; `lint`/`capture` keep them synced afterward (`docs/decisions/0027`, `0028`).
 - **`plugins/kms/hooks/`** — automation shipped with the plugin itself (e.g. the `capture` nudge), auto-activated on install, never written into an adopting project's own repo.
 
-For the 4-artifact-type model itself (fact/decision/guardrail/skill prescription, their fields, the derivation recipe) — see `bootstrap` or `capture`'s own `SKILL.md`, not repeated here; both already carry it in full since each must be self-sufficient at runtime (`docs/decisions/0016`).
+For the 4-artifact-type model itself (fact/decision/guardrail/procedure, their fields, the derivation recipe) — see `bootstrap` or `capture`'s own `SKILL.md`, not repeated here; both already carry it in full since each must be self-sufficient at runtime (`docs/decisions/0016`).
+
+A plan (`docs/plans/<slug>.md`, produced by `roadmap`) is not a 5th layer or artifact type (`docs/decisions/0037-plans-not-a-governed-artifact-type.md`). The four governed types are all parametric — a decision, guardrail, fact, or procedure states a general claim without naming the specific objects it acts on. A plan is fully applied — it names concrete files, decisions, and steps for one occasion, which is why it's disposable where the four types are durable, and why `lint` doesn't structurally validate it the way it validates them.
 
 ## Marker conventions (in an adopting project's own docs/)
 

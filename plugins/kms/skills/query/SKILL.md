@@ -7,9 +7,9 @@ Search `docs/{facts,decisions,guardrails,skills}/` for the artifacts relevant to
 
 ## Answering
 
-1. Search by keyword, topic, and frontmatter `tags` across all four artifact directories for candidates.
+1. Read each type's `INDEX.md` first, if present, to narrow candidates by tag/title before opening full files; fall back to searching all four directories by keyword/topic/`tags` when no index exists.
 2. If nothing relevant is found, say so plainly — don't guess or synthesize an answer the knowledge base doesn't actually support.
-3. If a decision has been superseded, cite the superseding one too, not just the original.
+3. If a decision has been superseded, follow `superseded-by` transitively until reaching a decision whose own `status` isn't `superseded` — cite that final active decision alongside the original, not just the next hop.
 4. Answer in prose, then list every artifact the answer drew from as `Refs: <repo-relative-path>` — one per artifact, matching `attribute`'s trailer format so this plugin has one citation convention.
 
 ## Out of scope

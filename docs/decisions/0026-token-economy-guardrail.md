@@ -1,7 +1,7 @@
 ---
 id: 0026-token-economy-guardrail
 title: Promote token economy from unenforced steward prose to a governed, checked guardrail
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
 track: process

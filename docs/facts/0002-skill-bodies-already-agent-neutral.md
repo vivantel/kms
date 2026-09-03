@@ -1,7 +1,7 @@
 ---
 id: 0002-skill-bodies-already-agent-neutral
 title: The fourteen SKILL.md bodies contain no Claude/Anthropic/tool-specific language
-status: current
+status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
 kind: environmental
@@ -36,7 +36,7 @@ generically, conditional on tool availability rather than naming a
 specific tool.
 
 This is the descriptive baseline behind
-`docs/decisions/0006-agent-agnostic-scope.md` and the guardrail in
+`docs/decisions/archive/0006-agent-agnostic-scope.md` and the guardrail in
 `docs/guardrails/agent-agnostic-skill-content.md`: no rewrite of existing
 skill bodies was needed to meet the agent-agnostic bar, only a standing
 rule to keep meeting it going forward.

@@ -1,7 +1,7 @@
 ---
 id: 0014-decision-scope-and-expires-fields
 title: Add optional scope and expires fields to decisions
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

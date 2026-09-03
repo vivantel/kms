@@ -1,7 +1,7 @@
 ---
 id: 0007-claude-md-agents-md-symlink
 title: Rewrite CLAUDE.md as AGENTS.md, keep CLAUDE.md as a symlink
-status: accepted
+status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, claude-md, agents-md]
 track: process

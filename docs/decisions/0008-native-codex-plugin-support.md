@@ -1,7 +1,7 @@
 ---
 id: 0008-native-codex-plugin-support
 title: Ship a native Codex plugin manifest for the kms skill set; keep the current directory layout; defer Cursor
-status: accepted
+status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
 track: product

@@ -1,7 +1,7 @@
 ---
 id: 0033-kms-architecture-doc
 title: Add a single reference doc synthesizing kms's own layers and marker conventions
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, documentation]
 track: process

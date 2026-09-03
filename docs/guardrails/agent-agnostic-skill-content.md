@@ -35,13 +35,13 @@ This does not extend to the repo's packaging/metadata layer
 (`.claude-plugin/marketplace.json`, `plugins/kms/.claude-plugin/plugin.json`),
 which is allowed to name Claude Code explicitly since that packaging format
 is inherently Claude-Code-specific — see
-`docs/decisions/0006-agent-agnostic-scope.md`.
+`docs/decisions/archive/0006-agent-agnostic-scope.md`.
 
 ## Derivation
 
 - **Descriptive basis**: `docs/facts/0002-skill-bodies-already-agent-neutral.md`
   — the four existing skill bodies were audited and already meet this bar.
-- **Axiomatic basis**: `docs/decisions/0006-agent-agnostic-scope.md` — the
+- **Axiomatic basis**: `docs/decisions/archive/0006-agent-agnostic-scope.md` — the
   team committed to keeping skill *content* portable across agents even
   though the packaging stays Claude-Code-specific.
 - **Normative conclusion**: therefore every future skill body must be

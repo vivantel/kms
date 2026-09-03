@@ -1,7 +1,7 @@
 ---
 id: 0004-conventional-commits-adoption
 title: Adopt Conventional Commits type prefixes, applied only when the attribute skill is invoked
-status: accepted
+status: active
 date: 2026-07-29
 tags: [kms, git, commit-messages]
 track: process

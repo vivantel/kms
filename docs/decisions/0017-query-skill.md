@@ -1,7 +1,7 @@
 ---
 id: 0017-query-skill
 title: Add query — an on-demand skill that answers questions from the knowledge base with citations
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

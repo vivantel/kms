@@ -1,7 +1,7 @@
 ---
 id: 0025-discoverability-improvements
 title: Improve discoverability — README badges, GitHub topics and description sync
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, discoverability, marketing]
 track: product

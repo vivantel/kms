@@ -1,7 +1,7 @@
 ---
 id: 0010-decision-track-field
 title: Add a track field (product | process) to decisions
-status: accepted
+status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
 track: process

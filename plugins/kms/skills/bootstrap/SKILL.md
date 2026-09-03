@@ -3,7 +3,7 @@ name: bootstrap
 description: One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract intents from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
 ---
 
-Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and skill prescriptions (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
+Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and procedures (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
 
 ## Artifact model
 
@@ -23,7 +23,7 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (add `scope`/`expires` if the decision is bounded or provisional), `status: draft`.
+- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
@@ -67,7 +67,7 @@ From the "Likely review role" column above, write
 `docs/skills/process-track-roles.md` — base frontmatter (`id`, `title`,
 `status`, `date`, `tags`) plus `kms-generated: true` (constructed from
 this project's own signals, not a template, but still `uninstall`'s to
-recognize), like any other skill prescription, then one
+recognize), like any other procedure, then one
 role per line: name plus a one-line scope (what kind of decision it
 should weigh in on). Sort each role by whether it bears on what the
 project is for (product) or how it's built (process) — a role can
@@ -78,7 +78,14 @@ built or reviewed, not what the project is for; only place a role on
 product if its scope is explicitly about mission, audience, or
 positioning. These are review perspectives an agent considers while
 drafting or reviewing a decision of that track, not a staffing
-assignment.
+assignment. Using the same repo-scan signals, compile
+`docs/skills/tags.md`: every tag already used across this project's
+artifacts (or, in a fresh project, domain vocabulary drawn from existing
+docs), one tag per line with a one-line meaning. Mark any tag carried by
+over half of active decisions as `(umbrella)` — computed from the
+scan, not asserted — since `lint` check 16 excludes umbrella tags from
+its contradiction-scoping test. Same frontmatter and `kms-generated:
+true` marking as the role lists above.
 
 ### 8. Seed baseline artifacts
 
@@ -95,7 +102,7 @@ If the `<!-- kms:start -->` marker isn't already present, insert a marked sectio
 This project uses kms's fact/decision/guardrail/skill knowledge system.
 See `docs/{facts,decisions,guardrails,skills}/` — facts (what's true),
 decisions (what's committed to and why), guardrails (what must/must not
-happen), skill prescriptions (how to act). Maintained via `capture`
+happen), procedures (how to act). Maintained via `capture`
 after work sessions; validated via `lint` on demand; queried via
 `query`.
 <!-- kms:end -->
@@ -103,6 +110,18 @@ after work sessions; validated via `lint` on demand; queried via
 
 The markers let `uninstall` remove exactly this block later without
 touching anything else in the file.
+
+### 10. Seed the per-type index
+
+For each of
+`docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md` in TOON
+format: one row per artifact in that directory (excluding `INDEX.md`
+itself and anything under an `archive/` subdirectory) with
+fields `id, title, tags, status`, extracted from each file's
+frontmatter. Mark it `kms-generated: true` in a leading comment line,
+since `uninstall` needs to recognize it as this skill's output. Verify
+the current TOON spec before finalizing exact syntax — this step only
+fixes the field set and source (frontmatter), not the literal encoding.
 
 ## Out of scope
 
