@@ -17,7 +17,7 @@ This skill's sibling `../../shared/artifact-model.md` defines the four artifact 
 4. **Contradiction found?** Block. Don't close the session until resolved or explicitly deferred with a written note (decision, fact, or stub).
 5. **Human-doc drift?** If watched paths overlap what changed this session, propose the specific update; if the doc's still accurate, bump its verified date.
 6. **Role list gap?** If a decision drafted this session suggests a role not on that track's role list (`docs/skills/{product,process}-track-roles.md`, if present), propose adding it. (A role that's gone cold over the project's whole history is `lint`'s job, not this session-scoped check's.)
-7. **Index entry?** After drafting or editing any fact, decision, guardrail, or procedure, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
+7. **Index entry?** Add or update the row for anything drafted or edited this pass, per the artifact model's own index-maintenance rule (`../../shared/artifact-model.md`).
 
 ## Recommending a new skill
 

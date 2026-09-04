@@ -49,6 +49,8 @@ Also add a colocated `plugins/<plugin-name>/skills/<skill-name>/examples.md` wit
 
 Keep the `SKILL.md` body itself as short as possible while preserving meaning — it's loaded into every invocation's context, per `docs/guardrails/token-economy.md`. This is about `kms`'s own skill bodies specifically; it's not something `lint`/`capture` check (their scope is a project's own `docs/{facts,guardrails,skills}/`, not `kms`'s packaging layer). Unlike a project's own `docs/`, nothing automated checks this here — after any edit to a shipped `SKILL.md`, re-read the whole file once before considering the change done, not just the lines you touched; incremental edits compound unnoticed otherwise. See `docs/skills/scoping-shipped-vs-repo-rules.md` before adding any new rule that could plausibly belong in a shipped skill's checks — most don't.
 
+A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should pass the eval suite (`docs/decisions/0043-eval-harness-for-shipped-skill-changes.md`, `docs/decisions/0044-eval-harness-ci-safety-gates.md`) once it exists — CI runs it automatically on a same-repo PR against `master`.
+
 ## Adding a new plugin
 
 1. Create `plugins/<new-plugin-name>/.claude-plugin/plugin.json` with `name`, `description`, `version`, and `author`.

@@ -126,15 +126,22 @@ Done when: 3a and 3b are applied verbatim.
 
 ### 4. Update `plugins/kms/skills/capture/SKILL.md` — status: done
 
-Add a new check to "## Checks, one pass per invocation," after check 7
-(the supersession-pointer check added by the predecessor plan's step
-5):
-```
-8. **Index entry?** After drafting or editing any fact, decision, guardrail, or procedure, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
-```
+Add a new check to "## Checks, one pass per invocation," covering
+index-row maintenance for anything this pass drafted or edited.
 
-Done when: check 8 is present verbatim, and no existing check's number
-changed.
+**Correction (post-execution review)**: this step originally said to
+add the new check "after check 7," assuming the predecessor plan's
+supersession-pointer addition had landed as its own numbered check.
+It hadn't — that addition was folded into the text of check 1 instead
+— so `capture` only had 6 checks at the time this step ran, and the
+new index-entry check correctly landed as check 7, not check 8. A
+later review pass also tightened its wording to point at the artifact
+model's own index-maintenance rule (`../../shared/artifact-model.md`)
+rather than repeating the TOON format details inline. Both are
+reflected in the file as it actually stands.
+
+Done when: `plugins/kms/skills/capture/SKILL.md` has a check covering
+index-row maintenance, and no existing check's number changed.
 
 ### 5. Update `plugins/kms/skills/lint/SKILL.md` — status: done
 
@@ -234,10 +241,13 @@ eligible: `docs/decisions/0006-agent-agnostic-scope.md` (`status:
 superseded` per the predecessor plan's retrofit). Move it to
 `docs/decisions/archive/0006-agent-agnostic-scope.md`, filename
 unchanged. Then update every literal (non-id) path reference to the old
-location — verified at plan-writing time to be exactly these four
-files, but re-grep at execution time in case something changed —
-**except decisions**: `docs/decisions/0007-claude-md-agents-md-symlink.md`
-and `docs/decisions/0008-native-codex-plugin-support.md` are both
+location — verified at plan-writing time to be exactly these five
+files (three decisions, one guardrail, one fact), but re-grep at
+execution time in case something changed —
+**except decisions**: `docs/decisions/0007-claude-md-agents-md-symlink.md`,
+`docs/decisions/0008-native-codex-plugin-support.md`, and (found by a
+later review pass, since this list was written before it existed)
+`docs/decisions/0039-unify-lifecycle-and-drop-scope.md` are all
 already-accepted decisions, and decisions are immutable once accepted
 (`plugins/kms/shared/artifact-model.md`'s own table) — leave their
 stale `docs/decisions/0006-agent-agnostic-scope.md` references

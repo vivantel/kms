@@ -8,7 +8,7 @@ Read `docs/{facts,decisions,guardrails,skills}/` and produce a 5-day, role-tailo
 ## Before producing a plan
 
 1. Ask for the role if not given — it shapes everything else, don't guess it.
-2. Read each type's `INDEX.md` first, if present, to identify what's relevant to the role, then open only those files — read all four artifact directories only when no index exists. If `docs/skills/{product,process}-track-roles.md` exists and lists the given role, weigh its stated scope; otherwise use judgment about what the role would need.
+2. Read each type's `INDEX.md` first, if present, to identify what's relevant to the role — ignore any `(umbrella)`-marked tag when matching (same exclusion `lint` check 16 applies). Read all four artifact directories directly when no index exists, or when the index-narrowed set looks thin for a role this broad (same staleness caveat `query` applies). If `docs/skills/{product,process}-track-roles.md` exists and lists the given role, weigh its stated scope; otherwise use judgment about what the role would need.
 3. **Warn if critical artifacts are missing** before producing the plan — most importantly, no facts at all, but also an empty `decisions/` or `guardrails/` if the project claims to use this system. Say plainly the plan is built on an incomplete base; don't let it read as if the knowledge base were complete when it isn't.
 4. No knowledge base at all? Say so and stop — recommend `bootstrap`, don't improvise a plan from nothing.
 

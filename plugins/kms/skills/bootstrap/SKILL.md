@@ -60,7 +60,7 @@ Propose domains that need their own skill, based on what's in the repo:
 
 For each: one paragraph on what it would own, one hard constraint, one fitness-function candidate. Proposals — the team decides adoption and naming. Domains governing irreversible decisions (published APIs, binary ABI, irreversible schema changes, legal/compliance commitments, public claims) are the highest priority to formalize first.
 
-### 7. Compile the track role lists
+### 7. Compile the track role lists and tag vocabulary
 
 From the "Likely review role" column above, write
 `docs/skills/product-track-roles.md` and
