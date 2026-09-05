@@ -39,6 +39,10 @@ agreed before you invest time in it.
   `docs/guardrails/token-economy.md`. Nothing automated checks this
   here, so re-read the whole file after editing it, not just the lines
   you touched; incremental edits compound unnoticed otherwise.
+- A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should
+  pass the eval suite once it exists — see `AGENTS.md`. Contributing
+  from a fork? CI won't trigger for you, so run `promptfoo eval` locally
+  first once the suite exists.
 
 ## This repo dogfoods its own skills
 

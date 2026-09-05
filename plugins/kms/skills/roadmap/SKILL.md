@@ -74,7 +74,7 @@ A plan is not a 5th artifact type: it carries no `track`, no `status` from the e
 
 Before finalizing this file, verify each step's Done-when against each named file's actual content — not memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan, like any other error.
 
-After writing any fact, decision, guardrail, or procedure to disk, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format).
+After writing any fact, decision, guardrail, or procedure to disk, add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format), if one exists.
 
 Follow the same structure-detection rule for this file: reuse an existing plans/tasks directory convention if the project has one; otherwise default to `docs/plans/<slug>.md`.
 

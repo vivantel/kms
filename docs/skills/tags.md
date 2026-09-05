@@ -17,7 +17,9 @@ codex — concerns Codex plugin manifest or packaging
 commit-messages — concerns the format or content of commit messages
 discoverability — concerns how the project is found (README badges, GitHub topics, marketplace listings)
 documentation — concerns docs structure, conventions, or prose quality
+eval-harness — concerns the promptfoo/Kilo/OpenRouter mechanism for comparing shipped skill-body changes
 git — concerns git workflow, history, or conventions
+github-models — concerns GitHub Models' free-tier API or GITHUB_TOKEN-based access
 guardrail — a normative artifact (in guardrails/) or a decision about guardrails
 hooks — concerns Claude Code SessionStart/PreToolUse/etc. hooks
 ideation — concerns the brainstorm skill or generative, write-nothing workflows
@@ -27,6 +29,7 @@ kilo — concerns Kilo Code CLI's skill format or remote-skills mechanism
 marketing — concerns public-facing positioning, description sync, or badges
 naming — concerns identifier or display-name conventions
 onboarding — concerns the quickstart or onboard skills
+openrouter — concerns OpenRouter's model-routing API or free-tier terms
 packaging — concerns plugin manifests, templates, version sync, or distribution
 procedural — a procedure artifact (in skills/) or a decision about procedures
 pull-requests — concerns PR description generation or review

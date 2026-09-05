@@ -4,7 +4,7 @@
 id,title,tags,status
 0001-knowledge-artifact-storage-convention,"Knowledge artifacts live under docs/{facts,decisions,guardrails,skills}/","kms, roadmap, knowledge-management",active
 0002-commit-pr-attribution-skill-design,"Split commit/PR/changelog work into two skills, added to the kms plugin","kms, git, commit-messages, pull-requests",active
-0003-commit-trailer-traceability,"Use a \"Refs:\" git trailer to link commits to knowledge artifacts, one-directionally","kms, git, traceability",active
+0003-commit-trailer-traceability,"Use a ""Refs:"" git trailer to link commits to knowledge artifacts, one-directionally","kms, git, traceability",active
 0004-conventional-commits-adoption,"Adopt Conventional Commits type prefixes, applied only when the attribute skill is invoked","kms, git, commit-messages",active
 0005-changelog-generation-design,"Thin, on-demand changelog skill reading from commit trailers","kms, git, changelog",active
 0007-claude-md-agents-md-symlink,"Rewrite CLAUDE.md as AGENTS.md, keep CLAUDE.md as a symlink","kms, agent-agnostic, claude-md, agents-md",active
@@ -22,7 +22,7 @@ id,title,tags,status
 0019-brainstorm-skill,"Add brainstorm — a generative, write-nothing ideation skill","kms, ideation",active
 0020-onboard-skill,"Add onboard — a role-tailored, read-only onboarding-plan skill","kms, knowledge-management",active
 0021-refactor-plan-skill,"Add refactor-plan — a phased, guardrail-respecting refactor-planning skill","kms, knowledge-management",active
-0022-vivantel-kms-display-name,"Display name becomes \"Vivantel KMS\", technical identifiers stay \"kms\"","kms, naming, branding",active
+0022-vivantel-kms-display-name,"Display name becomes ""Vivantel KMS"", technical identifiers stay ""kms""","kms, naming, branding",active
 0023-quickstart-skill,"Add quickstart — bootstrap plus one real decision captured live","kms, onboarding, knowledge-management",active
 0024-automate-steward-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward steward after a recent commit","kms, automation, claude-code, hooks",active
 0025-discoverability-improvements,"Improve discoverability — README badges, GitHub topics and description sync","kms, discoverability, marketing",active
@@ -38,8 +38,11 @@ id,title,tags,status
 0035-native-kilo-code-support,"Ship a self-hosted Kilo remote-skills index; list on kilo-marketplace; no directory restructuring","kms, agent-agnostic, kilo, packaging",active
 0036-standalone-installing-doc,"Extract per-agent install steps into a standalone INSTALLING.md","kms, discoverability, packaging",active
 0037-plans-not-a-governed-artifact-type,"Plans are not a 5th governed artifact type","kms, knowledge-management, taxonomy",active
-0038-track-field-mutual-exclusivity,"track values are mutually exclusive; \"both\"/\"mixed\" is never stored","kms, knowledge-management, taxonomy",active
+0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",active
 0039-unify-lifecycle-and-drop-scope,"Unify status and expires across all four artifact types; add superseded-by; drop scope","kms, knowledge-management, taxonomy",active
 0040-lint-contradiction-and-staleness-checks,"Add lint checks for cross-artifact contradiction, stale debt, and stale fitness-functions","kms, knowledge-management, taxonomy",active
 0041-index-and-archive-for-scale,"Add a per-type TOON index and an archive mechanism for superseded/deprecated artifacts","kms, knowledge-management, scale",active
 0042-tag-vocabulary-and-scoped-contradiction-check,"Add a canonical tag vocabulary; scope the contradiction check to tag overlap","kms, knowledge-management, scale",active
+0043-eval-harness-for-shipped-skill-changes,"Adopt Kilo+OpenRouter+promptfoo as the eval harness comparing shipped skill-body changes","kms, eval-harness, kilo, openrouter, github-models",active
+0044-eval-harness-ci-safety-gates,"Wire the eval harness into CI with fork and comment safety gates","kms, eval-harness",active
+0045-seed-tags-from-canonical-list-as-template,"Extend the seeded guardrail templates to include tags-from-canonical-list","kms, knowledge-management, guardrail",active

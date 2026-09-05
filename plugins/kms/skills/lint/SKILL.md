@@ -5,11 +5,11 @@ description: Full-repo validation pass over a project's fact/decision/guardrail/
 
 Scan every fact, decision, guardrail, and procedure in the project — not just what changed recently — and report every structural violation found. `capture` handles what a session just produced (new decisions, changed facts, contradictions, doc drift); this is everything else — the whole knowledge base's structural health, checked here and only here.
 
-The default invocation's *health* checks (verbosity, staleness, contradiction-scanning) scan only the live set — artifacts under `docs/<type>/archive/` are excluded unless a deep pass is explicitly requested. This exclusion does NOT apply to check 1 (dangling references): resolving whether a `governed-by`/`grounded-in`/`superseded-by` id exists always searches both the live directory and its `archive/` subdirectory, otherwise archiving an artifact would immediately turn every reference to it into a false-positive dangling reference.
+The default invocation's *health* checks (verbosity, staleness, contradiction-scanning) scan only the live set — artifacts under `docs/<type>/archive/` are excluded unless a deep pass is explicitly requested. This exclusion does NOT apply to check 1 (dangling references) or check 19 (index out of sync): resolving whether a `governed-by`/`grounded-in`/`superseded-by` id exists always searches both the live directory and its `archive/` subdirectory, otherwise archiving an artifact would immediately turn every reference to it into a false-positive dangling reference — and an archive's own `INDEX.md` needs the same sync-checking a live one gets, or it would never be validated at all once created.
 
 ## What to check
 
-1. **Dangling references** — any `governed-by`, `grounded-in`, or `superseded-by` value pointing at a decision/fact id that doesn't exist.
+1. **Dangling references** — any `governed-by`, `grounded-in`, `superseded-by`, or `governed-facts` value pointing at a decision/fact id that doesn't exist.
 2. **Missing required fields** — facts without `kind`/`governed-by`; guardrails without `governed-by`/`grounded-in`/`derivation-note`; decisions without `track`; any of the four types with a `status` value outside `draft | active | superseded | deprecated`; a decision `status: superseded` without `superseded-by`.
 3. **Numbering collisions or gaps** — duplicate or skipped numbers in `facts/`/`decisions/`.
 4. **Expired decisions** — any of the four governed types carrying an `expires` field whose date has passed or condition has plausibly been met, still standing without re-evaluation.
@@ -27,9 +27,9 @@ The default invocation's *health* checks (verbosity, staleness, contradiction-sc
 16. **Cross-artifact contradiction** — two `status: active` decisions, or a decision and a guardrail derived from it, sharing at least one non-`(umbrella)` tag from `docs/skills/tags.md`, making contradictory claims on overlapping subject matter — anywhere in the project's history, not just this session. A tag marked `(umbrella)` (over half of active decisions) never counts as the shared tag, bounding the comparison by cluster size rather than the full corpus.
 17. **Stale unresolved debt** — a `governed-by: TBD`, `grounded-in: TBD`, or `status: draft` marker that has sat unresolved a long time, judged the same relative way check 14 judges a role gone cold.
 18. **Stale fitness-functions** — a decision's declared `fitness-functions` entries that haven't been verified or re-checked in a long time.
-19. **Index out of sync** — any type's `INDEX.md` missing a row for a file that exists in its directory, containing a row for a file that doesn't, or a row whose `id`/`title`/`tags`/`status` no longer matches that file's frontmatter.
-20. **Archive candidate** — a `status: superseded` or `status: deprecated` artifact still in its live directory (not yet under `docs/<type>/archive/`) — propose moving it, filename and `id` unchanged, and updating any literal (non-id) path references elsewhere in the repo to the new path.
-21. **Tag off the list** — a tag in use on any of the four types that isn't in `docs/skills/tags.md`, when that file exists (`docs/guardrails/tags-from-canonical-list.md`).
+19. **Index out of sync** — any type's `INDEX.md`, live or under `archive/`, missing a row for a file that exists in that same directory, containing a row for a file that doesn't, or a row whose `id`/`title`/`tags`/`status` no longer matches that file's frontmatter.
+20. **Archive candidate** — a `status: superseded` or `status: deprecated` artifact still in its live directory (not yet under `docs/<type>/archive/`) — propose moving it (filename and `id` unchanged), removing its row from the live `INDEX.md` and adding it to that type's `archive/INDEX.md`, and updating any literal (non-id) path reference to it anywhere else in the repo. The one exception: never propose editing a path reference inside another decision file — decisions are immutable once accepted, so a stale reference there is left as an accurate record of what was true when it was written.
+21. **Tag off the list** — a tag in use on any of the four types that isn't in `docs/skills/tags.md`, when that file exists.
 22. **Tag gone cold** — a tag on `docs/skills/tags.md` unused by any artifact in a long time, judged the same relative way check 14 judges a role gone cold.
 
 ## Output

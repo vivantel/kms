@@ -2,7 +2,7 @@
   "name": "kms",
   "displayName": "Vivantel KMS",
   "description": "Get started fast with quickstart, brainstorm approaches, or clarify and capture project decisions as durable knowledge, then bootstrap, lint, and query the resulting fact/decision/guardrail system, onboard a role or plan a refactor from it — plus check a pending change conforms, attribute commits, generate changelogs, and uninstall cleanly.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "author": {
     "name": "sergemso"
   }

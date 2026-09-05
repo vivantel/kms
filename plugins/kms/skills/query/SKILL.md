@@ -7,7 +7,7 @@ Search `docs/{facts,decisions,guardrails,skills}/` for the artifacts relevant to
 
 ## Answering
 
-1. Read each type's `INDEX.md` first, if present, to narrow candidates by tag/title before opening full files; fall back to searching all four directories by keyword/topic/`tags` when no index exists.
+1. Read each type's `INDEX.md` first, if present, to narrow candidates by tag/title before opening full files — ignore any `(umbrella)`-marked tag when matching (same exclusion `lint` check 16 applies; an umbrella tag matches nearly every row). Fall back to searching all four directories directly by keyword/topic/`tags` when no index exists, or when the index-narrowed candidates don't actually settle the question — the index can go stale between `lint` runs, so a thin or empty match isn't proof nothing relevant exists.
 2. If nothing relevant is found, say so plainly — don't guess or synthesize an answer the knowledge base doesn't actually support.
 3. If a decision has been superseded, follow `superseded-by` transitively until reaching a decision whose own `status` isn't `superseded` — cite that final active decision alongside the original, not just the next hop.
 4. Answer in prose, then list every artifact the answer drew from as `Refs: <repo-relative-path>` — one per artifact, matching `attribute`'s trailer format so this plugin has one citation convention.
