@@ -57,3 +57,20 @@ one thing each job installs before running. Every other gate in this decision (f
 path-filter, `author_association` + cross-repo check on the comment retrigger, the timeout
 ceiling from the amendment above) is unaffected — none of them were about *which* model backend
 was in use.
+
+## Amendment (implementation-time, 2026-09-10)
+
+"No secret at all," above, held only briefly: `PROMPTFOO_API_KEY` is now a CI secret after all
+— see `docs/decisions/0043-...`'s matching amendment for why (promptfoo's own hosted "share"
+feature is the only way to get a real, working results link in the PR comment instead of dead
+text). Every safety gate this decision defines is orthogonal to that and still applies
+unchanged: the fork-guard still withholds this secret (and every other) from fork-originated
+PRs exactly as before — one more secret in the same `env:` block doesn't change what the
+fork-guard's `if:` condition protects.
+
+Separately, but discovered at the same time: `promptfoo-action`'s built-in PR comment never
+named which matrix case (`bootstrap`/`roadmap`/`capture`/`lint`/`attribute`) it was reporting
+on — running 5 cases in a matrix posted 5 byte-for-byte-identical comments, indistinguishable
+from the PR itself. Disabled (`disable-comment: true`) in favor of
+`evals/providers/post-eval-comment.py`, one clearly-labeled comment per case, run after the
+export step this decision's earlier amendment already added.

@@ -101,3 +101,17 @@ on the `kilo` provider, a real completion returned regardless) — see
   package backing the `kilo` binary) is installed globally as a CI/local prerequisite instead.
 - `docs/facts/0010-openrouter-free-tier-terms.md` and `docs/facts/0011-github-models-free-tier-terms.md`
   are marked `deprecated` — accurate records of paths tried and abandoned, not deleted.
+
+## Amendment (implementation-time, 2026-09-10)
+
+Without a `PROMPTFOO_API_KEY`, `promptfoo-action`'s own PR comment falls back to plain text
+("» View eval results in CI console «", not a link) instead of a real link to the eval's
+results — confirmed by reading the action's own source. Fixing that requires promptfoo's
+hosted "share" feature, which needs a `promptfoo.dev` account: **knowingly reopening the
+external-account dependency the runner/judge choices above spent two amendments removing**, for
+this one, narrower benefit. Chosen anyway, by direct request, weighing that this account
+requirement is scoped to the *judge/reporting* side only (still free tier; still no cost) and
+produces genuinely private links ("visible only to you and your organization" per promptfoo's
+own docs — not a public leak of eval content), unlike the OpenRouter/GitHub Models
+dependencies removed earlier for cost/reliability reasons specific to the *runner*.
+`PROMPTFOO_API_KEY` is now a CI secret; see `docs/decisions/0044-...`'s matching amendment.
