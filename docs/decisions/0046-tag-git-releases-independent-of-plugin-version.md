@@ -1,7 +1,7 @@
 ---
 id: 0046-tag-git-releases-independent-of-plugin-version
 title: Tag git releases, starting fresh at 0.1.0, independent of plugin.json's own version
-status: draft
+status: active
 date: 2026-09-10
 tags: [kms, git, release, packaging]
 track: process
