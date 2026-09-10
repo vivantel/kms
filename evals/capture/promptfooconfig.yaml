@@ -6,7 +6,7 @@ prompts:
   - "Run the knowledge check."
 
 providers:
-  - id: "exec:evals/providers/kilo-runner.sh"
+  - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/capture/fixture"
       model: "poolside/laguna-s-2.1:free"
@@ -14,7 +14,7 @@ providers:
 
 defaultTest:
   options:
-    provider: "exec:evals/providers/kilo-judge.sh"
+    provider: "exec:../providers/kilo-judge.sh"
   assert:
     - type: llm-rubric
       value: >

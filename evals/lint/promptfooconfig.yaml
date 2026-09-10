@@ -8,7 +8,7 @@ prompts:
   - "Lint the knowledge base."
 
 providers:
-  - id: "exec:evals/providers/kilo-runner.sh"
+  - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/lint/fixture"
       model: "poolside/laguna-s-2.1:free"
