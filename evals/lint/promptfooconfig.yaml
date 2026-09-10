@@ -27,6 +27,3 @@ defaultTest:
     # Check 9: stale prose reference to a guardrail file that doesn't exist.
     - type: regex
       value: "require-two-approvals"
-
-tests:
-  - {}

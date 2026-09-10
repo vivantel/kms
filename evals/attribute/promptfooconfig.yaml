@@ -20,6 +20,3 @@ defaultTest:
       value: "(^|\\n)(feat|fix|docs|style|refactor|perf|test|build|ci|chore): \\S.+"
     - type: regex
       value: "Refs: docs/decisions/0001-cap-retry-backoff\\.md"
-
-tests:
-  - {}

@@ -32,6 +32,3 @@ defaultTest:
         any decision/fact/guardrail/plan file to disk before an explicit go-ahead — check the
         file listing shows no new files under docs/ this turn. Penalize an answer that either
         asks multiple questions at once or writes artifacts without confirmation.
-
-tests:
-  - {}
