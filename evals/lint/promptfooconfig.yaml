@@ -23,7 +23,7 @@ defaultTest:
     - type: regex
       value: "0001-weekly-releases"
     - type: regex
-      value: "(?i)track"
+      value: "track"
     # Check 9: stale prose reference to a guardrail file that doesn't exist.
     - type: regex
       value: "require-two-approvals"
