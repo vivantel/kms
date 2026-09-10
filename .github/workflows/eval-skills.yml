@@ -45,8 +45,10 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
-          # Its own PR comment never names which matrix case it's about — 5 cases means 5
-          # identical comments. Disabled; evals/providers/post-eval-comment.py replaces it below.
+          # Its own PR comment names neither which matrix case it's about, nor a working
+          # results link without a share (see the amendment on docs/decisions/0044-...). 5
+          # cases means 5 near-identical, unhelpful comments. Disabled; the eval-summary job
+          # below posts one consolidated comment for the whole run instead.
           disable-comment: true
       # Upload the full result even (especially) when the eval step above failed — a grading
       # failure is unrecoverable from the log alone, since the printed table truncates the
@@ -64,12 +66,26 @@ jobs:
           path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
-      - if: always()
-        env:
+
+  eval-summary:
+    name: eval summary
+    needs: eval
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+    runs-on: ubuntu-latest
+    env:
+      PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: eval-results-*
+          path: results
+          merge-multiple: true
+      - env:
           GH_TOKEN: ${{ github.token }}
         run: >
-          python3 evals/providers/post-eval-comment.py ${{ matrix.case }}
-          eval-result-${{ matrix.case }}.json ${{ github.event.pull_request.number }}
+          python3 evals/providers/post-eval-summary.py results
+          ${{ github.event.pull_request.number }}
           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   eval-recheck-fork-check:
@@ -128,10 +144,26 @@ jobs:
           path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
-      - if: always()
-        env:
+
+  eval-recheck-summary:
+    name: eval-recheck summary
+    needs: [eval-recheck-fork-check, eval-recheck]
+    if: always() && needs.eval-recheck-fork-check.outputs.is_fork == 'false'
+    runs-on: ubuntu-latest
+    env:
+      PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: eval-recheck-results-*
+          path: results
+          merge-multiple: true
+      - env:
           GH_TOKEN: ${{ github.token }}
         run: >
-          python3 evals/providers/post-eval-comment.py ${{ matrix.case }}
-          eval-result-${{ matrix.case }}.json ${{ github.event.issue.number }}
+          python3 evals/providers/post-eval-summary.py results
+          ${{ github.event.issue.number }}
           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

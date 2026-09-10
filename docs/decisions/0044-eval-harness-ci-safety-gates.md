@@ -71,6 +71,12 @@ fork-guard's `if:` condition protects.
 Separately, but discovered at the same time: `promptfoo-action`'s built-in PR comment never
 named which matrix case (`bootstrap`/`roadmap`/`capture`/`lint`/`attribute`) it was reporting
 on — running 5 cases in a matrix posted 5 byte-for-byte-identical comments, indistinguishable
-from the PR itself. Disabled (`disable-comment: true`) in favor of
-`evals/providers/post-eval-comment.py`, one clearly-labeled comment per case, run after the
-export step this decision's earlier amendment already added.
+from the PR itself. Disabled (`disable-comment: true`). First fix (one labeled comment per
+case) traded that problem for a new one — 5 separate GitHub notifications per run instead of
+1 — so a new `eval-summary`/`eval-recheck-summary` job (`needs: eval`/`eval-recheck`,
+`if: always()`) now runs after all 5 matrix legs finish, downloads every case's uploaded
+artifact, and posts one consolidated comment with a row per case
+(`evals/providers/post-eval-summary.py`). Also fixed in the same pass: the constructed
+shareable link used `shareableUrl` from the exported JSON, a field that schema-exists but is
+never actually populated by `promptfoo export` (confirmed by inspecting a real exported file)
+— the real link is built from `evalId` instead, which is populated.
