@@ -43,16 +43,20 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
-      # promptfoo-action writes its -o JSON to a randomly-named file in cwd; upload it even
-      # (especially) when the eval step above failed, or a grading failure is unrecoverable
-      # from the log alone — the printed table truncates the transcript.
+      # Upload the full result even (especially) when the eval step above failed — a grading
+      # failure is unrecoverable from the log alone, since the printed table truncates the
+      # transcript. promptfoo-action reads its own -o output file and unconditionally unlinks it before
+      # this step ever runs (confirmed by reading the action's own source, dist/index.js) — so
+      # nothing survives to upload from that file. `promptfoo export eval latest` re-reads the
+      # same eval from promptfoo's persistent local store (~/.promptfoo) instead, which the
+      # action doesn't touch.
       - if: always()
-        run: ls -la "${GITHUB_WORKSPACE}" | grep -i output || echo "no output-*.json in workspace root"
+        run: npx promptfoo@0.122.2 export eval latest -o eval-result-${{ matrix.case }}.json || true
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eval-results-${{ matrix.case }}
-          path: ${{ github.workspace }}/output-*.json
+          path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
 
@@ -101,11 +105,11 @@ jobs:
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
       - if: always()
-        run: ls -la "${GITHUB_WORKSPACE}" | grep -i output || echo "no output-*.json in workspace root"
+        run: npx promptfoo@0.122.2 export eval latest -o eval-result-${{ matrix.case }}.json || true
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eval-recheck-results-${{ matrix.case }}
-          path: ${{ github.workspace }}/output-*.json
+          path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
