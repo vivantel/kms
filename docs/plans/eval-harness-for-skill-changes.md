@@ -265,7 +265,35 @@ Done when: `gh secret list --repo vivantel/kms` shows
 `OPENROUTER_API_KEY` present (value itself is never visible, only the
 name and last-updated date).
 
-### 7. Run the baseline and confirm the fitness-function — status: blocked (no longer on credentials — Kilo's free gateway needs none — but on deferring `npm install`/`npm run eval` execution to CI per instruction; a direct, non-npm smoke test of evals/bootstrap did complete a real run but hit its timeout without finishing, a genuine model-fit finding worth tracking, not a harness defect)
+### 7. Run the baseline and confirm the fitness-function — status: partial
+
+Run for real in CI (workflow run 34446496455, triggered via `/eval` on
+PR #4, against the fixed configs from PRs #5/#6): **3 of 5 cases
+genuinely passed** (`capture`, `roadmap`, `attribute` — real Kilo runs
+via the free gateway, real grading, no harness errors). Two did not:
+
+- `bootstrap` timed out at its 480s ceiling (`exit 124`) without
+  writing any files — reproduced twice (once locally, once in CI), so
+  it's a real model-fit finding, not a fluke. The local run's own
+  transcript showed the model going down a research tangent on what
+  "TOON format" (a term in `shared/artifact-model.md`) means rather
+  than treating it as a simple inline convention.
+- `lint` completed (`exit 0`) but failed its regex assertions — the
+  CI log truncates the printed transcript table, so it isn't yet clear
+  whether the model missed naming the planted violations or just
+  phrased them differently than the regexes expect. No output artifact
+  is currently uploaded anywhere to inspect the full transcript after
+  the fact — worth adding (`actions/upload-artifact` on promptfoo's
+  `-o` JSON) before spending more time tuning this case blind.
+
+Not yet done: deciding whether this counts as an acceptable first
+baseline to record as-is (per `docs/decisions/0043-...`'s own framing —
+"the suite's own results will show whether free-tier fidelity is
+actually sufficient... rather than assuming it either way going in" —
+this result *is* that answer, for 2 of 5 cases) or whether `bootstrap`/
+`lint` need adjustment (longer timeout, a stronger free model, clearer
+fixture/prompt) before the baseline is "confirmed" in the sense this
+step's Done-when originally meant.
 
 Per `docs/decisions/0043-...`'s own `fitness-functions` entry: once
 steps 1–5 are done, run the full 5-case suite locally
