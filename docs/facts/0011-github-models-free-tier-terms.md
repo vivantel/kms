@@ -1,7 +1,7 @@
 ---
 id: 0011-github-models-free-tier-terms
 title: GitHub Models' free-tier API, GITHUB_TOKEN access, and context-window limits
-status: active
+status: deprecated
 date: 2026-09-04
 tags: [kms, github-models]
 kind: environmental
@@ -24,3 +24,11 @@ this API as suited to prototyping, not production workloads.
 tier specifically, or some other, more universal grant for public
 repositories. `vivantel/kms` is a public repository. Verify this at
 implementation time before relying on a specific rate-limit figure.
+
+**Superseded by events, 2026-09-05**: GitHub Models was fully retired 2026-07-30
+(`docs.github.com/en/github-models`'s own retirement notice: "the playground, model catalog,
+inference API, and bring your own key (BYOK) are no longer available to any customer") —
+predating this fact's own 2026-09-04 snapshot date, meaning it was already stale when written.
+`docs/decisions/0043-eval-harness-for-shipped-skill-changes.md`'s amendment records the judge
+model falling back to a second free OpenRouter model instead. Kept here, not deleted, as an
+accurate record of what this fact claimed and why it no longer holds.

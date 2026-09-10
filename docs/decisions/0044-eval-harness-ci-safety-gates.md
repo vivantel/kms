@@ -31,3 +31,29 @@ The security design answers a concrete, specific risk, not a generic one: an aut
 - **Nightly on `master` only, no PR-time signal**: cheapest and simplest, but loses the actual "before/after this specific change" comparison that's the whole point of adopting this.
 - **A trusted-fork allowlist instead of a blanket fork-block**: more useful if this repo expects external contributions worth evaluating, but adds a list to maintain for a repo with no evidence yet of needing it.
 - **Chosen**: full CI now, `pull_request` only, fork-guard + path-filter + `author_association`-gated comment retrigger, defensive cost ceiling.
+
+## Amendment (implementation-time, 2026-09-05)
+
+`promptfoo` has no `--max-cost-usd` flag or equivalent cost-ceiling option (verified against its
+current CLI reference) — this decision's "defensive cost ceiling" doesn't exist as a literal
+flag to pass. The substitute, serving the same purpose (bound worst-case spend/runtime if a
+free model's pricing status changes or a misconfiguration reaches a paid one): every case's
+`promptfooconfig.yaml` pins an explicit `:free`-suffixed model id (visible in code review, not a
+runtime default that can silently drift to a paid model), plus a `timeout-minutes: 20` ceiling
+on each matrix job in `.github/workflows/eval-skills.yml`.
+
+Also: the `permissions:` block needs no `models: read` scope — that was for GitHub Models
+access, which `docs/decisions/0043-eval-harness-for-shipped-skill-changes.md`'s amendment
+records as fully retired; the judge model is OpenRouter now, reached the same way the runner is.
+
+## Amendment (implementation-time, 2026-09-10)
+
+`docs/decisions/0043-...`'s 2026-09-10 amendment moved both the runner and judge off OpenRouter
+entirely, onto Kilo's own built-in free gateway (no account, no API key). Consequence for this
+decision: the CI workflow (`.github/workflows/eval-skills.yml`) needs **no secret at all** —
+every `OPENROUTER_API_KEY` reference (`env:` blocks, the line above) is gone, and this repo
+never provisions or stores an OpenRouter key. `npm install -g @kilocode/cli` replaces it as the
+one thing each job installs before running. Every other gate in this decision (fork-guard,
+path-filter, `author_association` + cross-repo check on the comment retrigger, the timeout
+ceiling from the amendment above) is unaffected — none of them were about *which* model backend
+was in use.

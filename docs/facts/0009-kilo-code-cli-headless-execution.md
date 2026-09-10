@@ -29,3 +29,16 @@ non-interactive invocation. Verify against Kilo's own CLI docs/`--help`
 output at implementation time — the same caution
 `docs/facts/0008-kilo-code-skills-spec.md` already states for this
 fast-evolving, externally-owned CLI.
+
+**Re-verified 2026-09-05** against the installed `kilo --help`/`kilo run --help` output:
+`kilo run --auto -m <provider>/<model> "<prompt>"` combines both in one invocation as expected.
+One correction found by testing, not by docs: a *project-scope* `kilo.jsonc`/`.kilo/kilo.jsonc`
+(any config file Kilo discovers by walking up from cwd) unconditionally rejects
+`${env:VAR}`/`{env:VAR}` credential interpolation in `provider.*.options`, regardless of syntax
+variant — confirmed by testing, not documented anywhere found. A custom provider needing a
+secret from the environment (e.g. this harness's OpenRouter provider) must instead be supplied
+via the `KILO_CONFIG_CONTENT` environment variable (undocumented but present in the CLI binary
+alongside `KILO_CONFIG`/`KILO_CONFIG_DIR`), which Kilo treats as trusted, operator-supplied
+configuration rather than project configuration. See
+`docs/decisions/0043-eval-harness-for-shipped-skill-changes.md`'s amendment and
+`evals/providers/kilo-runner.sh`.

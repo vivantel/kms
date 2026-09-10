@@ -3,9 +3,11 @@
 Thanks for considering a contribution to Vivantel KMS (Knowledge
 Management System, package name `kms`). This repo is a Claude Code
 plugin marketplace — the entire product is JSON manifests and Markdown
-skill definitions under `plugins/kms/skills/`. There's no build step and
-no test suite, so contributing is mostly about writing clear, well-scoped
-skill instructions and manifest edits.
+skill definitions under `plugins/kms/skills/`. There's no build step for
+that content itself, so contributing is mostly about writing clear,
+well-scoped skill instructions and manifest edits. A change under
+`plugins/kms/skills/**` or `plugins/kms/shared/**` does have a test
+suite now — the eval harness under `evals/` (see below).
 
 Please also read [`AGENTS.md`](AGENTS.md) before making changes — it
 documents the repo's actual structure and conventions in more depth than
@@ -40,9 +42,13 @@ agreed before you invest time in it.
   here, so re-read the whole file after editing it, not just the lines
   you touched; incremental edits compound unnoticed otherwise.
 - A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should
-  pass the eval suite once it exists — see `AGENTS.md`. Contributing
-  from a fork? CI won't trigger for you, so run `promptfoo eval` locally
-  first once the suite exists.
+  pass the eval suite. One-time setup: `npm install && npm install -g
+  @kilocode/cli` — no account or API key needed, Kilo's own free
+  gateway covers it. Then `npm run eval`, or
+  `npx promptfoo eval -c evals/<case>/promptfooconfig.yaml` for one
+  case — see `AGENTS.md`. Contributing from a fork? CI won't trigger
+  for you (`docs/decisions/0044-eval-harness-ci-safety-gates.md`'s
+  fork-guard), so run the suite locally first.
 
 ## This repo dogfoods its own skills
 
@@ -57,7 +63,9 @@ examples, or use this plugin's own `roadmap` skill to generate one.
 
 ## Validation
 
-There's no CI. Before opening a PR:
+There's no CI for the manifests/skill-content checks below — do them by
+hand before opening a PR. (`plugins/kms/skills/**`/`plugins/kms/shared/**`
+changes do get CI, via the eval suite in `.github/workflows/eval-skills.yml`.)
 
 - Any manifest you touched is valid JSON: `python3 -m json.tool <file>` or
   `jq . <file>`.

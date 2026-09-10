@@ -1,0 +1,32 @@
+# Eval case: `lint` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# The most mechanically gradable case in the suite (regex, not llm-rubric) — the anchor for
+# validating deterministic grading works before trusting the llm-graded cases.
+# Run standalone: npx promptfoo eval -c evals/lint/promptfooconfig.yaml
+description: "kms lint — naming three deliberately-planted violations, one per check family"
+
+prompts:
+  - "Lint the knowledge base."
+
+providers:
+  - id: "exec:evals/providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/lint/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      timeout_seconds: 480
+
+defaultTest:
+  assert:
+    # Check 1: dangling `governed-by` on require-changelog-entry.md → 0099-nonexistent-decision.
+    - type: regex
+      value: "0099-nonexistent-decision"
+    # Check 2: 0001-weekly-releases.md is missing the required `track` field.
+    - type: regex
+      value: "0001-weekly-releases"
+    - type: regex
+      value: "(?i)track"
+    # Check 9: stale prose reference to a guardrail file that doesn't exist.
+    - type: regex
+      value: "require-two-approvals"
+
+tests:
+  - {}
