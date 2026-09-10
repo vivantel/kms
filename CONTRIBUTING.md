@@ -43,12 +43,15 @@ agreed before you invest time in it.
   you touched; incremental edits compound unnoticed otherwise.
 - A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should
   pass the eval suite. One-time setup: `npm install && npm install -g
-  @kilocode/cli` — no account or API key needed, Kilo's own free
-  gateway covers it. Then `npm run eval`, or
+  @kilocode/cli` — no account or API key needed for a local run, Kilo's
+  own free gateway covers it. Then `npm run eval`, or
   `npx promptfoo eval -c evals/<case>/promptfooconfig.yaml` for one
-  case — see `AGENTS.md`. Contributing from a fork? CI won't trigger
-  for you (`docs/decisions/0044-eval-harness-ci-safety-gates.md`'s
-  fork-guard), so run the suite locally first.
+  case — see `AGENTS.md`. (CI additionally uses a `PROMPTFOO_API_KEY`
+  secret purely so its PR comment can link to real results instead of
+  just the workflow run — not something a local run needs.) Contributing
+  from a fork? CI won't trigger for you
+  (`docs/decisions/0044-eval-harness-ci-safety-gates.md`'s fork-guard),
+  so run the suite locally first.
 
 ## This repo dogfoods its own skills
 
