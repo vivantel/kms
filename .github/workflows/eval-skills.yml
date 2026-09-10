@@ -43,6 +43,16 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
+      # promptfoo-action writes its -o JSON to a randomly-named file in cwd; upload it even
+      # (especially) when the eval step above failed, or a grading failure is unrecoverable
+      # from the log alone — the printed table truncates the transcript.
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results-${{ matrix.case }}
+          path: output-*.json
+          retention-days: 14
+          if-no-files-found: ignore
 
   eval-recheck-fork-check:
     name: eval-recheck (fork check)
@@ -88,3 +98,10 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-recheck-results-${{ matrix.case }}
+          path: output-*.json
+          retention-days: 14
+          if-no-files-found: ignore
