@@ -267,33 +267,34 @@ name and last-updated date).
 
 ### 7. Run the baseline and confirm the fitness-function — status: partial
 
-Run for real in CI (workflow run 34446496455, triggered via `/eval` on
-PR #4, against the fixed configs from PRs #5/#6): **3 of 5 cases
-genuinely passed** (`capture`, `roadmap`, `attribute` — real Kilo runs
-via the free gateway, real grading, no harness errors). Two did not:
+Run for real in CI (multiple runs; see
+`docs/plans/eval-harness-baseline-reliability.md` for the full history
+and every workflow-run ID). First pass (workflow run `34446496455`)
+found 3/5 passing, but two harness bugs were hiding in that number: an
+invalid `(?i)` regex flag in `evals/lint/promptfooconfig.yaml` (JS
+`RegExp` doesn't support it — that assertion always failed regardless of
+the model), and `evals/providers/kilo-judge.sh` sometimes returning
+unparseable grading output (Kilo's decorative banner/ANSI codes broke
+promptfoo's JSON extraction on longer rubric prompts). Both fixed (PRs
+#13, #14).
 
-- `bootstrap` timed out at its 480s ceiling (`exit 124`) without
-  writing any files — reproduced twice (once locally, once in CI), so
-  it's a real model-fit finding, not a fluke. The local run's own
-  transcript showed the model going down a research tangent on what
-  "TOON format" (a term in `shared/artifact-model.md`) means rather
-  than treating it as a simple inline convention.
-- `lint` completed (`exit 0`) but failed its regex assertions — the
-  CI log truncates the printed transcript table, so it isn't yet clear
-  whether the model missed naming the planted violations or just
-  phrased them differently than the regexes expect. No output artifact
-  is currently uploaded anywhere to inspect the full transcript after
-  the fact — worth adding (`actions/upload-artifact` on promptfoo's
-  `-o` JSON) before spending more time tuning this case blind.
+**Current real state** (3 CI runs after both fixes):
 
-Not yet done: deciding whether this counts as an acceptable first
-baseline to record as-is (per `docs/decisions/0043-...`'s own framing —
-"the suite's own results will show whether free-tier fidelity is
-actually sufficient... rather than assuming it either way going in" —
-this result *is* that answer, for 2 of 5 cases) or whether `bootstrap`/
-`lint` need adjustment (longer timeout, a stronger free model, clearer
-fixture/prompt) before the baseline is "confirmed" in the sense this
-step's Done-when originally meant.
+- **Reliably pass**: `capture`, `attribute`, `lint`.
+- **`bootstrap`**: flaky — passes about half the time, times out the
+  rest. One timed-out run's transcript showed the model going down a
+  research tangent on "TOON format" (a term in `shared/artifact-model.md`)
+  instead of proceeding.
+- **`roadmap`**: reliably fails, for a real, substantive reason — the
+  model bundles two questions into one turn, violating its own
+  `SKILL.md`'s explicit "ask one question at a time" instruction. This
+  is the harness doing exactly what `docs/decisions/0043-...` said it
+  would: surfacing a genuine free-tier fidelity gap on a
+  judgment-heavy case, not a broken test.
+
+Not yet done: `docs/plans/eval-harness-baseline-reliability.md` steps 3–4
+(deciding `bootstrap`'s and `roadmap`'s fix, if any) — continue there,
+not here.
 
 Per `docs/decisions/0043-...`'s own `fitness-functions` entry: once
 steps 1–5 are done, run the full 5-case suite locally
