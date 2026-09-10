@@ -33,6 +33,7 @@ openrouter — concerns OpenRouter's model-routing API or free-tier terms
 packaging — concerns plugin manifests, templates, version sync, or distribution
 procedural — a procedure artifact (in skills/) or a decision about procedures
 pull-requests — concerns PR description generation or review
+release — concerns version numbering, git tags, or the release/changelog process
 roadmap — concerns the roadmap skill or decision-capture workflow
 scale — concerns knowledge-base scalability (index, archive, tag vocabulary, scoped checks)
 scope — concerns the bounds or applicability of a decision (legacy tag, retained for 0006)

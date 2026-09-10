@@ -46,3 +46,4 @@ id,title,tags,status
 0043-eval-harness-for-shipped-skill-changes,"Adopt Kilo+OpenRouter+promptfoo as the eval harness comparing shipped skill-body changes","kms, eval-harness, kilo, openrouter, github-models",active
 0044-eval-harness-ci-safety-gates,"Wire the eval harness into CI with fork and comment safety gates","kms, eval-harness",active
 0045-seed-tags-from-canonical-list-as-template,"Extend the seeded guardrail templates to include tags-from-canonical-list","kms, knowledge-management, guardrail",active
+0046-tag-git-releases-independent-of-plugin-version,"Tag git releases, starting fresh at 0.1.0, independent of plugin.json's own version","kms, git, release, packaging",draft
