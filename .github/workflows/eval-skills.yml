@@ -31,6 +31,8 @@ jobs:
       fail-fast: false
       matrix:
         case: [bootstrap, roadmap, capture, lint, attribute]
+    env:
+      PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,6 +45,9 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
+          # Its own PR comment never names which matrix case it's about — 5 cases means 5
+          # identical comments. Disabled; evals/providers/post-eval-comment.py replaces it below.
+          disable-comment: true
       # Upload the full result even (especially) when the eval step above failed — a grading
       # failure is unrecoverable from the log alone, since the printed table truncates the
       # transcript. promptfoo-action reads its own -o output file and unconditionally unlinks it before
@@ -59,6 +64,13 @@ jobs:
           path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
+      - if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          python3 evals/providers/post-eval-comment.py ${{ matrix.case }}
+          eval-result-${{ matrix.case }}.json ${{ github.event.pull_request.number }}
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   eval-recheck-fork-check:
     name: eval-recheck (fork check)
@@ -90,6 +102,8 @@ jobs:
       fail-fast: false
       matrix:
         case: [bootstrap, roadmap, capture, lint, attribute]
+    env:
+      PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -104,6 +118,7 @@ jobs:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
+          disable-comment: true
       - if: always()
         run: npx promptfoo@0.122.2 export eval latest -o eval-result-${{ matrix.case }}.json || true
       - if: always()
@@ -113,3 +128,10 @@ jobs:
           path: eval-result-${{ matrix.case }}.json
           retention-days: 14
           if-no-files-found: warn
+      - if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          python3 evals/providers/post-eval-comment.py ${{ matrix.case }}
+          eval-result-${{ matrix.case }}.json ${{ github.event.issue.number }}
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
