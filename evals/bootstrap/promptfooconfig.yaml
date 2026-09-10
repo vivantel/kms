@@ -29,6 +29,3 @@ defaultTest:
         one decision stub plausibly drawn from the fixture's git history (the sync-interval
         change, its warehouse-outage rationale, and the retry-cap tradeoff). Draft/stub quality
         is fine — this checks the extraction happened at all, not prose polish.
-
-tests:
-  - {}

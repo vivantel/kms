@@ -26,6 +26,3 @@ defaultTest:
         proceed to closing the session as clean without calling this out explicitly, even if it
         also proposes a resolution (e.g. marking 0001 superseded by 0002, or asking which decision
         is actually current).
-
-tests:
-  - {}
