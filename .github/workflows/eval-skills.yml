@@ -47,12 +47,14 @@ jobs:
       # (especially) when the eval step above failed, or a grading failure is unrecoverable
       # from the log alone — the printed table truncates the transcript.
       - if: always()
+        run: ls -la "${GITHUB_WORKSPACE}" | grep -i output || echo "no output-*.json in workspace root"
+      - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eval-results-${{ matrix.case }}
-          path: output-*.json
+          path: ${{ github.workspace }}/output-*.json
           retention-days: 14
-          if-no-files-found: ignore
+          if-no-files-found: warn
 
   eval-recheck-fork-check:
     name: eval-recheck (fork check)
@@ -99,9 +101,11 @@ jobs:
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
           promptfoo-version: "0.122.2"
       - if: always()
+        run: ls -la "${GITHUB_WORKSPACE}" | grep -i output || echo "no output-*.json in workspace root"
+      - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eval-recheck-results-${{ matrix.case }}
-          path: output-*.json
+          path: ${{ github.workspace }}/output-*.json
           retention-days: 14
-          if-no-files-found: ignore
+          if-no-files-found: warn
