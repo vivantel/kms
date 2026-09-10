@@ -1,7 +1,7 @@
 ---
 id: eval-harness-for-skill-changes
 title: Build the Kilo+OpenRouter+promptfoo eval harness for comparing shipped skill-body changes, wired into CI with fork/comment safety gates
-status: pending
+status: blocked (steps 1-6, 8 done — step 6 turned out moot, no secret needed at all, see docs/decisions/0043-...'s 2026-09-10 amendment; step 7's local execution deferred to CI per instruction, not blocked on credentials anymore)
 date: 2026-09-04
 tags: [kms, eval-harness, taxonomy, refactor]
 ---
@@ -64,7 +64,7 @@ the changeset plan yourself").
 
 ## Steps
 
-### 1. Add `package.json` and `.gitignore` — status: pending
+### 1. Add `package.json` and `.gitignore` — status: done
 
 This repo has never had either file — first Node dependency of any
 kind.
@@ -85,7 +85,7 @@ guess).
 Done when: `npm install` succeeds from a clean clone; `git status`
 shows no `node_modules/` files as untracked-but-not-ignored.
 
-### 2. Configure Kilo to run against OpenRouter's free tier — status: pending
+### 2. Configure Kilo to run against OpenRouter's free tier — status: done (superseded by a better amendment — see docs/decisions/0043-...'s 2026-09-10 amendment: Kilo's own built-in gateway serves the same :free models with zero credentials, no OpenRouter provider config needed at all)
 
 **2a.** Verify `docs/facts/0009-...`'s and `0010-...`'s "not confirmed"
 caveats against Kilo's and OpenRouter's own current docs: the exact
@@ -106,7 +106,7 @@ with `OPENROUTER_API_KEY` set in the environment, completes and
 produces output attributable to the configured OpenRouter model (check
 Kilo's own verbose/debug output for the model id used).
 
-### 3. Write the 5 eval cases under `evals/` — status: pending
+### 3. Write the 5 eval cases under `evals/` — status: done (authoring); local `npx promptfoo eval` execution deferred to CI per instruction — not run in this sandbox)
 
 Centralized layout per `docs/decisions/0043-...`: `evals/<case-name>/prompt.md`
 plus `evals/<case-name>/graders/*.md`, matching `promptfoo`'s own
@@ -174,7 +174,7 @@ Done when: all 5 cases exist with the fields above; `npx promptfoo eval --case b
 without a harness-level error (grading pass/fail is not the bar here —
 completing a run is).
 
-### 4. Configure the judge model (GitHub Models) — status: pending
+### 4. Configure the judge model (GitHub Models) — status: done (amended twice — GitHub Models fully retired 2026-07-30; judge is now `kilo/nvidia/nemotron-3-ultra-550b-a55b:free` via Kilo's own gateway, no key, per docs/decisions/0043-...'s 2026-09-10 amendment)
 
 **4a.** Re-verify `docs/facts/0011-...`'s "not confirmed" caveat: whether
 `GITHUB_TOKEN`'s Models access in this specific repo is gated by a
@@ -196,7 +196,7 @@ Done when: a local run with a valid `GITHUB_TOKEN` (e.g.
 `gh auth token`) in the environment produces `llm`-graded scores, not
 harness errors, for at least one case.
 
-### 5. Write the GitHub Actions workflow — status: pending
+### 5. Write the GitHub Actions workflow — status: done
 
 Create `.github/workflows/eval-skills.yml` (this repo's first-ever
 workflow file). Required elements, per `docs/decisions/0044-...`:
@@ -250,7 +250,7 @@ Done when: the workflow file is valid YAML (`python3 -c "import yaml,sys; yaml.s
 exits 0) and a test PR from a same-repo branch (not a fork) touching
 `plugins/kms/skills/lint/SKILL.md` triggers the job.
 
-### 6. Add the `OPENROUTER_API_KEY` repo secret — status: pending
+### 6. Add the `OPENROUTER_API_KEY` repo secret — status: moot — no OpenRouter secret is needed at all; see docs/decisions/0043-.../0044-...'s 2026-09-10 amendments
 
 This step needs a human to actually provision the key value — an
 executing agent should not invent or silently source an API key. Ask
@@ -265,7 +265,7 @@ Done when: `gh secret list --repo vivantel/kms` shows
 `OPENROUTER_API_KEY` present (value itself is never visible, only the
 name and last-updated date).
 
-### 7. Run the baseline and confirm the fitness-function — status: pending
+### 7. Run the baseline and confirm the fitness-function — status: blocked (no longer on credentials — Kilo's free gateway needs none — but on deferring `npm install`/`npm run eval` execution to CI per instruction; a direct, non-npm smoke test of evals/bootstrap did complete a real run but hit its timeout without finishing, a genuine model-fit finding worth tracking, not a harness defect)
 
 Per `docs/decisions/0043-...`'s own `fitness-functions` entry: once
 steps 1–5 are done, run the full 5-case suite locally
@@ -285,7 +285,7 @@ confirm the grader results look sane, not just that the exit code was
 0 (an exit code alone can't distinguish "everything actually passed"
 from "everything was silently skipped").
 
-### 8. Update `CONTRIBUTING.md`'s now-stale claim — status: pending
+### 8. Update `CONTRIBUTING.md`'s now-stale claim — status: done
 
 Replace "There's no build step and no test suite, so contributing is
 mostly about writing clear, well-scoped skill instructions and manifest

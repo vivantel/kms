@@ -1,0 +1,34 @@
+# Eval case: `bootstrap` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# Run standalone: npx promptfoo eval -c evals/bootstrap/promptfooconfig.yaml
+description: "kms bootstrap — one-time setup of a fact/decision/guardrail/skill system"
+
+prompts:
+  - "Bootstrap the knowledge system here."
+
+providers:
+  - id: "exec:evals/providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/bootstrap/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      timeout_seconds: 480
+
+defaultTest:
+  options:
+    provider: "exec:evals/providers/kilo-judge.sh"
+  assert:
+    - type: contains
+      value: "docs/facts"
+    - type: contains
+      value: "docs/decisions"
+    - type: contains
+      value: "docs/guardrails"
+    - type: llm-rubric
+      value: >
+        The transcript and file listing show a fact/decision/guardrail/skill knowledge base
+        being created (docs/facts/, docs/decisions/, docs/guardrails/ at minimum) with at least
+        one decision stub plausibly drawn from the fixture's git history (the sync-interval
+        change, its warehouse-outage rationale, and the retry-cap tradeoff). Draft/stub quality
+        is fine — this checks the extraction happened at all, not prose polish.
+
+tests:
+  - {}

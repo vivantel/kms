@@ -1,0 +1,90 @@
+name: Eval skill changes
+
+# docs/decisions/0043-eval-harness-for-shipped-skill-changes.md,
+# docs/decisions/0044-eval-harness-ci-safety-gates.md.
+#
+# Never `pull_request_target` — that trigger exposes secrets to fork-originated PRs. Plain
+# `pull_request` already withholds secrets from forks; the `fork-guard` job condition below goes
+# further and skips the autonomous Kilo run against fork content entirely, secrets or not.
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [master]
+    paths:
+      - "plugins/kms/skills/**"
+      - "plugins/kms/shared/**"
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  eval:
+    name: eval (${{ matrix.case }})
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [bootstrap, roadmap, capture, lint, attribute]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm install -g @kilocode/cli
+      - uses: promptfoo/promptfoo-action@v1
+        with:
+          github-token: ${{ github.token }}
+          config: evals/${{ matrix.case }}/promptfooconfig.yaml
+          promptfoo-version: "0.122.2"
+
+  eval-recheck-fork-check:
+    name: eval-recheck (fork check)
+    if: >
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/eval') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    outputs:
+      is_fork: ${{ steps.fork-check.outputs.is_fork }}
+    steps:
+      # `issue_comment` payloads carry no `head.repo.fork` field the way `pull_request` payloads
+      # do — a collaborator commenting `/eval` on someone else's fork-originated PR would
+      # otherwise still trigger a run against that fork's content. Resolve fork status via the
+      # API before anything else in the re-run path runs.
+      - id: fork-check
+        run: echo "is_fork=$(gh pr view ${{ github.event.issue.number }} --repo ${{ github.repository }} --json isCrossRepository -q .isCrossRepository)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  eval-recheck:
+    name: eval-recheck (${{ matrix.case }})
+    needs: eval-recheck-fork-check
+    if: needs.eval-recheck-fork-check.outputs.is_fork == 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [bootstrap, roadmap, capture, lint, attribute]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm install -g @kilocode/cli
+      - uses: promptfoo/promptfoo-action@v1
+        with:
+          github-token: ${{ github.token }}
+          config: evals/${{ matrix.case }}/promptfooconfig.yaml
+          promptfoo-version: "0.122.2"

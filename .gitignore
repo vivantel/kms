@@ -1,0 +1,7 @@
+# Node dependencies (first introduced by the eval harness, docs/decisions/0043-eval-harness-for-shipped-skill-changes.md)
+node_modules/
+
+# promptfoo's own cache/session state lives under ~/.promptfoo, not the repo;
+# these are local eval-run artifacts this repo's own tooling produces.
+evals/scratch/
+*.eval-baseline.json

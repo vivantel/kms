@@ -1,0 +1,31 @@
+# Eval case: `capture` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# Run standalone: npx promptfoo eval -c evals/capture/promptfooconfig.yaml
+description: "kms capture — surfacing a contradiction from a work session"
+
+prompts:
+  - "Run the knowledge check."
+
+providers:
+  - id: "exec:evals/providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/capture/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      timeout_seconds: 480
+
+defaultTest:
+  options:
+    provider: "exec:evals/providers/kilo-judge.sh"
+  assert:
+    - type: llm-rubric
+      value: >
+        The transcript identifies and surfaces a contradiction between decision
+        0001-use-postgres.md (Postgres, active) and decision 0002-use-mysql.md (MySQL, active)
+        — both claim to be the project's primary datastore, and fact 0001-datastore-choice.md
+        still points at the superseded Postgres decision while src/db.py already connects to
+        MySQL. Per capture's own check 4 ("Contradiction found? Block."), the run should not
+        proceed to closing the session as clean without calling this out explicitly, even if it
+        also proposes a resolution (e.g. marking 0001 superseded by 0002, or asking which decision
+        is actually current).
+
+tests:
+  - {}

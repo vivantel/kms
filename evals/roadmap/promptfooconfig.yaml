@@ -1,0 +1,37 @@
+# Eval case: `roadmap` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# A single non-interactive `kilo run --auto` turn can't carry a real multi-turn interview, so
+# this grades the *first* turn's behavior: one question, a stated recommendation, no premature
+# writes — not the full interview-to-artifacts flow (see this case's note in
+# docs/decisions/0043-eval-harness-for-shipped-skill-changes.md's amendment).
+# Run standalone: npx promptfoo eval -c evals/roadmap/promptfooconfig.yaml
+description: "kms roadmap — interview mechanics on the opening turn"
+
+prompts:
+  - >
+    We're switching the public API's rate limiter from the fixed 60-second window
+    (docs/decisions/0001-fixed-window-rate-limit.md) to a token bucket, because bursty
+    traffic keeps tripping the fixed window's boundary — a client can send double its
+    allowance across a window edge. Interview me and save this as knowledge.
+
+providers:
+  - id: "exec:evals/providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/roadmap/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      timeout_seconds: 480
+
+defaultTest:
+  options:
+    provider: "exec:evals/providers/kilo-judge.sh"
+  assert:
+    - type: llm-rubric
+      value: >
+        The transcript asks the user exactly one clarifying question this turn (not several
+        bundled together), and if it presents discrete options it states a recommended one
+        rather than listing them neutrally. Per roadmap's own hard limits, it must NOT write
+        any decision/fact/guardrail/plan file to disk before an explicit go-ahead — check the
+        file listing shows no new files under docs/ this turn. Penalize an answer that either
+        asks multiple questions at once or writes artifacts without confirmation.
+
+tests:
+  - {}

@@ -11,5 +11,6 @@ id,title,tags,status
 0007-claude-code-plugin-uninstall-lifecycle,"Claude Code has no plugin uninstall/disable lifecycle hook","kms, packaging, claude-code, hooks",active
 0008-kilo-code-skills-spec,"Kilo Code CLI's skill format and remote-skill-source schema","kms, agent-agnostic, kilo, packaging",active
 0009-kilo-code-cli-headless-execution,"Kilo Code CLI's headless execution mode and multi-provider model configuration","kilo, automation",active
-0010-openrouter-free-tier-terms,"OpenRouter's free-tier model access, rate limits, and quota-extension mechanism","kms, openrouter",active
-0011-github-models-free-tier-terms,"GitHub Models' free-tier API, GITHUB_TOKEN access, and context-window limits","kms, github-models",active
+0010-openrouter-free-tier-terms,"OpenRouter's free-tier model access, rate limits, and quota-extension mechanism","kms, openrouter",deprecated
+0011-github-models-free-tier-terms,"GitHub Models' free-tier API, GITHUB_TOKEN access, and context-window limits","kms, github-models",deprecated
+0012-kilo-gateway-free-tier-access,"Kilo Code CLI's built-in gateway serves :free models with no account or API key","kms, kilo",active

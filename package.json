@@ -1,0 +1,11 @@
+{
+  "name": "vivantel-kms",
+  "private": true,
+  "description": "Eval harness tooling for plugins/kms/skills/** and plugins/kms/shared/** changes (docs/decisions/0043-eval-harness-for-shipped-skill-changes.md). This repo ships no npm package — it's a Claude Code plugin marketplace.",
+  "devDependencies": {
+    "promptfoo": "0.122.2"
+  },
+  "scripts": {
+    "eval": "for d in evals/*/; do [ -f \"$d/promptfooconfig.yaml\" ] || continue; echo \"=== $d ===\"; npx promptfoo eval -c \"$d/promptfooconfig.yaml\" \"$@\" || exit 1; done"
+  }
+}

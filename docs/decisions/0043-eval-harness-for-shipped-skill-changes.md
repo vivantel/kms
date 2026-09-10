@@ -5,7 +5,7 @@ status: active
 date: 2026-09-04
 tags: [kms, eval-harness, kilo, openrouter, github-models]
 track: process
-governed-facts: [0009-kilo-code-cli-headless-execution, 0010-openrouter-free-tier-terms, 0011-github-models-free-tier-terms]
+governed-facts: [0009-kilo-code-cli-headless-execution, 0012-kilo-gateway-free-tier-access]
 fitness-functions: ["Once implemented, run the initial 5-case suite against the current (pre-change) skill bodies and confirm every case passes, establishing a clean baseline before any skill-body change is ever compared against it."]
 ---
 
@@ -38,3 +38,66 @@ A separate judge model (GitHub Models) rather than reusing the OpenRouter runner
 - **A bespoke bash/python harness instead of `promptfoo`**: zero new dependency, but reimplements variance-averaging, structured reporting, and the before/after diff mechanic that `promptfoo` already provides and maintains.
 - **Colocated `evals/` per skill**, matching `examples.md`'s placement convention: more consistent with `kms`'s existing colocation habit, but needs `promptfoo --eval-dir` overrides or a wrapper script to aggregate 5 scattered directories — more moving parts than a first suite this size warrants.
 - **Chosen**: Kilo+OpenRouter running, GitHub Models judging, `promptfoo` orchestrating, 5 cases, centralized `evals/`.
+
+## Amendment (implementation-time, 2026-09-05)
+
+Executing this decision surfaced four deviations from what's written above. The decision's
+substance (Kilo+OpenRouter running, `promptfoo` orchestrating, 5 centralized cases) stands;
+these are corrections to implementation details this decision got wrong or left unverified,
+recorded here rather than silently reconciled, per this decision's own re-verification caveats.
+
+- **Judge model**: GitHub Models was fully retired 2026-07-30 (confirmed against
+  `docs.github.com/en/github-models`'s own retirement notice) — it is not a temporary outage,
+  and `docs/facts/0011-github-models-free-tier-terms.md` is stale. Rather than fall back to
+  self-grading on the same OpenRouter model doing the running (the literal runner-up this
+  decision's tradeoffs section named), the judge uses a *second*, distinct free OpenRouter model
+  (`z-ai/glm-5.2:free`, a large-context reasoning model, vs. the runner's
+  `poolside/laguna-s-2.1:free`, a dedicated coding-agent model) — preserving this decision's
+  anti-self-grading-bias intent without a working GitHub Models to depend on.
+- **Runner model**: `docs/facts/0010-openrouter-free-tier-terms.md`'s named example
+  (Qwen3 Coder) has rotated off OpenRouter's free tier entirely, confirming that fact's own
+  "expected to change" caveat. `poolside/laguna-s-2.1:free` — explicitly marketed by Poolside as
+  a coding-agent model, scored on Terminal-Bench — is the current equivalent.
+- **Case layout**: "matching `promptfoo`'s own convention" turned out to mean one self-contained
+  `evals/<case>/promptfooconfig.yaml` per case (providers/prompts/tests/assert inline, per
+  `promptfoo`'s real schema), not the `prompt.md` + `graders/*.md` directory shape with
+  `type: regex/tool_used/tool_order/file_exists/llm/baseline` frontmatter this decision
+  speculated — that shape does not exist in `promptfoo`; it appears to have been conflated with
+  a different, Claude-Code-specific plugin-eval format. `evals/<case>/` still centralizes one
+  directory per case, plus an optional fixture/ and setup.sh, matching this decision's intent.
+- **Provider config location**: Kilo's project-scope `kilo.jsonc`/`.kilo/kilo.jsonc` (any config
+  file discovered by walking up from cwd) categorically rejects `${env:...}`-style credential
+  interpolation — a deliberate guard against a checked-in, shared config exfiltrating arbitrary
+  env vars. This repo's own committed `kilo.jsonc` is therefore left untouched (`skills.urls`
+  only, per `docs/decisions/0035-native-kilo-code-support.md`); the OpenRouter provider is
+  supplied per-invocation via the `KILO_CONFIG_CONTENT` env var instead (see
+  `evals/providers/kilo-runner.sh`), which Kilo treats as trusted, operator-supplied
+  configuration rather than project configuration.
+
+## Amendment (implementation-time, 2026-09-10)
+
+The 2026-09-05 amendment above patched OpenRouter access around GitHub Models' retirement.
+Further testing found something better, superseding OpenRouter entirely rather than just its
+judge role: **Kilo Code CLI has its own built-in gateway serving `:free`-suffixed models with
+no account, no `kilo auth login`, and no API key at all** — confirmed by testing (`hasToken=false`
+on the `kilo` provider, a real completion returned regardless) — see
+`docs/facts/0012-kilo-gateway-free-tier-access.md`.
+
+- **Runner**: `kilo run --auto -m kilo/poolside/laguna-s-2.1:free "..."` — same model as the
+  09-05 amendment chose, just addressed through Kilo's own gateway instead of a separately
+  registered OpenRouter provider. No `KILO_CONFIG_CONTENT`, no custom `provider` block, no
+  `OPENROUTER_API_KEY` anywhere — the 09-05 amendment's "provider config location" workaround is
+  now moot, not just relocated.
+- **Judge**: `kilo/nvidia/nemotron-3-ultra-550b-a55b:free` (a large, general-reasoning model,
+  distinct from the runner's coding-agent model) via a second, minimal exec provider
+  (`evals/providers/kilo-judge.sh`) that promptfoo's `llm-rubric` assertions point at directly —
+  confirmed on a rubric-shaped grading prompt to return clean, parseable output rather than
+  reaching for tools (`kilo/z-ai/glm-5.2:free`, the 09-05 amendment's judge pick, doesn't exist in
+  Kilo's own gateway catalog, which curates a different subset than OpenRouter's raw catalog —
+  confirmed by testing, not assumed).
+- **Net effect**: `docs/decisions/0044-eval-harness-ci-safety-gates.md`'s CI workflow needs no
+  secret at all now — `OPENROUTER_API_KEY` is gone from every job, and the CI-secret step in
+  `docs/plans/eval-harness-for-skill-changes.md` (step 6) is moot. `@kilocode/cli` (the npm
+  package backing the `kilo` binary) is installed globally as a CI/local prerequisite instead.
+- `docs/facts/0010-openrouter-free-tier-terms.md` and `docs/facts/0011-github-models-free-tier-terms.md`
+  are marked `deprecated` — accurate records of paths tried and abandoned, not deleted.
