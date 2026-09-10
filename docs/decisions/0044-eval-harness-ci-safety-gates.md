@@ -80,3 +80,9 @@ artifact, and posts one consolidated comment with a row per case
 shareable link used `shareableUrl` from the exported JSON, a field that schema-exists but is
 never actually populated by `promptfoo export` (confirmed by inspecting a real exported file)
 — the real link is built from `evalId` instead, which is populated.
+
+The summary comment also renders, per *failed* case only, a collapsed `<details>` block with
+the actual invocation prompt, the failing assertion(s) (type, value, and the grader's own
+`reason`), and an excerpt of the actual model output — so "what was tested against what" is
+answerable directly from the PR, without opening `promptfoo.app` (which needs org access this
+repo's contributors may not all have) or hunting through the Actions log.
