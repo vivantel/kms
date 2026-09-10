@@ -8,7 +8,7 @@ prompts:
   - "Commit this with attribution."
 
 providers:
-  - id: "exec:evals/providers/kilo-runner.sh"
+  - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/attribute/fixture"
       model: "poolside/laguna-s-2.1:free"
