@@ -21,7 +21,7 @@ response. A non-`:free` model in the same catalog (e.g. `kilo/qwen/qwen3-coder`)
 `kilo` provider as a whole.
 
 This is a different mechanism from OpenRouter's own `:free` tier
-(`docs/facts/0010-openrouter-free-tier-terms.md`, now superseded for this repo's purposes): the
+(`docs/facts/archive/0010-openrouter-free-tier-terms.md`, now superseded for this repo's purposes): the
 `kilo` provider's catalog is Kilo's own curated subset, not a 1:1 mirror of OpenRouter's — a
 model id that's free on OpenRouter directly is not necessarily present, or free, under `kilo/`
 (e.g. `kilo/z-ai/glm-5.2:free` doesn't exist in this catalog at all).

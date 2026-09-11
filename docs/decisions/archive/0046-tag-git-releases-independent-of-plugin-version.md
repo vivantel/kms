@@ -1,12 +1,20 @@
 ---
 id: 0046-tag-git-releases-independent-of-plugin-version
 title: Tag git releases, starting fresh at 0.1.0, independent of plugin.json's own version
-status: active
+status: superseded
+superseded-by: 0048-tag-git-releases-matching-plugin-version
 date: 2026-09-10
 tags: [kms, git, release, packaging]
 track: process
 fitness-functions: ["Once lint or a CI check can verify it cheaply, confirm every plugins/kms manifest version bump commit has a matching git tag pushed at or shortly after that commit — until then, this is manually maintained debt, not automated."]
 ---
+
+> **Superseded 2026-09-11** by
+> `docs/decisions/0048-tag-git-releases-matching-plugin-version.md`: chose
+> to tag releases with a version matching `plugin.json` instead of the
+> independent sequence starting at `0.1.0` this decision established. The
+> `0.1.0` git tag itself was deleted and replaced with `0.11.0` at the
+> same commit.
 
 ## Decision
 
