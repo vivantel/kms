@@ -20,7 +20,7 @@ All four carry the base frontmatter `id, title, status, date, tags` — `status`
 
 For `tags`: if `docs/skills/tags.md` exists, every tag assigned to any of the four types MUST come from it — check each intended tag against the list's stated meanings before writing it. If none fit, propose a new tag (name, one-line meaning, why nothing existing covers it) and get confirmation before using it and adding it to the list.
 
-After writing any of the four types directly to disk, also add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format), if one exists.
+After writing any of the four types directly to disk, also add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format — a header line naming the fields, then one comma-separated row per artifact, no external spec lookup needed), if one exists.
 
 Fact — add `kind: environmental | decision | derived | mixed` (mixed = file has both; label each section inline) and `governed-by: <decision-id>` (`TBD` = debt).
 

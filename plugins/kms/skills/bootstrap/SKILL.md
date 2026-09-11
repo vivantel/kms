@@ -119,9 +119,10 @@ format: one row per artifact in that directory (excluding `INDEX.md`
 itself and anything under an `archive/` subdirectory) with
 fields `id, title, tags, status`, extracted from each file's
 frontmatter. Mark it `kms-generated: true` in a leading comment line,
-since `uninstall` needs to recognize it as this skill's output. Verify
-the current TOON spec before finalizing exact syntax — this step only
-fixes the field set and source (frontmatter), not the literal encoding.
+since `uninstall` needs to recognize it as this skill's output. TOON
+here is simple, no external lookup needed: a header line naming the
+fields, then one comma-separated row per artifact — match the exact
+shape of any `INDEX.md` already in this project if one exists.
 
 ## Out of scope
 

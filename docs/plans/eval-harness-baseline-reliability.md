@@ -156,9 +156,28 @@ this specific task — matching `docs/decisions/0043-...`'s own stated
 tradeoff going in. Legitimate if 3a–3c are tried first and don't move the
 needle enough.
 
+**Update, 2026-09-11 (second)**: gathered 2 more real runs specifically to check whether the
+judge fix alone had resolved this (it had looked like 2/2 clean passes right after that fix
+landed). It hadn't — the fuller run history (8 real runs total; see this plan's git history for
+the exact table) puts `bootstrap` back at a genuinely flaky ~50% post-judge-fix, not fixed. Both
+new failures reproduced the *exact* same transcript pattern as the very first one found: `exit
+124`, transcript ending mid-`WebFetch` to `toonformat.dev`/the TOON spec's GitHub repo. Root
+cause pinned down precisely: `plugins/kms/skills/bootstrap/SKILL.md` step 10 literally said
+*"Verify the current TOON spec before finalizing exact syntax"* — an explicit instruction to
+research externally, not just an unclear term as originally guessed. **3b implemented**: that
+instruction removed and replaced with a two-line inline definition (a header line + comma-separated
+rows, matching any `INDEX.md` already in the project) — no external lookup implied at all.
+Also softened the two other, lower-risk "TOON format" mentions in `shared/artifact-model.md` and
+`roadmap/SKILL.md` the same way. Verified locally before shipping: a fresh run produced zero
+TOON/WebFetch/WebSearch activity and completed the *entire* bootstrap task for real (all 4
+artifact types, both INDEX.mds, `docs-manifest.md`, `tags.md`, both role lists) — the only reason
+it still shows `exit 124` is that it went on to proactively run its own `lint` self-check
+afterward and ran past the ceiling doing that extra, unrequested step, not the original task.
+
 Done when: one of 3a/3b/3c is tried and either fixes `bootstrap` (a few
 consecutive real CI runs passing), or all three are tried without success
-and 3d is explicitly chosen and recorded here with why.
+and 3d is explicitly chosen and recorded here with why. 3b has been tried and looks strong on
+one local verification; still needs a few real CI runs post-merge before calling this closed.
 
 ### 4. Decide `roadmap`'s fix — status: pending
 
