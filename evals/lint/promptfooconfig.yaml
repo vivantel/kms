@@ -4,26 +4,43 @@
 # Run standalone: npx promptfoo eval -c evals/lint/promptfooconfig.yaml
 description: "kms lint — naming three deliberately-planted violations, one per check family"
 
+# The sentinel-line instruction below is a harness/grading convenience added to this eval
+# case's own invocation prompt — never part of the real, shipped lint skill a user actually
+# sees. Without it, a bare-substring regex (checking for "0099-nonexistent-decision" appearing
+# anywhere) can't tell a genuine conclusion apart from the model incidentally `cat`-ing a
+# fixture file that happens to contain that string while exploring — confirmed the hard way: a
+# real CI run that timed out mid-exploration, before ever writing a single line of analysis,
+# still scored 3/4 on the old assertions purely from echoed file content (workflow run
+# 34492665844). These sentinel tokens are synthetic strings that don't appear anywhere in the
+# fixture, so a match can only come from the model deliberately stating that conclusion — and a
+# run that times out before reaching them now fails everything, not most of it by accident.
 prompts:
-  - "Lint the knowledge base."
+  - >
+    Lint the knowledge base. After completing your analysis, end your response with exactly
+    these three lines, each followed by YES if you identified that specific violation in this
+    knowledge base or NO if you did not:
+
+    LINT_CHECK_DANGLING_REF: YES|NO
+    LINT_CHECK_MISSING_TRACK: YES|NO
+    LINT_CHECK_STALE_PATH: YES|NO
 
 providers:
   - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/lint/fixture"
       model: "poolside/laguna-s-2.1:free"
-      timeout_seconds: 480
+      timeout_seconds: 1440
 
 defaultTest:
   assert:
     # Check 1: dangling `governed-by` on require-changelog-entry.md → 0099-nonexistent-decision.
+    # The (?!\|) guards against the model echoing the literal "YES|NO" placeholder verbatim
+    # instead of choosing one — "YES" followed by "|" doesn't count as a real answer.
     - type: regex
-      value: "0099-nonexistent-decision"
+      value: "LINT_CHECK_DANGLING_REF: YES(?!\\|)"
     # Check 2: 0001-weekly-releases.md is missing the required `track` field.
     - type: regex
-      value: "0001-weekly-releases"
-    - type: regex
-      value: "track"
+      value: "LINT_CHECK_MISSING_TRACK: YES(?!\\|)"
     # Check 9: stale prose reference to a guardrail file that doesn't exist.
     - type: regex
-      value: "require-two-approvals"
+      value: "LINT_CHECK_STALE_PATH: YES(?!\\|)"

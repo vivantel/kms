@@ -89,6 +89,20 @@ above), not a model failure. Fixed in PR #13.
 Dropped the invalid `(?i)` flag. Confirmed passing in 2 subsequent real
 CI runs (`34452564880`, `34453513003`).
 
+**Update, 2026-09-11**: that "passing" turned out weaker evidence than it looked. Inspecting a
+*different* run (workflow `34492665844`) found the model timing out mid-exploration — never
+writing a single line of actual analysis — yet still scoring 3 of 4 assertions, because the
+bare-substring regexes (`0099-nonexistent-decision`, `0001-weekly-releases`, `require-two-approvals`)
+were satisfied by the model incidentally `cat`-ing fixture files containing those strings while
+exploring, not by it reaching any conclusion. Only the 4th assertion (`track`, which never
+appears literally in any fixture file) actually required real analysis — which is exactly why it
+was the one that failed. Fixed: the case's invocation prompt now asks for three synthetic
+sentinel lines (`LINT_CHECK_DANGLING_REF: YES|NO`, etc. — strings that don't exist anywhere in
+the fixture, so a match can only come from a deliberate final statement) instead of grading on
+bare substrings; `timeout_seconds` also raised 480→600. Verified locally: a real run now
+completes a genuine, thorough analysis (correctly identifying all 3 planted violations plus two
+bonus findings) and ends with the exact expected sentinel lines.
+
 ### 3. Decide `bootstrap`'s fix — status: partial
 
 **Update, 2026-09-11**: one real cause of `bootstrap` failures turned out

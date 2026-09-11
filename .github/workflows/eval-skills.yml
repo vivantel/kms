@@ -26,7 +26,7 @@ jobs:
     name: eval (${{ matrix.case }})
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -113,7 +113,7 @@ jobs:
     needs: eval-recheck-fork-check
     if: needs.eval-recheck-fork-check.outputs.is_fork == 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
