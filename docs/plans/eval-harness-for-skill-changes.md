@@ -38,8 +38,8 @@ yet"):
   being `OWNER`/`MEMBER`/`COLLABORATOR`.
 
 Supporting facts already written: `docs/facts/0009-kilo-code-cli-headless-execution.md`,
-`docs/facts/0010-openrouter-free-tier-terms.md`,
-`docs/facts/0011-github-models-free-tier-terms.md` — each carries a
+`docs/facts/archive/0010-openrouter-free-tier-terms.md`,
+`docs/facts/archive/0011-github-models-free-tier-terms.md` — each carries a
 "not confirmed with high confidence" caveat about exact syntax or
 figures that may have drifted since 2026-09-04. **Re-verify each one
 against the named tool/service's own current docs before writing the
