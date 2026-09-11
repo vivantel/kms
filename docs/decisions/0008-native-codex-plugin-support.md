@@ -5,6 +5,7 @@ status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
 track: product
+fitness-functions: ["docs/guardrails/plugin-manifest-version-sync.md ('every plugin manifest must be bumped together') has no procedure operationalizing it and no CI check enforcing it — found by lint's check 23 on 2026-09-11. Currently manual discipline only: whoever bumps one manifest's version has to remember to bump the other two and every skill entry in index.json in the same change. Automate as a CI check comparing all version fields on any PR touching a manifest, once worth the setup cost."]
 ---
 
 ## Decision
