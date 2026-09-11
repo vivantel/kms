@@ -12,15 +12,25 @@ set -u
 
 PROMPT="${1:-}"
 JUDGE_MODEL="${KMS_EVAL_JUDGE_MODEL:-nvidia/nemotron-3-ultra-550b-a55b:free}"
-TIMEOUT_SECONDS="${KMS_EVAL_JUDGE_TIMEOUT_SECONDS:-90}"
+TIMEOUT_SECONDS="${KMS_EVAL_JUDGE_TIMEOUT_SECONDS:-150}"
 
-# Run in an isolated, empty scratch directory so the judge model has no filesystem to explore
-# and no reason to reach for a tool — a plain grading answer only.
+# Run in an isolated, empty scratch directory as defense in depth, but the real fix for tool
+# detours is --agent summary below (see its own comment) — an empty directory alone didn't stop
+# the model from *attempting* tool calls, just made those attempts find nothing.
 SCRATCH="$(mktemp -d "${TMPDIR:-/tmp}/kms-eval-judge-XXXXXX")"
 trap 'rm -rf "$SCRATCH"' EXIT
 cd "$SCRATCH" || exit 1
 
-RAW="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto -m "kilo/${JUDGE_MODEL}" "$PROMPT" 2>&1)"
+# --agent summary: Kilo's built-in tool-free agent (every permission denied, confirmed via
+# `kilo agent list`). Grading prompts for cases with large transcripts (e.g. bootstrap) embed
+# text that looks like real tool-call output ("→ Read x", "$ ls -la ...") — confirmed by
+# testing, the default --auto agent sometimes reaches for a real tool on a prompt shaped like
+# that instead of just answering, burning the whole timeout and producing no output at all
+# ("Could not extract JSON from llm-rubric response" — because there was no response, not
+# because of a malformed one). --agent summary can't call a tool at all, so it always just
+# answers. Timeout raised from 90s to 150s too — large transcripts genuinely take longer even
+# without a tool detour (confirmed: ~98s for a 19KB prompt with --agent summary).
+RAW="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto --agent summary -m "kilo/${JUDGE_MODEL}" "$PROMPT" 2>&1)"
 
 # promptfoo's llm-rubric grader needs a response it can extract a {"pass":...} JSON object
 # from. Kilo's own decorative banner ("> code · <model>") and ANSI color codes sometimes broke
