@@ -89,10 +89,23 @@ above), not a model failure. Fixed in PR #13.
 Dropped the invalid `(?i)` flag. Confirmed passing in 2 subsequent real
 CI runs (`34452564880`, `34453513003`).
 
-### 3. Decide `bootstrap`'s fix — status: pending
+### 3. Decide `bootstrap`'s fix — status: partial
 
-Still open — see the "Current real baseline" section above for what's
-known: genuinely flaky (2/4 real runs timed out), not a hard failure.
+**Update, 2026-09-11**: one real cause of `bootstrap` failures turned out
+to be a harness bug, not the runner model at all — a *separate* problem
+from the timeout this step originally tracked. `bootstrap`'s transcript
+is large enough that its `llm-rubric` grading prompt (which embeds the
+whole transcript) sometimes made the *judge* model reach for a real tool
+instead of just answering, burning the judge's own timeout and producing
+no gradable response at all ("Could not extract JSON from llm-rubric
+response" — because there was no response). Fixed: `evals/providers/kilo-judge.sh`
+now runs the judge with `--agent summary` (Kilo's built-in tool-free
+agent), confirmed by a real CI run (workflow `34632007293`) where
+`bootstrap` passed. This does not fix the *other*, still-open cause below
+(the runner itself timing out on a research tangent) — that's a
+different failure mode, on the runner side, not the judge side. Treat
+this step as still open until 3a–3d below are actually tried.
+
 Options, roughly cheapest-to-most-invasive (unchanged from this plan's
 first version, since none have been tried yet):
 
@@ -138,6 +151,19 @@ and 3d is explicitly chosen and recorded here with why.
 New step, added after the judge-extraction fix revealed this is a real,
 reliable failure (see "Current real baseline" above), not the flaky
 harness error this plan originally thought it needed to investigate.
+
+**Update, 2026-09-11**: the *specific* violation isn't stable across
+runs, which matters for how to read this step. The run this step was
+originally written from failed on question-bundling (two questions in
+one turn). A later run (workflow `34632007293`, same unmodified prompt
+and skill) asked exactly one question — no bundling — but failed
+instead on not stating a recommended option among three it listed. Two
+different instructions in the same rubric, both violated, just not on
+the same run. Read this as: this free model reliably violates *something*
+in the rubric, not that it reliably violates the *same* thing — which
+weakens 4b below somewhat (there's no one fix in the wording that would
+address both observed failures) and strengthens 4a.
+
 Options:
 
 **4a. Accept it as this free model's genuine limitation** on multi-step
