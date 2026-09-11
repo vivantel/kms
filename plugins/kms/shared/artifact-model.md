@@ -28,4 +28,6 @@ Guardrail — add `governed-by: <decision-id>`, `grounded-in: <fact-id[, ...]>`,
 
 Decision — add `track: product | process` (required, exactly one — never `both`/`mixed`: product = what the project is for and who it serves; process = how it's built, organized, or shipped); `superseded-by: <decision-id>`, required when `status: superseded`; optionally `governed-facts: [<fact-id>, ...]` and `fitness-functions: [<check description>, ...]`.
 
+Procedure — optionally add `operationalizes: [<guardrail-id>, ...]` when this procedure is a runbook/playbook for a guardrail's required behavior, not general reference material. Many-to-many: a procedure may list several guardrails, and more than one procedure may list the same guardrail. Most procedures won't carry this field at all.
+
 **Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
