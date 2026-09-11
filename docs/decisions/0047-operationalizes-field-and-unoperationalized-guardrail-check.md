@@ -97,3 +97,22 @@ for organic `operationalizes` adoption to build up first.
   in practice (variants, revisions co-existing). Rejected.
 - **Chosen**: optional `operationalizes` on `Procedure`, many-to-many,
   plus `lint` check 23, shipped together.
+
+## Amendment (pre-merge review, 2026-09-11)
+
+Checked check 23 against this repo's own 14 guardrails before merging, per the standard
+"does this actually propagate correctly" pass: almost none of them could ever be satisfied by
+`operationalizes`, because the thing that actually carries most of them out is a *shipped
+skill* (`lint`, `bootstrap`, `capture` — code in `plugins/kms/skills/`), not a `docs/skills/*.md`
+procedure — and `lint` explicitly treats that packaging layer as out of its own scope. Check 23
+as originally worded had no way to recognize "enforced by code/CI instead of a written
+procedure" as satisfying a guardrail, so it would have flagged most of kms's own guardrails as
+unoperationalized, permanently and unactionably — not a one-time debt-surfacing like
+`docs/decisions/0040-...`'s checks, which real usage could eventually resolve.
+
+This isn't kms-specific: any project enforcing a rule via a script or CI job rather than a
+written runbook would hit the same false positive. Fixed by widening check 23's satisfying
+condition to "a procedure operationalizes it, *or* it's already actively enforced by code (a
+CI check, a hook, a shipped skill/tool's own logic)" — `plugins/kms/skills/lint/SKILL.md`'s
+check 23 wording updated accordingly. The field itself (`operationalizes`) is unchanged; only
+the check's definition of "satisfied" widened.
