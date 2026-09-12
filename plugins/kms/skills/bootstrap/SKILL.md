@@ -113,16 +113,15 @@ touching anything else in the file.
 
 ### 10. Seed the per-type index
 
-For each of
-`docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md` in TOON
-format: one row per artifact in that directory (excluding `INDEX.md`
-itself and anything under an `archive/` subdirectory) with
-fields `id, title, tags, status`, extracted from each file's
-frontmatter. Mark it `kms-generated: true` in a leading comment line,
-since `uninstall` needs to recognize it as this skill's output. TOON
-here is simple, no external lookup needed: a header line naming the
-fields, then one comma-separated row per artifact — match the exact
-shape of any `INDEX.md` already in this project if one exists.
+For each of `docs/{facts,decisions,guardrails,skills}/`, write
+`INDEX.md` with one row per artifact in that directory (excluding
+`INDEX.md` itself and anything under an `archive/` subdirectory),
+fields `id, title, tags, status` extracted from each file's
+frontmatter, in the CSV format defined in
+`../../shared/artifact-model.md`. Mark it `kms-generated: true` in a
+leading comment line, since `uninstall` needs to recognize it as this
+skill's output. Match the exact shape of any `INDEX.md` already in
+this project if one exists.
 
 ## Out of scope
 

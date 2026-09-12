@@ -1,5 +1,5 @@
 <!-- kms-generated: true -->
-# Decisions index (TOON)
+# Decisions index (CSV)
 
 id,title,tags,status
 0001-knowledge-artifact-storage-convention,"Knowledge artifacts live under docs/{facts,decisions,guardrails,skills}/","kms, roadmap, knowledge-management",active
@@ -41,10 +41,10 @@ id,title,tags,status
 0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",active
 0039-unify-lifecycle-and-drop-scope,"Unify status and expires across all four artifact types; add superseded-by; drop scope","kms, knowledge-management, taxonomy",active
 0040-lint-contradiction-and-staleness-checks,"Add lint checks for cross-artifact contradiction, stale debt, and stale fitness-functions","kms, knowledge-management, taxonomy",active
-0041-index-and-archive-for-scale,"Add a per-type TOON index and an archive mechanism for superseded/deprecated artifacts","kms, knowledge-management, scale",active
 0042-tag-vocabulary-and-scoped-contradiction-check,"Add a canonical tag vocabulary; scope the contradiction check to tag overlap","kms, knowledge-management, scale",active
 0043-eval-harness-for-shipped-skill-changes,"Adopt Kilo+OpenRouter+promptfoo as the eval harness comparing shipped skill-body changes","kms, eval-harness, kilo, openrouter, github-models",active
 0044-eval-harness-ci-safety-gates,"Wire the eval harness into CI with fork and comment safety gates","kms, eval-harness",active
 0045-seed-tags-from-canonical-list-as-template,"Extend the seeded guardrail templates to include tags-from-canonical-list","kms, knowledge-management, guardrail",active
 0047-operationalizes-field-and-unoperationalized-guardrail-check,"Add an optional operationalizes field to Procedure, plus a lint check for guardrails missing one","kms, knowledge-management, taxonomy, guardrail",draft
 0048-tag-git-releases-matching-plugin-version,"Tag git releases with the same version as plugin.json, not a separate sequence","kms, git, release, packaging",active
+0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active

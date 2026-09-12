@@ -20,7 +20,7 @@ All four carry the base frontmatter `id, title, status, date, tags` — `status`
 
 For `tags`: if `docs/skills/tags.md` exists, every tag assigned to any of the four types MUST come from it — check each intended tag against the list's stated meanings before writing it. If none fit, propose a new tag (name, one-line meaning, why nothing existing covers it) and get confirmation before using it and adding it to the list.
 
-After writing any of the four types directly to disk, also add or update its row in that type's `INDEX.md` (`id, title, tags, status`, TOON format — a header line naming the fields, then one comma-separated row per artifact, no external spec lookup needed), if one exists.
+After writing any of the four types directly to disk, also add or update its row in that type's `INDEX.md`, if one exists: CSV — a header line naming the fields (`id, title, tags, status`), then one comma-separated row per artifact. A field containing a comma (e.g. `tags`) is wrapped in double quotes, with its items comma-separated inside the quotes — e.g. `"kms, naming, branding"`. If a value ever needs multiple parts that can't just be comma-separated inside quotes, quote the cell and separate with `;` instead — no field has needed this yet.
 
 Fact — add `kind: environmental | decision | derived | mixed` (mixed = file has both; label each section inline) and `governed-by: <decision-id>` (`TBD` = debt).
 

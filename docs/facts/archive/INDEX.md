@@ -1,5 +1,5 @@
 <!-- kms-generated: true -->
-# Facts archive index (TOON)
+# Facts archive index (CSV)
 
 id,title,tags,status
 0010-openrouter-free-tier-terms,"OpenRouter's free-tier model access, rate limits, and quota-extension mechanism","kms, openrouter",deprecated

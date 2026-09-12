@@ -1,5 +1,5 @@
 <!-- kms-generated: true -->
-# Facts index (TOON)
+# Facts index (CSV)
 
 id,title,tags,status
 0001-kms-skill-names,"Names of the commit/PR attribution and changelog skills","kms, naming",active
