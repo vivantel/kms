@@ -5,7 +5,7 @@ status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0009-bootstrap-and-steward-skills
-grounded-in: TBD
+grounded-in: [0014-guardrails-carry-derivation-prose]
 derivation-note: >
   Given decision 0009 (every normative artifact must trace to its
   sources), every guardrail must declare governed-by, grounded-in, and
@@ -26,9 +26,9 @@ left silent.
   — the team committed to a knowledge system where every normative
   artifact traces to the axiomatic and descriptive artifacts that
   produced it.
-- **Descriptive basis**: this repo's own guardrails (`docs/guardrails/*.md`)
-  already carry `## Derivation` sections in prose — this makes that
-  existing pattern a structured, machine-checkable frontmatter
-  requirement rather than only a prose convention.
+- **Descriptive basis**: `docs/facts/0014-guardrails-carry-derivation-prose.md`
+  — this repo's own guardrails already carry `## Derivation` sections in
+  prose; this makes that existing pattern a structured, machine-checkable
+  frontmatter requirement rather than only a prose convention.
 - **Normative conclusion**: therefore any guardrail file carries these
   three fields, regardless of how it was created.

@@ -24,7 +24,7 @@ After writing any of the four types directly to disk, also add or update its row
 
 Fact — add `kind: environmental | decision | derived | mixed` (mixed = file has both; label each section inline) and `governed-by: <decision-id>` (`TBD` = debt).
 
-Guardrail — add `governed-by: <decision-id>`, `grounded-in: [<fact-id>, ...]`, and `derivation-note: <one sentence: given decision X and fact Y, Z must/must not follow>`. `grounded-in` is always a YAML list, even with one entry (`[<fact-id>]`) — never a comma-joined string. Missing any of the three = undeclared, flag as debt.
+Guardrail — add `governed-by: <decision-id>`, `grounded-in: [<fact-id, decision-id, or guardrail-id>, ...]`, and `derivation-note: <one sentence: given decision X and fact Y, Z must/must not follow>`. `grounded-in` normally holds the independent fact a guardrail rests on; when no such fact exists, it may instead hold a decision or sibling-guardrail id — including the same id already in `governed-by`, when the guardrail is a direct, unmediated consequence of that decision alone (`docs/decisions/0051-...`). Always a YAML list, even with one entry — never a comma-joined string. Missing any of the three = undeclared, flag as debt.
 
 Decision — add `track: product | process` (required, exactly one — never `both`/`mixed`: product = what the project is for and who it serves; process = how it's built, organized, or shipped); `superseded-by: <decision-id>`, required when `status: superseded`; optionally `governed-facts: [<fact-id>, ...]` and `fitness-functions: [<check description>, ...]`.
 
