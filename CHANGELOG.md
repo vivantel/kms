@@ -1,5 +1,62 @@
 # Changelog
 
+## [0.12.0] - 2026-09-12
+
+### Added
+
+- `operationalizes: [<guardrail-id>, ...]` — an optional field on `Procedure` (the only one of the four governed types that previously had zero type-specific frontmatter), plus `lint` check 23 flagging a guardrail whose text describes a recurring/multi-step action with no procedure operationalizing it and nothing else already enforcing it (a CI check, a hook, a shipped skill's own logic all count). Motivated by asking whether `kms` needs a 5th "runbook"/"playbook" artifact type — it doesn't; a runbook already fits `Procedure`'s existing definition, and check 23 was the actual missing piece: nothing let a guardrail's required behavior be checked against whether a written procedure exists for it.
+- `lint` check 24: a `docs/plans/*.md` file whose own per-step legend is all `done` and still sitting in the live `docs/plans/` directory is now flagged as an archive candidate, mirroring the four governed types' existing archive mechanism (`docs/plans/archive/`) — without imposing any governed `status`/`track` lifecycle on plans, which `docs/decisions/0037-...` deliberately excludes them from. Applied to the current backlog: 9 fully-done plans archived (3 backfilled with minimal frontmatter first, since they predated the plan-frontmatter convention).
+
+### Fixed
+
+- `bootstrap`'s eval case was genuinely flaky post-judge-fix, not resolved as an earlier small sample suggested. Root-caused precisely: `bootstrap/SKILL.md` step 10 literally said "verify the current TOON spec before finalizing exact syntax" — an explicit instruction to research externally, not just an unclear term — and separately, `evals/bootstrap/promptfooconfig.yaml`'s `timeout_seconds` was too tight for otherwise-legitimate thorough exploration. Both fixed (inline definition replacing the research instruction; timeout raised 480s → 1440s). A full self-scan then found the TOON naming itself was the deeper issue — none of this project's own `INDEX.md` files use any TOON feature beyond what plain CSV already expresses, so the format is now defined directly as strict, quoted CSV (`docs/decisions/0049-plain-csv-index-not-toon.md`, superseding `docs/decisions/0041-...`), removing the "verify an external spec" temptation at its root rather than just describing it better.
+- `lint`'s own eval case scored a passing grade on a run that had actually timed out mid-exploration without writing any real analysis, because its old bare-substring regex assertions were incidentally satisfied by the model `cat`-ing fixture files containing the same strings. Fixed by grading on synthetic sentinel lines instead (strings that exist nowhere in the fixture, so a match can only come from a deliberate final statement).
+- A full `lint` pass over this repo's own knowledge base found and fixed three real, pre-existing defects: two guardrails' `grounded-in` fields were malformed (a comma-joined string instead of a YAML list, traceable to ambiguous notation in `plugins/kms/shared/artifact-model.md`'s own field spec — now unambiguous, and `lint` check 2 now verifies list-shaped fields are actually lists); `docs/skills/tags.md` had no base frontmatter at all (written directly during a plan's execution rather than through an actual `bootstrap` run, and `lint` check 2 never asserted universal base-frontmatter presence — now it does); and `docs/decisions/0047-...` sat at `status: draft` for two days after its own described mechanism had already shipped and been cited as settled fact elsewhere (promoted to `active`).
+
+### Changed
+
+- Adopted a free Kilo Code CLI + promptfoo eval harness (`evals/`) comparing shipped skill-body changes, wired into CI (`.github/workflows/eval-skills.yml`) with fork/comment safety gates — closing fitness-function debt logged against `docs/decisions/0040-...`. Runs 5 cases (`bootstrap`, `roadmap`, `capture`, `lint`, `attribute`) through Kilo's own built-in free gateway, no account or API key needed for a local run. Iterated through a long real-CI-driven debugging pass (invalid regex flags, a promptfoo `exec:`-provider path-resolution quirk, an action that deletes its own output file before a later step can read it, ANSI codes breaking JSON extraction, a judge model reaching for tools on large transcripts instead of answering) before reaching a stable baseline: `capture`, `attribute`, `lint`, and `bootstrap` reliably pass; `roadmap` is an accepted, narrow, known flake on the discrete-options interview mechanic specifically — a genuine free-tier model limitation, not a harness defect (`docs/plans/archive/eval-harness-baseline-reliability.md`).
+- Optionally enabled promptfoo's hosted sharing (a `PROMPTFOO_API_KEY` CI secret) so the PR summary comment's result links actually resolve, and consolidated what was briefly 5 separate per-case PR comments into one summary comment with `<details>` failure blocks (prompt, failing assertion, grader reason, output excerpt) for anyone without promptfoo.app org access.
+- Git tags now mirror `plugin.json`'s own version directly (`docs/decisions/0048-...`) instead of an independently-incrementing sequence (`docs/decisions/archive/0046-...`, superseded) — one number, not two, since this repo ships exactly one plugin today.
+
+## [0.11.0] - 2026-09-11
+
+### Added
+
+- Executed `docs/plans/eval-harness-for-skill-changes.md` end to end: `package.json`, the 5 promptfoo eval cases under `evals/` (each with a fixture and a Kilo-driven exec provider), and the CI workflow. Discovered mid-execution that GitHub Models (the originally-decided judge) had been fully retired, and that Kilo Code CLI's own built-in gateway serves the exact `:free`-suffixed models this harness needs with no account, login, or API key at all — superseding the OpenRouter-based design and removing every CI secret requirement.
+
+### Fixed
+
+- A string of real-CI-only bugs found by actually running the harness rather than reasoning about it: an invalid empty `tests: [{}]` entry promptfoo rejects outright; each case's `exec:` provider path resolving relative to its config file rather than the process's working directory; `promptfoo-action` deleting its own `-o` output file before a later workflow step could read it (fixed by exporting from promptfoo's persistent local store instead); an inline `(?i)` regex flag `lint`'s case used that plain JS `RegExp` doesn't support (masking that the model's own analysis was actually correct); and the grading judge failing to extract JSON from its own response on long rubric prompts because Kilo's decorative banner/ANSI codes broke the parser, then — after that first fix — reaching for an actual tool on large transcripts instead of just answering (fixed with Kilo's tool-free `--agent summary`).
+
+### Changed
+
+- Enabled promptfoo's hosted sharing via a `PROMPTFOO_API_KEY` CI secret, then replaced 5 separate per-case PR comments (one per matrix leg, indistinguishable at a glance, and 5 notifications per run) with a single consolidated summary comment, later extended with a collapsed `<details>` block per *failed* case showing the actual prompt, failing assertion, grader reasoning, and an output excerpt directly in the PR.
+
+### Documentation
+
+- Recorded the real, evolving eval-harness baseline as it was actually measured across many live CI runs (`docs/plans/archive/eval-harness-baseline-reliability.md`), rather than assumed from a single early sample — the initial "3/5 passing" reading turned out to hide two harness bugs, and a later "2/2 clean passes" reading of `bootstrap` after one fix turned out to be too small a sample once more runs came in.
+- Captured, then corrected, the release-tagging scheme: first as an independent sequence starting at `0.1.0` (`docs/decisions/archive/0046-...`), then superseded in favor of mirroring `plugin.json`'s own version directly (see `[0.12.0]` above).
+
+## [0.10.0] - 2026-09-04
+
+### Added
+
+- A code-review pass found the prior taxonomy/plan-organization plan structurally broken (its Done-when criteria couldn't be satisfied by its own steps). Reopening it via a `roadmap` interview surfaced that the underlying artifact model itself needed revision: plans are not a 5th governed artifact type (`docs/decisions/0037-...`); `track` is mutually exclusive everywhere it's stored, `both`/`mixed` is never a literal value (`0038`); `status` is unified into one enum across all four governed types, `expires` extends to all four, `scope` is dropped, decisions gain a structured `superseded-by` field (`0039`); `lint` gains cross-artifact-contradiction, stale-debt, and stale-fitness-function checks (`0040`). A follow-up scale-focused interview added a per-type TOON-format `INDEX.md` so `query`/`onboard` don't have to read every file, an archive mechanism for superseded/deprecated artifacts, and a canonical tag vocabulary with tag-scoped contradiction checking (`0041`, `0042`).
+- Executed both resulting plans: the lifecycle/taxonomy retrofit (35 decisions' `status` migrated, "skill prescription" renamed to "procedure" across README/skill bodies) and the KB-scale plan (per-type `INDEX.md` files, `docs/skills/tags.md`, `0006` archived). Both executions surfaced and fixed real defects a review pass caught: leaked dogfooding-repo-specific citations in shipped skill-body text, and a decision-immutability violation (three already-accepted decisions had been edited to point at 0006's new archive path — reverted, since decisions are immutable once accepted and a stale reference in one is an accurate record of what was true when it was written, not an error).
+- Adopted a free Kilo Code CLI + OpenRouter + promptfoo eval harness design for comparing shipped skill-body changes (`docs/decisions/0043-...`, `0044-...`), closing fitness-function debt logged against `0040`. Not yet built at this point — see `[0.11.0]`.
+
+## [0.9.0] - 2026-08-30
+
+### Added
+
+- Native Kilo Code CLI support: `plugins/kms/skills/index.json`, a remote-skills manifest matching Kilo's `skills.urls` config mechanism, letting a Kilo user track this repo without copying files into their own project. Kilo Code CLI itself needs no manifest — it reads plain `SKILL.md` folders directly in the same open Agent Skills format Claude Code and Codex use. The version-sync guardrail (`docs/guardrails/plugin-manifest-version-sync.md`) extends to cover `index.json`'s per-skill version fields.
+
+### Documentation
+
+- Extracted per-agent install steps into a standalone `INSTALLING.md` — README's Installing section previously mixed three agents' setup instructions as consecutive prose with no way to deep-link or scan for just one agent's steps.
+- While tightening README's setup instructions, re-verified the Codex install-command claim in `docs/facts/0003-...` against a second primary source; it didn't corroborate. Retracted the unconfirmed claim with a dated note rather than leave an unverified command in a user-facing doc.
+
 ## [0.8.0] - 2026-08-30
 
 ### Changed
