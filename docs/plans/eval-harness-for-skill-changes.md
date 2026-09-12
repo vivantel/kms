@@ -265,7 +265,7 @@ Done when: `gh secret list --repo vivantel/kms` shows
 `OPENROUTER_API_KEY` present (value itself is never visible, only the
 name and last-updated date).
 
-### 7. Run the baseline and confirm the fitness-function — status: partial
+### 7. Run the baseline and confirm the fitness-function — status: done
 
 Run for real in CI (multiple runs; see
 `docs/plans/eval-harness-baseline-reliability.md` for the full history
@@ -292,9 +292,23 @@ promptfoo's JSON extraction on longer rubric prompts). Both fixed (PRs
   would: surfacing a genuine free-tier fidelity gap on a
   judgment-heavy case, not a broken test.
 
-Not yet done: `docs/plans/eval-harness-baseline-reliability.md` steps 3–4
-(deciding `bootstrap`'s and `roadmap`'s fix, if any) — continue there,
-not here.
+**Update, 2026-09-12**: `docs/plans/eval-harness-baseline-reliability.md` steps 3–4 are both
+closed now. `bootstrap` is fixed for real — two root causes found and fixed (a judge-side
+tool-detour bug; the runner-side TOON research tangent, later hardened by dropping the TOON name
+entirely in favor of plain CSV, `docs/decisions/0049-...`) plus a generic timeout raise, all
+verified via live, passing CI runs (PRs #27, #36, #39, #40). `bootstrap` is now reliable.
+`roadmap` is not fixed, by deliberate choice: 3 real runs show it solid (3/3) on one-question-per-
+turn discipline but narrowly unreliable specifically on the discrete-options mechanic (bundling,
+or listing options without a stated recommendation) — a genuine free-tier model limitation on
+that one mechanic, not a harness or instruction defect (the relevant instruction is already a
+plain, unambiguous sentence). Accepted as-is (4a in the reliability plan), matching
+`docs/decisions/0043-...`'s own stated tradeoff going in.
+
+**Accepted baseline**: 4/5 cases (`capture`, `attribute`, `lint`, `bootstrap`) reliably pass.
+`roadmap` is a known, narrow, accepted flake on the discrete-options mechanic specifically — not
+a suite defect, and not blocking. A future skill-body change should compare against *this*
+baseline: `roadmap` staying flaky in the same specific way is expected and not itself a
+regression signal; a new or different `roadmap` failure mode would be.
 
 Per `docs/decisions/0043-...`'s own `fitness-functions` entry: once
 steps 1–5 are done, run the full 5-case suite locally
