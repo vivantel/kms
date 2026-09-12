@@ -49,3 +49,4 @@ id,title,tags,status
 0048-tag-git-releases-matching-plugin-version,"Tag git releases with the same version as plugin.json, not a separate sequence","kms, git, release, packaging",active
 0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active
 0050-version-bump-changelog-linkage,"Require a CHANGELOG entry for every plugin manifest version bump","kms, git, changelog, release, packaging",active
+0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",active

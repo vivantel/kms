@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0026-token-economy-guardrail
-grounded-in: TBD
+grounded-in: [0026-token-economy-guardrail]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
@@ -35,8 +35,9 @@ already draws.
 - **Axiomatic basis**: `docs/decisions/0026-token-economy-guardrail.md`
   — the team committed to enforcing this as a real, checked guardrail
   rather than leaving it as unenforced aspiration.
-- **Descriptive basis**: TBD — no existing fact documents why this
-  matters specifically; a future fact could ground this more precisely.
+- **Descriptive basis**: `docs/decisions/0026-token-economy-guardrail.md` itself,
+  in the absence of an independent fact — a future fact could ground this more
+  precisely if one is ever written.
 - **Normative conclusion**: therefore any fact, guardrail, or procedure
   in a project's own `docs/{facts,guardrails,skills}/` found
   more verbose than needed is flagged by `lint`'s full-repo sweep, which

@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0010-decision-track-field
-grounded-in: TBD
+grounded-in: [0001-knowledge-artifact-storage-convention]
 derivation-note: >
   Given decision 0010 (decisions distinguish product from process),
   every decision must declare which, or the distinction has no teeth.

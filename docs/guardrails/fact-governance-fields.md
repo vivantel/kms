@@ -5,7 +5,7 @@ status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0009-bootstrap-and-steward-skills
-grounded-in: TBD
+grounded-in: [0001-knowledge-artifact-storage-convention]
 derivation-note: >
   Given decision 0009 (facts must be traceable to their kind and
   governing decision), every fact file must declare kind and

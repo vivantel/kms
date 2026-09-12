@@ -5,7 +5,7 @@ status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0042-tag-vocabulary-and-scoped-contradiction-check
-grounded-in: TBD
+grounded-in: [0001-knowledge-artifact-storage-convention]
 derivation-note: >
   Given decision 0042 (a canonical tag vocabulary exists so tag-scoped
   checks and discovery work), any artifact's tags must be drawn from

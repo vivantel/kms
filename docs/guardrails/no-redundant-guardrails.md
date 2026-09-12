@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
 governed-by: 0027-baseline-guardrail-seeding
-grounded-in: TBD
+grounded-in: [0012-no-redundant-guardrails]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
@@ -26,7 +26,9 @@ to be specific to X, in which case reword it as a system-wide invariant.
   — kms's own copy of a guardrail it also ships as a template to every
   adopting project. Originally established for this repo by
   `docs/decisions/0012-no-redundant-guardrails.md`.
-- **Descriptive basis**: TBD.
+- **Descriptive basis**: `docs/decisions/0012-no-redundant-guardrails.md` — the
+  decision that originally established this principle for this repo, before
+  it was later re-packaged as a seeded template by `0027`.
 - **Normative conclusion**: therefore any guardrail found only true
   "whenever skill X does Y" is flagged, matching `lint` check 5.
 

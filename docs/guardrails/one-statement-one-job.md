@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
 governed-by: 0027-baseline-guardrail-seeding
-grounded-in: TBD
+grounded-in: [0027-baseline-guardrail-seeding]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
@@ -24,7 +24,9 @@ governed, verified, or superseded independently.
 - **Axiomatic basis**: `docs/decisions/0027-baseline-guardrail-seeding.md`
   — kms's own copy of a guardrail it also ships as a template to every
   adopting project.
-- **Descriptive basis**: TBD.
+- **Descriptive basis**: `docs/decisions/0027-baseline-guardrail-seeding.md` itself
+  — no independent fact exists distinct from the team's own commitment; `0027`
+  serves as both bases.
 - **Normative conclusion**: therefore any fact/guardrail/derivation-note
   found doing two jobs in this repo is split, matching `lint` check 11.
 

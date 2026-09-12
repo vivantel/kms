@@ -5,7 +5,7 @@ status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0039-unify-lifecycle-and-drop-scope
-grounded-in: TBD
+grounded-in: [0001-knowledge-artifact-storage-convention]
 derivation-note: >
   Given decision 0039 (supersession moves from free text in status to a
   dedicated field), a decision with status: superseded must carry

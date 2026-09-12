@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0015-facts-must-not-be-audit-log-records
-grounded-in: TBD
+grounded-in: [fact-governance-fields]
 derivation-note: >
   Given decision 0015 (kms stays a knowledge base, not a log), a fact
   grounding nothing and referenced by nothing is noise, not knowledge.

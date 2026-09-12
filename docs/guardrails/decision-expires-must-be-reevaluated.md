@@ -5,7 +5,7 @@ status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
 governed-by: 0039-unify-lifecycle-and-drop-scope
-grounded-in: TBD
+grounded-in: [0001-knowledge-artifact-storage-convention]
 derivation-note: >
   Given decision 0039 (expires extends from decision-only to all four
   artifact types), any fact/decision/guardrail/procedure past its bound
