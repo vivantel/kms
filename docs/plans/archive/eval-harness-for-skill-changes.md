@@ -1,7 +1,7 @@
 ---
 id: eval-harness-for-skill-changes
 title: Build the Kilo+OpenRouter+promptfoo eval harness for comparing shipped skill-body changes, wired into CI with fork/comment safety gates
-status: blocked (steps 1-6, 8 done — step 6 turned out moot, no secret needed at all, see docs/decisions/0043-...'s 2026-09-10 amendment; step 7's local execution deferred to CI per instruction, not blocked on credentials anymore)
+status: done (all 8 steps complete — step 6 turned out moot, no secret needed at all, see docs/decisions/0043-...'s 2026-09-10 amendment; step 7 confirmed via live CI, accepted baseline recorded in its own 2026-09-12 update below)
 date: 2026-09-04
 tags: [kms, eval-harness, taxonomy, refactor]
 ---

@@ -15,7 +15,6 @@
 
 ### Added
 
-- `operationalizes: [<guardrail-id>, ...]` — an optional field on `Procedure` (the only one of the four governed types that previously had zero type-specific frontmatter), plus `lint` check 23 flagging a guardrail whose text describes a recurring/multi-step action with no procedure operationalizing it and nothing else already enforcing it (a CI check, a hook, a shipped skill's own logic all count). Motivated by asking whether `kms` needs a 5th "runbook"/"playbook" artifact type — it doesn't; a runbook already fits `Procedure`'s existing definition, and check 23 was the actual missing piece: nothing let a guardrail's required behavior be checked against whether a written procedure exists for it.
 - `lint` check 24: a `docs/plans/*.md` file whose own per-step legend is all `done` and still sitting in the live `docs/plans/` directory is now flagged as an archive candidate, mirroring the four governed types' existing archive mechanism (`docs/plans/archive/`) — without imposing any governed `status`/`track` lifecycle on plans, which `docs/decisions/0037-...` deliberately excludes them from. Applied to the current backlog: 9 fully-done plans archived (3 backfilled with minimal frontmatter first, since they predated the plan-frontmatter convention).
 
 ### Fixed
@@ -35,6 +34,7 @@
 ### Added
 
 - Executed `docs/plans/eval-harness-for-skill-changes.md` end to end: `package.json`, the 5 promptfoo eval cases under `evals/` (each with a fixture and a Kilo-driven exec provider), and the CI workflow. Discovered mid-execution that GitHub Models (the originally-decided judge) had been fully retired, and that Kilo Code CLI's own built-in gateway serves the exact `:free`-suffixed models this harness needs with no account, login, or API key at all — superseding the OpenRouter-based design and removing every CI secret requirement.
+- `operationalizes: [<guardrail-id>, ...]` — an optional field on `Procedure` (the only one of the four governed types that previously had zero type-specific frontmatter), plus `lint` check 23 flagging a guardrail whose text describes a recurring/multi-step action with no procedure operationalizing it and nothing else already enforcing it (a CI check, a hook, a shipped skill's own logic all count). Motivated by asking whether `kms` needs a 5th "runbook"/"playbook" artifact type — it doesn't; a runbook already fits `Procedure`'s existing definition, and check 23 was the actual missing piece: nothing let a guardrail's required behavior be checked against whether a written procedure exists for it.
 
 ### Fixed
 
