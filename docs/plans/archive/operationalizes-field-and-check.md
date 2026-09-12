@@ -1,7 +1,7 @@
 ---
 id: operationalizes-field-and-check
 title: Ship the operationalizes field and lint check 23
-status: steps 1-4, 6 done; step 5 (changelog entry) still pending
+status: done (all 6 steps complete)
 date: 2026-09-10
 tags: [kms, knowledge-management, taxonomy, guardrail]
 ---
@@ -87,16 +87,12 @@ knowledge base found the decision still sitting at `draft` despite its described
 use for two days (even cited as settled fact by `docs/decisions/0049-...`). Promoted to
 `status: active` in both the decision file and `docs/decisions/INDEX.md`.
 
-### 5. Generate a CHANGELOG.md entry — status: pending
+### 5. Generate a CHANGELOG.md entry — status: done
 
-Not done in this pass — `docs/decisions/0005-changelog-generation-design.md`
-scopes the `changelog` skill as on-demand, asking the user for the
-version/date at invocation rather than being auto-run as a side effect of
-other work. Run it explicitly (`"generate a changelog"`) once this
-change is ready to ship, using `0.11.0` as the version.
-
-Done when: `CHANGELOG.md` has a `## [0.11.0] - <date>` entry covering
-this change.
+**Update, 2026-09-12**: satisfied via `docs/decisions/0050-version-bump-changelog-linkage.md`'s
+backfill — `CHANGELOG.md`'s `## [0.11.0] - 2026-09-11` entry now has an `### Added` bullet
+covering this change (the `operationalizes` field and lint check 23), correctly attributed to
+`0.11.0` (the version this change's own bump commit produced), not the later `0.12.0`.
 
 ### 6. Run the eval suite — status: done
 
