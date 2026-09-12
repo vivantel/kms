@@ -31,3 +31,5 @@ Decision — add `track: product | process` (required, exactly one — never `bo
 Procedure — optionally add `operationalizes: [<guardrail-id>, ...]` when this procedure is a runbook/playbook for a guardrail's required behavior, not general reference material. Many-to-many: a procedure may list several guardrails, and more than one procedure may list the same guardrail. Most procedures won't carry this field at all.
 
 **Derivation recipe**: `Decision (why) + Fact (what is) → Guardrail (ought)`. The `derivation-note` states that step in one sentence; if either source changes, re-apply and propose updated guardrail text.
+
+**Economy**: a fact, guardrail, or procedure stub (decisions and plans exempt) uses the shortest phrasing that preserves meaning. Before considering a newly-drafted one done, re-read it once specifically for restatement (a point already made earlier in this file, or in a sibling artifact from the same drafting pass) and length — tighten before finishing, not after, the same way a shipped `SKILL.md` edit gets one full re-read before being considered done.

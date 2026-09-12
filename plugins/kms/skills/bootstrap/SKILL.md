@@ -7,7 +7,7 @@ Set up the knowledge system this plugin's other skills assume: intents (what the
 
 ## Artifact model
 
-This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, and the derivation recipe — read it before drafting anything. Fact and guardrail stubs written here use the shortest phrasing that preserves meaning — decisions and plans are exempt.
+This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, the derivation recipe, and the economy rule for stubs written here — read it before drafting anything.
 
 ## Before starting
 

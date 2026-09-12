@@ -12,3 +12,4 @@ id,title,tags,status
 0008-kilo-code-skills-spec,"Kilo Code CLI's skill format and remote-skill-source schema","kms, agent-agnostic, kilo, packaging",active
 0009-kilo-code-cli-headless-execution,"Kilo Code CLI's headless execution mode and multi-provider model configuration","kilo, automation",active
 0012-kilo-gateway-free-tier-access,"Kilo Code CLI's built-in gateway serves :free models with no account or API key","kms, kilo",active
+0013-changelog-lagged-four-version-bumps,"CHANGELOG.md lagged four manifest version bumps before being backfilled","kms, git, changelog, release",active
