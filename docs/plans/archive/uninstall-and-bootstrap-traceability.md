@@ -1,7 +1,7 @@
 ---
 id: uninstall-and-bootstrap-traceability
 title: Uninstall skill, bootstrap full traceability, generalized templates sync
-status: steps 1-5 done; step 6 pending, open question
+status: done (all 6 steps complete)
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
 ---
@@ -92,19 +92,34 @@ sync; `.claude-plugin/marketplace.json` description sync;
 Structure line for the `kms-generated`/`<!-- kms:start/end -->`
 conventions (added after a `/code-review` pass caught the gap).
 
-### 6. Retrofit this repo's own AGENTS.md / bootstrap outputs — status: pending, open question
+### 6. Retrofit this repo's own AGENTS.md / bootstrap outputs — status: done
 
-This repo's own `AGENTS.md` doesn't yet have the `<!-- kms:start -->`
-block (that only makes sense for a project consuming `kms`, and this
-repo simultaneously *builds* `kms` and *dogfoods* the resulting
-knowledge system — its `AGENTS.md` already documents that system in its
-own words, arguably making the boilerplate `kms:start` block
-redundant here specifically). Similarly, `docs/facts/docs-manifest.md`
-and the track-role-lists don't exist in this repo. **Not resolved by
-this plan** — whether this repo's own `AGENTS.md`/`docs/` should carry
-these `bootstrap`-style artifacts too, or whether kms's own repo is a
-legitimate exception to a convention meant for adopting projects, is an
-open question for a future session, not assumed either way here.
+**Update, 2026-09-12**: resolved as three separate answers, not one — the three
+`bootstrap`-produced artifacts don't share a verdict:
+
+- **`<!-- kms:start -->` block in `AGENTS.md`** — skipped, deliberately. Its content
+  (a generic pointer to the knowledge system) is already covered in more precise,
+  repo-specific detail by `AGENTS.md`'s own Structure section, and its only other
+  purpose — letting `uninstall` detach it later — has no use case here, since this
+  repo will never `uninstall` itself. Adding it would be pure redundant duplication,
+  the exact thing `docs/decisions/0050-...`'s economy consolidation just targeted.
+- **`docs/facts/docs-manifest.md`** — built. Unlike the other two, this one is a real
+  functional dependency: `capture` check 5 (human-doc drift) has nothing to consult
+  without it, and this repo has genuine human-facing docs (`README.md`, `AGENTS.md`,
+  `INSTALLING.md`, `CONTRIBUTING.md`) that can drift from the decisions describing
+  them — PR #25 this session was exactly that kind of catch, found ad hoc rather than
+  systematically. Added, mapping each doc's sections to governing decisions/facts and
+  watch paths.
+- **Track role lists** (`product-track-roles.md`/`process-track-roles.md`) — skipped.
+  These assume a multi-role team (`bootstrap`'s skill-gap table: Build Engineer,
+  Release Engineer, QA/Test Owner, etc.); this repo's decisions are made by one
+  maintainer plus an AI agent, so populating this would produce roles that never
+  match a real decision — exactly what `lint` check 14 (role list gone cold) exists
+  to flag as unused.
+
+Done when: `docs/facts/docs-manifest.md` exists and covers this repo's actual
+human-facing docs, and the `kms:start`/track-role-lists question has an explicit,
+recorded answer rather than being silently skipped. Both met.
 
 ## Explicitly not done in this plan (separate, later work)
 
