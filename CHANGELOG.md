@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.13.0] - 2026-09-12
+
+### Added
+
+- A version bump and its `CHANGELOG.md` entry are now one unit of work, not two independently-timed ones — a new guardrail (`docs/guardrails/version-bump-requires-changelog-entry.md`, governed by `docs/decisions/0050-...`) requires a matching entry before a manifest bump is considered done, closing the exact gap that let four prior bumps ship undocumented (`docs/facts/0013-...`). `changelog` itself stays on-demand, per `docs/decisions/0005-...` — this only fixes when it's required to run, not how it behaves.
+- Consolidated `bootstrap`/`capture`/`roadmap`'s three independently-worded restatements of "use the shortest phrasing that preserves meaning" into one **Economy** section in `plugins/kms/shared/artifact-model.md`, now paired with a concrete re-read-before-done step — mirroring `AGENTS.md`'s existing rule for shipped `SKILL.md` edits, applied one level down to the artifacts those skills produce.
+
+### Documentation
+
+- Backfilled `CHANGELOG.md` itself for the four version bumps (`0.9.0`-`0.12.0`) that had landed with no entry.
+
 ## [0.12.0] - 2026-09-12
 
 ### Added
