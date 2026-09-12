@@ -50,3 +50,7 @@ id,title,tags,status
 0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active
 0050-version-bump-changelog-linkage,"Require a CHANGELOG entry for every plugin manifest version bump","kms, git, changelog, release, packaging",active
 0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",active
+0052-state-the-core-thesis-in-positioning-copy,"State kms's core thesis in its own positioning copy, not just its feature list","kms, discoverability, marketing",active
+0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
+0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
+0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active

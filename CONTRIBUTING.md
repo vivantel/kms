@@ -64,6 +64,20 @@ result of a real tradeoff), consider capturing it as a decision record
 alongside your PR — see `docs/decisions/` for the format and existing
 examples, or use this plugin's own `roadmap` skill to generate one.
 
+## Governance
+
+Decisions are currently accepted by the maintainer — there's no
+separate review board or role list, matching this project's actual
+size (one maintainer plus AI-agent collaborators, not a multi-person
+team). A decision becomes `active` once the maintainer accepts it, and
+`accepted-by` records who — independent of whoever ran the commit,
+which matters once an agent is doing the drafting and committing on the
+maintainer's behalf (`docs/decisions/0053-decision-accepted-by-field.md`).
+Per `plugins/kms/shared/artifact-model.md`, a decision is then immutable
+— a later change comes as a *new* decision superseding it, never an
+edit to the original. This may formalize further if `kms` gains other
+maintainers.
+
 ## Validation
 
 There's no CI for the manifests/skill-content checks below — do them by

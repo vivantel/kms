@@ -46,7 +46,9 @@ who it serves; or **process** — how it's built, organized, or shipped.
 Exactly one value, never both. Any of the four types may be bounded or
 provisional: add `expires` (a date or condition — when it stops being
 current). `status` is one of `draft | active | superseded | deprecated`;
-`superseded` also requires `superseded-by: <decision-id>`. If
+`superseded` also requires `superseded-by: <decision-id>`. A decision
+reaching `active` also gets `accepted-by: <name>` — the accountable
+party, not necessarily whoever runs the commit. If
 `docs/skills/tags.md` exists, check any tag against it before
 assigning; propose additions there when none fit.
 

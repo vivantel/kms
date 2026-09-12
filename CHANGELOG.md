@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.15.0] - 2026-09-12
+
+### Added
+
+- Stated `kms`'s actual thesis — a controlled vocabulary for AI agent knowledge, not more memory — in every surface that previously only listed features: `README.md` (a new tagline and hook paragraph, linking the author's own fuller argument), the GitHub repo description, and all three plugin-manifest descriptions (`docs/decisions/0052-...`). An earlier draft led these with the article's own abstract term ("a controlled vocabulary...") and was reviewed and reverted before shipping — a one-line marketplace description gets one skim-pass, and outcome-first language ("give your AI coding agent durable, checkable knowledge... it won't forget, contradict, or re-litigate") passes that test where the abstract framing didn't.
+- A new `ARCHITECTURE.md` — a human-facing overview (thesis, the artifact model illustrated with a worked example, Mermaid diagrams of the four layers and how the 14 skills fit together, and the design's own pivotal-decision history) distinct from the terse, agent-facing `docs/skills/kms-architecture.md` it doesn't duplicate.
+- A `Governance` section (in both `ARCHITECTURE.md` and `CONTRIBUTING.md`) making explicit what was previously only implicit: traceability, change control via decision immutability and supersession, `lint`/`conform` as passive/active enforcement, and who currently accepts a decision. An optional `accepted-by` field on decisions now records that accountability independent of who ran the commit (`docs/decisions/0053-...`).
+- A second `SessionStart` hook (`lint-nudge.sh`, sibling to `capture-nudge.sh`) that suggests running `lint` once enough recent commits have touched the knowledge base to make drift plausible — closing the same "principle with no forcing function" gap `0050` closed for changelog entries, this time for whole-KB review (`docs/decisions/0055-...`).
+- A decision explicitly deferring a `domain` field for large multi-product monorepos until `kms` operates at that scale, with the trigger condition for revisiting it logged in advance rather than built ahead of a demonstrated need (`docs/decisions/0054-...`).
+
+### Documentation
+
+- `docs/facts/docs-manifest.md` extended to cover `ARCHITECTURE.md` and the new sections in `README.md`/`CONTRIBUTING.md`, so `capture` check 5 can actually detect drift on them.
+
 ## [0.14.0] - 2026-09-12
 
 ### Added
