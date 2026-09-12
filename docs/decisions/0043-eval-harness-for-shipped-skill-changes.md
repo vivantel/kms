@@ -6,7 +6,7 @@ date: 2026-09-04
 tags: [kms, eval-harness, kilo, openrouter, github-models]
 track: process
 governed-facts: [0009-kilo-code-cli-headless-execution, 0012-kilo-gateway-free-tier-access]
-fitness-functions: ["Once implemented, run the initial 5-case suite against the current (pre-change) skill bodies and confirm every case passes, establishing a clean baseline before any skill-body change is ever compared against it."]
+fitness-functions: ["Resolved: docs/plans/archive/eval-harness-baseline-reliability.md and docs/plans/archive/eval-harness-for-skill-changes.md's own step 7 established and recorded the accepted baseline via many real CI runs — capture, attribute, lint, and bootstrap reliably pass; roadmap is an accepted, narrow, known flake on the discrete-options mechanic specifically. Originally declared here as: 'Once implemented, run the initial 5-case suite against the current (pre-change) skill bodies and confirm every case passes, establishing a clean baseline before any skill-body change is ever compared against it.'"]
 ---
 
 ## Decision
