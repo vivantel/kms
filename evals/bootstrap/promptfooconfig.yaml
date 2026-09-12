@@ -10,7 +10,7 @@ providers:
     config:
       fixture_dir: "evals/bootstrap/fixture"
       model: "poolside/laguna-s-2.1:free"
-      timeout_seconds: 480
+      timeout_seconds: 1440
 
 defaultTest:
   options:

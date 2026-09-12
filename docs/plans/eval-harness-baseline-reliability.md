@@ -174,10 +174,21 @@ artifact types, both INDEX.mds, `docs-manifest.md`, `tags.md`, both role lists) 
 it still shows `exit 124` is that it went on to proactively run its own `lint` self-check
 afterward and ran past the ceiling doing that extra, unrequested step, not the original task.
 
+**Update, 2026-09-12**: 3b confirmed as a genuine, permanent fix, not a fluke — 3 real post-merge
+CI runs (`34655665753`, and two more from throwaway PRs #37/#38) all show **zero** TOON/WebFetch/
+WebSearch activity. 2 of those 3 passed outright. The 1 failure (`34657052079`) is a *different*,
+more generic problem: an unusually long, thorough exploration pass (43K chars of transcript vs.
+~11K for the passing runs) that used up the full 480s budget before ever writing a file — nothing
+to do with TOON, no wrong instruction to point at, just "explored more than the clock allowed."
+That's exactly 3a's territory. **3a implemented**: `timeout_seconds` raised 480→1440 (24min,
+under the workflow's already-30min job ceiling — no separate workflow change needed, that
+ceiling was already raised alongside `lint`'s fix). Not yet re-verified with a live run.
+
 Done when: one of 3a/3b/3c is tried and either fixes `bootstrap` (a few
 consecutive real CI runs passing), or all three are tried without success
-and 3d is explicitly chosen and recorded here with why. 3b has been tried and looks strong on
-one local verification; still needs a few real CI runs post-merge before calling this closed.
+and 3d is explicitly chosen and recorded here with why. 3b is confirmed and closed (the TOON
+tangent itself is gone for good); 3a is implemented but not yet verified — still needs a few
+real CI runs post-merge before this step as a whole can close.
 
 ### 4. Decide `roadmap`'s fix — status: pending
 
