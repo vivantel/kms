@@ -5,7 +5,7 @@ status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, taxonomy]
 track: process
-fitness-functions: ["Adopt a reproducible eval harness (e.g. promptfoo, https://github.com/promptfoo/promptfoo) with a Claude Code adapter provider, wired into CI, to compare lint/capture/roadmap output before and after a change to this repo's own skill bodies or artifact model — declared debt, no implementation yet; see Why for why it's deliberately out of this decision's scope."]
+fitness-functions: ["Resolved by docs/decisions/0043-eval-harness-for-shipped-skill-changes.md and docs/decisions/0044-eval-harness-ci-safety-gates.md (2026-09-04): a Kilo Code CLI + promptfoo eval harness was adopted and wired into CI, closing this debt. Originally declared here as: 'Adopt a reproducible eval harness (e.g. promptfoo)... wired into CI, to compare lint/capture/roadmap output before and after a change to this repo's own skill bodies or artifact model — declared debt, no implementation yet; see Why for why it's deliberately out of this decision's scope.'"]
 ---
 
 ## Decision
