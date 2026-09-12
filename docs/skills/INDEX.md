@@ -1,5 +1,5 @@
 <!-- kms-generated: true -->
-# Skills index (TOON)
+# Skills index (CSV)
 
 id,title,tags,status
 adding-agent-support,"Procedure for adding a new coding-agent target to this repo","kms, agent-agnostic, packaging, procedural",active

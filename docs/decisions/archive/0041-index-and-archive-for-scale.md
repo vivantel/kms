@@ -1,7 +1,8 @@
 ---
 id: 0041-index-and-archive-for-scale
 title: Add a per-type TOON index and an archive mechanism for superseded/deprecated artifacts
-status: active
+status: superseded
+superseded-by: 0049-plain-csv-index-not-toon
 date: 2026-09-01
 tags: [kms, knowledge-management, scale]
 track: process

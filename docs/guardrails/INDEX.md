@@ -1,5 +1,5 @@
 <!-- kms-generated: true -->
-# Guardrails index (TOON)
+# Guardrails index (CSV)
 
 id,title,tags,status
 agent-agnostic-skill-content,"Skill instruction bodies must stay agent-neutral","kms, agent-agnostic, guardrail",active
