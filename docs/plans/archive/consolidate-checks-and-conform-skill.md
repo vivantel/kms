@@ -1,3 +1,11 @@
+---
+id: consolidate-checks-and-conform-skill
+title: Consolidate lint/capture checks, add conform, document kms's architecture
+status: done (all 8 steps complete)
+date: 2026-08-30
+tags: [kms, knowledge-management, packaging]
+---
+
 # Plan: consolidate lint/capture checks, add conform, document kms's architecture
 
 ## Context (read this before touching anything)

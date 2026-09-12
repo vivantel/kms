@@ -1,3 +1,11 @@
+---
+id: uninstall-and-bootstrap-traceability
+title: Uninstall skill, bootstrap full traceability, generalized templates sync
+status: steps 1-5 done; step 6 pending, open question
+date: 2026-08-30
+tags: [kms, knowledge-management, packaging]
+---
+
 # Plan: uninstall skill, bootstrap full traceability, generalized templates sync
 
 ## Context (read this before touching anything)

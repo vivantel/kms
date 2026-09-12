@@ -1,3 +1,11 @@
+---
+id: quickstart-automation-discoverability
+title: Quickstart skill, steward-nudge hook, discoverability improvements
+status: done (all 9 steps complete)
+date: 2026-08-30
+tags: [kms, onboarding, automation, discoverability]
+---
+
 # Plan: quickstart skill, steward-nudge hook, discoverability improvements
 
 ## Context (read this before touching anything)

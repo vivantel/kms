@@ -1,4 +1,12 @@
-<!-- kms-generated: true -->
+---
+id: tags
+title: Canonical tag vocabulary
+status: active
+date: 2026-09-01
+tags: [kms, knowledge-management, scale]
+kms-generated: true
+---
+
 # Canonical tag vocabulary
 
 Each tag listed below is the single authoritative spelling for that concept. When `docs/skills/tags.md` exists, every artifact's `tags` frontmatter MUST draw from this list — see `docs/guardrails/tags-from-canonical-list.md`.
