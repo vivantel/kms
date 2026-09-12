@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.14.0] - 2026-09-12
+
+### Added
+
+- `grounded-in` may now hold a decision or sibling-guardrail id, not only a fact — closing 13 of 14 guardrails that had sat at `grounded-in: TBD` since the project's earliest days (`docs/decisions/0051-...`). Each one's real basis was already stated in its own `## Derivation` prose, just never copied into the structured field, because the schema only ever accepted a fact id; `lint` check 13 had already anticipated a decision could ground a guardrail, the schema just never caught up. 7 cite a different decision than their own `governed-by` (mostly `0001-knowledge-artifact-storage-convention`); 2 ground in a sibling guardrail; 1 (`guardrail-derivation-fields.md`) got a genuine new fact instead of a substitute (`docs/facts/0014-guardrails-carry-derivation-prose.md`); 3 are self-referential to their own `governed-by`. `every-skill-ships-examples.md` stays `TBD` — it genuinely wants a future roster fact.
+
 ## [0.13.0] - 2026-09-12
 
 ### Added
