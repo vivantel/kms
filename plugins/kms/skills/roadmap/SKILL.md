@@ -59,8 +59,7 @@ today — don't require it.
 
 - Every explicit or implicit intent (a presupposition unambiguous enough to count as a commitment) must be captured as a record — never silently dropped.
 - An intent becomes a full ADR/decision-record entry only if it is hard to reverse, surprising without context, or the result of a genuine tradeoff. An intent that fails all three still gets saved, but as a lighter artifact (a decision fact or inline note) rather than a full record.
-- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format — not just labeled in a summary.
-- Facts, guardrails, and procedures written this way use the shortest phrasing that preserves meaning — decisions and the plan file are exempt.
+- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format and economy (`../../shared/artifact-model.md`) — not just labeled in a summary. The plan file itself is exempt from that economy rule, same as a decision.
 
 ## Avoid duplicates
 

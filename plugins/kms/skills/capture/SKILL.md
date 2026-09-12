@@ -7,7 +7,7 @@ If the project has no knowledge system yet, run `bootstrap` first — this skill
 
 ## Artifact model
 
-This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, and the derivation recipe — read it before drafting anything. Anything drafted here uses the shortest phrasing that preserves meaning — decisions exempt.
+This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, the derivation recipe, and the economy rule for anything drafted here — read it before drafting anything.
 
 ## Checks, one pass per invocation
 

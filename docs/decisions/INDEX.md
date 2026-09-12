@@ -48,3 +48,4 @@ id,title,tags,status
 0047-operationalizes-field-and-unoperationalized-guardrail-check,"Add an optional operationalizes field to Procedure, plus a lint check for guardrails missing one","kms, knowledge-management, taxonomy, guardrail",active
 0048-tag-git-releases-matching-plugin-version,"Tag git releases with the same version as plugin.json, not a separate sequence","kms, git, release, packaging",active
 0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active
+0050-version-bump-changelog-linkage,"Require a CHANGELOG entry for every plugin manifest version bump","kms, git, changelog, release, packaging",active

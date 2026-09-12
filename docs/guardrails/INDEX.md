@@ -18,3 +18,4 @@ plugin-manifest-version-sync,"Every plugin manifest's version field must be bump
 superseded-decision-requires-pointer,"A decision marked superseded must name what superseded it","kms, knowledge-management, guardrail",active
 tags-from-canonical-list,"Any artifact's tags must come from the canonical tag list, when one exists","kms, knowledge-management, guardrail",active
 token-economy,"Every fact, guardrail, and procedure must be maximally economical","kms, knowledge-management, guardrail",active
+version-bump-requires-changelog-entry,"Every plugin manifest version bump must have a matching CHANGELOG.md entry","kms, git, changelog, release, packaging, guardrail",active
