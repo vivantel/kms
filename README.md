@@ -1,10 +1,24 @@
 # Vivantel KMS
 
+*Give your AI coding agent durable, checkable knowledge — decisions,
+facts, and guardrails it won't forget, contradict, or re-litigate.*
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-5A32FB.svg)](https://code.claude.com/docs/en/plugins.md)
 
+**The problem isn't that your agent forgets — it's that it has no
+language for knowledge.** A vector database can retrieve a
+similar-looking snippet, but it can't tell a settled decision from a
+stale guess, or a hard constraint from a passing note, so it keeps
+re-suggesting what you already rejected. `kms` gives agents that
+vocabulary: four typed artifacts — facts, decisions, guardrails,
+procedures — each with its own fields, lifecycle, and role, so
+knowledge stays durable, checkable, and shareable instead of a
+half-remembered guess. [Read the full case for
+it →](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a)
+
 Vivantel KMS (Knowledge Management System) — for any git-based
-project, capture decisions, facts, and guardrails as durable, traceable artifacts,
+project, capture decisions, facts, guardrails, and procedures as durable, traceable artifacts,
 maintained automatically as the project evolves. Works for software
 repos, technical documentation, even long-form writing like research
 papers, not just code.

@@ -18,6 +18,7 @@ this to decide whether a session's changes touched a watched path;
 
 | Section | Describes | Watch paths | Last verified |
 |---|---|---|---|
+| Tagline + hook paragraph | The core thesis (vocabulary, not memory), linking the author's article | `docs/decisions/0052-state-the-core-thesis-in-positioning-copy.md`; the three manifest `description` fields and the GitHub repo description (kept in wording sync manually, no single source of truth) | |
 | Title/intro | What `kms` is, agent-neutral design, 3-agent packaging | `plugins/kms/.claude-plugin/plugin.json` (description), `docs/decisions/0011-...`, `docs/guardrails/agent-agnostic-skill-content.md` | |
 | Skill table | One-line description + examples link per skill | `plugins/kms/skills/*/SKILL.md` (`description`), `plugins/kms/skills/*/examples.md` existence, `docs/guardrails/every-skill-ships-examples.md` | |
 | Installing | Quick-start command, link to `INSTALLING.md` | `INSTALLING.md`, `.claude-plugin/marketplace.json` | |
@@ -52,9 +53,21 @@ this to decide whether a session's changes touched a watched path;
 | Before you start | Repo orientation for a contributor | `AGENTS.md` | |
 | Adding or changing a skill | Same steps as AGENTS.md's own section | `AGENTS.md`'s "Adding a new skill" section (kept in sync manually — no single source of truth between the two today) | |
 | This repo dogfoods its own skills | Same as README's section | `AGENTS.md` | |
+| Governance | Who accepts a decision, `accepted-by` | `docs/decisions/0053-decision-accepted-by-field.md`, `plugins/kms/shared/artifact-model.md`'s immutability note | |
 | Validation | Manifest JSON validity + eval suite | `docs/decisions/0043-...`, `0044-...`, `evals/` | |
 | Pull requests | PR conventions | `docs/decisions/0002-...`, `0003-...`, `0004-...` (attribute/commit conventions) | |
 | Code of Conduct | Points to `CODE_OF_CONDUCT.md` | `CODE_OF_CONDUCT.md` | |
+
+## ARCHITECTURE.md
+
+| Section | Describes | Watch paths | Last verified |
+|---|---|---|---|
+| Overview | The core thesis | `docs/decisions/0052-...` | |
+| The artifact model | Type table, `track`, lifecycle (incl. `expires`/archive), derivation recipe worked example | `plugins/kms/shared/artifact-model.md`, `docs/decisions/0038-...`, `docs/guardrails/decision-expires-must-be-reevaluated.md`, `docs/guardrails/agent-agnostic-skill-content.md` (the worked example's own sources, `0006`/`0002`, if either is ever superseded/changed) | |
+| Governance | Traceability/change-control/enforcement/accountability synthesis; explicit non-additions (`scope`, quality score, `domain`) | `docs/decisions/0053-...`, `0054-...`, `0039-...` | |
+| The four layers | `docs/` vs. `plugins/kms/skills/` vs. `templates/` vs. `hooks/` | `docs/skills/kms-architecture.md` (the agent-facing version of the same content — keep in sync) | |
+| How the skills fit together | All 14 skills grouped by role | `plugins/kms/skills/*/SKILL.md` (any added/removed/reclassified), actual skill count | |
+| How the design got here | 10 pivotal decisions, one line each | Each decision listed — if any is superseded/reworded, update its line or move it out | |
 
 ## Not tracked here
 
