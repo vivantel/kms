@@ -5,7 +5,7 @@ status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, kilo, packaging, guardrail]
 governed-by: 0008-native-codex-plugin-support
-grounded-in: 0003-codex-plugin-manifest-schema, 0008-kilo-code-skills-spec
+grounded-in: [0003-codex-plugin-manifest-schema, 0008-kilo-code-skills-spec]
 derivation-note: >
   Given decision 0008 (one skill set, many manifests, later extended to
   Kilo by decision 0035) and facts 0003 and 0008 (Codex's manifest and

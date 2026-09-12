@@ -1,7 +1,7 @@
 ---
 id: 0047-operationalizes-field-and-unoperationalized-guardrail-check
 title: Add an optional operationalizes field to Procedure, plus a lint check for guardrails missing one
-status: draft
+status: active
 date: 2026-09-10
 tags: [kms, knowledge-management, taxonomy, guardrail]
 track: process

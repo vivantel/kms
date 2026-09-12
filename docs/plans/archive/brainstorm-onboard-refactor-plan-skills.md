@@ -1,3 +1,11 @@
+---
+id: brainstorm-onboard-refactor-plan-skills
+title: Add brainstorm, onboard, refactor-plan skills; ship examples.md repo-wide
+status: done (all 8 steps complete)
+date: 2026-08-30
+tags: [kms, knowledge-management, packaging]
+---
+
 # Plan: add brainstorm, onboard, refactor-plan skills; ship examples.md repo-wide
 
 ## Context (read this before touching anything)

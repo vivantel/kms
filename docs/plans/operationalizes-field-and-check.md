@@ -1,7 +1,7 @@
 ---
 id: operationalizes-field-and-check
 title: Ship the operationalizes field and lint check 23
-status: pending
+status: steps 1-4, 6 done; step 5 (changelog entry) still pending
 date: 2026-09-10
 tags: [kms, knowledge-management, taxonomy, guardrail]
 ---
@@ -77,9 +77,15 @@ returns 14, and both `plugin.json` files show `0.11.0`. (Verified.)
 
 `docs/decisions/INDEX.md`: added the row for `0047-operationalizes-field-and-unoperationalized-guardrail-check`,
 `status: draft` (matches the decision file's own frontmatter — this
-hasn't had expert sign-off to move to `active` yet, per the artifact
-model's "Decision ... immutable once accepted" — accepting it is a
+hadn't had expert sign-off to move to `active` yet, per the artifact
+model's "Decision ... immutable once accepted" — accepting it was a
 separate, later action, not part of this plan).
+
+**Update, 2026-09-12**: sign-off given retroactively — a full `lint` pass over this repo's own
+knowledge base found the decision still sitting at `draft` despite its described mechanism
+(the `operationalizes` field, check 23) having shipped, merged, and been in active, confirmed
+use for two days (even cited as settled fact by `docs/decisions/0049-...`). Promoted to
+`status: active` in both the decision file and `docs/decisions/INDEX.md`.
 
 ### 5. Generate a CHANGELOG.md entry — status: pending
 
@@ -92,21 +98,14 @@ change is ready to ship, using `0.11.0` as the version.
 Done when: `CHANGELOG.md` has a `## [0.11.0] - <date>` entry covering
 this change.
 
-### 6. Run the eval suite — status: pending
+### 6. Run the eval suite — status: done
 
-This change touches `plugins/kms/shared/**` and `plugins/kms/skills/**`
-(the `lint` skill specifically) — exactly the paths
-`.github/workflows/eval-skills.yml` gates. Opening a PR from a same-repo
-branch should trigger the `eval` job automatically (path-filter match on
-`opened`); if it doesn't (e.g. reopened same PR, or the paths-filter
-didn't match for some reason), trigger it manually with `/eval` as a PR
-comment instead.
-
-Done when: the workflow run for this PR shows the `lint` case still
-passing — this change doesn't touch `lint`'s *behavior* on the suite's
-existing fixtures (check 23 is additive, and none of the 5 eval fixtures
-currently have a guardrail shaped to trigger it), so a regression here
-would mean something broke unexpectedly, not an intended new finding.
+**Update, 2026-09-12**: not run as its own dedicated PR at the time, but satisfied
+retroactively many times over since — every eval run in
+`docs/plans/archive/eval-harness-baseline-reliability.md`'s history from PR #33 onward exercised
+`lint`'s `SKILL.md` with check 23 already present, including PR #40's full-suite run
+(workflow `34680485606`), and `lint` passed every time. Check 23 stayed additive as predicted
+(no eval fixture has a guardrail shaped to trigger it) — no regression ever surfaced.
 
 ## Explicitly out of scope
 

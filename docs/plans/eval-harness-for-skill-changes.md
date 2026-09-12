@@ -268,7 +268,7 @@ name and last-updated date).
 ### 7. Run the baseline and confirm the fitness-function — status: done
 
 Run for real in CI (multiple runs; see
-`docs/plans/eval-harness-baseline-reliability.md` for the full history
+`docs/plans/archive/eval-harness-baseline-reliability.md` for the full history
 and every workflow-run ID). First pass (workflow run `34446496455`)
 found 3/5 passing, but two harness bugs were hiding in that number: an
 invalid `(?i)` regex flag in `evals/lint/promptfooconfig.yaml` (JS
@@ -292,7 +292,7 @@ promptfoo's JSON extraction on longer rubric prompts). Both fixed (PRs
   would: surfacing a genuine free-tier fidelity gap on a
   judgment-heavy case, not a broken test.
 
-**Update, 2026-09-12**: `docs/plans/eval-harness-baseline-reliability.md` steps 3–4 are both
+**Update, 2026-09-12**: `docs/plans/archive/eval-harness-baseline-reliability.md` steps 3–4 are both
 closed now. `bootstrap` is fixed for real — two root causes found and fixed (a judge-side
 tool-detour bug; the runner-side TOON research tangent, later hardened by dropping the TOON name
 entirely in favor of plain CSV, `docs/decisions/0049-...`) plus a generic timeout raise, all
