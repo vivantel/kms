@@ -1,7 +1,7 @@
 ---
 id: eval-harness-baseline-reliability
 title: Get the eval harness's real baseline from 3/5 to 5/5, or decide why it shouldn't be
-status: pending
+status: done (all 5 steps complete — accepted baseline is 4/5 reliable, roadmap a known narrow flake)
 date: 2026-09-10
 tags: [kms, eval-harness]
 ---
@@ -103,7 +103,7 @@ bare substrings; `timeout_seconds` also raised 480→600. Verified locally: a re
 completes a genuine, thorough analysis (correctly identifying all 3 planted violations plus two
 bonus findings) and ends with the exact expected sentinel lines.
 
-### 3. Decide `bootstrap`'s fix — status: partial
+### 3. Decide `bootstrap`'s fix — status: done
 
 **Update, 2026-09-11**: one real cause of `bootstrap` failures turned out
 to be a harness bug, not the runner model at all — a *separate* problem
@@ -184,13 +184,31 @@ That's exactly 3a's territory. **3a implemented**: `timeout_seconds` raised 480�
 under the workflow's already-30min job ceiling — no separate workflow change needed, that
 ceiling was already raised alongside `lint`'s fix). Not yet re-verified with a live run.
 
+**Update, 2026-09-12 (second)**: 3a verified via a live `/eval` run on PR #39 (workflow
+`34676135969`): `exit 0`, genuine natural completion (not a timeout kill), all 5 cases passing.
+Downloaded the `bootstrap` artifact directly — transcript opens `=== KILO TRANSCRIPT (exit 0)
+===` and its only 2 "TOON" mentions are benign in-context uses ("the four INDEX.md files (TOON
+format)"), not research activity. PR #39 merged (`3a7bc63` on `master`).
+
+Separately, in the same pass, went further than 3b's original inline-definition fix: rather than
+just describing TOON well enough to avoid triggering research, dropped the TOON name from the
+shipped skill bodies entirely. Reasoning (`docs/decisions/0049-plain-csv-index-not-toon.md`,
+superseding `docs/decisions/0041-index-and-archive-for-scale.md`): naming an external spec at all
+invites a model to verify conformance to it, independent of how complete an inlined description
+is — and auditing every `INDEX.md` this project has ever produced showed none of them use any
+TOON feature beyond plain CSV, so the name bought nothing to justify that risk. `plugins/kms/
+shared/artifact-model.md`, `bootstrap/SKILL.md`, and `roadmap/SKILL.md` now define/reference a
+plain, strictly-specified CSV grammar instead. Verified via a full eval suite run on PR #40
+(workflow `34680485606`) — all 5 cases pass, `bootstrap` included, in 25m54s (within the 30min
+job ceiling). PR #40 merged (`ca58c2a` on `master`).
+
 Done when: one of 3a/3b/3c is tried and either fixes `bootstrap` (a few
 consecutive real CI runs passing), or all three are tried without success
-and 3d is explicitly chosen and recorded here with why. 3b is confirmed and closed (the TOON
-tangent itself is gone for good); 3a is implemented but not yet verified — still needs a few
-real CI runs post-merge before this step as a whole can close.
+and 3d is explicitly chosen and recorded here with why. **Met**: 3b (research-tangent removal,
+later hardened into full TOON-name removal via 0049) and 3a (timeout raise) are both implemented
+and verified via live, passing CI runs (PRs #39 and #40, both merged). `bootstrap` is closed.
 
-### 4. Decide `roadmap`'s fix — status: pending
+### 4. Decide `roadmap`'s fix — status: done
 
 New step, added after the judge-extraction fix revealed this is a real,
 reliable failure (see "Current real baseline" above), not the flaky
@@ -235,10 +253,31 @@ wording before concluding it needs a change.
 rather than an instruction-clarity problem, a stronger free model might
 just follow the existing instruction correctly.
 
-Done when: 4a is explicitly chosen and recorded, or 4b/4c is tried and a
-fresh CI run shows `roadmap` passing.
+**Update, 2026-09-12**: gathered a 3rd real run (workflow `34683372469`, via `/eval` on
+throwaway PR #41) before concluding on 2. It passed — the model asked exactly one question (a
+numeric fact question, e.g. "what's the current per-API-key allowance"), no bundling, no
+premature writes. Confirmed genuine, not an early-stop artifact: `evals/roadmap/promptfooconfig.yaml`
+grades only the opening turn by design, and per `roadmap/SKILL.md`'s own rule ("Numeric answer...
+skip the list, ask openly"), a numeric question never enters the discrete-options mechanics at
+all — so this run had nothing to bundle or fail to recommend. Sharpens the diagnosis: across all
+3 real runs, one-question-per-turn discipline is 3/3 solid; both real failures happened
+specifically once the interview reached a *discrete-options* question (bundling two
+options-related sub-questions in one run; listing options without a stated recommendation in the
+other). Re-read `plugins/kms/skills/roadmap/SKILL.md`'s discrete-options instructions fresh
+before closing this out — they're already a plain, single-sentence "Cap at 4... mark the
+recommended one" with no structural framing (unlike bootstrap's literal "verify the spec"
+instruction) that would invite the observed failure. No concrete wording gap to point at, so 4b
+doesn't apply. **4a chosen**: this is a genuine, narrow limitation of this specific free model
+on the discrete-options mechanic — accepted as `docs/decisions/0043-...`'s stated free-tier
+fidelity tradeoff, not a harness or instruction defect. Not pursuing 4c (a different free model)
+per the same decision's scope — `roadmap` stays a known-flaky case, not a blocking one, in the
+harness baseline.
 
-### 5. Record the final baseline state — status: pending
+Done when: 4a is explicitly chosen and recorded, or 4b/4c is tried and a
+fresh CI run shows `roadmap` passing. **Met**: 4a chosen and recorded above, with 3 real runs'
+worth of evidence.
+
+### 5. Record the final baseline state — status: done
 
 Once steps 3–4 settle (whether that means 5/5 passing, or fewer with an
 explicit reason recorded), update
@@ -249,7 +288,9 @@ accepted baseline is and why, so a future skill-body change being
 compared against it has an honest reference point.
 
 Done when: `docs/plans/eval-harness-for-skill-changes.md`'s step 7 no
-longer says `partial`.
+longer says `partial`. **Met** — that step is now `done`, recording the accepted baseline: 4/5
+cases (`capture`, `attribute`, `lint`, `bootstrap`) reliably pass; `roadmap` is a known, narrow,
+accepted flake on the discrete-options mechanic (see step 4 above), not a suite defect.
 
 ## Explicitly out of scope
 
