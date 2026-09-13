@@ -19,6 +19,7 @@ automation — concerns a mechanism that runs without human invocation (hooks, C
 audit — concerns an audit trail or verification record
 branding — concerns the project's display name or public identity
 changelog — concerns the CHANGELOG.md generation design
+checkpointing — concerns chunked, resumable execution and checkpoint-file state for long-running skill runs
 claude-code — specific to Claude Code's plugin/hooks mechanisms
 claude-md — concerns the CLAUDE.md/AGENTS.md file and its conventions
 codex — concerns Codex plugin manifest or packaging

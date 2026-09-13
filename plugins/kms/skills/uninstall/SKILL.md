@@ -14,7 +14,7 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 
 ## Report first, then act
 
-List everything found, grouped by category, before asking about any of it — never surface per-file prompts one at a time with no overview. Then, per finding, ask: **detach** (strip `kms-seeded`/`kms-generated`, or the AGENTS.md markers alone leaving the section text, keeping everything else as the team's own) or **remove** (delete the file, or delete just the marked block from AGENTS.md, or delete the still-draft decision/fact). Same confirmation for both — propose, wait for an explicit yes, exactly like every other skill in this plugin.
+List everything found, grouped by category, before asking about any of it — never surface per-file prompts one at a time with no overview. Then, per finding, ask: **detach** (strip `kms-seeded`/`kms-generated`, or the AGENTS.md markers alone leaving the section text, keeping everything else as the team's own) or **remove** (delete the file, or delete just the marked block from AGENTS.md, or delete the still-draft decision/fact). Same confirmation for both — propose, wait for an explicit yes, the same way every other skill in this plugin defers before acting.
 
 ## Never touch
 

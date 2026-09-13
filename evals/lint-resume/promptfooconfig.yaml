@@ -1,0 +1,54 @@
+# Eval case: `lint-resume` — docs/decisions/0056-chunked-checkpointed-execution-for-bootstrap-and-lint.md.
+# Exercises the interrupted/resumed path specifically: `evals/lint` already tests "does the skill
+# find the three planted violations" against a normal timeout budget; this case forces a real kill
+# mid-run (a short first-run timeout against the same fixture) and asserts the second run resumes
+# from the checkpoint and still reports every finding — none dropped, none duplicated.
+# Run standalone: npx promptfoo eval -c evals/lint-resume/promptfooconfig.yaml
+description: "kms lint — resume after a killed run, same three planted violations as evals/lint"
+
+# The final sentence below is a harness-only convenience, never part of the real, shipped lint
+# skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`, which has
+# no interactive human/subagent to answer checkpointing.md's resume-or-discard question, so this
+# eval pre-authorizes resuming any checkpoint it finds — standing in as the confirming party for
+# grading purposes only. Real usage always asks a human or an authorized reviewing subagent
+# (docs/guardrails/confirming-party-acceptable-for-checkpoint-gates.md).
+prompts:
+  - >
+    Lint the knowledge base. After completing your analysis, end your response with exactly
+    these three lines, each followed by YES if you identified that specific violation in this
+    knowledge base or NO if you did not:
+
+    LINT_CHECK_DANGLING_REF: YES|NO
+    LINT_CHECK_MISSING_TRACK: YES|NO
+    LINT_CHECK_STALE_PATH: YES|NO
+
+    If you find an existing checkpoint file under docs/.kms-checkpoints/ from a prior interrupted
+    run, resume it.
+
+providers:
+  - id: "exec:../providers/kilo-resume-runner.sh"
+    config:
+      fixture_dir: "evals/lint/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      # Starting point per docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md step 4
+      # (~half the sibling evals/lint case's 1440s timeout) — not yet verified locally (plan
+      # step 5 still pending); tune if the first run isn't reliably interrupted.
+      first_timeout_seconds: 720
+      second_timeout_seconds: 1440
+
+defaultTest:
+  assert:
+    # The short first-run budget should force a checkpoint to exist afterward.
+    - type: not-contains
+      value: "=== CHECKPOINT FILES AFTER FIRST RUN ===\n(none)"
+    # A completed, cleaned-up run leaves no checkpoint behind (docs/guardrails/checkpoint-file-lifecycle.md).
+    - type: contains
+      value: "=== CHECKPOINT FILES AFTER SECOND RUN ===\n(none)"
+    # Same three sentinel checks as evals/lint — every finding from the interrupted run must still
+    # surface in the resumed run's final report, not be silently dropped.
+    - type: regex
+      value: "LINT_CHECK_DANGLING_REF: YES(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_MISSING_TRACK: YES(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_STALE_PATH: YES(?!\\|)"

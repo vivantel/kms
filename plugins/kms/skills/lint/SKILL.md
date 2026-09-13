@@ -7,6 +7,23 @@ Scan every fact, decision, guardrail, and procedure in the project — not just 
 
 The default invocation's *health* checks (verbosity, staleness, contradiction-scanning) scan only the live set — artifacts under `docs/<type>/archive/` are excluded unless a deep pass is explicitly requested. This exclusion does NOT apply to check 1 (dangling references) or check 19 (index out of sync): resolving whether a `governed-by`/`grounded-in`/`superseded-by` id exists always searches both the live directory and its `archive/` subdirectory, otherwise archiving an artifact would immediately turn every reference to it into a false-positive dangling reference — and an archive's own `INDEX.md` needs the same sync-checking a live one gets, or it would never be validated at all once created.
 
+## Chunked execution
+
+`../../shared/checkpointing.md` defines the paging, checkpoint-file, and resume mechanics — read it
+before starting. Phase A pages, by artifact type, every check resolvable from the file being read plus an
+already-loaded, bounded lookup — a type's own `INDEX.md` (never paged itself, used only to check id
+existence/counts or accumulate a tally, not to fetch more file content), or kms's own small, fixed shipped
+content (`plugins/kms/skills/*/SKILL.md`, `../../templates/` — bounded by kms's own size, not the
+project's): checks 1–12, 15, 17–19, 21–24. Some of these (6, 7, 19, 22, 23) only finalize once Phase A
+has read every file of the relevant type — e.g. "referenced by nothing" needs every file's outbound
+references tallied first — but still need no *additional* file opens beyond what Phase A already reads.
+Phase B runs once, after every Phase A page completes, only for checks needing a second, specific project
+artifact identified from Phase A's own findings (13, 14, 16, 20): 13 opens the guardrail's own named
+source to check whether it's changed; 14 and 16 shortlist candidates from each type's `INDEX.md` by tag
+first (the same approach check 16 already used before this change), then open only the shortlisted files,
+itself paged if the shortlist is large; 20 needs a repo-wide reference search when proposing the archive
+move. The 24 checks themselves are unchanged — this only changes execution order and checkpointing.
+
 ## What to check
 
 1. **Dangling references** — any `governed-by`, `grounded-in`, `superseded-by`, or `governed-facts` value pointing at an id that doesn't exist (`grounded-in` may resolve to a fact, decision, or guardrail id per `docs/decisions/0051-...`; the others resolve to a decision/fact id as before).
@@ -36,7 +53,7 @@ The default invocation's *health* checks (verbosity, staleness, contradiction-sc
 
 ## Output
 
-Group findings by check, one line per violation with the file path and what's wrong. Never silently fix anything — propose the fix and wait for confirmation, the same way every other skill in this plugin defers to the user before writing.
+Group findings by check, one line per violation with the file path and what's wrong. Never silently fix anything — propose the fix and wait for the confirming party's go-ahead, the same way every other skill in this plugin defers before writing. The confirming party is ordinarily the user, but may be an authorized reviewing subagent acting within its own configured authority (kms does not define that authorization mechanism — see `docs/guardrails/confirming-party-acceptable-for-checkpoint-gates.md`).
 
 ## Out of scope
 
