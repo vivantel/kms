@@ -208,8 +208,18 @@ after checkout (as one final synthetic commit) so bootstrap faces a genuine from
 gap-fill pass. `first_timeout_seconds` kept at 720 (already reliably interrupted the much smaller 2-commit
 fixture); `second_timeout_seconds` kept at 1440 but flagged as the real risk this time — a full mine of
 much more real content might not finish in that budget, unverified until the next real CI run.
-`lint-resume` is left as-is pending a decision on which further fix to pursue. Not yet verified — needs
-another fresh PR.
+`lint-resume` is left as-is pending a decision on which further fix to pursue. PR #56 closed and reopened
+as #57.
+
+**Update, 2026-09-14 (sixth)**: PR #57's run showed a completely different failure for `bootstrap-resume` —
+not a grading judgment at all. `Error: spawn E2BIG` (an OS-level "argument list too long" error) when
+promptfoo tried to spawn the judge grading subprocess. Cause: `setup.sh` only stripped
+`docs/{facts,decisions,guardrails,skills}/`, leaving the rest of the historical repo tree (`plugins/`,
+`evals/`, everything else) in place — `kilo-resume-runner.sh`'s own final file listing (`find . -type f`)
+enumerated hundreds of files, and that giant string exceeded the OS's exec argument-size limit. Fixed:
+`setup.sh` now resets the working tree to near-empty (just a placeholder `README.md`) after checkout,
+keeping full git history for mining but keeping the file listing small. Not yet verified — needs another
+fresh PR.
 
 New files, sibling to the existing cases (original design — since superseded per the updates above for
 both cases' actual fixtures):
