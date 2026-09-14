@@ -166,7 +166,23 @@ never reached writing a checkpoint at all. This fixture is small enough that its
 one page — there's no page-1-vs-page-2 boundary, only a single narrow point (finish-reading-and-write-the-
 one-checkpoint) that a timeout has to land after. Two data points now bracket it: 90s lands before that
 point, 720s lands well after full completion (~430s). Fixed: raised to 200s — real margin on both sides,
-not another small increment against the same boundary. PR #54 closed and reopened as #55. Not yet verified.
+not another small increment against the same boundary. PR #54 closed and reopened as #55.
+
+**Update, 2026-09-14 (fourth)**: PR #55's run showed 200s still didn't work, but for a new reason — this
+time `exit 0` at under 200s (the model completed the *entire* task, correctly finding all 3 planted
+violations, just fast). Combined with the ~430s completion time observed on PR #53's run, this meant the
+same tiny task's total completion time varies more than 2x run to run on this free-tier model — no fixed
+timeout can reliably interrupt a moving target, so continuing to tune `first_timeout_seconds` against
+`evals/lint/fixture` was a losing battle. Root cause: that fixture is so small its entire Phase A corpus
+fits in a single 15K-token page, so there's only ever one narrow, speed-dependent point to land after, not
+a stable multi-page window. Fixed properly instead of tuning further: `lint-resume` now uses its own
+dedicated `evals/lint-resume/fixture/`, not the shared tiny one — `docs/decisions/` is a real snapshot of
+this repo's own `docs/decisions/` at tag `0.15.0` (52 real decisions, ~34K tokens, pinned to a tag from
+before this branch's own changes) plus one added synthetic decision carrying the missing-track violation;
+`facts/`/`guardrails/`/`skills/` stay exactly as small as the original fixture, carrying the other two
+planted violations unchanged. ~34K tokens forces ~3 real Phase A pages, giving a wide, page-count-driven
+window instead of a single speed-dependent point. `first_timeout_seconds` raised to 400 (unverified
+starting point, sized for the larger corpus). Not yet verified — needs another fresh PR.
 
 New files, sibling to the existing cases:
 

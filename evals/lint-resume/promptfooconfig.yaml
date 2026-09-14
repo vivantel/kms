@@ -1,10 +1,23 @@
 # Eval case: `lint-resume` — docs/decisions/0056-chunked-checkpointed-execution-for-bootstrap-and-lint.md.
 # Exercises the interrupted/resumed path specifically: `evals/lint` already tests "does the skill
 # find the three planted violations" against a normal timeout budget; this case forces a real kill
-# mid-run (a short first-run timeout against the same fixture) and asserts the second run resumes
-# from the checkpoint and still reports every finding — none dropped, none duplicated.
+# mid-run (a short first-run timeout) and asserts the second run resumes from the checkpoint and
+# still reports every finding — none dropped, none duplicated.
+#
+# Uses its own dedicated, larger fixture (fixture/), not evals/lint's tiny one: two real CI runs
+# (workflows 34853228741 and 34858747933) showed the tiny fixture's entire Phase A corpus fits in
+# one page, so there was only a single narrow, model-speed-dependent point (finish reading, write
+# the one checkpoint) for a timeout to land after — not a stable window, and observed completion
+# time varied >2x run to run (200s-430s) on the exact same task. fixture/docs/decisions/ is a real
+# snapshot of this repo's own docs/decisions/ at tag 0.15.0 (52 real decisions, ~34K tokens — pinned
+# to a tag from before this branch's own changes, so the fixture isn't self-referentially about the
+# decisions this branch introduces) plus one added synthetic decision (0056-weekly-releases.md)
+# carrying the missing-track violation. ~34K tokens forces ~3 real Phase A pages under the 15K
+# budget, giving a wide, page-count-driven window instead of a single speed-dependent point.
+# fixture/docs/{facts,guardrails,skills}/ stay exactly as small as evals/lint's original fixture —
+# only decisions/ needed bulk to force real paging.
 # Run standalone: npx promptfoo eval -c evals/lint-resume/promptfooconfig.yaml
-description: "kms lint — resume after a killed run, same three planted violations as evals/lint"
+description: "kms lint — resume after a killed run, against a larger fixture that forces real multi-page chunking"
 
 # The final sentence below is a harness-only convenience, never part of the real, shipped lint
 # skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`, which has
@@ -28,16 +41,16 @@ prompts:
 providers:
   - id: "exec:../providers/kilo-resume-runner.sh"
     config:
-      fixture_dir: "evals/lint/fixture"
+      fixture_dir: "evals/lint-resume/fixture"
       model: "poolside/laguna-s-2.1:free"
-      # Two real CI data points bracket the actual window: 720s never interrupted anything (first
-      # run completed cleanly in ~430s total, exit 0 — workflow 34853228741/job 104006144452);
-      # 90s cut the model off exit 124 but *before* it finished reading the fixture and writing
-      # its one checkpoint (this fixture is small enough that Phase A is a single page, so there's
-      # only one checkpoint-write point, not a page-1-vs-page-2 boundary to land inside) — workflow
-      # 34858747933/job 104025078503. 200s gives real margin on both sides of that narrow point,
-      # rather than creeping the value up by small increments against a fragile boundary.
-      first_timeout_seconds: 200
+      # Unverified starting point for the new, larger dedicated fixture (~34K tokens, ~3 pages) —
+      # sized to give real margin: long enough that at least one Phase A page (roughly a third of
+      # decisions/'s 52 files) should be read and checkpointed well before this elapses, short
+      # enough to land before the full multi-page task (facts/guardrails/skills + Phase B) can
+      # complete. `second_timeout_seconds` kept at the sibling evals/lint case's own 1440s budget —
+      # bootstrap's established baseline already needed up to that long for a comparably-scoped
+      # multi-step task, so this should have headroom, but neither number is confirmed yet.
+      first_timeout_seconds: 400
       second_timeout_seconds: 1440
 
 defaultTest:
