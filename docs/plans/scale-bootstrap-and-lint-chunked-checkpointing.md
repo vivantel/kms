@@ -156,8 +156,17 @@ reopening `0016-...`'s already-considered token-budget value without a real driv
 reasoning `docs/decisions/0054-...` already established for not building ahead of demonstrated need).
 Fixed instead: `lint-resume`'s own `first_timeout_seconds` lowered 720→90, tuned to `lint`'s
 (considerably faster) actual completion time on this fixture rather than sharing `bootstrap-resume`'s
-value. Not yet re-verified — needs another fresh PR (`/eval` can't test this either, since `eval-skills.yml`
-itself is unchanged this time but `master`'s copy still lacks the matrix fix from the first update above).
+value. PR #53 closed and reopened as #54 to get a genuine `opened` event (same reason as the #52→#53
+reopen).
+
+**Update, 2026-09-14 (third)**: PR #54's run (`34858747933`) showed 90s was still wrong, in the opposite
+direction — genuinely interrupted this time (`exit 124`), but the transcript showed the model had only
+just finished reading every file (its own `SKILL.md`/`checkpointing.md` plus all 7 fixture doc files) and
+never reached writing a checkpoint at all. This fixture is small enough that its entire Phase A corpus is
+one page — there's no page-1-vs-page-2 boundary, only a single narrow point (finish-reading-and-write-the-
+one-checkpoint) that a timeout has to land after. Two data points now bracket it: 90s lands before that
+point, 720s lands well after full completion (~430s). Fixed: raised to 200s — real margin on both sides,
+not another small increment against the same boundary. PR #54 closed and reopened as #55. Not yet verified.
 
 New files, sibling to the existing cases:
 

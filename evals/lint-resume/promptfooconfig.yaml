@@ -30,15 +30,14 @@ providers:
     config:
       fixture_dir: "evals/lint/fixture"
       model: "poolside/laguna-s-2.1:free"
-      # 720s (half evals/lint's 1440s timeout) was tried first and never interrupted anything: a
-      # real CI run (workflow 34853228741, job 104006144452) showed the first run completing
-      # cleanly in ~430s total, exit 0 — lint's task on this small fixture is simply much faster
-      # than bootstrap's (whose own resume case's 720s does reliably interrupt it, same run,
-      # exit 124), so it never needs to checkpoint before finishing regardless of timeout, unless
-      # the timeout lands well inside that ~430s window. 90s is comfortably before that window
-      # closes, while still well after Phase A's single page (a handful of tiny fixture files)
-      # should have completed and written its first checkpoint.
-      first_timeout_seconds: 90
+      # Two real CI data points bracket the actual window: 720s never interrupted anything (first
+      # run completed cleanly in ~430s total, exit 0 — workflow 34853228741/job 104006144452);
+      # 90s cut the model off exit 124 but *before* it finished reading the fixture and writing
+      # its one checkpoint (this fixture is small enough that Phase A is a single page, so there's
+      # only one checkpoint-write point, not a page-1-vs-page-2 boundary to land inside) — workflow
+      # 34858747933/job 104025078503. 200s gives real margin on both sides of that narrow point,
+      # rather than creeping the value up by small increments against a fragile boundary.
+      first_timeout_seconds: 200
       second_timeout_seconds: 1440
 
 defaultTest:
