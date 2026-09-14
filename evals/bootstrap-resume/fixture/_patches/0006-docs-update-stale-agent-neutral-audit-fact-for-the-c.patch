@@ -1,0 +1,61 @@
+From 6a37265fd28c72ae01d5d3ece5d76ca95b09ebd1 Mon Sep 17 00:00:00 2001
+From: Sergey Strebulaev <s@vivantel.dev>
+Date: Sun, 30 Aug 2026 00:58:28 +0000
+Subject: [PATCH 06/15] docs: update stale agent-neutral audit fact for the
+ current six skills
+
+Named four skills and quoted wording that had since changed. Re-ran the
+fact's own grep across all six current SKILL.md bodies to confirm the
+underlying claim still holds before updating it, rather than just
+bumping the date.
+---
+ ...0002-skill-bodies-already-agent-neutral.md | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/docs/facts/0002-skill-bodies-already-agent-neutral.md b/docs/facts/0002-skill-bodies-already-agent-neutral.md
+index 625e640..7333ac2 100644
+--- a/docs/facts/0002-skill-bodies-already-agent-neutral.md
++++ b/docs/facts/0002-skill-bodies-already-agent-neutral.md
+@@ -1,27 +1,30 @@
+ ---
+ id: 0002-skill-bodies-already-agent-neutral
+-title: The four SKILL.md bodies contain no Claude/Anthropic/tool-specific language
++title: The six SKILL.md bodies contain no Claude/Anthropic/tool-specific language
+ status: current
+-date: 2026-07-29
++date: 2026-08-30
+ tags: [kms, agent-agnostic, audit]
+ ---
+ 
+-As of 2026-07-29, an audit of all four skill instruction bodies —
+-`plugins/kms/skills/{clarify,roadmap,attribute,changelog}/SKILL.md` —
+-found no occurrences of "Claude", "Claude Code", "Anthropic", specific
++As of 2026-08-30, an audit of all six skill instruction bodies —
++`plugins/kms/skills/{clarify,roadmap,bootstrap,steward,attribute,changelog}/SKILL.md`
++— found no occurrences of "Claude", "Claude Code", "Anthropic", specific
+ tool names (e.g. "Bash tool", "Read tool"), slash-command syntax
+ (`/kms:...`), or any other agent-product-specific term, in either the
+ YAML frontmatter (`name`, `description`) or the instruction body.
++Re-verified after every round of edits to these bodies since the
++original 2026-07-29 audit (originally four skills; `bootstrap`/`steward`
++added and included from `0009` onward).
+ 
+ Search performed: `grep -rniE "claude|anthropic|slash command|/kms:|bash
+ tool|read tool|edit tool|write tool|tool use" plugins/kms/skills/*/SKILL.md`
+ — zero matches.
+ 
+ Where the skills reference tooling at all (e.g. `clarify` and `roadmap`'s
+-"Use a selectable-question tool if the environment provides one, ...
+-Otherwise present as plain numbered text"), the language is already
+-phrased generically, conditional on tool availability rather than naming
+-a specific tool.
++"Selectable-question tool available? Use it; ... No tool: number each
++option with plain digits..."), the language is already phrased
++generically, conditional on tool availability rather than naming a
++specific tool.
+ 
+ This is the descriptive baseline behind
+ `docs/decisions/0006-agent-agnostic-scope.md` and the guardrail in
+-- 
+2.53.0
+

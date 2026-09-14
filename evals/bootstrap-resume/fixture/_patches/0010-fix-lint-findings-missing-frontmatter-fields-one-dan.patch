@@ -1,0 +1,269 @@
+From 1656b4f3e23fca5396cb4f33a91815f987784902 Mon Sep 17 00:00:00 2001
+From: Sergey Strebulaev <s@vivantel.dev>
+Date: Sun, 30 Aug 2026 01:57:49 +0000
+Subject: [PATCH 10/15] fix: lint findings - missing frontmatter fields, one
+ dangling ref
+
+Every guardrail in this repo has stated its derivation in a `##
+Derivation` prose section since the day guardrail-derivation-fields.md
+was written, but none of them - including that guardrail, about
+itself - ever actually carried governed-by/grounded-in/derivation-note
+as real frontmatter fields, which is what it explicitly requires
+("structured, machine-checkable... not only a prose convention").
+Same gap on the fact side: all 5 pre-existing facts predate
+fact-governance-fields.md and were never retrofitted with kind/
+governed-by. Running kms's own lint skill against kms's own repo
+caught both systemic gaps, plus one real dangling reference (a fact
+pointing at a guardrail that was split and deleted, missing the
+"since deleted" annotation the other similar cases already have) and
+one orphaned fact now cross-referenced from its owning decision.
+
+Six of the eight guardrails' actual "descriptive basis" turned out to
+be another decision or guardrail, not a fact - grounded-in: TBD for
+those rather than force-fitting a non-fact into a field that's
+supposed to hold one.
+
+Refs: docs/guardrails/fact-governance-fields.md
+Refs: docs/guardrails/guardrail-derivation-fields.md
+---
+ docs/decisions/0009-bootstrap-and-steward-skills.md         | 3 ++-
+ docs/facts/0001-kms-skill-names.md                          | 2 ++
+ docs/facts/0002-skill-bodies-already-agent-neutral.md       | 2 ++
+ docs/facts/0003-codex-plugin-manifest-schema.md             | 2 ++
+ docs/facts/0004-kms-skill-names-steward-bootstrap.md        | 2 ++
+ .../0005-global-principles-applied-to-existing-artifacts.md | 4 +++-
+ docs/guardrails/agent-agnostic-skill-content.md             | 6 ++++++
+ docs/guardrails/decision-expires-must-be-reevaluated.md     | 6 ++++++
+ docs/guardrails/decision-track-field.md                     | 5 +++++
+ docs/guardrails/fact-governance-fields.md                   | 6 ++++++
+ docs/guardrails/fact-not-audit-log.md                       | 5 +++++
+ docs/guardrails/guardrail-derivation-fields.md              | 6 ++++++
+ docs/guardrails/guardrail-re-derivation-on-source-change.md | 6 ++++++
+ docs/guardrails/plugin-manifest-version-sync.md             | 6 ++++++
+ 14 files changed, 59 insertions(+), 2 deletions(-)
+
+diff --git a/docs/decisions/0009-bootstrap-and-steward-skills.md b/docs/decisions/0009-bootstrap-and-steward-skills.md
+index a15397b..fac3c2f 100644
+--- a/docs/decisions/0009-bootstrap-and-steward-skills.md
++++ b/docs/decisions/0009-bootstrap-and-steward-skills.md
+@@ -28,7 +28,8 @@ already used to split `attribute` from `changelog`:
+ git-history mining, the full skill-gap-detection table); `steward` carries
+ only what matters on every single invocation (the six checks, the artifact
+ frontmatter formats, the derivation recipe), kept as lean as the four
+-existing skills.
++existing skills. See `docs/facts/0004-kms-skill-names-steward-bootstrap.md`
++for how these two names were settled.
+ 
+ ## Why
+ 
+diff --git a/docs/facts/0001-kms-skill-names.md b/docs/facts/0001-kms-skill-names.md
+index d92b23a..6ab45ea 100644
+--- a/docs/facts/0001-kms-skill-names.md
++++ b/docs/facts/0001-kms-skill-names.md
+@@ -4,6 +4,8 @@ title: Names of the commit/PR attribution and changelog skills
+ status: current
+ date: 2026-07-29
+ tags: [kms, naming]
++kind: decision
++governed-by: 0002-commit-pr-attribution-skill-design
+ ---
+ 
+ The two skills designed in `docs/decisions/0002-commit-pr-attribution-skill-design.md`
+diff --git a/docs/facts/0002-skill-bodies-already-agent-neutral.md b/docs/facts/0002-skill-bodies-already-agent-neutral.md
+index 912eb89..0a675dc 100644
+--- a/docs/facts/0002-skill-bodies-already-agent-neutral.md
++++ b/docs/facts/0002-skill-bodies-already-agent-neutral.md
+@@ -4,6 +4,8 @@ title: The eight SKILL.md bodies contain no Claude/Anthropic/tool-specific langu
+ status: current
+ date: 2026-08-30
+ tags: [kms, agent-agnostic, audit]
++kind: environmental
++governed-by: 0006-agent-agnostic-scope
+ ---
+ 
+ As of 2026-08-30, an audit of all eight skill instruction bodies —
+diff --git a/docs/facts/0003-codex-plugin-manifest-schema.md b/docs/facts/0003-codex-plugin-manifest-schema.md
+index 29845ac..2039a2e 100644
+--- a/docs/facts/0003-codex-plugin-manifest-schema.md
++++ b/docs/facts/0003-codex-plugin-manifest-schema.md
+@@ -4,6 +4,8 @@ title: Codex's plugin manifest schema and location
+ status: current
+ date: 2026-07-29
+ tags: [kms, agent-agnostic, codex, packaging]
++kind: environmental
++governed-by: 0008-native-codex-plugin-support
+ ---
+ 
+ Confirmed 2026-07-29 via OpenAI's own developer docs
+diff --git a/docs/facts/0004-kms-skill-names-steward-bootstrap.md b/docs/facts/0004-kms-skill-names-steward-bootstrap.md
+index 42ac2d2..1948bb2 100644
+--- a/docs/facts/0004-kms-skill-names-steward-bootstrap.md
++++ b/docs/facts/0004-kms-skill-names-steward-bootstrap.md
+@@ -4,6 +4,8 @@ title: Names of the bootstrap and steward skills
+ status: current
+ date: 2026-08-29
+ tags: [kms, naming, knowledge-management]
++kind: decision
++governed-by: 0009-bootstrap-and-steward-skills
+ ---
+ 
+ The two skills added by
+diff --git a/docs/facts/0005-global-principles-applied-to-existing-artifacts.md b/docs/facts/0005-global-principles-applied-to-existing-artifacts.md
+index edae847..d6247c4 100644
+--- a/docs/facts/0005-global-principles-applied-to-existing-artifacts.md
++++ b/docs/facts/0005-global-principles-applied-to-existing-artifacts.md
+@@ -4,6 +4,8 @@ title: Result of auditing existing artifacts against the global writing principl
+ status: current
+ date: 2026-08-29
+ tags: [kms, knowledge-management, audit]
++kind: environmental
++governed-by: TBD
+ ---
+ 
+ As of 2026-08-29, every artifact under `docs/{facts,decisions,guardrails,skills}/`
+@@ -11,7 +13,7 @@ and every `plugins/kms/skills/*/SKILL.md` was checked against the global
+ principles stated in `plugins/kms/skills/steward/SKILL.md` (token
+ economy, one statement one job). Two violations found and fixed:
+ 
+-- `docs/guardrails/knowledge-artifact-derivation-fields.md` bundled three
++- `docs/guardrails/knowledge-artifact-derivation-fields.md` (since deleted) bundled three
+   distinct normative claims (guardrail frontmatter, fact frontmatter,
+   re-derivation-on-change) in one file — split into
+   `guardrail-derivation-fields.md`, `fact-governance-fields.md`, and
+diff --git a/docs/guardrails/agent-agnostic-skill-content.md b/docs/guardrails/agent-agnostic-skill-content.md
+index 3531f3a..d536594 100644
+--- a/docs/guardrails/agent-agnostic-skill-content.md
++++ b/docs/guardrails/agent-agnostic-skill-content.md
+@@ -4,6 +4,12 @@ title: Skill instruction bodies must stay agent-neutral
+ status: active
+ date: 2026-07-29
+ tags: [kms, agent-agnostic, guardrail]
++governed-by: 0006-agent-agnostic-scope
++grounded-in: 0002-skill-bodies-already-agent-neutral
++derivation-note: >
++  Given decision 0006 (skill content stays agent-neutral across agents)
++  and fact 0002 (bodies already meet that bar), future skill bodies must
++  not regress it.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/decision-expires-must-be-reevaluated.md b/docs/guardrails/decision-expires-must-be-reevaluated.md
+index 6316961..0a66614 100644
+--- a/docs/guardrails/decision-expires-must-be-reevaluated.md
++++ b/docs/guardrails/decision-expires-must-be-reevaluated.md
+@@ -4,6 +4,12 @@ title: A decision past its expires date or condition must be re-evaluated
+ status: active
+ date: 2026-08-30
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0014-decision-scope-and-expires-fields
++grounded-in: TBD
++derivation-note: >
++  Given decision 0014 (bounded/provisional decisions get an expires
++  field), a decision past its bound must be re-evaluated, not left
++  standing as current.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/decision-track-field.md b/docs/guardrails/decision-track-field.md
+index eb11b34..b646e78 100644
+--- a/docs/guardrails/decision-track-field.md
++++ b/docs/guardrails/decision-track-field.md
+@@ -4,6 +4,11 @@ title: Every decision must declare its track
+ status: active
+ date: 2026-08-30
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0010-decision-track-field
++grounded-in: TBD
++derivation-note: >
++  Given decision 0010 (decisions distinguish product from process),
++  every decision must declare which, or the distinction has no teeth.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/fact-governance-fields.md b/docs/guardrails/fact-governance-fields.md
+index 3ee95af..e0ce3f8 100644
+--- a/docs/guardrails/fact-governance-fields.md
++++ b/docs/guardrails/fact-governance-fields.md
+@@ -4,6 +4,12 @@ title: Facts must declare their kind and governing decision
+ status: active
+ date: 2026-08-29
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0009-bootstrap-and-steward-skills
++grounded-in: TBD
++derivation-note: >
++  Given decision 0009 (facts must be traceable to their kind and
++  governing decision), every fact file must declare kind and
++  governed-by.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/fact-not-audit-log.md b/docs/guardrails/fact-not-audit-log.md
+index 230cbb8..9799f23 100644
+--- a/docs/guardrails/fact-not-audit-log.md
++++ b/docs/guardrails/fact-not-audit-log.md
+@@ -4,6 +4,11 @@ title: A fact must not be an ungrounded audit-log record
+ status: active
+ date: 2026-08-30
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0015-facts-must-not-be-audit-log-records
++grounded-in: TBD
++derivation-note: >
++  Given decision 0015 (kms stays a knowledge base, not a log), a fact
++  grounding nothing and referenced by nothing is noise, not knowledge.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/guardrail-derivation-fields.md b/docs/guardrails/guardrail-derivation-fields.md
+index 2141e20..bf99dbf 100644
+--- a/docs/guardrails/guardrail-derivation-fields.md
++++ b/docs/guardrails/guardrail-derivation-fields.md
+@@ -4,6 +4,12 @@ title: Guardrails must declare their derivation
+ status: active
+ date: 2026-08-29
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0009-bootstrap-and-steward-skills
++grounded-in: TBD
++derivation-note: >
++  Given decision 0009 (every normative artifact must trace to its
++  sources), every guardrail must declare governed-by, grounded-in, and
++  derivation-note.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/guardrail-re-derivation-on-source-change.md b/docs/guardrails/guardrail-re-derivation-on-source-change.md
+index 718e606..06e631e 100644
+--- a/docs/guardrails/guardrail-re-derivation-on-source-change.md
++++ b/docs/guardrails/guardrail-re-derivation-on-source-change.md
+@@ -4,6 +4,12 @@ title: A guardrail must be re-derived when its governing decision or grounding f
+ status: active
+ date: 2026-08-29
+ tags: [kms, knowledge-management, guardrail]
++governed-by: 0009-bootstrap-and-steward-skills
++grounded-in: TBD
++derivation-note: >
++  Given decision 0009 (norms must not outlive the decisions that
++  justified them), a guardrail's source changing must trigger
++  re-derivation, not silence.
+ ---
+ 
+ ## Guardrail
+diff --git a/docs/guardrails/plugin-manifest-version-sync.md b/docs/guardrails/plugin-manifest-version-sync.md
+index 00bea8e..ee78014 100644
+--- a/docs/guardrails/plugin-manifest-version-sync.md
++++ b/docs/guardrails/plugin-manifest-version-sync.md
+@@ -4,6 +4,12 @@ title: Every plugin manifest's version field must be bumped together
+ status: active
+ date: 2026-07-29
+ tags: [kms, agent-agnostic, codex, packaging, guardrail]
++governed-by: 0008-native-codex-plugin-support
++grounded-in: 0003-codex-plugin-manifest-schema
++derivation-note: >
++  Given decision 0008 (one skill set, many manifests) and fact 0003
++  (Codex's manifest has its own independent version field), every
++  manifest's version must move together.
+ ---
+ 
+ ## Guardrail
+-- 
+2.53.0
+

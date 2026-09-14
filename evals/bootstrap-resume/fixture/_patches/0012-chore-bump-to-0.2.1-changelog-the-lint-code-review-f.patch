@@ -1,0 +1,60 @@
+From 42df31d7aee90bc8826568482d44acf5b6e42b80 Mon Sep 17 00:00:00 2001
+From: Sergey Strebulaev <s@vivantel.dev>
+Date: Sun, 30 Aug 2026 02:03:00 +0000
+Subject: [PATCH 12/15] chore: bump to 0.2.1, changelog the lint/code-review
+ fixes
+
+---
+ CHANGELOG.md                           | 10 ++++++++++
+ plugins/kms/.claude-plugin/plugin.json |  2 +-
+ plugins/kms/.codex-plugin/plugin.json  |  2 +-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 156391c..c61bc2a 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,15 @@
+ # Changelog
+ 
++## [0.2.1] - 2026-08-30
++
++### Fixed
++
++- Every guardrail in this repo stated its derivation only in prose, never as the `governed-by`/`grounded-in`/`derivation-note` frontmatter `guardrail-derivation-fields.md` itself requires — including that guardrail, about itself. All 5 pre-existing facts were missing `kind`/`governed-by` the same way. Caught by running `lint` (this plugin's own new skill) against this repo's own knowledge base, then fixed across all 13 files.
++- One dangling reference (a fact pointing at a guardrail that was split and deleted) and one orphaned fact (referenced by nothing) found by the same `lint` pass.
++- `steward`'s "No unenforced guardrail" principle had no matching numbered check, unlike its sibling "No redundant guardrails"; added, and mirrored into `lint`'s checklist.
++- `bootstrap`'s role-list step never said to give the two files it writes their base frontmatter, and gave no tiebreaker for a role whose track is genuinely ambiguous (compliance, quality, process-documentation roles) — both added.
++- A historical plan's "done when" criterion quoted `roadmap`'s classification paragraph verbatim; later work changed that paragraph without updating the quote. Annotated as stale rather than left to confuse a future reader.
++
+ ## [0.2.0] - 2026-08-30
+ 
+ ### Added
+diff --git a/plugins/kms/.claude-plugin/plugin.json b/plugins/kms/.claude-plugin/plugin.json
+index 99f7b3f..72d121c 100644
+--- a/plugins/kms/.claude-plugin/plugin.json
++++ b/plugins/kms/.claude-plugin/plugin.json
+@@ -2,7 +2,7 @@
+   "name": "kms",
+   "displayName": "KMS Dev Skills",
+   "description": "Clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system — plus attribute commits and generate changelogs from it.",
+-  "version": "0.2.0",
++  "version": "0.2.1",
+   "author": {
+     "name": "sergemso"
+   }
+diff --git a/plugins/kms/.codex-plugin/plugin.json b/plugins/kms/.codex-plugin/plugin.json
+index 7885f5d..a5e8e35 100644
+--- a/plugins/kms/.codex-plugin/plugin.json
++++ b/plugins/kms/.codex-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "kms",
+-  "version": "0.2.0",
++  "version": "0.2.1",
+   "description": "Clarify and capture project decisions as durable knowledge, then bootstrap, steward, lint, and query the resulting fact/decision/guardrail system — plus attribute commits and generate changelogs from it.",
+   "skills": "./skills"
+ }
+-- 
+2.53.0
+

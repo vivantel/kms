@@ -1,0 +1,25 @@
+name: Skill proposal or change
+description: Propose a new skill, or a behavior change to an existing one.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: domain
+    attributes:
+      label: Domain and trigger
+      description: What does this skill own, and what work should activate it?
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: What's missing or wrong today
+      description: If this changes an existing skill, name it and quote the part that's wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What should the skill do instead? Sketch the SKILL.md instructions if you can.
+    validations:
+      required: true

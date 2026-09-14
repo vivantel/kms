@@ -218,8 +218,30 @@ promptfoo tried to spawn the judge grading subprocess. Cause: `setup.sh` only st
 `evals/`, everything else) in place — `kilo-resume-runner.sh`'s own final file listing (`find . -type f`)
 enumerated hundreds of files, and that giant string exceeded the OS's exec argument-size limit. Fixed:
 `setup.sh` now resets the working tree to near-empty (just a placeholder `README.md`) after checkout,
-keeping full git history for mining but keeping the file listing small. Not yet verified — needs another
-fresh PR.
+keeping full git history for mining but keeping the file listing small. PR #57 closed and reopened as #58.
+
+**Update, 2026-09-14 (seventh)**: PR #58's run showed `bootstrap` (the sibling non-resume case) — a new
+data point, not caused by anything touched here — failed too, and `bootstrap-resume` hit `Error: spawn
+E2BIG` again, unchanged, proving the working-tree trim wasn't the actual size driver. Downloaded and
+inspected the artifact: the error is `promptfoo`'s own spawn of the grading subprocess itself (visible in
+the stack trace, before `kilo-judge.sh` even starts) — not something fixable from inside that script (no
+stdin/temp-file option available for `exec:` providers' own invocation). Root cause: the full 67-commit
+history's real diff content (~220K tokens) makes the model's own transcript (formatted output, not just
+raw diffs) large enough to blow past the OS's `ARG_MAX` regardless of working-tree trimming.
+
+Replaced the fixture entirely rather than trimming further: `setup.sh` now builds 16 real commits from
+early in this repo's own history (commit #5's full-tree snapshot as `_seed/`, ~240KB — much smaller than
+this late in history — then 15 more replayed via `git am` from `_patches/*.patch`, preserving real
+messages/dates/authors) instead of a git bundle of the full 67-commit history. Two bundle-based approaches
+were tried first and abandoned: a bundle of the full history (the E2BIG problem above), and a bundle of a
+`--depth`-shallow clone of just a smaller slice (the shallow boundary's grafted parent isn't portably
+bundleable without `git replace`/`refs/replace` handling that still didn't survive a plain `git clone` of
+the bundle in isolation, tested directly). The snapshot+patches approach sidesteps both — no shallow
+quirks, and an early-history seed keeps total size down: full `git log -p` across all 16 commits is now
+~64K tokens (~250KB raw), well under the failing attempt's ~430KB+. The final reset-to-near-empty step
+also changed: it's no longer a committed diff (which would itself add a large removal diff to the very
+history being mined) — the working tree is just deleted on disk, uncommitted, after `git am` completes.
+Not yet verified — needs another fresh PR.
 
 New files, sibling to the existing cases (original design — since superseded per the updates above for
 both cases' actual fixtures):

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Changelog"
+  short_description: "Generate a CHANGELOG.md entry from commit history"
+policy:
+  allow_implicit_invocation: false

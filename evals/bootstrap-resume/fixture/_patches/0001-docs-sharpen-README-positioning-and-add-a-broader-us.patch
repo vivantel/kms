@@ -1,0 +1,30 @@
+From 86f951a1f981ab35279b2032b6daf03c7293bb2c Mon Sep 17 00:00:00 2001
+From: Sergey Strebulaev <s@vivantel.dev>
+Date: Sat, 29 Aug 2026 23:46:54 +0000
+Subject: [PATCH 01/15] docs: sharpen README positioning and add a broader
+ use-case line
+
+---
+ README.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/README.md b/README.md
+index 0f5f788..9608409 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,12 @@
+ # kms
+ 
++A knowledge-management system for any codebase — capture decisions,
++facts, and guardrails as durable, traceable artifacts, maintained
++automatically as your project evolves. Works for any git-based project
++where decisions and facts are worth tracking durably — software repos,
++technical documentation, even long-form writing like research papers,
++not just code.
++
+ A curated marketplace of Claude Code plugins for everyday development
+ workflows. The `kms` plugin bundles six knowledge-management skills:
+ 
+-- 
+2.53.0
+

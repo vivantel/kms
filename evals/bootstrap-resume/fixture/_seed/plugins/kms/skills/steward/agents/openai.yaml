@@ -1,0 +1,5 @@
+interface:
+  display_name: "Steward"
+  short_description: "Maintain facts, decisions, and guardrails each session"
+policy:
+  allow_implicit_invocation: false

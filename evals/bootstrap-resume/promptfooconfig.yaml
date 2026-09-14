@@ -4,14 +4,17 @@
 # first-run timeout) and asserts the second run detects and resumes from the checkpoint rather than
 # starting over or duplicating output.
 #
-# Uses its own dedicated fixture (fixture/), not evals/bootstrap's tiny 2-commit one: this repo's
-# own real commit history up to tag 0.15.0 (67 commits, materialized from a checked-in git bundle
-# by setup.sh), not synthetic. Unlike lint's docs/ tree — where INDEX.md is a cheap shortcut a model
-# can read instead of every file, which defeated a larger *synthetic* fixture for lint-resume (see
-# that case's own history in docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md) — there is
-# no equivalent shortcut for git-history mining: extracting decision stubs genuinely requires
-# walking real commit messages/diffs, so real history should force genuine multi-page paging far
-# more reliably than the 2-commit fixture, whose own timing turned out flaky (workflow 34862500834).
+# Uses its own dedicated fixture (fixture/), not evals/bootstrap's tiny 2-commit one: 16 real
+# commits from early in this repo's own history (commit #5's full-tree snapshot, then 15 more
+# replayed via `git am`; see fixture/setup.sh's own comments for why — two earlier attempts using
+# the full 67-commit history up to tag 0.15.0 via a git bundle hit real problems: an OS
+# argument-size limit on the grading subprocess, and shallow-clone/bundle portability issues).
+# Unlike lint's docs/ tree — where INDEX.md is a cheap shortcut a model can read instead of every
+# file, which defeated a larger *synthetic* fixture for lint-resume (see that case's own history in
+# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md) — there is no equivalent shortcut
+# for git-history mining: extracting decision stubs genuinely requires walking real commit
+# messages/diffs, so real history should force genuine multi-page paging far more reliably than the
+# 2-commit fixture, whose own timing turned out flaky (workflow 34862500834).
 # Run standalone: npx promptfoo eval -c evals/bootstrap-resume/promptfooconfig.yaml
 description: "kms bootstrap — resume after a killed run, against this repo's own real commit history"
 
@@ -32,11 +35,10 @@ providers:
       fixture_dir: "evals/bootstrap-resume/fixture"
       model: "poolside/laguna-s-2.1:free"
       # 720s already reliably interrupted the old, much smaller 2-commit fixture (with occasional
-      # flakiness — workflow 34862500834). The real history here is far larger (67 commits; full
-      # patch content alone is ~220K tokens, commit messages alone ~13K), so 720s should land well
-      # before completion regardless — kept unchanged as the starting point, not re-derived, since
-      # the risk here is the opposite one: second_timeout_seconds may need raising if a full mine
-      # of this much real content can't finish in 1440s. Unverified; watch the next real CI run.
+      # flakiness — workflow 34862500834). Full `git log -p` across all 16 commits here is ~64K
+      # tokens (~250KB raw) — real content, no INDEX-equivalent shortcut, but deliberately sized
+      # with margin under the OS argument-size limit that broke the earlier 67-commit/~430KB+
+      # attempt. Kept unchanged as the starting point; unverified, watch the next real CI run.
       first_timeout_seconds: 720
       second_timeout_seconds: 1440
 
