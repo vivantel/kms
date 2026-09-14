@@ -1,10 +1,19 @@
 # Eval case: `bootstrap-resume` — docs/decisions/0056-chunked-checkpointed-execution-for-bootstrap-and-lint.md.
 # Exercises the interrupted/resumed path specifically: `evals/bootstrap` already tests "does the
 # skill do its job" against a normal timeout budget; this case forces a real kill mid-run (a short
-# first-run timeout against the same fixture) and asserts the second run detects and resumes from
-# the checkpoint rather than starting over or duplicating output.
+# first-run timeout) and asserts the second run detects and resumes from the checkpoint rather than
+# starting over or duplicating output.
+#
+# Uses its own dedicated fixture (fixture/), not evals/bootstrap's tiny 2-commit one: this repo's
+# own real commit history up to tag 0.15.0 (67 commits, materialized from a checked-in git bundle
+# by setup.sh), not synthetic. Unlike lint's docs/ tree — where INDEX.md is a cheap shortcut a model
+# can read instead of every file, which defeated a larger *synthetic* fixture for lint-resume (see
+# that case's own history in docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md) — there is
+# no equivalent shortcut for git-history mining: extracting decision stubs genuinely requires
+# walking real commit messages/diffs, so real history should force genuine multi-page paging far
+# more reliably than the 2-commit fixture, whose own timing turned out flaky (workflow 34862500834).
 # Run standalone: npx promptfoo eval -c evals/bootstrap-resume/promptfooconfig.yaml
-description: "kms bootstrap — resume after a killed run"
+description: "kms bootstrap — resume after a killed run, against this repo's own real commit history"
 
 # The second sentence below is a harness-only convenience, never part of the real, shipped
 # bootstrap skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`,
@@ -20,11 +29,14 @@ prompts:
 providers:
   - id: "exec:../providers/kilo-resume-runner.sh"
     config:
-      fixture_dir: "evals/bootstrap/fixture"
+      fixture_dir: "evals/bootstrap-resume/fixture"
       model: "poolside/laguna-s-2.1:free"
-      # Starting point per docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md step 4
-      # (~half the sibling evals/bootstrap case's 1440s timeout) — not yet verified locally
-      # (plan step 5 still pending); tune if the first run isn't reliably interrupted.
+      # 720s already reliably interrupted the old, much smaller 2-commit fixture (with occasional
+      # flakiness — workflow 34862500834). The real history here is far larger (67 commits; full
+      # patch content alone is ~220K tokens, commit messages alone ~13K), so 720s should land well
+      # before completion regardless — kept unchanged as the starting point, not re-derived, since
+      # the risk here is the opposite one: second_timeout_seconds may need raising if a full mine
+      # of this much real content can't finish in 1440s. Unverified; watch the next real CI run.
       first_timeout_seconds: 720
       second_timeout_seconds: 1440
 

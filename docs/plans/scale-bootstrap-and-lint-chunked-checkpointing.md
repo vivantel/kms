@@ -182,9 +182,37 @@ before this branch's own changes) plus one added synthetic decision carrying the
 `facts/`/`guardrails/`/`skills/` stay exactly as small as the original fixture, carrying the other two
 planted violations unchanged. ~34K tokens forces ~3 real Phase A pages, giving a wide, page-count-driven
 window instead of a single speed-dependent point. `first_timeout_seconds` raised to 400 (unverified
-starting point, sized for the larger corpus). Not yet verified — needs another fresh PR.
+starting point, sized for the larger corpus). PR #55 closed and reopened as #56.
 
-New files, sibling to the existing cases:
+**Update, 2026-09-14 (fifth)**: PR #56's run showed two things. `lint-resume` still failed, but the real
+cause is deeper than fixture size: the model got a genuine `exit 124` kill at 400s, but in that time did
+only 12 Read actions — it read the cheap `INDEX.md` files (which already summarize id/title/tags/status
+for every decision) plus a handful of individually-suspicious files, using that as a shortcut to answer
+the 3 sentinel questions instead of mechanically walking every decision file. A bigger *fixture* doesn't
+force real multi-page chunking if the model never needs to open most of the files at all — this needs a
+different fix (a more explicit, exhaustive-processing prompt, or accepting it as a known-hard case) than
+anything tried so far. Separately, `bootstrap-resume` — unrelated to this run's changes — failed for the
+first time (passed twice before, PR #53), genuine `exit 124` but cut off during early setup before
+reaching a checkpoint; read as the same run-to-run model-speed variance already established for
+`lint-resume`, not a regression.
+
+That second finding motivated a fix for `bootstrap-resume` specifically: unlike `lint`'s `docs/` tree
+(where `INDEX.md` is an intentional, designed-in shortcut a model can read instead of every file —
+exactly what defeated `lint-resume`'s bigger fixture), git-history mining has **no equivalent shortcut** —
+extracting decision stubs genuinely requires walking real commit messages/diffs. `bootstrap-resume` now
+uses its own dedicated `evals/bootstrap-resume/fixture/`: this repo's own real commit history up to tag
+`0.15.0` (67 commits — the repo's entire history at that point, since only 67 total commits exist — full
+patch content ~220K tokens, commit messages alone ~13K tokens), materialized from a checked-in git bundle
+(`kms-history-0.15.0.bundle`) by `setup.sh`, with `docs/{facts,decisions,guardrails,skills}/` removed
+after checkout (as one final synthetic commit) so bootstrap faces a genuine from-scratch extraction, not a
+gap-fill pass. `first_timeout_seconds` kept at 720 (already reliably interrupted the much smaller 2-commit
+fixture); `second_timeout_seconds` kept at 1440 but flagged as the real risk this time — a full mine of
+much more real content might not finish in that budget, unverified until the next real CI run.
+`lint-resume` is left as-is pending a decision on which further fix to pursue. Not yet verified — needs
+another fresh PR.
+
+New files, sibling to the existing cases (original design — since superseded per the updates above for
+both cases' actual fixtures):
 
 - `evals/bootstrap-resume/promptfooconfig.yaml` — reuses `evals/bootstrap/fixture/` (point `fixture_dir`
   at the existing path, don't duplicate the fixture). Sets `timeout_seconds` low enough to force a kill
