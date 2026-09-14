@@ -129,7 +129,16 @@ Done when: `lint/SKILL.md` references `checkpointing.md`, states the Phase A/Pha
 checks fall in each phase, and the "Output" section's confirmation language matches the new guardrail —
 confirmed by re-reading the whole file once more after editing, same rule as step 2.
 
-### 4. Add resume-specific eval cases — status: pending (files written, not yet run locally — see step 5)
+### 4. Add resume-specific eval cases — status: pending (files written; wired into `.github/workflows/eval-skills.yml`'s matrix after a real CI run showed them being silently skipped — not yet run locally, see step 5)
+
+**Update, 2026-09-14**: a real `/eval` CI run (workflow `34847715310`) showed `eval (matrix.case)` and
+`eval summary` as `skipped` — the two new case directories existed on disk but `eval-skills.yml`'s
+`matrix.case` list (both the `eval` and `eval-recheck` jobs) was never updated to include
+`bootstrap-resume`/`lint-resume`, so CI never actually ran them despite this step's own done-when
+criteria implying it would. Fixed: both matrix lists now include them, and each job's `timeout-minutes`
+raised 30→45 (`bootstrap-resume`/`lint-resume`'s worst case, `first_timeout_seconds` +
+`second_timeout_seconds` = 2160s/36min, would otherwise exceed the prior 30min ceiling sized for the
+original cases' single 1440s budget). Re-triggered via a fresh `/eval` comment; not yet confirmed passing.
 
 New files, sibling to the existing cases:
 
@@ -181,6 +190,16 @@ Push this branch (`scale-bootstrap-lint-chunking`), open a PR against `master`. 
 ...`, `.github/workflows/eval-skills.yml` triggers automatically on a same-repo PR touching `plugins/kms/
 skills/**` or `plugins/kms/shared/**` — this change touches both. Confirm the workflow's consolidated
 summary comment shows all cases (including the 2 new resume cases) passing.
+
+**Update, 2026-09-14**: PR #52 opened. Its only `pull_request`-triggered run (`34766744874`) tested the
+pre-code-review-fix commit — `eval-skills.yml` deliberately doesn't re-trigger on a force-push (`0044-...`
+excludes `synchronize`), so a subsequent `/eval` comment was needed to test the amended commit. That
+recheck run (`34847715310`) found `capture` failing on `Read AGENTS.md failed: File not found` —
+`evals/capture/fixture/` has never had an `AGENTS.md` (unchanged since PR #3, predates this branch
+entirely, and `capture/SKILL.md` isn't touched by this change) — read as pre-existing free-tier-model
+flakiness, not a regression this PR caused. `bootstrap`, `lint`, `attribute`, and even `roadmap` (the
+documented known-flaky case) all passed in the same run. The same run also surfaced step 4's matrix-wiring
+gap (see that step's update) — re-triggered again after fixing it; not yet confirmed.
 
 Done when: a real CI run on this PR shows the full suite passing, matching step 5's local result.
 
