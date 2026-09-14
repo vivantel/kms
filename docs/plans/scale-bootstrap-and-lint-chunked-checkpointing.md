@@ -138,7 +138,26 @@ confirmed by re-reading the whole file once more after editing, same rule as ste
 criteria implying it would. Fixed: both matrix lists now include them, and each job's `timeout-minutes`
 raised 30→45 (`bootstrap-resume`/`lint-resume`'s worst case, `first_timeout_seconds` +
 `second_timeout_seconds` = 2160s/36min, would otherwise exceed the prior 30min ceiling sized for the
-original cases' single 1440s budget). Re-triggered via a fresh `/eval` comment; not yet confirmed passing.
+original cases' single 1440s budget). The `/eval` comment retrigger on PR #52 turned out to hit the same
+gap it was meant to test — `issue_comment`-triggered workflows resolve the *workflow YAML itself* from
+`master`, not the PR branch (unlike `pull_request`-triggered ones, which do use the branch's version), so
+the matrix fix was invisible to it. PR #52 closed and reopened as #53 to get a genuine `opened` event.
+
+**Update, 2026-09-14 (second)**: PR #53's real `pull_request`-triggered run (`34853228741`) did correctly
+include both new cases. `bootstrap-resume` passed — its first run genuinely hit `exit 124` (a real kill at
+the 720s budget), confirming `bootstrap`'s multi-step task is slow enough on this fixture to interrupt
+reliably. `lint-resume` failed: its first run hit `exit 0` (completed cleanly in ~430s, well under the
+720s budget) — `lint`'s task on the same tiny fixture is simply faster than `bootstrap`'s, so it never
+needed to checkpoint at all regardless of the timeout value, unless the timeout happened to land inside
+that ~430s window. Considered and declined a fix via a configurable page-size budget (would let the eval
+force pagination on a tiny fixture) — rejected as solving a test problem with a product feature no real
+user has asked for, weakening the eval's fidelity to the shipped default rather than strengthening it, and
+reopening `0016-...`'s already-considered token-budget value without a real driving need (the same
+reasoning `docs/decisions/0054-...` already established for not building ahead of demonstrated need).
+Fixed instead: `lint-resume`'s own `first_timeout_seconds` lowered 720→90, tuned to `lint`'s
+(considerably faster) actual completion time on this fixture rather than sharing `bootstrap-resume`'s
+value. Not yet re-verified — needs another fresh PR (`/eval` can't test this either, since `eval-skills.yml`
+itself is unchanged this time but `master`'s copy still lacks the matrix fix from the first update above).
 
 New files, sibling to the existing cases:
 

@@ -30,10 +30,15 @@ providers:
     config:
       fixture_dir: "evals/lint/fixture"
       model: "poolside/laguna-s-2.1:free"
-      # Starting point per docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md step 4
-      # (~half the sibling evals/lint case's 1440s timeout) — not yet verified locally (plan
-      # step 5 still pending); tune if the first run isn't reliably interrupted.
-      first_timeout_seconds: 720
+      # 720s (half evals/lint's 1440s timeout) was tried first and never interrupted anything: a
+      # real CI run (workflow 34853228741, job 104006144452) showed the first run completing
+      # cleanly in ~430s total, exit 0 — lint's task on this small fixture is simply much faster
+      # than bootstrap's (whose own resume case's 720s does reliably interrupt it, same run,
+      # exit 124), so it never needs to checkpoint before finishing regardless of timeout, unless
+      # the timeout lands well inside that ~430s window. 90s is comfortably before that window
+      # closes, while still well after Phase A's single page (a handful of tiny fixture files)
+      # should have completed and written its first checkpoint.
+      first_timeout_seconds: 90
       second_timeout_seconds: 1440
 
 defaultTest:
