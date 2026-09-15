@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.16.0] - 2026-09-13
+
+### Added
+
+- `bootstrap` and `lint` now execute as chunked, self-checkpointing passes instead of one unbroken
+  run, closing the scaling gap `docs/decisions/archive/0041-index-and-archive-for-scale.md` left
+  open — that decision already noted `lint`'s structural checks "inherently require opening every
+  file they validate, index or not," and `bootstrap`'s own eval case needed a 24-minute timeout
+  even on a tiny fixture. A new shared convention (`plugins/kms/shared/checkpointing.md`) pages
+  per-file work by artifact type until an ~15,000-token budget is hit, checkpointing to
+  `docs/.kms-checkpoints/<skill>-<run-id>.md`; relational checks (contradiction-scanning,
+  stale-derived-artifact) run as a separate phase afterward, shortlisted from each type's
+  `INDEX.md` first. A found checkpoint is never auto-resumed — the confirming party is asked, and
+  resuming re-verifies the recorded file/commit set first. `bootstrap` also now asks how much git
+  history to mine (all / last N commits / last M years / custom), recommending a bounded window
+  once a project's commit count crosses 1,000 (`docs/decisions/0056-...`, `docs/facts/0015-...`
+  through `0017-...`, `docs/guardrails/checkpoint-file-lifecycle.md`).
+- `lint`'s "wait for human confirmation" gate now reads as "wait for the confirming party" —
+  ordinarily the user, but an explicitly authorized reviewing subagent may stand in, acting within
+  its own configured authority (which kms itself does not define). Surfaced directly by needing to
+  validate the chunking/checkpointing work above unattended. Every other skill's analogous
+  human-phrased gate (`roadmap`, `clarify`, `capture`, `attribute`, `refactor-plan`, `uninstall`)
+  is a natural candidate for the same generalization but is deliberately left for a follow-on, not
+  changed here (`docs/decisions/0057-...`, `docs/guardrails/confirming-party-acceptable-for-
+  checkpoint-gates.md`).
+- Two new eval cases, `evals/bootstrap-resume` and `evals/lint-resume`, exercising the interrupted/
+  resumed path directly: a new `evals/providers/kilo-resume-runner.sh` forces a real kill partway
+  through a run (a short first-run timeout), then asserts the second run detects and resumes the
+  checkpoint rather than duplicating output. Both are honestly recorded, not unconditionally
+  green: `bootstrap-resume` is accepted known-flaky (a real, if imperfect, pass record — matching
+  `roadmap`'s own status in the original suite); `lint-resume` is accepted known-hard/unresolved —
+  the model shortcuts via `INDEX.md` instead of the exhaustive per-file reads the checkpointing
+  mechanism assumes, a real product finding this eval surfaced rather than a harness defect (full
+  trail in `docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md`).
+- A new procedure, `docs/skills/adding-checkpointed-execution.md`, for adopting this pattern in a
+  future skill beyond `bootstrap`/`lint`.
+
 ## [0.15.0] - 2026-09-12
 
 ### Added

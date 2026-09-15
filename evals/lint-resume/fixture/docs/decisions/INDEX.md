@@ -54,5 +54,4 @@ id,title,tags,status
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
-0056-chunked-checkpointed-execution-for-bootstrap-and-lint,"Give bootstrap and lint a chunked, checkpointed execution mode so neither requires one unbroken pass","kms, knowledge-management, scale, checkpointing, eval-harness",active
-0057-confirming-party-generalizes-human-checkpoint,"Generalize lint's ""wait for human confirmation"" gate to ""wait for a confirming party""","kms, knowledge-management, automation",active
+0056-weekly-releases,Ship on a weekly release cadence,"release",active

@@ -1,0 +1,60 @@
+# Eval case: `bootstrap-resume` — docs/decisions/0056-chunked-checkpointed-execution-for-bootstrap-and-lint.md.
+# Exercises the interrupted/resumed path specifically: `evals/bootstrap` already tests "does the
+# skill do its job" against a normal timeout budget; this case forces a real kill mid-run (a short
+# first-run timeout) and asserts the second run detects and resumes from the checkpoint rather than
+# starting over or duplicating output.
+#
+# Reuses evals/bootstrap's own tiny 2-commit fixture — a larger real-commit-history fixture was
+# tried (four iterations: a git bundle of this repo's full 67-commit history, a working-tree trim,
+# a shallow-clone bundle, and a 16-commit snapshot+patches version) specifically to get a wider,
+# more reliable interruption window than this tiny fixture's single-checkpoint-point timing allows.
+# Every attempt hit a different real infrastructure problem (an OS argument-size limit on the
+# grading subprocess — "Error: spawn E2BIG" — that persisted even after cutting real content down
+# to ~64K tokens; shallow-clone/bundle portability issues) rather than ever actually running to a
+# graded result. Reverted to this fixture, which has a real, if imperfect, track record (passed
+# genuinely twice — workflows 34766744874 and 34853228741 — both with a real exit-124 kill and a
+# real resume) — accepted as a known-flaky case for the same reason `roadmap` already is in the
+# original 5-case suite, rather than left on a fixture with a 0% pass rate. Full history in
+# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md's step 4 updates.
+# Run standalone: npx promptfoo eval -c evals/bootstrap-resume/promptfooconfig.yaml
+description: "kms bootstrap — resume after a killed run (known-flaky, see comments above)"
+
+# The second sentence below is a harness-only convenience, never part of the real, shipped
+# bootstrap skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`,
+# which has no interactive human/subagent to answer checkpointing.md's resume-or-discard
+# question, so this eval pre-authorizes resuming any checkpoint it finds — standing in as the
+# confirming party for grading purposes only. Real usage always asks a human or an authorized
+# reviewing subagent (docs/guardrails/confirming-party-acceptable-for-checkpoint-gates.md).
+prompts:
+  - >
+    Bootstrap the knowledge system here. If you find an existing checkpoint file under
+    docs/.kms-checkpoints/ from a prior interrupted run, resume it.
+
+providers:
+  - id: "exec:../providers/kilo-resume-runner.sh"
+    config:
+      fixture_dir: "evals/bootstrap/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      # Matches the value that produced both real passes (workflows 34766744874, 34853228741).
+      first_timeout_seconds: 720
+      second_timeout_seconds: 1440
+
+defaultTest:
+  options:
+    provider: "exec:../providers/kilo-judge.sh"
+  assert:
+    # The short first-run budget should force a checkpoint to exist afterward.
+    - type: not-contains
+      value: "=== CHECKPOINT FILES AFTER FIRST RUN ===\n(none)"
+    # A completed, cleaned-up run leaves no checkpoint behind (docs/guardrails/checkpoint-file-lifecycle.md).
+    - type: contains
+      value: "=== CHECKPOINT FILES AFTER SECOND RUN ===\n(none)"
+    - type: llm-rubric
+      value: >
+        The second run's transcript shows the model detecting an existing checkpoint file under
+        docs/.kms-checkpoints/ and asking whether to resume it (rather than silently starting a
+        fresh bootstrap pass or ignoring the checkpoint entirely), then continuing to a complete
+        knowledge base (docs/facts/, docs/decisions/, docs/guardrails/ at minimum). The final file
+        listing must not contain two files with the same decision or fact number (e.g. two
+        0001-*.md files in docs/decisions/) — that would mean the resume duplicated a stub the
+        first run already wrote.

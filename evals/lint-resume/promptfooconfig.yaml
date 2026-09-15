@@ -1,0 +1,80 @@
+# Eval case: `lint-resume` — docs/decisions/0056-chunked-checkpointed-execution-for-bootstrap-and-lint.md.
+# Exercises the interrupted/resumed path specifically: `evals/lint` already tests "does the skill
+# find the three planted violations" against a normal timeout budget; this case forces a real kill
+# mid-run (a short first-run timeout) and asserts the second run resumes from the checkpoint and
+# still reports every finding — none dropped, none duplicated.
+#
+# Uses its own dedicated, larger fixture (fixture/), not evals/lint's tiny one: two real CI runs
+# (workflows 34853228741 and 34858747933) showed the tiny fixture's entire Phase A corpus fits in
+# one page, so there was only a single narrow, model-speed-dependent point (finish reading, write
+# the one checkpoint) for a timeout to land after — not a stable window, and observed completion
+# time varied >2x run to run (200s-430s) on the exact same task. fixture/docs/decisions/ is a real
+# snapshot of this repo's own docs/decisions/ at tag 0.15.0 (52 real decisions, ~34K tokens — pinned
+# to a tag from before this branch's own changes, so the fixture isn't self-referentially about the
+# decisions this branch introduces) plus one added synthetic decision (0056-weekly-releases.md)
+# carrying the missing-track violation. ~34K tokens forces ~3 real Phase A pages under the 15K
+# budget, giving a wide, page-count-driven window instead of a single speed-dependent point.
+# fixture/docs/{facts,guardrails,skills}/ stay exactly as small as evals/lint's original fixture —
+# only decisions/ needed bulk to force real paging.
+#
+# Known-hard, unresolved as of this writing (matching `roadmap`'s status in the original 5-case
+# suite): a real CI run (workflow 34862500834) showed the model reading only 12 files in 400s
+# before being killed — it used the cheap INDEX.md (which already summarizes every decision) as a
+# shortcut instead of mechanically paging through every file, so a bigger fixture alone doesn't
+# force the exhaustive per-file reads the checkpointing mechanism assumes. Fixing this needs a
+# different kind of change (e.g. an explicit exhaustive-processing instruction) than fixture size or
+# timeout tuning — not yet pursued. Full history in
+# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md's step 4 updates.
+# Run standalone: npx promptfoo eval -c evals/lint-resume/promptfooconfig.yaml
+description: "kms lint — resume after a killed run (known-hard/unresolved, see comments above)"
+
+# The final sentence below is a harness-only convenience, never part of the real, shipped lint
+# skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`, which has
+# no interactive human/subagent to answer checkpointing.md's resume-or-discard question, so this
+# eval pre-authorizes resuming any checkpoint it finds — standing in as the confirming party for
+# grading purposes only. Real usage always asks a human or an authorized reviewing subagent
+# (docs/guardrails/confirming-party-acceptable-for-checkpoint-gates.md).
+prompts:
+  - >
+    Lint the knowledge base. After completing your analysis, end your response with exactly
+    these three lines, each followed by YES if you identified that specific violation in this
+    knowledge base or NO if you did not:
+
+    LINT_CHECK_DANGLING_REF: YES|NO
+    LINT_CHECK_MISSING_TRACK: YES|NO
+    LINT_CHECK_STALE_PATH: YES|NO
+
+    If you find an existing checkpoint file under docs/.kms-checkpoints/ from a prior interrupted
+    run, resume it.
+
+providers:
+  - id: "exec:../providers/kilo-resume-runner.sh"
+    config:
+      fixture_dir: "evals/lint-resume/fixture"
+      model: "poolside/laguna-s-2.1:free"
+      # Unverified starting point for the new, larger dedicated fixture (~34K tokens, ~3 pages) —
+      # sized to give real margin: long enough that at least one Phase A page (roughly a third of
+      # decisions/'s 52 files) should be read and checkpointed well before this elapses, short
+      # enough to land before the full multi-page task (facts/guardrails/skills + Phase B) can
+      # complete. `second_timeout_seconds` kept at the sibling evals/lint case's own 1440s budget —
+      # bootstrap's established baseline already needed up to that long for a comparably-scoped
+      # multi-step task, so this should have headroom, but neither number is confirmed yet.
+      first_timeout_seconds: 400
+      second_timeout_seconds: 1440
+
+defaultTest:
+  assert:
+    # The short first-run budget should force a checkpoint to exist afterward.
+    - type: not-contains
+      value: "=== CHECKPOINT FILES AFTER FIRST RUN ===\n(none)"
+    # A completed, cleaned-up run leaves no checkpoint behind (docs/guardrails/checkpoint-file-lifecycle.md).
+    - type: contains
+      value: "=== CHECKPOINT FILES AFTER SECOND RUN ===\n(none)"
+    # Same three sentinel checks as evals/lint — every finding from the interrupted run must still
+    # surface in the resumed run's final report, not be silently dropped.
+    - type: regex
+      value: "LINT_CHECK_DANGLING_REF: YES(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_MISSING_TRACK: YES(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_STALE_PATH: YES(?!\\|)"

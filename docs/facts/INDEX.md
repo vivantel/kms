@@ -14,4 +14,7 @@ id,title,tags,status
 0012-kilo-gateway-free-tier-access,"Kilo Code CLI's built-in gateway serves :free models with no account or API key","kms, kilo",active
 0013-changelog-lagged-four-version-bumps,"CHANGELOG.md lagged four manifest version bumps before being backfilled","kms, git, changelog, release",active
 0014-guardrails-carry-derivation-prose,"Every guardrail carries a ## Derivation prose section","kms, knowledge-management, audit",active
+0015-checkpoint-file-location-and-lifecycle,"Checkpoint file path, naming, and lifecycle for chunked bootstrap/lint runs","kms, knowledge-management, scale, checkpointing",active
+0016-chunk-sizing-parameters,"Chunk-sizing values for lint's and bootstrap's paged phases","kms, knowledge-management, scale, checkpointing",active
+0017-bootstrap-history-scope-selection-values,"Bootstrap's git-history scope question — options, threshold, and default recommendation","kms, knowledge-management, scale, checkpointing",active
 docs-manifest,"Human-facing doc sections mapped to the decisions/facts they describe","kms, knowledge-management, documentation",active

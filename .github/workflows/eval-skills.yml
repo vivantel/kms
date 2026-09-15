@@ -26,11 +26,15 @@ jobs:
     name: eval (${{ matrix.case }})
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 45, not 30: bootstrap-resume/lint-resume's worst case is first_timeout_seconds (720) +
+    # second_timeout_seconds (1440) = 2160s (36min) plus npm-install overhead — the prior 30min
+    # ceiling (sized for the original 5 cases' single 1440s budget) would kill a resume case's
+    # second run before it could complete, misreporting a real pass as a job timeout.
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, capture, lint, attribute]
+        case: [bootstrap, roadmap, capture, lint, attribute, bootstrap-resume, lint-resume]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -113,11 +117,15 @@ jobs:
     needs: eval-recheck-fork-check
     if: needs.eval-recheck-fork-check.outputs.is_fork == 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 45, not 30: bootstrap-resume/lint-resume's worst case is first_timeout_seconds (720) +
+    # second_timeout_seconds (1440) = 2160s (36min) plus npm-install overhead — the prior 30min
+    # ceiling (sized for the original 5 cases' single 1440s budget) would kill a resume case's
+    # second run before it could complete, misreporting a real pass as a job timeout.
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, capture, lint, attribute]
+        case: [bootstrap, roadmap, capture, lint, attribute, bootstrap-resume, lint-resume]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:

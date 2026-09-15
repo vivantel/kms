@@ -3,6 +3,8 @@
 
 id,title,tags,status
 agent-agnostic-skill-content,"Skill instruction bodies must stay agent-neutral","kms, agent-agnostic, guardrail",active
+checkpoint-file-lifecycle,"A chunked run's checkpoint file must be cleaned up on success and never silently resumed","kms, knowledge-management, scale, checkpointing, guardrail",active
+confirming-party-acceptable-for-checkpoint-gates,"A confirmation gate must accept a human or an authorized reviewing subagent, never assume human-only","kms, knowledge-management, automation, guardrail",active
 decision-expires-must-be-reevaluated,"An artifact past its expires date or condition must be re-evaluated","kms, knowledge-management, guardrail",active
 decision-track-field,"Every decision must declare its track","kms, knowledge-management, guardrail",active
 every-skill-ships-examples,"Every skill must ship a colocated examples.md","kms, packaging, documentation, guardrail",active

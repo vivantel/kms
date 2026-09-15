@@ -9,6 +9,13 @@ Set up the knowledge system this plugin's other skills assume: intents (what the
 
 This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, the derivation recipe, and the economy rule for stubs written here — read it before drafting anything.
 
+## Chunked execution
+
+Steps 1–5 below are Phase A: chunkable, paged, checkpointed. Steps 6–10 are Phase B: a single
+aggregation pass that runs once, only after every Phase A page has completed, since they consume Phase
+A's aggregate output rather than chunking on their own. `../../shared/checkpointing.md` defines the
+paging, checkpoint-file, and resume mechanics — read it before running steps 1–5.
+
 ## Before starting
 
 Detect what the project already has, the same way `roadmap` does: look for an existing `decisions/`, `facts/`, `guardrails/`, or `skills/` directory and infer format from real examples there. If none exists, default to the structure above under `docs/`. Never invent a mismatched directory convention — extend what exists, don't duplicate.
@@ -21,6 +28,12 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 ### 1. Intent extraction from history
 
+Before scanning, check `git rev-list --count HEAD` and ask how much history to mine: all history, last
+N commits, last M years, or custom. Recommend "all" under 1,000 commits; at or above it, recommend the
+last 2 years, explaining why (an unbounded mine on a large history risks the same unpredictable-duration
+problem chunking exists to avoid). Then mine oldest-first, paged per `../../shared/checkpointing.md`,
+checkpointing the last completed commit SHA after each page.
+
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
 - Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
@@ -29,21 +42,21 @@ Scan git log and existing docs (README, planning notes, guardrail/skill files) f
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Write one fact stub per finding, `governed-by: TBD` when none exists yet.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Write one fact stub per finding, `governed-by: TBD` when none exists yet. Page by file per `../../shared/checkpointing.md`.
 
 ### 3. Doc manifest bootstrap
 
-For every human-facing doc (README, planning notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the content and decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `capture` fills it in later. Mark the file `kms-generated: true` — it's constructed from this project's own docs, not copied from a template, but `uninstall` still needs to recognize it as this skill's output.
+For every human-facing doc (README, planning notes, roadmap, other `docs/` markdown), add an entry to `facts/docs-manifest.md` mapping the doc's sections to the content and decisions they describe, plus the watch paths that would make each section drift. Leave `last-verified` blank; `capture` fills it in later. Mark the file `kms-generated: true` — it's constructed from this project's own docs, not copied from a template, but `uninstall` still needs to recognize it as this skill's output. Page by doc file per `../../shared/checkpointing.md`.
 
 ### 4. Guardrail derivation audit
 
-For every existing guardrail file, check whether `governed-by`, `grounded-in`, and `derivation-note` are present. If any are missing, flag it as undeclared, propose the most likely governing decision(s) and grounding fact(s), and draft the `derivation-note`. Log undeclared guardrails as debt.
+For every existing guardrail file, check whether `governed-by`, `grounded-in`, and `derivation-note` are present. If any are missing, flag it as undeclared, propose the most likely governing decision(s) and grounding fact(s), and draft the `derivation-note`. Log undeclared guardrails as debt. Page by file per `../../shared/checkpointing.md`.
 
 ### 5. Fitness function inventory
 
-Scan existing checks (CI/build config, review checklists, approval gates) for rules already enforced, and record them. Scan skill/guardrail files for rules that *could* be automated but aren't, and log each as debt: rule text, why not automated yet, governing decision (or `TBD`).
+Scan existing checks (CI/build config, review checklists, approval gates) for rules already enforced, and record them — small enough to read whole, not paged. Scan skill/guardrail files for rules that *could* be automated but aren't, and log each as debt: rule text, why not automated yet, governing decision (or `TBD`) — page by file per `../../shared/checkpointing.md`.
 
-### 6. Skill gap detection
+### 6. Skill gap detection (Phase B — starts only once every step 1–5 page has completed)
 
 Propose domains that need their own skill, based on what's in the repo:
 
