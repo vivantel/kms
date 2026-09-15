@@ -4,19 +4,20 @@
 # first-run timeout) and asserts the second run detects and resumes from the checkpoint rather than
 # starting over or duplicating output.
 #
-# Uses its own dedicated fixture (fixture/), not evals/bootstrap's tiny 2-commit one: 16 real
-# commits from early in this repo's own history (commit #5's full-tree snapshot, then 15 more
-# replayed via `git am`; see fixture/setup.sh's own comments for why — two earlier attempts using
-# the full 67-commit history up to tag 0.15.0 via a git bundle hit real problems: an OS
-# argument-size limit on the grading subprocess, and shallow-clone/bundle portability issues).
-# Unlike lint's docs/ tree — where INDEX.md is a cheap shortcut a model can read instead of every
-# file, which defeated a larger *synthetic* fixture for lint-resume (see that case's own history in
-# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md) — there is no equivalent shortcut
-# for git-history mining: extracting decision stubs genuinely requires walking real commit
-# messages/diffs, so real history should force genuine multi-page paging far more reliably than the
-# 2-commit fixture, whose own timing turned out flaky (workflow 34862500834).
+# Reuses evals/bootstrap's own tiny 2-commit fixture — a larger real-commit-history fixture was
+# tried (four iterations: a git bundle of this repo's full 67-commit history, a working-tree trim,
+# a shallow-clone bundle, and a 16-commit snapshot+patches version) specifically to get a wider,
+# more reliable interruption window than this tiny fixture's single-checkpoint-point timing allows.
+# Every attempt hit a different real infrastructure problem (an OS argument-size limit on the
+# grading subprocess — "Error: spawn E2BIG" — that persisted even after cutting real content down
+# to ~64K tokens; shallow-clone/bundle portability issues) rather than ever actually running to a
+# graded result. Reverted to this fixture, which has a real, if imperfect, track record (passed
+# genuinely twice — workflows 34766744874 and 34853228741 — both with a real exit-124 kill and a
+# real resume) — accepted as a known-flaky case for the same reason `roadmap` already is in the
+# original 5-case suite, rather than left on a fixture with a 0% pass rate. Full history in
+# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md's step 4 updates.
 # Run standalone: npx promptfoo eval -c evals/bootstrap-resume/promptfooconfig.yaml
-description: "kms bootstrap — resume after a killed run, against this repo's own real commit history"
+description: "kms bootstrap — resume after a killed run (known-flaky, see comments above)"
 
 # The second sentence below is a harness-only convenience, never part of the real, shipped
 # bootstrap skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`,
@@ -32,13 +33,9 @@ prompts:
 providers:
   - id: "exec:../providers/kilo-resume-runner.sh"
     config:
-      fixture_dir: "evals/bootstrap-resume/fixture"
+      fixture_dir: "evals/bootstrap/fixture"
       model: "poolside/laguna-s-2.1:free"
-      # 720s already reliably interrupted the old, much smaller 2-commit fixture (with occasional
-      # flakiness — workflow 34862500834). Full `git log -p` across all 16 commits here is ~64K
-      # tokens (~250KB raw) — real content, no INDEX-equivalent shortcut, but deliberately sized
-      # with margin under the OS argument-size limit that broke the earlier 67-commit/~430KB+
-      # attempt. Kept unchanged as the starting point; unverified, watch the next real CI run.
+      # Matches the value that produced both real passes (workflows 34766744874, 34853228741).
       first_timeout_seconds: 720
       second_timeout_seconds: 1440
 

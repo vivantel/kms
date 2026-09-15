@@ -27,9 +27,13 @@
   checkpoint-gates.md`).
 - Two new eval cases, `evals/bootstrap-resume` and `evals/lint-resume`, exercising the interrupted/
   resumed path directly: a new `evals/providers/kilo-resume-runner.sh` forces a real kill partway
-  through a run (a short first-run timeout) against the same fixtures the existing `bootstrap`/
-  `lint` cases use, then asserts the second run detects and resumes the checkpoint rather than
-  duplicating output.
+  through a run (a short first-run timeout), then asserts the second run detects and resumes the
+  checkpoint rather than duplicating output. Both are honestly recorded, not unconditionally
+  green: `bootstrap-resume` is accepted known-flaky (a real, if imperfect, pass record — matching
+  `roadmap`'s own status in the original suite); `lint-resume` is accepted known-hard/unresolved —
+  the model shortcuts via `INDEX.md` instead of the exhaustive per-file reads the checkpointing
+  mechanism assumes, a real product finding this eval surfaced rather than a harness defect (full
+  trail in `docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md`).
 - A new procedure, `docs/skills/adding-checkpointed-execution.md`, for adopting this pattern in a
   future skill beyond `bootstrap`/`lint`.
 

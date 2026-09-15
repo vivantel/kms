@@ -16,8 +16,17 @@
 # budget, giving a wide, page-count-driven window instead of a single speed-dependent point.
 # fixture/docs/{facts,guardrails,skills}/ stay exactly as small as evals/lint's original fixture —
 # only decisions/ needed bulk to force real paging.
+#
+# Known-hard, unresolved as of this writing (matching `roadmap`'s status in the original 5-case
+# suite): a real CI run (workflow 34862500834) showed the model reading only 12 files in 400s
+# before being killed — it used the cheap INDEX.md (which already summarizes every decision) as a
+# shortcut instead of mechanically paging through every file, so a bigger fixture alone doesn't
+# force the exhaustive per-file reads the checkpointing mechanism assumes. Fixing this needs a
+# different kind of change (e.g. an explicit exhaustive-processing instruction) than fixture size or
+# timeout tuning — not yet pursued. Full history in
+# docs/plans/scale-bootstrap-and-lint-chunked-checkpointing.md's step 4 updates.
 # Run standalone: npx promptfoo eval -c evals/lint-resume/promptfooconfig.yaml
-description: "kms lint — resume after a killed run, against a larger fixture that forces real multi-page chunking"
+description: "kms lint — resume after a killed run (known-hard/unresolved, see comments above)"
 
 # The final sentence below is a harness-only convenience, never part of the real, shipped lint
 # skill a user actually sees: kilo-resume-runner.sh's two invocations run with `--auto`, which has
