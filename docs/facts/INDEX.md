@@ -14,4 +14,6 @@ id,title,tags,status
 0012-kilo-gateway-free-tier-access,"Kilo Code CLI's built-in gateway serves :free models with no account or API key","kms, kilo",active
 0013-changelog-lagged-four-version-bumps,"CHANGELOG.md lagged four manifest version bumps before being backfilled","kms, git, changelog, release",active
 0014-guardrails-carry-derivation-prose,"Every guardrail carries a ## Derivation prose section","kms, knowledge-management, audit",active
+0015-improvement-harness-zero-api-keys,"Improvement harness must work with zero API keys (free models only)","kms, improvement-harness, constraint, kilo, free-tier",active
+0016-improvement-harness-token-economy,"Improvement harness must respect the token-economy guardrail","kms, improvement-harness, constraint, token-economy, guardrail",active
 docs-manifest,"Human-facing doc sections mapped to the decisions/facts they describe","kms, knowledge-management, documentation",active

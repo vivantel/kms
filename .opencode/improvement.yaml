@@ -1,0 +1,63 @@
+version: 1
+
+baseline_ref: "latest-tag"
+
+triggers:
+  scheduled:
+    enabled: true
+    cron: "0 2 * * *"
+  event_driven:
+    enabled: false  # v0.2+
+    paths:
+      - "plugins/kms/skills/**"
+      - "docs/**"
+      - "plugins/kms/shared/**"
+  manual:
+    enabled: true
+
+improvement_types:
+  - name: lint-fix
+    subagent: improve-lint-fix
+    auto_commit: true
+    verification: [lint_gate]
+  - name: skill-rewrite
+    subagent: improve-skill-rewrite
+    auto_commit: false
+    verification: [lint_gate, eval_gate]
+  # v0.2+:
+  # - name: kb-repair
+  #   subagent: improve-kb-repair
+  #   auto_commit: false
+  #   verification: [lint_gate, sampling]
+  # - name: guardrail-update
+  #   subagent: improve-guardrail-update
+  #   auto_commit: true
+  #   verification: [lint_gate]
+
+loop_prevention:
+  max_passes_per_type: 3
+  convergence_threshold: 0.01
+  semantic_hash_algorithm: "markdown-ast"
+
+verification:
+  lint_gate:
+    enabled: true
+    require_clean: true
+  eval_gate:
+    enabled: true
+    min_score_improvement: 0.05
+  sampling:
+    enabled: true
+    sample_rate: 0.2
+
+observability:
+  log_file: "docs/improvement-log.md"
+  commit_attribution:
+    name: "kms-improvement-bot"
+    email: "kms-improvement@vivantel.dev"
+  ci_gate: true
+
+safety:
+  kill_switch: false
+  max_files_per_run: 50
+  excluded_paths: []
