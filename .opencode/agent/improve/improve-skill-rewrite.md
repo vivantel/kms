@@ -9,6 +9,9 @@ tools:
   glob: true
   bash: true
 model: opencode/nemotron-3-ultra-free
+# Fallback models (used if primary returns 503):
+# model: openrouter/~anthropic/claude-haiku-latest
+# model: openrouter/~google/gemini-flash-latest
 ---
 
 # Skill Rewrite Subagent

@@ -33,6 +33,7 @@ jobs:
     env:
       BASELINE_REF: "latest-tag"
       DRY_RUN: "${{ github.event.inputs.dry_run == 'true' && 'true' || 'false' }}"
+      FALLBACK_MODEL: "openrouter/~anthropic/claude-haiku-latest"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -159,37 +160,15 @@ jobs:
       - name: Update improvement log (if commits made)
         if: success() && env.DRY_RUN != 'true'
         run: |
-          # Append run summary to improvement log
+          # Base64-encoded Python script to append log entry
+          # This avoids YAML parsing issues with colon-lines in the workflow
+          LOG_SCRIPT_B64="CmltcG9ydCBzeXMKcnVuX2RhdGUgPSBzeXMuYXJndlsxXQpydW5fbW9kZSA9IHN5cy5hcmd2WzJdCnJ1bl9udW1iZXIgPSBzeXMuYXJndlszXQpiYXNlbGluZV9yZWYgPSBzeXMuYXJndls0XQpjb21taXRfY291bnQgPSBzeXMuYXJndls1XQpydW5faWQgPSBzeXMuYXJndls2XQoKbGluZXMgPSBbCiAgICAiIiwKICAgIGYiIyMjIHtydW5fZGF0ZX06IHtydW5fbW9kZX0gUnVuIChHaXRIdWIgQWN0aW9ucykiLAogICAgIiIsCiAgICAiLS0tIiwKICAgIGYiZGF0ZToge3J1bl9kYXRlfSIsCiAgICBmIm1vZGU6IHtydW5fbW9kZX0iLAogICAgZiJydW5fbnVtYmVyOiB7cnVuX251bWJlcn0iLAogICAgZiJiYXNlbGluZV9yZWY6ICd7YmFzZWxpbmVfcmVmfSciLAogICAgInF1ZXVlX2RlcHRoOiAwIiwKICAgIGYicHJvY2Vzc2VkOiB7Y29tbWl0X2NvdW50fSIsCiAgICBmImNvbW1pdHRlZDoge2NvbW1pdF9jb3VudH0iLAogICAgImVzY2FsYXRlZDogMCIsCiAgICAic2tpcHBlZDogMCIsCiAgICAibGludF92aW9sYXRpb25zX2JlZm9yZTogMCIsCiAgICAibGludF92aW9sYXRpb25zX2FmdGVyOiAwIiwKICAgICJldmFsX3Njb3Jlczoge30iLAogICAgImVzY2FsYXRlZF9pdGVtczogW10iLAogICAgIi0tLSIsCiAgICAiIiwKICAgIGYiQXV0b21hdGVkIHJ1biB2aWEgR2l0SHViIEFjdGlvbnMgKHtydW5faWR9KS4ge2NvbW1pdF9jb3VudH0gY29tbWl0KHMpIGFwcGxpZWQuIiwKICAgICIiCl0KZW50cnkgPSAiXG4iLmpvaW4obGluZXMpCgp3aXRoIG9wZW4oImRvY3MvaW1wcm92ZW1lbnQtbG9nLm1kIiwgImEiKSBhcyBmOgogICAgZi53cml0ZShlbnRyeSk="
           RUN_DATE=$(date -Iseconds)
           RUN_MODE="${{ github.event.inputs.mode || github.event_name }}"
           COMMIT_COUNT=$(git log --oneline -10 --author="kms-improvement-bot" --grep="improvement" | wc -l | tr -d ' ')
           
           if [[ "$COMMIT_COUNT" -gt 0 ]]; then
-            cat >> docs/improvement-log.md <<EOF
-
----
-
-## $RUN_DATE: $RUN_MODE Run (GitHub Actions)
-
----
-date: $RUN_DATE
-mode: $RUN_MODE
-run_number: $GITHUB_RUN_NUMBER
-baseline_ref: "\${BASELINE_REF}"
-queue_depth: 0
-processed: $COMMIT_COUNT
-committed: $COMMIT_COUNT
-escalated: 0
-skipped: 0
-lint_violations_before: 0
-lint_violations_after: 0
-eval_scores: {}
-escalated_items: []
----
-
-Automated run via GitHub Actions ($GITHUB_RUN_ID). $COMMIT_COUNT commit(s) applied.
-
-EOF
+            echo "$LOG_SCRIPT_B64" | base64 -d | python3 - "$RUN_DATE" "$RUN_MODE" "$GITHUB_RUN_NUMBER" "${BASELINE_REF}" "$COMMIT_COUNT" "$GITHUB_RUN_ID"
             git config user.name "kms-improvement-bot"
             git config user.email "kms-improvement@vivantel.dev"
             git add docs/improvement-log.md

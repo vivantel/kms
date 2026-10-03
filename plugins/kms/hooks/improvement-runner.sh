@@ -12,6 +12,53 @@ HOOK_DIR="${REPO_ROOT}/plugins/kms/hooks"
 MODE="${1:-manual}"
 CHANGED_FILES="${2:-}"
 
+# Retry configuration for 503 errors
+MAX_RETRIES=3
+BASE_DELAY=2  # seconds
+
+# Fallback model (set via env or use default)
+FALLBACK_MODEL="${FALLBACK_MODEL:-openrouter/~anthropic/claude-haiku-latest}"
+
+# Run opencode with retry on 503 (model unavailable), with fallback model
+run_with_retry() {
+  local agent="$1"
+  local prompt="$2"
+  local attempt=1
+  local delay=$BASE_DELAY
+  local model_override=""
+
+  while [[ $attempt -le $MAX_RETRIES ]]; do
+    echo "Attempt $attempt/$MAX_RETRIES: opencode run --agent $agent ${model_override:+--model $model_override} ..."
+    # Use timeout to prevent indefinite hangs (5 minutes max per attempt)
+    if timeout 300 opencode run --agent "$agent" ${model_override:+--model "$model_override"} "$prompt" --print-logs 2>&1; then
+      return 0
+    fi
+
+    local exit_code=$?
+    # Check if it was a timeout (124) or other error
+    if [[ $exit_code -eq 124 ]]; then
+      echo "Attempt $attempt timed out after 300s."
+    else
+      echo "Attempt $attempt failed (exit code: $exit_code)."
+    fi
+
+    if [[ $attempt -lt $MAX_RETRIES ]]; then
+      echo "Retrying in ${delay}s..."
+      sleep $delay
+      delay=$((delay * 2))  # Exponential backoff
+      attempt=$((attempt + 1))
+      # On last retry before fallback, switch to fallback model
+      if [[ $attempt -eq $MAX_RETRIES && -n "$FALLBACK_MODEL" ]]; then
+        echo "Switching to fallback model: $FALLBACK_MODEL"
+        model_override="$FALLBACK_MODEL"
+      fi
+    else
+      echo "All $MAX_RETRIES attempts failed."
+      return $exit_code
+    fi
+  done
+}
+
 usage() {
   cat <<EOF
 Usage: $0 [scheduled|event|manual] [--changed-files="file1,file2"]
@@ -126,7 +173,7 @@ EOF
 )
 
 echo "Running improvement harness..."
-opencode run --agent improve-harness "$PROMPT" --print-logs
+run_with_retry improve-harness "$PROMPT"
 
 # If not dry run and there are commits, push back to main worktree
 if [[ "${DRY_RUN:-false}" != "true" ]]; then
