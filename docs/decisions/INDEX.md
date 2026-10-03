@@ -54,20 +54,20 @@ id,title,tags,status
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
-0056-improvement-harness-scope,"Improvement harness covers lint auto-fix, skill rewrites, and knowledge base repairs","kms, improvement-harness, automation, process",active
-0057-improvement-harness-trigger-model,"Improvement harness uses a hybrid trigger model (scheduled + event-driven)","kms, improvement-harness, automation, process",active
-0058-improvement-harness-execution-model,"Improvement harness uses OpenCode recursively for agent execution","kms, improvement-harness, automation, opencode, process",active
-0059-improvement-harness-safety-model,"Improvement harness applies fixes via fully automatic commits","kms, improvement-harness, automation, safety, process",active
-0060-improvement-harness-bootstrap,"Improvement harness uses git worktree with pinned skills for bootstrap isolation","kms, improvement-harness, bootstrap, automation, process",active
-0061-improvement-harness-loop-prevention,"Improvement harness uses layered loop prevention (idempotency + max iterations + convergence + human gate)","kms, improvement-harness, automation, safety, process",active
-0062-improvement-harness-discovery,"Improvement harness uses a unified queue from all signals (lint, evals, capture, drift)","kms, improvement-harness, automation, discovery, process",active
-0063-improvement-harness-configuration,"Improvement harness configuration lives at .opencode/improvement.yaml","kms, improvement-harness, configuration, opencode, process",active
-0064-improvement-harness-observability,"Improvement harness provides multi-layer observability (commits, log, CI gate, dashboard)","kms, improvement-harness, observability, audit, process",active
-0065-improvement-harness-skill-structure,"Improvement skills are implemented as OpenCode subagents","kms, improvement-harness, subagents, opencode, process",active
-0066-improvement-harness-data-flow,"Improvement harness uses a continuous convergence loop (detect -> fix -> verify -> repeat)","kms, improvement-harness, data-flow, automation, process",active
-0067-improvement-harness-nature,"Improvement harness is both a KMS skill (interface) and infrastructure (implementation)","kms, improvement-harness, skill, infrastructure, process",active
-0068-improvement-harness-verification,"Improvement harness uses three-layer verification (lint gate + eval gate + sampling)","kms, improvement-harness, verification, testing, process",active
-0069-improvement-harness-scope,"Improvement harness scans the whole repository each run","kms, improvement-harness, scope, automation, process",active
-0070-improvement-harness-self-improvement,"Improvement harness improves itself (full dogfooding)","kms, improvement-harness, dogfooding, automation, process",active
-0071-improvement-harness-mvp,"Improvement harness MVP delivers framework + lint-fix + skill-rewrite","kms, improvement-harness, mvp, automation, process",active
-0072-improvement-harness-location,"Improvement harness code lives under .opencode/agent/improve/ and plugins/kms/hooks/","kms, improvement-harness, location, packaging, process",active
+0056-improvement-harness-scope,"Improvement harness covers lint auto-fix, skill rewrites, and knowledge base repairs","kms, improvement-harness, automation, process",draft
+0057-improvement-harness-trigger-model,"Improvement harness uses a hybrid trigger model (scheduled + event-driven)","kms, improvement-harness, automation, process",draft
+0058-improvement-harness-execution-model,"Improvement harness uses OpenCode recursively for agent execution","kms, improvement-harness, automation, opencode, process",draft
+0059-improvement-harness-safety-model,"Improvement harness applies fixes via fully automatic commits","kms, improvement-harness, automation, safety, process",draft
+0060-improvement-harness-bootstrap,"Improvement harness uses git worktree with pinned skills for bootstrap isolation","kms, improvement-harness, bootstrap, automation, process",draft
+0061-improvement-harness-loop-prevention,"Improvement harness uses layered loop prevention (idempotency + max iterations + convergence + human gate)","kms, improvement-harness, automation, safety, process",draft
+0062-improvement-harness-discovery,"Improvement harness uses a unified queue from all signals (lint, evals, capture, drift)","kms, improvement-harness, automation, discovery, process",draft
+0063-improvement-harness-configuration,"Improvement harness configuration lives at .opencode/improvement.yaml","kms, improvement-harness, configuration, opencode, process",draft
+0064-improvement-harness-observability,"Improvement harness provides multi-layer observability (commits, log, CI gate, dashboard)","kms, improvement-harness, observability, audit, process",draft
+0065-improvement-harness-skill-structure,"Improvement skills are implemented as OpenCode subagents","kms, improvement-harness, subagents, opencode, process",draft
+0066-improvement-harness-data-flow,"Improvement harness uses a continuous convergence loop (detect -> fix -> verify -> repeat)","kms, improvement-harness, data-flow, automation, process",draft
+0067-improvement-harness-nature,"Improvement harness is both a KMS skill (interface) and infrastructure (implementation)","kms, improvement-harness, skill, infrastructure, process",draft
+0068-improvement-harness-verification,"Improvement harness uses three-layer verification (lint gate + eval gate + sampling)","kms, improvement-harness, verification, testing, process",draft
+0069-improvement-harness-scope,"Improvement harness scans the whole repository each run","kms, improvement-harness, scope, automation, process",draft
+0070-improvement-harness-self-improvement,"Improvement harness improves itself (full dogfooding)","kms, improvement-harness, dogfooding, automation, process",draft
+0071-improvement-harness-mvp,"Improvement harness MVP delivers framework + lint-fix + skill-rewrite","kms, improvement-harness, mvp, automation, process",draft
+0072-improvement-harness-location,"Improvement harness code lives under .opencode/agent/improve/ and plugins/kms/hooks/","kms, improvement-harness, location, packaging, process",draft
