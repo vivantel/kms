@@ -1,0 +1,88 @@
+name: Improvement Harness
+
+# Runs the improvement harness on a schedule and on manual dispatch.
+# Phase 0.2: Add OpenCode to GitHub Actions setup (CI prerequisite)
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # Daily at 2 AM UTC (matches improvement.yaml scheduled cron)
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Run mode
+        type: choice
+        options: [scheduled, manual]
+        default: scheduled
+      dry_run:
+        description: Dry run (no commits)
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  improvement-harness:
+    name: Run improvement harness
+    if: github.repository == 'vivantel/kms'  # Only run on main repo, not forks
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      BASELINE_REF: "latest-tag"
+      DRY_RUN: "${{ github.event.inputs.dry_run == 'true' && 'true' || 'false' }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for git worktree
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .opencode/package-lock.json
+
+      - name: Install OpenCode CLI
+        run: |
+          npm install -g @opencode/cli@latest
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: .opencode
+
+      - name: Install Kilo Code CLI (for evals)
+        run: npm install -g @kilocode/cli
+
+      - name: Run improvement harness
+        run: |
+          MODE="${{ github.event.inputs.mode || 'scheduled' }}"
+          if [[ "$MODE" == "scheduled" && "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            MODE="manual"
+          fi
+          CHANGED_FILES=""
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          fi
+          bash plugins/kms/hooks/improvement-runner.sh "$MODE" "$CHANGED_FILES"
+        env:
+          PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
+
+      - name: Verify auto-commits (CI gate)
+        if: success() && env.DRY_RUN != 'true'
+        run: |
+          # Verify that any commits made by the harness pass our quality gates
+          # This is Phase 4.3: CI verification gate
+          echo "Checking recent commits from improvement harness..."
+          RECENT_COMMITS=$(git log --oneline -10 --author="kms-improvement-bot" --grep="improvement" || true)
+          if [[ -n "$RECENT_COMMITS" ]]; then
+            echo "Found improvement harness commits:"
+            echo "$RECENT_COMMITS"
+            # Run lint on the whole repo to ensure no regressions
+            opencode run --agent lint "lint the knowledge base" --print-logs
+          else
+            echo "No improvement harness commits found in recent history"
+          fi

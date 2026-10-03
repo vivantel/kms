@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 CONFIG_FILE="${REPO_ROOT}/.opencode/improvement.yaml"
 HOOK_DIR="${REPO_ROOT}/plugins/kms/hooks"
 
@@ -39,10 +39,12 @@ with open('$CONFIG_FILE') as f:
 # Print key values as shell exports
 print(f'BASELINE_REF={os.environ.get(\"BASELINE_REF\", cfg.get(\"baseline_ref\", \"latest-tag\"))}')
 print(f'KILL_SWITCH={cfg.get(\"safety\", {}).get(\"kill_switch\", False)}')
-print(f'MAX_FILES={cfg.get(\"safety\", {}).get(\"max_files_per_run\", 50)}'
+print(f'MAX_FILES={cfg.get(\"safety\", {}).get(\"max_files_per_run\", 50)}')
 print(f'LOG_FILE={cfg.get(\"observability\", {}).get(\"log_file\", \"docs/improvement-log.md\")}')
 print(f'BOT_NAME={cfg.get(\"observability\", {}).get(\"commit_attribution\", {}).get(\"name\", \"kms-improvement-bot\")}')
 print(f'BOT_EMAIL={cfg.get(\"observability\", {}).get(\"commit_attribution\", {}).get(\"email\", \"kms-improvement@vivantel.dev\")}')
+print(f'MAX_PASSES={cfg.get(\"loop_prevention\", {}).get(\"max_passes_per_type\", 3)}')
+print(f'CONVERGENCE_THRESHOLD={cfg.get(\"loop_prevention\", {}).get(\"convergence_threshold\", 0.01)}')
 "
 }
 
@@ -80,6 +82,7 @@ cp -a "$REPO_ROOT/.opencode/agent/improve/." "$WORKTREE_DIR/.opencode/agent/impr
 
 mkdir -p "$WORKTREE_DIR/.opencode"
 cp "$CONFIG_FILE" "$WORKTREE_DIR/.opencode/improvement.yaml"
+cp "$REPO_ROOT/.opencode/opencode.json" "$WORKTREE_DIR/.opencode/opencode.json"
 
 # Copy shipped skills and shared for context
 mkdir -p "$WORKTREE_DIR/plugins/kms/skills"
@@ -98,22 +101,32 @@ cp -a "$REPO_ROOT/docs/." "$WORKTREE_DIR/docs/"
 
 cd "$WORKTREE_DIR"
 
+# Initialize queue file
+QUEUE_FILE="$WORKTREE_DIR/.improvement-queue.json"
+echo '{"items":[],"metadata":{"created":"'$(date -Iseconds)'","mode":"'$MODE'","baseline":"'$BASELINE_SHA'"}}' > "$QUEUE_FILE"
+
 # Build prompt for orchestrator subagent
-# Fix: read stdin once into variable
-CHANGED_JSON=$(echo "$CHANGED_FILES" | python3 -c "import sys, json; data = sys.stdin.read().strip(); print(json.dumps(data.split(',')) if data else '[]')")
+# Handle trailing comma from tr '\n' ','
+CHANGED_FILES_CLEAN="${CHANGED_FILES%,}"
+CHANGED_JSON=$(printf '%s' "$CHANGED_FILES_CLEAN" | python3 -c "import sys, json; data = sys.stdin.read().strip(); print(json.dumps(data.split(',')) if data else '[]')")
 
 PROMPT=$(cat <<EOF
 {
   "mode": "$MODE",
   "changed_files": $CHANGED_JSON,
   "config": ".opencode/improvement.yaml",
-  "repo_root": "$WORKTREE_DIR"
+  "repo_root": "$WORKTREE_DIR",
+  "queue_file": ".improvement-queue.json",
+  "baseline_sha": "$BASELINE_SHA",
+  "max_passes": $MAX_PASSES,
+  "convergence_threshold": $CONVERGENCE_THRESHOLD,
+  "dry_run": ${DRY_RUN:-false}
 }
 EOF
 )
 
 echo "Running improvement harness..."
-opencode agent improve-harness --prompt "$PROMPT"
+opencode run --agent improve-harness "$PROMPT" --print-logs
 
 # If not dry run and there are commits, push back to main worktree
 if [[ "${DRY_RUN:-false}" != "true" ]]; then

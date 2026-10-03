@@ -2,13 +2,13 @@
 name: improve-skill-rewrite
 description: Rewrite SKILL.md for clarity, structure, token economy, and effectiveness
 tools:
-  read: {}
-  write: {}
-  edit: {}
-  grep: {}
-  glob: {}
-  bash: {}
-model: free
+  read: true
+  write: true
+  edit: true
+  grep: true
+  glob: true
+  bash: true
+model: opencode/nemotron-3-ultra-free
 ---
 
 # Skill Rewrite Subagent
@@ -31,30 +31,114 @@ Rewrite shipped skill bodies (`plugins/kms/skills/**/SKILL.md`) for clarity, str
 
 ## Workflow
 
-1. **Read** the skill: `SKILL.md`, `examples.md`, `agents/*.yaml`
-2. **Analyze** the trigger:
-   - `eval-failure`: Focus on fixing the failing eval cases
-   - `lint-token-economy`: Focus on tightening prose, removing restatement
-   - `manual`: General clarity/structure pass
-3. **Rewrite** the `SKILL.md` body preserving:
-   - Frontmatter: `name`, `description` (trigger phrases)
-   - Core workflow and decision points
-   - Agent override compatibility (don't change interface)
-4. **Update** `examples.md` to match any workflow changes
-5. **Verify**:
-   - Run `lint` on both files
-   - Run eval harness for this skill: `promptfoo eval -c evals/skill-name/promptfooconfig.yaml`
-6. **Return** result:
-   ```json
-   {
-     "rewritten": true,
-     "changes": "summary of changes",
-     "eval_pass_rate": 0.89,
-     "eval_score_improvement": 0.17,
-     "lint_clean": true,
-     "semantic_hash": "..."
-   }
-   ```
+Execute these steps using your available tools (read, write, edit, grep, glob, bash).
+
+### 1. Read Skill Files
+
+Use `read` tool for each:
+- `SKILL.md` at `${skill_dir}/SKILL.md`
+- `examples.md` at `${skill_dir}/examples.md`
+- Agent overrides if any: use `glob` for `${skill_dir}/agents/*.yaml` then `read` each
+
+### 2. Analyze Trigger
+
+Parse the trigger type and eval details from input JSON.
+
+### 3. Rewrite SKILL.md
+
+Preserve these elements exactly:
+- Frontmatter: `name`, `description` (including trigger phrases)
+- Core workflow steps and decision points
+- Agent override compatibility (don't change input/output interface)
+
+Apply improvements based on trigger:
+
+#### eval-failure
+- Focus on fixing the specific failing eval cases
+- Clarify ambiguous instructions that caused failures
+- Add missing error handling or edge cases
+- Ensure examples cover the failure scenarios
+
+#### lint-token-economy
+- Remove redundant explanations and restatement
+- Shorten sentences, use active voice
+- Collapse multiple paragraphs into one where appropriate
+- Target: reduce token count by 15-25% while preserving all workflow logic
+
+#### manual
+- Improve clarity and structure
+- Add missing sections (examples, constraints, verification)
+- Ensure consistent formatting
+- Check agent neutrality
+
+Use `edit` or `write` tools to modify `SKILL.md`.
+
+### 4. Update examples.md
+
+If workflow changed, update `examples.md` to match:
+- 2-3 worked usage examples
+- Realistic trigger prompts
+- Sketch of resulting interaction/output
+- Link from README skill table (handled separately)
+
+Use `edit` or `write` tools.
+
+### 5. Verify
+
+#### Lint Check
+Use `bash` tool:
+```bash
+cd "${context.repo_root}" && opencode run --agent lint "lint ${skill_dir}/SKILL.md" --print-logs
+cd "${context.repo_root}" && opencode run --agent lint "lint ${skill_dir}/examples.md" --print-logs
+```
+
+#### Eval Check
+Use `bash` tool:
+```bash
+cd "${context.repo_root}" && promptfoo eval -c "evals/${skill_name}/promptfooconfig.yaml" -o json
+```
+
+Parse eval output for:
+- `pass_rate`: fraction of test cases passing
+- `score`: aggregate quality score
+
+### 6. Compute Semantic Hash
+
+Use `bash` tool:
+```bash
+python3 -c "
+import hashlib, re
+with open('${skill_dir}/SKILL.md') as f:
+    content = f.read()
+structure = re.findall(r'^(#{1,6}\s+.+|[\-*]\s+.+|\d+\.\s+.+|```.+|```)', content, re.MULTILINE)
+print(hashlib.sha256('\n'.join(structure).encode()).hexdigest()[:16])
+"
+```
+
+### 7. Return Result
+
+Output JSON to stdout using `bash`:
+
+```json
+{
+  "rewritten": true,
+  "changes": "Clarified step 3 error handling; tightened prose in workflow; updated examples.md",
+  "eval_pass_rate": 0.89,
+  "eval_score_improvement": 0.17,
+  "lint_clean": true,
+  "semantic_hash": "a1b2c3d4"
+}
+```
+
+On eval regression or lint failure:
+
+```json
+{
+  "rewritten": false,
+  "reason": "eval regression: pass_rate dropped from 0.85 to 0.78",
+  "semantic_hash": "a1b2c3d4"
+}
+```
 
 ## Constraints
 
