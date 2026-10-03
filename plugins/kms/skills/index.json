@@ -111,6 +111,14 @@
         "SKILL.md",
         "examples.md"
       ]
+    },
+    {
+      "name": "improvement-harness",
+      "version": "0.15.0",
+      "files": [
+        "SKILL.md",
+        "examples.md"
+      ]
     }
   ]
 }

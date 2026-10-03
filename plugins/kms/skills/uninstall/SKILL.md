@@ -1,9 +1,9 @@
 ---
 name: uninstall
-description: Finds everything bootstrap/capture added to this project and offers to detach or remove it, before you actually uninstall the kms plugin. Use when a team is winding down use of kms, e.g. "we're uninstalling kms, clean up what it added", "remove kms's guardrails from this repo".
+description: Finds everything bootstrap/capture/harness added to this project and offers to detach or remove it, before you actually uninstall the kms plugin. Use when a team is winding down use of kms, e.g. "we're uninstalling kms, clean up what it added", "remove kms's guardrails from this repo".
 ---
 
-Run this *before* uninstalling the `kms` plugin — nothing can act automatically afterward, so this is the only window for cleanup. Finds every trace `bootstrap`/`capture` left in this project and offers to detach (keep the content, stop tracking it as kms's) or remove it.
+Run this *before* uninstalling the `kms` plugin — nothing can act automatically afterward, so this is the only window for cleanup. Finds every trace `bootstrap`/`capture`/`harness` left in this project and offers to detach (keep the content, stop tracking it as kms's) or remove it.
 
 ## What to scan for
 
@@ -11,6 +11,15 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 2. **`kms-generated: true` files** — scan for the marker anywhere under `docs/`, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time (currently `docs/skills/product-track-roles.md`, `docs/skills/process-track-roles.md`, and `docs/facts/docs-manifest.md`, all three written by a single `bootstrap` run).
 3. **The `<!-- kms:start -->`/`<!-- kms:end -->` block** in the project's agent-instructions file (`AGENTS.md` or whatever host-specific equivalent it uses), if present.
 4. **Still-`status: draft` decisions, or facts still `governed-by: TBD`** — a proposal (from `bootstrap` or from `capture`'s own check 1, which drafts stubs the same way) that nobody has acted on yet. Report these separately from categories 1-3 and note plainly that they carry no `kms-seeded`/`kms-generated` marker — they're identified by status, not by marker.
+5. **Improvement harness artifacts** — files and config added by the improvement harness:
+   - `.opencode/improvement.yaml` (harness config)
+   - `.opencode/agent/improve/` (subagent definitions: improve-harness, improve-lint-fix, improve-skill-rewrite)
+   - `.opencode/opencode.json` (agent discovery config)
+   - `.github/workflows/improvement-harness.yml` (CI workflow)
+   - `docs/improvement-log.md` (run history log)
+   - `plugins/kms/skills/improvement-harness/` (skill interface + examples)
+   - `docs/skills/improvement-harness.md` (KB procedure)
+   - `plugins/kms/hooks/hooks.json` SessionStart hook entry for `improvement-runner.sh`
 
 ## Report first, then act
 

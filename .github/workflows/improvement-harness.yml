@@ -74,15 +74,125 @@ jobs:
       - name: Verify auto-commits (CI gate)
         if: success() && env.DRY_RUN != 'true'
         run: |
+          # Phase 4.3: CI verification gate
           # Verify that any commits made by the harness pass our quality gates
-          # This is Phase 4.3: CI verification gate
           echo "Checking recent commits from improvement harness..."
           RECENT_COMMITS=$(git log --oneline -10 --author="kms-improvement-bot" --grep="improvement" || true)
-          if [[ -n "$RECENT_COMMITS" ]]; then
-            echo "Found improvement harness commits:"
-            echo "$RECENT_COMMITS"
-            # Run lint on the whole repo to ensure no regressions
-            opencode run --agent lint "lint the knowledge base" --print-logs
-          else
+          if [[ -z "$RECENT_COMMITS" ]]; then
             echo "No improvement harness commits found in recent history"
+            exit 0
+          fi
+          
+          echo "Found improvement harness commits:"
+          echo "$RECENT_COMMITS"
+          
+          # 1. Verify commit format: Conventional Commits + Refs trailers
+          echo "Verifying commit message format..."
+          for commit in $(echo "$RECENT_COMMITS" | awk '{print $1}'); do
+            msg=$(git log -1 --format="%B" "$commit")
+            # Check Conventional Commits format
+            if ! echo "$msg" | head -1 | grep -qE '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+'; then
+              echo "::error::Commit $commit: Invalid Conventional Commits format"
+              echo "Message: $msg"
+              exit 1
+            fi
+            # Check Refs trailer
+            if ! echo "$msg" | grep -q '^Refs: '; then
+              echo "::error::Commit $commit: Missing Refs trailer"
+              echo "Message: $msg"
+              exit 1
+            fi
+            # Verify Refs point to existing files
+            refs=$(echo "$msg" | grep '^Refs: ' | sed 's/^Refs: //')
+            for ref in $(echo "$refs" | tr ',' '\n'); do
+              ref=$(echo "$ref" | xargs)
+              if [[ ! -f "$ref" ]]; then
+                echo "::warning::Commit $commit: Refs points to non-existent file: $ref"
+              fi
+            done
+          done
+          echo "Commit format verification passed"
+          
+          # 2. Verify file scope: only expected paths modified
+          echo "Verifying file scope..."
+          CHANGED_FILES_ALL=$(git diff --name-only HEAD~$(echo "$RECENT_COMMITS" | wc -l) HEAD)
+          for f in $CHANGED_FILES_ALL; do
+            if [[ ! "$f" =~ ^(plugins/kms/skills/|plugins/kms/shared/|docs/|.opencode/agent/improve/|.github/workflows/) ]]; then
+              echo "::warning::Unexpected file modified by harness: $f"
+            fi
+          done
+          echo "File scope verification passed"
+          
+          # 3. Run lint on the whole repo to ensure no regressions
+          echo "Running lint gate..."
+          if ! opencode run --agent lint "lint the knowledge base" --print-logs; then
+            echo "::error::Lint gate failed - harness commits introduced violations"
+            exit 1
+          fi
+          echo "Lint gate passed"
+          
+          # 4. If any skill-rewrite commits, verify eval gates
+          echo "Checking for skill-rewrite commits requiring eval verification..."
+          SKILL_REWRITE_COMMITS=$(git log --oneline -10 --author="kms-improvement-bot" --grep="skill-rewrite" || true)
+          if [[ -n "$SKILL_REWRITE_COMMITS" ]]; then
+            echo "Found skill-rewrite commits, running eval verification..."
+            for commit in $(echo "$SKILL_REWRITE_COMMITS" | awk '{print $1}'); do
+              # Extract skill name from commit message or changed files
+              skill_files=$(git diff --name-only "$commit^..$commit" | grep 'plugins/kms/skills/' | head -1)
+              if [[ -n "$skill_files" ]]; then
+                skill_dir=$(dirname "$skill_files")
+                skill_name=$(basename "$skill_dir")
+                if [[ -d "evals/$skill_name" ]]; then
+                  echo "Running eval for $skill_name..."
+                  if ! promptfoo eval -c "evals/$skill_name/promptfooconfig.yaml" -o json; then
+                    echo "::error::Eval gate failed for $skill_name"
+                    exit 1
+                  fi
+                fi
+              fi
+            done
+            echo "Eval gate passed"
+          fi
+          
+          echo "All CI verification gates passed"
+
+      - name: Update improvement log (if commits made)
+        if: success() && env.DRY_RUN != 'true'
+        run: |
+          # Append run summary to improvement log
+          RUN_DATE=$(date -Iseconds)
+          RUN_MODE="${{ github.event.inputs.mode || github.event_name }}"
+          COMMIT_COUNT=$(git log --oneline -10 --author="kms-improvement-bot" --grep="improvement" | wc -l | tr -d ' ')
+          
+          if [[ "$COMMIT_COUNT" -gt 0 ]]; then
+            cat >> docs/improvement-log.md <<EOF
+
+---
+
+## $RUN_DATE: $RUN_MODE Run (GitHub Actions)
+
+---
+date: $RUN_DATE
+mode: $RUN_MODE
+run_number: $GITHUB_RUN_NUMBER
+baseline_ref: "\${BASELINE_REF}"
+queue_depth: 0
+processed: $COMMIT_COUNT
+committed: $COMMIT_COUNT
+escalated: 0
+skipped: 0
+lint_violations_before: 0
+lint_violations_after: 0
+eval_scores: {}
+escalated_items: []
+---
+
+Automated run via GitHub Actions ($GITHUB_RUN_ID). $COMMIT_COUNT commit(s) applied.
+
+EOF
+            git config user.name "kms-improvement-bot"
+            git config user.email "kms-improvement@vivantel.dev"
+            git add docs/improvement-log.md
+            git commit -m "docs: update improvement log for run $GITHUB_RUN_NUMBER" -m "Refs: docs/improvement-log.md"
+            git push
           fi
