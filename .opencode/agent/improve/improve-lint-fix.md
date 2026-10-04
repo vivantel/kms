@@ -16,19 +16,16 @@ model: opencode/nemotron-3-ultra-free
 
 # Lint Fix Subagent
 
-Fix mechanical lint violations in KMS knowledge artifacts. Each invocation receives a single queue item with violation details.
+Fix mechanical lint violations in KMS knowledge artifacts. Each invocation receives a queue item with ALL violations for a single file.
 
 ## Input (via prompt)
 
 ```json
 {
   "file": "path/to/artifact.md",
-  "violation": {
-    "type": "token-economy|structure|xref|format|derivation|tags",
-    "message": "specific violation description",
-    "line": 42,
-    "suggestion": "optional fix hint"
-  },
+  "violations": [
+    {"type": "token-economy|structure|xref|format|derivation|tags", "message": "desc", "line": 42, "suggestion": "hint"}
+  ],
   "context": {
     "repo_root": "/abs/path/to/repo",
     "tags_list": "docs/skills/tags.md"
@@ -44,13 +41,13 @@ Execute these steps using your available tools (read, write, edit, grep, glob, b
 
 Use the `read` tool to read the file at the path in `file`.
 
-### 2. Analyze Violation
+### 2. Analyze All Violations
 
-Parse the violation type and location from the input JSON.
+Parse all violations from the input JSON. Group by type.
 
-### 3. Apply Fix Based on Violation Type
+### 3. Apply Fixes for All Violations
 
-Use `edit` or `write` tools to make minimal fixes:
+Use `edit` or `write` tools to make minimal fixes for ALL violations in the file:
 
 #### token-economy
 - Remove redundant phrases ("in order to" → "to", "due to the fact that" → "because")
@@ -72,7 +69,7 @@ Use `edit` or `write` tools to make minimal fixes:
 
 #### format
 - Fix YAML frontmatter syntax errors
-- Fix CSV format in INDEX.md (pipe-delimited with header)
+- Fix CSV format in INDEX.md (comma-delimited with header)
 - Ensure consistent indentation
 
 #### derivation
@@ -90,7 +87,7 @@ Use `edit` or `write` tools to make minimal fixes:
 
 Use `bash` tool to run lint on the fixed file:
 ```bash
-cd "${context.repo_root}" && opencode run --agent lint "lint ${file}" --print-logs
+cd "${context.repo_root}" && opencode run --agent lint '{"scope": "file", "target": "${file}"}' --print-logs
 ```
 
 If lint passes (exit 0), proceed. If fails, retry up to 3 times with lint output as feedback (use `edit` to apply corrections).
@@ -115,14 +112,13 @@ Output JSON to stdout using `bash` with `cat`/`echo` or `write` to a temp file:
 ```json
 {
   "fixed": true,
-  "changes": "Tightened prose in paragraph 3; removed redundant 'in order to'",
+  "changes": "Fixed structure: added missing status field; Fixed token-economy: removed redundant phrases",
   "semantic_hash": "a1b2c3d4",
   "retries": 0
 }
 ```
 
 Or on failure:
-
 ```json
 {
   "fixed": false,
@@ -135,7 +131,7 @@ Or on failure:
 
 - Token economy: fixes must be concise (guardrail `improvement-harness-token-economy`)
 - Free models only (guardrail `improvement-harness-free-models-only`)
-- Only fix the reported violation — no scope creep
+- Only fix the reported violations — no scope creep
 - Preserve all semantic content; only fix formatting/structure/mechanical issues
 - If unsure, return `{ "fixed": false, "reason": "requires human judgment" }`
 
@@ -143,6 +139,6 @@ Or on failure:
 
 After fixing, run:
 ```bash
-cd "$REPO_ROOT" && opencode run --agent lint "lint ${file}" --print-logs
+cd "$REPO_ROOT" && opencode run --agent lint '{"scope": "file", "target": "${file}"}' --print-logs
 ```
 Exit code 0 = pass. Non-zero = retry with lint output as feedback (max 3 retries).

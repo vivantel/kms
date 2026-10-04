@@ -1,0 +1,177 @@
+# Translation table for token-economy fixes
+# Format: pattern -> replacement
+# Patterns are regex, case-insensitive
+# Add new entries below, keep alphabetical by pattern
+
+translations:
+  - pattern: "in order to"
+    replacement: "to"
+    reason: "verbose infinitive"
+  
+  - pattern: "due to the fact that"
+    replacement: "because"
+    reason: "verbose causal"
+  
+  - pattern: "at this point in time"
+    replacement: "now"
+    reason: "verbose temporal"
+  
+  - pattern: "for the purpose of"
+    replacement: "for"
+    reason: "verbose prepositional"
+  
+  - pattern: "in the event that"
+    replacement: "if"
+    reason: "verbose conditional"
+  
+  - pattern: "with the exception of"
+    replacement: "except"
+    reason: "verbose exclusion"
+  
+  - pattern: "by means of"
+    replacement: "by"
+    reason: "verbose instrumental"
+  
+  - pattern: "in spite of the fact that"
+    replacement: "although"
+    reason: "verbose concessive"
+  
+  - pattern: "until such time as"
+    replacement: "until"
+    reason: "verbose temporal"
+  
+  - pattern: "prior to"
+    replacement: "before"
+    reason: "verbose temporal"
+  
+  - pattern: "subsequent to"
+    replacement: "after"
+    reason: "verbose temporal"
+  
+  - pattern: "in the vicinity of"
+    replacement: "near"
+    reason: "verbose spatial"
+  
+  - pattern: "in close proximity to"
+    replacement: "near"
+    reason: "verbose spatial"
+  
+  - pattern: "with regard to"
+    replacement: "about"
+    reason: "verbose prepositional"
+  
+  - pattern: "with respect to"
+    replacement: "about"
+    reason: "verbose prepositional"
+  
+  - pattern: "in connection with"
+    replacement: "about"
+    reason: "verbose prepositional"
+  
+  - pattern: "on the basis of"
+    replacement: "based on"
+    reason: "verbose causal"
+  
+  - pattern: "for the reason that"
+    replacement: "because"
+    reason: "verbose causal"
+  
+  - pattern: "in the majority of cases"
+    replacement: "usually"
+    reason: "verbose frequency"
+  
+  - pattern: "a large number of"
+    replacement: "many"
+    reason: "verbose quantity"
+  
+  - pattern: "a small number of"
+    replacement: "few"
+    reason: "verbose quantity"
+  
+  - pattern: "give consideration to"
+    replacement: "consider"
+    reason: "verbose verb phrase"
+  
+  - pattern: "make an effort to"
+    replacement: "try to"
+    reason: "verbose verb phrase"
+  
+  - pattern: "take into account"
+    replacement: "consider"
+    reason: "verbose verb phrase"
+  
+  - pattern: "bring to an end"
+    replacement: "end"
+    reason: "verbose verb phrase"
+  
+  - pattern: "come to a conclusion"
+    replacement: "conclude"
+    reason: "verbose verb phrase"
+  
+  - pattern: "reach a decision"
+    replacement: "decide"
+    reason: "verbose verb phrase"
+  
+  - pattern: "make a determination"
+    replacement: "determine"
+    reason: "verbose verb phrase"
+  
+  - pattern: "perform an analysis"
+    replacement: "analyze"
+    reason: "verbose verb phrase"
+  
+  - pattern: "conduct an investigation"
+    replacement: "investigate"
+    reason: "verbose verb phrase"
+  
+  - pattern: "provide assistance"
+    replacement: "help"
+    reason: "verbose verb phrase"
+  
+  - pattern: "offer an explanation"
+    replacement: "explain"
+    reason: "verbose verb phrase"
+  
+  - pattern: "make a recommendation"
+    replacement: "recommend"
+    reason: "verbose verb phrase"
+  
+  - pattern: "provide an indication"
+    replacement: "indicate"
+    reason: "verbose verb phrase"
+  
+  - pattern: "give an overview"
+    replacement: "overview"
+    reason: "verbose noun phrase"
+  
+  - pattern: "provide a summary"
+    replacement: "summarize"
+    reason: "verbose verb phrase"
+  
+  - pattern: "it is important to note that"
+    replacement: "note that"
+    reason: "verbose hedge"
+  
+  - pattern: "it should be noted that"
+    replacement: "note that"
+    reason: "verbose hedge"
+  
+  - pattern: "it is worth mentioning that"
+    replacement: "note that"
+    reason: "verbose hedge"
+  
+  - pattern: "as a matter of fact"
+    replacement: "in fact"
+    reason: "verbose hedge"
+  
+  - pattern: "for all intents and purposes"
+    replacement: "effectively"
+    reason: "verbose hedge"
+  
+  - pattern: "in the final analysis"
+    replacement: "finally"
+    reason: "verbose hedge"
+  
+  - pattern: "last but not least"
+    replacement: "finally"
+    reason: "verbose hedge"

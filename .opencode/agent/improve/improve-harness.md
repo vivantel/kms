@@ -44,17 +44,19 @@ Read the config file using the `read` tool, then extract settings with a bash co
 
 ```bash
 python3 -c "
-import yaml, json, sys
+import yaml, json, sys, os
 with open('${config}') as f:
     cfg = yaml.safe_load(f)
-# Print verification settings
 verification = cfg.get('verification', {})
+safety = cfg.get('safety', {})
 print(f'LINT_GATE_ENABLED={verification.get(\"lint_gate\", {}).get(\"enabled\", True)}')
 print(f'LINT_GATE_REQUIRE_CLEAN={verification.get(\"lint_gate\", {}).get(\"require_clean\", True)}')
 print(f'EVAL_GATE_ENABLED={verification.get(\"eval_gate\", {}).get(\"enabled\", True)}')
 print(f'EVAL_GATE_MIN_IMPROVEMENT={verification.get(\"eval_gate\", {}).get(\"min_score_improvement\", 0.05)}')
-print(f'SAMPLING_ENABLED={verification.get(\"sampling\", {}).get(\"enabled\", True)}')
-print(f'SAMPLING_RATE={verification.get(\"sampling\", {}).get(\"sample_rate\", 0.2)}')
+print(f'MAX_PASSES={cfg.get(\"loop_prevention\", {}).get(\"max_passes_per_type\", 3)}')
+print(f'CONVERGENCE_THRESHOLD={cfg.get(\"loop_prevention\", {}).get(\"convergence_threshold\", 0.01)}')
+print(f'MAX_FILES_PER_RUN={safety.get(\"max_files_per_run\", 10)}')
+print(f'DRY_RUN={os.environ.get(\"DRY_RUN\", \"false\").lower()}')
 "
 ```
 
@@ -62,28 +64,25 @@ print(f'SAMPLING_RATE={verification.get(\"sampling\", {}).get(\"sample_rate\", 0
 
 Queue file already created by runner at the path in `queue_file`. Confirm it exists with `read`.
 
-### Step 3: Discover Queue Items
+### Step 3: Discover Queue Items (Limited)
 
-Run discovery for each enabled signal using your tools:
+Run discovery for each enabled signal, but limit total items to `MAX_FILES_PER_RUN`.
 
 #### 3a. Lint Discovery (lint-fix items)
 
-Run the lint skill to get violations:
-- Use `bash` tool to run: `opencode run --agent lint "lint the knowledge base and output violations as JSON" --print-logs --format json`
+Run the lint agent to get violations:
+- Use `bash` tool to run: `opencode run --agent lint '{"scope": "all"}' --print-logs`
 
-Parse the lint output and convert each violation to a queue item. Add items to queue file using `edit` or `bash` with `jq`/`python`.
+Parse the lint output and convert violations to queue items, grouped by file (batch all violations in a file together). Limit to `MAX_FILES_PER_RUN` files.
 
-Queue item format:
+Queue item format (per file, not per violation):
 ```json
 {
   "type": "lint-fix",
   "file": "path/to/file.md",
-  "violation": {
-    "type": "token-economy|structure|xref|format|derivation|tags",
-    "message": "description",
-    "line": 42,
-    "suggestion": "fix hint"
-  },
+  "violations": [
+    {"type": "token-economy|structure|xref|format|derivation|tags", "message": "desc", "line": 42, "suggestion": "hint"}
+  ],
   "priority": 10,
   "source": "lint"
 }
@@ -95,12 +94,13 @@ For each skill in `plugins/kms/skills/` that has an eval case:
 - Use `glob` to find skills with eval directories
 - Use `bash` to run promptfoo eval for each
 - Parse results and create queue items for skills with pass rate < 1.0 or score below baseline
+- Limit to `MAX_FILES_PER_RUN` skills
 
 ### Step 4: Prioritize Queue
 
 Sort queue items by: severity, impact, confidence, age. Use `bash` with `jq` or `python` to sort and update queue file.
 
-### Step 5: Convergence Loop with Three-Layer Verification
+### Step 5: Convergence Loop (Batched Processing)
 
 For each improvement type in priority order [lint-fix, skill-rewrite]:
 
@@ -108,9 +108,11 @@ For each improvement type in priority order [lint-fix, skill-rewrite]:
 passes=0
 prev_hash=""
 prev_metrics=""
+MAX_ITEMS_PER_PASS=5  # Process max 5 items per pass
+
 while [[ $passes -lt $max_passes ]]; do
-  # Filter queue for this type using jq
-  items=$(jq -c '.items[] | select(.type=="lint-fix")' "$queue_file")
+  # Filter queue for this type using jq, limit to MAX_ITEMS_PER_PASS
+  items=$(jq -c '.items[] | select(.type=="lint-fix")' "$queue_file" | head -$MAX_ITEMS_PER_PASS)
   
   if [[ -z "$items" ]]; then
     break
@@ -118,7 +120,7 @@ while [[ $passes -lt $max_passes ]]; do
   
   committed_this_pass=0
   for item in $items; do
-    # Invoke appropriate subagent
+    # Invoke appropriate subagent ONCE PER FILE (not per violation)
     if [[ "$item_type" == "lint-fix" ]]; then
       result=$(opencode run --agent improve-lint-fix --prompt "$item" --print-logs --format json)
     elif [[ "$item_type" == "skill-rewrite" ]]; then
@@ -131,15 +133,13 @@ while [[ $passes -lt $max_passes ]]; do
     # Layer 1: Lint Gate (all types)
     if [[ "$LINT_GATE_ENABLED" == "True" ]]; then
       if [[ "$item_type" == "lint-fix" ]]; then
-        # Run lint on the specific fixed file
-        lint_result=$(cd "${repo_root}" && opencode run --agent lint "lint ${item_file}" --print-logs --format json 2>&1)
+        file=$(echo "$item" | jq -r '.file')
+        lint_result=$(cd "${repo_root}" && opencode run --agent lint "{\"scope\": \"file\", \"target\": \"$file\"}" --print-logs 2>&1)
       else
-        # For skill-rewrite, run lint on both SKILL.md and examples.md
         skill_dir=$(echo "$item" | jq -r '.skill_dir')
-        lint_result=$(cd "${repo_root}" && opencode run --agent lint "lint ${skill_dir}/SKILL.md" --print-logs --format json 2>&1)
-        lint_result2=$(cd "${repo_root}" && opencode run --agent lint "lint ${skill_dir}/examples.md" --print-logs --format json 2>&1)
+        lint_result=$(cd "${repo_root}" && opencode run --agent lint "{\"scope\": \"file\", \"target\": \"${skill_dir}/SKILL.md\"}" --print-logs 2>&1)
+        lint_result2=$(cd "${repo_root}" && opencode run --agent lint "{\"scope\": \"file\", \"target\": \"${skill_dir}/examples.md\"}" --print-logs 2>&1)
       fi
-      # Check if lint passed (exit code 0, no violations)
       if echo "$lint_result" | jq -e '.violations | length == 0' >/dev/null; then
         lint_passed=true
       else
@@ -181,26 +181,27 @@ while [[ $passes -lt $max_passes ]]; do
       # Commit or stage
       if [[ "$dry_run" == "false" ]]; then
         # Use attribute-format commit with Refs trailers
-        git add <files>
-        git commit -m "fix: <why>" -m "Refs: docs/facts/..."
+        file=$(echo "$item" | jq -r '.file')
+        git add "$file"
+        git commit -m "fix: auto-fix lint violations in $(basename "$file")" -m "Refs: $file"
       fi
       committed_this_pass=$((committed_this_pass + 1))
+      
+      # Remove from queue
+      jq "del(.items[] | select(.file==\"$file\"))" "$queue_file" > "$queue_file.tmp" && mv "$queue_file.tmp" "$queue_file"
     else
       # Escalate: add to escalated list in queue metadata
       # Log reason for escalation
+      echo "Escalated: $(echo "$item" | jq -r '.file') - verification failed"
     fi
   done
   
   # Check convergence
-  # Compute semantic hash of all changed files
-  current_hash=$(compute_semantic_hash_of_changes)
-  current_metrics=$(compute_metrics)
+  current_hash=$(git -C "${repo_root}" diff --name-only HEAD~${committed_this_pass} HEAD 2>/dev/null | sort | sha256sum | cut -d' ' -f1)
+  current_metrics="commits=$committed_this_pass"
   
   if [[ $passes -gt 0 ]]; then
-    # Check if marginal improvement < convergence_threshold
-    improvement=$(calculate_improvement "$prev_metrics" "$current_metrics")
-    if [[ $(echo "$improvement < $convergence_threshold" | bc -l) -eq 1 ]] && \
-       [[ "$current_hash" == "$prev_hash" ]]; then
+    if [[ "$current_hash" == "$prev_hash" ]]; then
       break
     fi
   fi
@@ -209,21 +210,17 @@ while [[ $passes -lt $max_passes ]]; do
   prev_metrics="$current_metrics"
   passes=$((passes + 1))
   
-  # Re-discover queue (state may have changed)
+  # Re-discover queue (state may have changed) - but limit to avoid infinite loop
+  if [[ $passes -lt $max_passes ]]; then
+    # Re-run lint discovery for remaining items
+    break  # For MVP, only one pass per run
+  fi
 done
 ```
 
 Use `bash` tool for the loop, `read`/`write` for queue operations, `bash` for subagent invocation.
 
-### Step 6: Commit Changes
-
-For verified fixes, create commits with attribute-format messages using `bash`:
-```bash
-git add <files>
-git commit -m "fix: <why>" -m "Refs: docs/facts/..."
-```
-
-### Step 7: Log Run Summary
+### Step 6: Log Run Summary
 
 Append structured entry to `docs/improvement-log.md` using `edit` or `write`:
 
@@ -232,6 +229,8 @@ Append structured entry to `docs/improvement-log.md` using `edit` or `write`:
 date: 2026-01-15T10:30:00Z
 mode: scheduled
 run_number: 42
+baseline_ref: "0.15.0"
+baseline_sha: "abc123"
 queue_depth: 15
 processed: 12
 committed: 10
@@ -252,7 +251,7 @@ escalated_items:
 Use `bash` tool to invoke subagents:
 
 ```bash
-# lint-fix
+# lint-fix (per file, not per violation)
 opencode run --agent improve-lint-fix --prompt '<json>' --print-logs --format json
 
 # skill-rewrite
@@ -267,15 +266,16 @@ opencode run --agent improve-skill-rewrite --prompt '<json>' --print-logs --form
 
 ## Loop Prevention
 
-- Semantic hash (markdown AST) for idempotency
 - Max 3 passes per type (configurable)
-- Convergence: <1% marginal improvement over 2 passes
+- Max 10 files per run (configurable)
+- Max 5 items per pass
+- Convergence: no new changes detected
 - Human gate: skill-rewrite requires high confidence
 
 ## Output
 
 Structured log entry appended to `docs/improvement-log.md` with:
-- Timestamp, mode, run number
+- Timestamp, mode, run number, baseline
 - Queue depth, processed, committed, escalated, skipped
 - Metrics (lint violations before/after, eval scores)
 - Escalated items requiring human review
