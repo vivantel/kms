@@ -1,7 +1,7 @@
 import json, sys, os
 
 queue_file = os.environ.get("QUEUE_FILE")
-max_files = 10
+max_files = int(os.environ.get("MAX_FILES_PER_RUN", "50"))
 lint_output_file = os.environ.get("LINT_OUTPUT_FILE")
 
 try:
