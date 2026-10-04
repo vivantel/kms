@@ -1,6 +1,11 @@
 ---
 name: quickstart
 description: Sets up a project's knowledge system and captures one real decision live, in the same sitting, so the value is felt immediately rather than left for later. Use when a user is trying this plugin for the first time, e.g. "get me started with this", "set this up and show me how it works".
+id: quickstart
+title: Quickstart
+status: active
+date: 2026-01-04
+tags: [onboarding, setup]
 ---
 
 Run `bootstrap`'s setup, then immediately capture one real, current decision as a full artifact — first value in one sitting, not a cold "now go use `roadmap` sometime."
