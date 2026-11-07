@@ -54,3 +54,4 @@ id,title,tags,status
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
+0056-eval-gate-covers-study-base,"Run the eval gate on pull requests into study/base as well as master","kms, evals, ci",active

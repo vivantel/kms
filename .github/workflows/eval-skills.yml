@@ -10,7 +10,7 @@ name: Eval skill changes
 on:
   pull_request:
     types: [opened]
-    branches: [master]
+    branches: [master, study/base]
     paths:
       - "plugins/kms/skills/**"
       - "plugins/kms/shared/**"
