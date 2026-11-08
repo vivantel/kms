@@ -85,3 +85,9 @@ tests:
   - description: "c24"
     vars:
       fixture_dir: "evals/lint-matrix/cases/c24"
+  - description: "p13-changed"
+    vars:
+      fixture_dir: "evals/lint-matrix/cases/p13-changed"
+  - description: "p13-control"
+    vars:
+      fixture_dir: "evals/lint-matrix/cases/p13-control"

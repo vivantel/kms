@@ -176,6 +176,18 @@
    "expected": [
     24
    ]
+  },
+  "p13-changed": {
+   "target": 13,
+   "variant": "pinned",
+   "expected": [
+    13
+   ]
+  },
+  "p13-control": {
+   "target": null,
+   "variant": "pinned",
+   "expected": []
   }
  }
 }
