@@ -33,7 +33,7 @@ NUMBERED = re.compile(r"^(\d{4})-")
 
 
 def split_frontmatter(text):
-    """Return (dict, error). Frontmatter is the block between a first line '---' and the next
+    """Return (dict or None, error or None); both are set for an unterminated block that still parses. Frontmatter is the block between a first line '---' and the next
     line that is exactly '---'."""
     lines = text.split("\n")
     if not lines or lines[0].strip() != "---":
@@ -47,7 +47,18 @@ def split_frontmatter(text):
             if not isinstance(data, dict):
                 return None, "frontmatter is not a mapping"
             return data, None
-    return None, "unterminated frontmatter"
+    # No closing '---': read up to the first blank line or heading, so the file's other
+    # violations are still checked, and report the missing delimiter.
+    end = len(lines)
+    for i in range(1, len(lines)):
+        if not lines[i].strip() or lines[i].startswith("#"):
+            end = i
+            break
+    try:
+        data = yaml.safe_load("\n".join(lines[1:end])) or {}
+    except yaml.YAMLError:
+        return None, "unterminated frontmatter"
+    return (data, "unterminated frontmatter") if isinstance(data, dict) else (None, "unterminated frontmatter")
 
 
 class Linter:
@@ -77,9 +88,9 @@ class Linter:
                     self.arts.append(
                         dict(type=t, archived=archived, path=p, rel=self.rel(p), fm=fm, text=text, err=err)
                     )
-                    if fm is None:
+                    if err:
                         self.add(2, self.rel(p), err)
-                    elif "id" in fm:
+                    if fm is not None and "id" in fm:
                         self.ids.add(str(fm["id"]))
 
     def tags_list(self):

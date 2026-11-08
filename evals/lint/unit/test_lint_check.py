@@ -100,6 +100,13 @@ class LintCheck(unittest.TestCase):
     def test_2_bare_string_list(self):
         self.assertEqual(self.checks(**{"docs/guardrails/changelog.md": GUARD.replace("[0001-cadence]", "0001-cadence")}), [2])
 
+    def test_unterminated_frontmatter_still_checked(self):
+        bad = GUARD.replace("---\nBody.\n", "").replace("[0001-cadence]", "[0099-none]")
+        project(self.root, **{"docs/guardrails/changelog.md": bad})
+        got = {(c, m) for c, _, m in Linter(self.root).run()}
+        self.assertIn((2, "unterminated frontmatter"), got)
+        self.assertTrue(any(c == 1 for c, _ in got))
+
     def test_2_bad_status(self):
         got = self.checks(**{"docs/skills/deploy.md": PROC.replace("status: active", "status: live")})
         self.assertIn(2, got)
