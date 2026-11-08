@@ -58,3 +58,4 @@ id,title,tags,status
 0057-pin-eval-model-north-mini-code,"Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn","kms, eval-harness, kilo",active
 0058-deterministic-structural-lint-checks,"Run lint's structural checks in a script, not through the model","kms, knowledge-management, eval-harness",active
 0059-lint-matrix-eval,"Measure lint per check with a clean control and one seeded violation per check","kms, eval-harness, knowledge-management",active
+0060-lint-checker-path-from-project-root,"The lint skill names the checker path so it resolves from the project root","kms, eval-harness, knowledge-management",active
