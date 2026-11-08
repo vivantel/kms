@@ -54,3 +54,12 @@ id,title,tags,status
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
+0056-eval-gate-covers-study-base,"Run the eval gate on pull requests into study/base as well as master","kms, eval-harness, automation",active
+0057-pin-eval-model-north-mini-code,"Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn","kms, eval-harness, kilo",active
+0058-deterministic-structural-lint-checks,"Run lint's structural checks in a script, not through the model","kms, knowledge-management, eval-harness",active
+0059-lint-matrix-eval,"Measure lint per check with a clean control and one seeded violation per check","kms, eval-harness, knowledge-management",active
+0060-lint-checker-path-from-project-root,"The lint skill names the checker path so it resolves from the project root","kms, eval-harness, knowledge-management",active
+0061-label-lint-checks-structural-or-judgment,"Each lint check carries a structural or judgment label, checked by a second rater","kms, eval-harness, knowledge-management",active
+0062-pin-edge-targets-by-content-hash,"Edges pin their targets by content hash in a parallel pinned map, compared by the checker","kms, knowledge-management, eval-harness",active
+0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
+0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",active

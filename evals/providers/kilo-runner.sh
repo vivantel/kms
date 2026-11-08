@@ -47,8 +47,15 @@ except Exception:
 
 CONFIG_JSON="$(json_get "$OPTIONS_JSON" "json.dumps(d.get('config', {}))" '{}')"
 FIXTURE_DIR="$(json_get "$CONFIG_JSON" "d.get('fixture_dir', '')" '')"
-MODEL="$(json_get "$CONFIG_JSON" "d.get('model', 'poolside/laguna-s-2.1:free')" 'poolside/laguna-s-2.1:free')"
+MODEL="$(json_get "$CONFIG_JSON" "d.get('model', 'cohere/north-mini-code:free')" 'cohere/north-mini-code:free')"
 TIMEOUT_SECONDS="$(json_get "$CONFIG_JSON" "d.get('timeout_seconds', 180)" '180')"
+
+# A test's own `vars.fixture_dir` (third argument, promptfoo's context) overrides the provider's,
+# so one config can run many fixtures (evals/lint-matrix).
+CONTEXT_JSON="${3:-}"
+[ -z "$CONTEXT_JSON" ] && CONTEXT_JSON='{}'
+CASE_FIXTURE="$(json_get "$CONTEXT_JSON" "d.get('vars', {}).get('fixture_dir', '')" '')"
+[ -n "$CASE_FIXTURE" ] && FIXTURE_DIR="$CASE_FIXTURE"
 
 if [ -n "$FIXTURE_DIR" ]; then
   FIXTURE_DIR="$REPO_ROOT/$FIXTURE_DIR"
@@ -87,8 +94,22 @@ fi
 
 BEFORE_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 
-TRANSCRIPT="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto -m "kilo/${MODEL}" "$PROMPT" 2>&1)"
-KILO_EXIT=$?
+# A model named `nvidia/...` is a Kilo provider of its own (own API key); anything else goes through
+# the Kilo gateway.
+case "$MODEL" in nvidia/*) MODEL_ID="$MODEL" ;; *) MODEL_ID="kilo/${MODEL}" ;; esac
+
+# A rate-limit error is an infrastructure failure, not an answer: wait and run again (up to 6
+# tries) so it is not graded as the model's output. The wait is the response's Retry-After when
+# kilo's event store has one (retry_after.py), else 30s doubling, plus jitter so parallel runs
+# do not retry in step.
+for attempt in 1 2 3 4 5 6; do
+  STARTED_MS=$(( $(date +%s) * 1000 ))
+  TRANSCRIPT="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto -m "$MODEL_ID" "$PROMPT" 2>&1)"
+  KILO_EXIT=$?
+  echo "$TRANSCRIPT" | grep -q "Too Many Requests" || break
+  [ "$attempt" -eq 6 ] && break
+  sleep $(( $(python3 "$REPO_ROOT/evals/providers/retry_after.py" "$STARTED_MS" $(( 30 * 2 ** (attempt - 1) )) ) + RANDOM % 10 ))
+done
 
 AFTER_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 CHANGED_FILES="$(LC_ALL=C comm -13 <(echo "$BEFORE_FILES") <(echo "$AFTER_FILES"))"
