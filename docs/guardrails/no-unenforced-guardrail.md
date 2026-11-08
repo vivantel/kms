@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
 governed-by: 0027-baseline-guardrail-seeding
-grounded-in: [0027-baseline-guardrail-seeding]
+grounded-in: [0027-baseline-guardrail-seeding, 0008-kilo-code-skills-spec]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
@@ -26,8 +26,9 @@ whoever only reads or runs the skill itself.
   — kms's own copy of a guardrail it also ships as a template to every
   adopting project. This principle first appeared in `steward` without
   a dedicated decision of its own; this is its first governing record.
-- **Descriptive basis**: `0027` itself, in the absence of an independent fact
-  — see axiomatic basis above.
+- **Descriptive basis**: `docs/facts/0008-kilo-code-skills-spec.md` —
+  agents load a skill from its own `SKILL.md`; nothing loads
+  `docs/guardrails/` for someone who only runs the skill.
 - **Normative conclusion**: therefore any guardrail found describing
   shipped behavior a skill's own body doesn't state is flagged, matching
   `lint` check 8.

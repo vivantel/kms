@@ -64,3 +64,4 @@ id,title,tags,status
 0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
 0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",active
 0065-admission-test-for-new-records,"New records pass an admission test of hard gates and three estimated signals","kms, knowledge-management, taxonomy",active
+0066-corpus-cleanup-under-admission-test,"Six facts that fail the admission test are deprecated; the other contested records stay","kms, knowledge-management, taxonomy",active
