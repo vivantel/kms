@@ -1,7 +1,8 @@
 ---
 id: 0066-corpus-cleanup-under-admission-test
 title: Six facts that fail the admission test are deprecated; the other contested records stay
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
 track: process
@@ -24,4 +25,4 @@ Two fresh model raters (agreement 81 of 98, kappa 0.69) failed 6 records in both
 
 ## Limits
 
-Model raters, one family. The effect of the cleanup on evals that read the knowledge base (lint, query) is not separated here; run those on `study-v1` and on this state before attributing a change to the rule.
+Model raters, one family. The effect of the cleanup on evals that read the knowledge base (lint, query) was not measured (author decision, 2026-11-08: the baselines are too weak to show a change); do not credit a change in those evals to the rule alone.
