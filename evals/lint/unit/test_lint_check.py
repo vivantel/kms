@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "plugins" / "kms" / "shared"))
-from lint_check import Linter  # noqa: E402
+from lint_check import Linter, revision  # noqa: E402
 
 FACT = """---
 id: 0001-cadence
@@ -81,7 +81,7 @@ def project(root, **over):
 class LintCheck(unittest.TestCase):
     def setUp(self):
         self.root = tempfile.mkdtemp()
-        self.addCleanup(shutil.rmtree, self.root)
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
 
     def checks(self, **over):
         project(self.root, **over)
@@ -157,6 +157,81 @@ class LintCheck(unittest.TestCase):
 
     def test_21_tag_off_list(self):
         self.assertEqual(self.checks(**{"docs/skills/deploy.md": PROC.replace("[release]", "[nope]"), "docs/skills/INDEX.md": INDEX.format("deploy,Deploy steps,nope,active\ntags,Tags,release,active")}), [21])
+
+    # --- pinned edges (check 13) ---
+
+    def pinned(self, **over):
+        """Project whose guardrail is pinned to the current fact and decision; `over` then edits files."""
+        project(self.root)
+        Linter(self.root).pin("docs/guardrails/changelog.md")
+        for rel, text in over.items():
+            (Path(self.root) / rel).write_text(text, encoding="utf-8")
+        return sorted({c for c, _, _ in Linter(self.root).run()})
+
+    def test_pin_writes_map_and_is_clean(self):
+        self.assertEqual(self.pinned(), [])
+        text = (Path(self.root) / "docs/guardrails/changelog.md").read_text()
+        self.assertIn("pinned:\n  0001-weekly: ", text)
+        self.assertIn("  0001-cadence: ", text)
+
+    def test_pin_is_idempotent(self):
+        project(self.root)
+        for _ in range(2):
+            Linter(self.root).pin("docs/guardrails/changelog.md")
+        text = (Path(self.root) / "docs/guardrails/changelog.md").read_text()
+        self.assertEqual(text.count("pinned:"), 1)
+
+    def test_13_source_body_changed(self):
+        self.assertEqual(self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("Body.", "Releases are now monthly.")}), [13])
+
+    def test_13_source_status_changed(self):
+        self.assertEqual(
+            self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("status: active", "status: deprecated"),
+                           "docs/facts/INDEX.md": INDEX.format("0001-cadence,Releases are weekly,release,deprecated")}),
+            [13, 20],  # a deprecated fact is also an archive candidate
+        )
+
+    def test_13_ignores_date_cosmetics_and_own_edges(self):
+        self.assertEqual(
+            self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("date: 2026-01-01", "date: 2026-06-01").replace("Body.", "Body.\n\n")}),
+            [],
+        )
+
+    def test_13_unpinned_edge_is_left_to_the_model(self):
+        self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": FACT.replace("Body.", "Changed.")}), [])
+
+    def test_2_pin_for_non_edge(self):
+        g = GUARD.replace("derivation-note", "pinned:\n  0099-none: abc\nderivation-note")
+        self.assertEqual(self.checks(**{"docs/guardrails/changelog.md": g}), [2])
+
+    def test_13_precision_recall_on_seeded_changes(self):
+        """Seed one source change per case and one untouched control per case; the checker must flag exactly the changed ones."""
+        changes = [
+            lambda: {"docs/facts/0001-cadence.md": FACT.replace("Body.", "Different claim.")},
+            lambda: {"docs/facts/0001-cadence.md": FACT.replace("weekly", "monthly")},
+            lambda: {"docs/decisions/0001-weekly.md": DECISION.replace("Body.", "Ship daily.")},
+            lambda: {"docs/decisions/0001-weekly.md": DECISION.replace("Ship weekly", "Ship daily")},
+        ]
+        controls = [
+            lambda: {},
+            lambda: {"docs/facts/0001-cadence.md": FACT.replace("date: 2026-01-01", "date: 2026-02-02")},
+            lambda: {"docs/guardrails/changelog.md": None},
+        ]
+        tp = sum(13 in self._flagged(c()) for c in changes)
+        fp = sum(13 in self._flagged(c()) for c in controls)
+        self.assertEqual((tp, fp), (len(changes), 0))
+
+    def _flagged(self, over):
+        shutil.rmtree(self.root)
+        self.root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+        return self.pinned(**{k: v for k, v in over.items() if v is not None})
+
+    def test_revision_ignores_edge_fields_and_whitespace(self):
+        a = revision(FACT)
+        self.assertEqual(a, revision(FACT.replace("governed-by: 0001-weekly", "governed-by: 0002-x")))
+        self.assertEqual(a, revision(FACT.replace("Body.", "Body.  \n")))
+        self.assertNotEqual(a, revision(FACT.replace("Body.", "Other.")))
 
     def test_deterministic(self):
         project(self.root, **{"docs/skills/deploy.md": PROC.replace("[release]", "[nope]")})
