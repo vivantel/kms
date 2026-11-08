@@ -63,3 +63,4 @@ id,title,tags,status
 0062-pin-edge-targets-by-content-hash,"Edges pin their targets by content hash in a parallel pinned map, compared by the checker","kms, knowledge-management, eval-harness",active
 0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
 0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",active
+0065-admission-test-for-new-records,"New records pass an admission test of hard gates and three estimated signals","kms, knowledge-management, taxonomy",draft
