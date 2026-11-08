@@ -47,3 +47,4 @@ Group findings by check, one line per violation with the file path and what's wr
 ## Out of scope
 
 Fixing anything without confirmation, and judgment calls about domain-specific correctness beyond structural validity (e.g. whether a decision's rationale is actually convincing) — that's what `clarify`/`roadmap`'s interview is for, not a mechanical scan. Also out of scope: `kms`'s own plugin-packaging layer (`plugins/<plugin-name>/skills/*/SKILL.md`, its `examples.md` convention) — that governs how `kms` itself is built, not the target project's knowledge base; see `AGENTS.md`/`CONTRIBUTING.md` for that instead. Also out of scope: `docs/plans/` — a plan is not a governed artifact type and isn't structurally validated here; it keeps only its own per-step done/pending/blocked legend. Check 24 is the sole exception, reading that same self-reported legend purely to detect "fully done and not yet archived" — it doesn't impose any other check on plans.
+
