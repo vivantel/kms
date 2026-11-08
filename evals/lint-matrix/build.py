@@ -49,6 +49,7 @@ def base():
     f["docs/facts/0001-release-cadence.md"] = art(
         "0001-release-cadence", "Releases go out on Thursdays", ["release"],
         "The release job runs Thursdays at 10:00 UTC.", kind="environmental",
+        scope={"component": "release-job", "environment": "production"},
         **{"governed-by": "0001-weekly-releases"})
     f["docs/facts/0002-ci-runs-on-pr.md"] = art(
         "0002-ci-runs-on-pr", "CI runs on every pull request", ["git"],
