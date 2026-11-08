@@ -17,7 +17,7 @@ providers:
   - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/roadmap/fixture"
-      model: "poolside/laguna-s-2.1:free"
+      model: "cohere/north-mini-code:free"
       timeout_seconds: 480
 
 defaultTest:

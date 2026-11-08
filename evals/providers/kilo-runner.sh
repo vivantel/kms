@@ -47,7 +47,7 @@ except Exception:
 
 CONFIG_JSON="$(json_get "$OPTIONS_JSON" "json.dumps(d.get('config', {}))" '{}')"
 FIXTURE_DIR="$(json_get "$CONFIG_JSON" "d.get('fixture_dir', '')" '')"
-MODEL="$(json_get "$CONFIG_JSON" "d.get('model', 'poolside/laguna-s-2.1:free')" 'poolside/laguna-s-2.1:free')"
+MODEL="$(json_get "$CONFIG_JSON" "d.get('model', 'cohere/north-mini-code:free')" 'cohere/north-mini-code:free')"
 TIMEOUT_SECONDS="$(json_get "$CONFIG_JSON" "d.get('timeout_seconds', 180)" '180')"
 
 if [ -n "$FIXTURE_DIR" ]; then
