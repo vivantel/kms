@@ -40,6 +40,7 @@ PROSE_REF = re.compile(r"docs/(facts|decisions|guardrails|skills)/([\w.\-]+\.md)
 NUMBERED = re.compile(r"^(\d{4})-")
 EDGE_FIELDS = ("governed-by", "grounded-in")
 PIN_IGNORED = EDGE_FIELDS + ("pinned", "date")
+KINDS = ("environmental", "decision")
 SCOPE_KEYS = ("component", "environment", "version")
 
 
@@ -174,6 +175,8 @@ class Linter:
                     for k in pins:
                         if str(k) not in edge_ids(fm):
                             self.add(2, rel, f"`pinned` has `{k}`, which is not in `governed-by` or `grounded-in`")
+            if a["type"] == "facts" and "kind" in fm and fm["kind"] not in KINDS:
+                self.add(2, rel, f"`kind` is `{fm['kind']}`, not one of {' | '.join(KINDS)}")
             if "scope" in fm:
                 if a["type"] != "facts":
                     self.add(2, rel, "`scope` is only defined on facts")

@@ -168,6 +168,11 @@ class LintCheck(unittest.TestCase):
             (Path(self.root) / rel).write_text(text, encoding="utf-8")
         return sorted({c for c, _, _ in Linter(self.root).run()})
 
+    def test_2_kind_retired_value(self):
+        for bad in ("mixed", "derived"):
+            with self.subTest(bad=bad):
+                self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": FACT.replace("kind: environmental", f"kind: {bad}")}), [2])
+
     def test_scope_valid_on_fact_is_clean(self):
         f = FACT.replace("governed-by: 0001-weekly", "scope: {component: release-job, environment: ci}\ngoverned-by: 0001-weekly")
         self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": f}), [])
