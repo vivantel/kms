@@ -14,7 +14,7 @@ derivation-note: >
 
 ## Guardrail
 
-Any fact file MUST carry `kind` (`environmental | decision | derived | mixed`)
+Any fact file MUST carry `kind` (`environmental | decision`, per decision 0064)
 and `governed-by` (a decision id, or `TBD` when no decision has been
 recorded yet — itself debt, but declared debt) — whether written by
 `bootstrap`/`capture` or by hand.
