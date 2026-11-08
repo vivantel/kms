@@ -11,7 +11,7 @@ track: process
 
 `plugins/kms/shared/lint_check.py` performs lint checks 1, 2, 3, 7, 9, 12, 15, 19, 20 and 21 from frontmatter, file names and file text. The `lint` skill runs it first and reports its lines as those checks' findings. Checks 4, 5, 6, 8, 10, 11, 13, 14, 16, 17, 18, 22, 23 and 24 stay judgment-based. The script needs PyYAML, which the author accepted.
 
-Checks 7, 9 and 12 join the deterministic set because each reduces to a lookup: an id or path searched across files (7, 9) or a template compared by `id` and version (12). Two exemptions in check 9 (a conditionally-optional file, a reference a plan marks as preserved history) cannot be decided from text, so the script reports those and the skill tells the model to dismiss them.
+Checks 7, 9 and 12 join the deterministic set because each reduces to a lookup: an id or path searched across files (7, 9) or a template compared by `id` and version (12). Two exemptions in check 9 (a conditionally-optional file, a reference a plan marks as preserved history) cannot be decided from text, so the script reports those and the skill tells the model to dismiss them. Check 9 skips decision files, which are immutable and whose stale paths are left as a record (as check 20 already says), and check 2 accepts the `TBD` debt marker in a list field.
 
 ## Why
 

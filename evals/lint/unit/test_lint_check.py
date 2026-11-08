@@ -107,6 +107,12 @@ class LintCheck(unittest.TestCase):
         self.assertIn((2, "unterminated frontmatter"), got)
         self.assertTrue(any(c == 1 for c, _ in got))
 
+    def test_2_tbd_marker_is_not_a_list_violation(self):
+        self.assertEqual(self.checks(**{"docs/guardrails/changelog.md": GUARD.replace("[0001-cadence]", "TBD")}), [7])
+
+    def test_9_skips_decisions(self):
+        self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("Body.", "See docs/guardrails/gone.md.")}), [])
+
     def test_2_bad_status(self):
         got = self.checks(**{"docs/skills/deploy.md": PROC.replace("status: active", "status: live")})
         self.assertIn(2, got)

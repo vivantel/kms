@@ -1,6 +1,6 @@
 ---
 id: 0014-guardrails-carry-derivation-prose
-title: Every guardrail carries a ## Derivation prose section
+title: "Every guardrail carries a ## Derivation prose section"
 status: active
 date: 2026-09-12
 tags: [kms, knowledge-management, audit]
