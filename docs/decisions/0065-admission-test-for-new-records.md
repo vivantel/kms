@@ -1,7 +1,8 @@
 ---
 id: 0065-admission-test-for-new-records
 title: New records pass an admission test of hard gates and three estimated signals
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
 track: process
