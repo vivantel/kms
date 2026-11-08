@@ -15,7 +15,7 @@ Ask what decision or plan is currently live for the user — something they're a
 
 ## Step 3: capture it
 
-Run `roadmap`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline. Don't shortcut it; the point is a real, complete artifact, not a demo.
+Run `roadmap`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. Don't shortcut it; the point is a real, complete artifact, not a demo.
 
 ## Step 4: show what just happened
 

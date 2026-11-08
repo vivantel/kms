@@ -1,0 +1,67 @@
+id	group	gold	case
+c01	trivial	none	Drop the invalid `(?i)` inline regex flag from the lint eval case (real kms 6fd3348).
+c02	significant	decision	Tag git releases independently of the plugin version, starting fresh at 0.1.0 (real kms 1fe279c, decision 0046).
+c04	pointer	procedure	To get the sensor calibration log, ask the lab technician.
+c05	trivial	none	Add `.env` to `.gitignore` for local secrets (real kms a113c91).
+c07	transient	none	CI run 4821 failed on a flaky test.
+c08	pointer	none	Alice owns the billing service.
+c10	significant	decision	Pin edge targets by content hash and compare pinned edges in lint check 13 (real kms 712dc5f).
+c11	transient	none	The kms step 8 rerun scored capture 2/5 at the head (real kms 9bfe0ee, a log row).
+c13	trivial	none	Close the fixture frontmatter and clear the checker's findings on the repo (real kms 40016d5).
+c14	significant	decision	Move the eval harness to a free-tier `north-mini-code` model (real kms b361485).
+c16	pointer	procedure	Security sign-off goes through the security channel and takes about two days.
+c17	trivial	none	Record 'kms step 5 done' as a row in this repo's plan Log (real, this repo 24795ac).
+c19	transient	none	PR 73 was merged at 14:02.
+c20	pointer	none	John asked to be pinged when the report is done.
+c22	significant	guardrail	Require a CHANGELOG entry per version bump (real kms ca888d4).
+c23	transient	none	Staging is down for maintenance until 5pm today.
+c25	trivial	none	Reformat three files with the formatter already configured in the repo.
+c26	significant	decision	Label each lint check structural or judgment (real kms 63cccf5).
+c28	pointer	none	The contact for customer X is Maria, with her email.
+c29	trivial	none	Choose the wording of a README sub-heading.
+c31	transient	none	The test suite took 3m12s on this run.
+c32	pointer	fact	The latency dashboard lives at a fixed internal URL.
+c34	significant	decision	Choose Postgres over SQLite for a service with several concurrent writers.
+c35	transient	fact	The sensor's safe operating range per the vendor is 0 to 50 C.
+c37	trivial	none	Use two spaces instead of four in one new YAML file to match its neighbours.
+c38	significant	decision	Remove a public API field in v2; known clients will break.
+c40	pointer	none	The on-call rotation for this week.
+c41	trivial	none	Name a temporary working branch `tmp-fix-2`.
+c43	transient	fact	After the sensor was replaced, a +2.0 C calibration offset is applied permanently.
+c44	pointer	procedure	Release approval comes from whoever holds the release manager role.
+c46	significant	procedure	Steps to cut a release: tag, build, sign, publish, announce, verify.
+c47	transient	none	Files touched in this session: a.py, b.py.
+c49	trivial	none	Pick `sample_basic.json` as the name of a new test fixture.
+c50	significant	decision	Retry with exponential backoff, max five attempts, and idempotency keys on payments.
+c52	pointer	none	The team meeting is on Thursday.
+c53	trivial	none	Fix a typo in an error message.
+c55	transient	none	The build was green at commit abc123.
+c56	pointer	procedure	To rotate the signing key, file a request with the infra team through form INFRA-KEY.
+c58	significant	decision	Store auth tokens in httpOnly cookies rather than local storage.
+c59	transient	none	The vendor API was down yesterday from 10:00 to 10:40.
+c61	trivial	none	Rename the CLI flag `--out` to `--output` in an unreleased script no one else calls.
+c62	significant	guardrail	Never log request bodies that may contain personal data.
+c64	pointer	none	Who approved last Friday's deploy.
+c65	trivial	none	Move a helper function from `utils.py` to the module that uses it.
+c67	transient	fact	The retention period fixed by the customer contract is 18 months (asked once, holds for months).
+c68	pointer	guardrail	The data owner of dataset Y must consent before any export.
+c69	pointer	fact	The billing service is owned by the payments team lead (a role, not a person).
+c70	gcontrol	none	Guardrail: write tests for new code.
+c71	gcontrol	none	Guardrail: never push directly to main; branch protection already blocks it and the PR-only workflow is a recorded decision.
+c72	gcontrol	none	Guardrail: be careful when editing the billing module.
+c73	gcontrol	none	Guardrail: never deploy on Fridays, after one bad Friday deploy last month.
+c74	gcontrol	none	Guardrail: keep staging data under 2 GB, derived from the fact that the staging disk showed 10 GB free on Tuesday.
+c75	gcontrol	none	Guardrail: always run lint before committing; a pre-commit hook already blocks commits that fail lint.
+c76	gcontrol	guardrail	Never keep card numbers in logs or test fixtures; the payment contract (card-data scope) forbids it and only review enforces it.
+c77	gcontrol	guardrail	Database migrations must be reversible, per the decision to deploy with zero downtime; only review checks it.
+c78	decoy	none	Pick between two equivalent JSON libraries for an internal script; use the one already in the lockfile.
+c79	decoy	decision	Rename the public endpoint `/v1/users` to `/v1/accounts`; known external clients call it.
+c80	decoy	none	Move the internal build cache from local disk to a shared bucket; one flag reverts it and only this repo's CI uses it.
+c81	decoy	none	Delete the stale local branch `old-experiments` after confirming it was merged.
+c82	decoy	decision	Store all timestamps in UTC, replacing mixed local times; existing rows need a migration.
+c83	incode	decision	Cap each lint check at 30 s with a hard-coded timeout in the runner, after weighing a per-check timeout that was rejected as too complex.
+c84	incode	decision	Use SHA-256, not MD5, for the pin hash because the security review required collision resistance; the code only calls `sha256`.
+c85	incode	none	Set the retry limit constant to 3 in `config.py`.
+c86	incode	none	Name the config key `max_retries` instead of `retries`.
+c87	incode	none	Order eval cases alphabetically by id in the matrix file because the scorer reads them in file order; the scorer's docstring says so.
+c88	incode	none	Skip the integration suite on forks because secrets are unavailable there; a workflow condition with a comment says so.

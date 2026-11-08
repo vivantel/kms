@@ -12,6 +12,21 @@
 
 A guardrail is only valid while its sources are current — a source change invalidates it.
 
+## Admission
+
+Before drafting any of the four types, decide whether the change is worth a record at all. Reject if a hard gate fails.
+
+Hard gates:
+- **Not already carried**: not stated in code, tests, config, tooling, history or a sibling record, and not a mechanical repeat of an enforced check. A decision is carried by those only if they also state its reason and the rejected alternative; a value or call visible in the code does not carry the reason for it.
+- **Right shape**: one claim; no named person, contact details or secret. Name a role or system, not a person.
+- **Recurrence (guardrails)**: applies to every future occurrence of a kind of change. A prohibition from one incident is admitted only with a stated cause that generalises.
+
+Then estimate from the change: **shelf life** (how long it stays true; a decision is valid until superseded), **recurrence** (how likely a different future task meets the same question), **rediscovery cost** (tool calls, minutes, or asking another actor, which raises it). Admit when shelf life times recurrence clearly exceeds rediscovery cost and a future agent would act differently knowing it. Reject a raw reading, run result, status or timestamped event; a scoped claim with a source (a contract term, a vendor limit, a permanent state change) can be a fact. If the knowledge base already holds a record the change contradicts or supersedes, that is a reason to update it, not a new record.
+
+Rejected means no record: say so in one line with the failed gate. Typical rejections: a rename or move visible in the diff, a one-line config or hygiene change, a CI result, who did what when, a meeting or on-call entry, "be careful" or "write tests" rules, a rule a lint or test already enforces.
+
+Type for a pointer: a required path through another actor is a procedure; a static location (dashboard URL, vault path) is a fact; a standing consent before an action is a guardrail.
+
 ## File formats
 
 Facts and decisions are filed as `docs/{facts,decisions}/NNNN-slug.md` (4-digit, 1-based, per directory); guardrails and procedures as `docs/{guardrails,skills}/slug.md`, no numeric prefix.

@@ -23,13 +23,14 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Cluster findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
+- Apply the artifact model's Admission section to each finding first; skip a finding that fails a hard gate or whose estimated shelf life times recurrence does not exceed its rediscovery cost, and list skipped findings in one line each.
+- Cluster the admitted findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Write one fact stub per finding, `governed-by: TBD` when none exists yet.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Apply the Admission section here too, then write one fact stub per admitted finding, `governed-by: TBD` when none exists yet.
 
 ### 3. Doc manifest bootstrap
 
