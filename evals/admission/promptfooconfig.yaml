@@ -10,6 +10,10 @@ providers:
       fixture_dir: "evals/admission/fixture"
       model: "nvidia/nvidia/nemotron-3.5-lightning-30b-a3b"
       timeout_seconds: 480
+defaultTest:
+  assert:
+    - type: regex
+      value: "ADMISSION:[ \\t]*`?(none|fact|decision|guardrail|procedure)`?[ \\t.]*$"
 tests:
   - description: "c01"
     vars:

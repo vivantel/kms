@@ -37,6 +37,7 @@ def build():
         f"prompts:\n  - >\n    {PROMPT}\n"
         "providers:\n  - id: \"exec:../providers/kilo-runner.sh\"\n    config:\n      fixture_dir: \"evals/admission/fixture\"\n"
         "      model: \"nvidia/nvidia/nemotron-3.5-lightning-30b-a3b\"\n      timeout_seconds: 480\n"
+        "defaultTest:\n  assert:\n    - type: regex\n      value: \"ADMISSION:[ \\\\t]*`?(none|fact|decision|guardrail|procedure)`?[ \\\\t.]*$\"\n"
         f"tests:\n{tests}\n")
 
 
