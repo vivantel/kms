@@ -120,7 +120,7 @@ class Linter:
             if st == "superseded" and "superseded-by" not in fm:
                 self.add(2, rel, "`status: superseded` without `superseded-by`")
             for f in LIST_FIELDS:
-                if f in fm and not isinstance(fm[f], list):
+                if f in fm and not isinstance(fm[f], list) and fm[f] != "TBD":
                     self.add(2, rel, f"`{f}` must be a YAML list, got {type(fm[f]).__name__}")
             if a["type"] == "decisions" and "track" in fm and fm["track"] not in ("product", "process"):
                 self.add(15, rel, f"`track` is `{fm['track']}`, must be exactly `product` or `process`")
@@ -169,7 +169,7 @@ class Linter:
 
     def check_prose_refs(self):  # 9
         for a in self.arts:
-            if a["archived"]:
+            if a["archived"] or a["type"] == "decisions":  # decisions are immutable (check 20)
                 continue
             seen = set()
             for m in PROSE_REF.finditer(a["text"]):

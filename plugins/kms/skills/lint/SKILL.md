@@ -11,7 +11,7 @@ The default invocation's *health* checks (verbosity, staleness, contradiction-sc
 
 Run `python3 ../../shared/lint_check.py --root <project root>` (needs PyYAML) before anything else. It performs checks 1, 2, 3, 7, 9, 12, 15, 19, 20 and 21 deterministically and prints one `check N: <file>: <problem>` line per violation, exit status 1 if any. Report those lines as that check's findings; do not re-derive or second-guess them by reading the files, and do not skip a check because its list is empty. If it cannot run, say so and do those ten checks by hand per the definitions below. Every other check is yours to judge.
 
-Known limits of check 9: a placeholder (`NNNN`) is skipped by the checker, but a conditionally-optional file or a reference a plan annotates as preserved history is reported — dismiss those two cases when you present the findings.
+Known limits of check 9: placeholders (`NNNN`) and anything inside a decision file (decisions are immutable, as in check 20) are skipped by the checker, but a conditionally-optional file or a reference a plan annotates as preserved history is reported — dismiss those two cases when you present the findings.
 
 ## What to check
 
