@@ -49,7 +49,10 @@ def score(runs, labels):
     structural, judgment = labels["structural"], labels["judgment"]
     cases = labels["cases"]
     valid = [(c, r) for c, r in runs if r is not None]
-    report = {"runs": len(runs), "invalid": len(runs) - len(valid), "checks": {}}
+    n_invalid = len(runs) - len(valid)
+    pinned = [(c, r) for c, r in valid if cases[c].get("variant") == "pinned"]
+    valid = [(c, r) for c, r in valid if cases[c].get("variant") != "pinned"]
+    report = {"runs": len(runs), "invalid": n_invalid, "checks": {}}
     clean = [r for c, r in valid if cases[c]["target"] is None]
     report["clean_false_alarm_rate"] = (sum(1 for r in clean if r) / len(clean)) if clean else None
     for chk in structural + judgment:
@@ -70,6 +73,13 @@ def score(runs, labels):
             "variance": sum(vs) / len(vs) if vs else 0.0,
             "tp": tp, "fp": fp, "fn": fn,
         }
+    changed = [r for c, r in pinned if cases[c]["target"] == 13]
+    control = [r for c, r in pinned if cases[c]["target"] is None]
+    report["pinned_13"] = {  # check 13 where the edge carries a pin; the source changed, or did not
+        "recall": (sum(13 in r for r in changed) / len(changed)) if changed else None,
+        "false_alarm_rate": (sum(13 in r for r in control) / len(control)) if control else None,
+        "runs": len(pinned),
+    }
     return report
 
 
@@ -94,6 +104,8 @@ def main():
     labels = json.loads(Path(sys.argv[2] if len(sys.argv) > 2 else here / "labels.json").read_text(encoding="utf-8"))
     rep = score(load_runs(sys.argv[1]), labels)
     print(f"runs {rep['runs']}, invalid {rep['invalid']}, clean-control false-alarm rate {fmt(rep['clean_false_alarm_rate'])}")
+    p = rep["pinned_13"]
+    print(f"pinned check 13 ({p['runs']} runs): recall {fmt(p['recall'])}, false-alarm rate {fmt(p['false_alarm_rate'])}")
     for kind in ("structural", "judgment"):
         print(f"\n{kind} checks\ncheck  precision  recall  variance   tp  fp  fn")
         for chk, s in rep["checks"].items():

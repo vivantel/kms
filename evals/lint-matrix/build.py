@@ -161,6 +161,32 @@ MUTATIONS = {  # check -> (pre, post, cofires)
 }
 
 
+def pin_guardrail(files, rel="docs/guardrails/require-changelog-entry.md"):
+    """Add the `pinned` map to a guardrail with lint_check's own --pin, so the fixture holds what the tool writes."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        for k, text in files.items():
+            p = Path(d, k)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(text, encoding="utf-8")
+        Linter(d).pin(rel)
+        files[rel] = Path(d, rel).read_text(encoding="utf-8")
+
+
+def pinned_changed(f):  # the fact the guardrail was derived from changes after the pin was taken
+    pin_guardrail(f)
+    sub(f, "The release job runs Thursdays at 10:00 UTC.", "The release job runs Mondays at 10:00 UTC.", "docs/facts/0001-release-cadence.md")
+
+
+def pinned_control(f):  # same pin, source untouched apart from its date
+    pin_guardrail(f)
+    sub(f, "date: 2026-10-01", "date: 2026-10-15", "docs/facts/0001-release-cadence.md")
+
+
+# Variant cases measure check 13 on pinned edges. name -> (mutation, check 13 expected)
+PINNED = {"p13-changed": (pinned_changed, True), "p13-control": (pinned_control, False)}
+
+
 def write_indexes(files):
     for t in ("facts", "decisions", "guardrails", "skills"):
         for arch in (False, True):
@@ -208,6 +234,16 @@ def build():
         if bad or (target in STRUCTURAL and target not in found) or (target is None and found):
             raise SystemExit(f"{name}: checker reports {found}, expected target {target} plus {cofires}")
         labels[name] = {"target": target, "expected": sorted(set(found) | ({target} if target else set()))}
+    for name, (mutate, stale) in PINNED.items():
+        files = base()
+        mutate(files)
+        write_indexes(files)
+        for rel, text in files.items():
+            out[f"cases/{name}/{rel}"] = text
+        found = sorted({c for c, _, _ in Linter_run(files)})
+        if found != ([13] if stale else []):
+            raise SystemExit(f"{name}: checker reports {found}, expected {[13] if stale else []}")
+        labels[name] = {"target": 13 if stale else None, "variant": "pinned", "expected": found}
     out["labels.json"] = json.dumps({"structural": STRUCTURAL, "judgment": JUDGMENT, "cases": labels}, indent=1) + "\n"
     tests = "\n".join(f'  - description: "{n}"\n    vars:\n      fixture_dir: "evals/lint-matrix/cases/{n}"' for n in labels)
     out["promptfooconfig.yaml"] = (
