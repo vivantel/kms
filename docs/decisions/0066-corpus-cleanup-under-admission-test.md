@@ -1,8 +1,7 @@
 ---
 id: 0066-corpus-cleanup-under-admission-test
 title: Six facts that fail the admission test are deprecated; the other contested records stay
-status: active
-accepted-by: Sergei Strebulaev
+status: draft
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
 track: process
