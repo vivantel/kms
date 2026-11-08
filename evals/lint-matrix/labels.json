@@ -1,0 +1,181 @@
+{
+ "structural": [
+  1,
+  2,
+  3,
+  7,
+  9,
+  12,
+  15,
+  19,
+  20,
+  21
+ ],
+ "judgment": [
+  4,
+  5,
+  6,
+  8,
+  10,
+  11,
+  13,
+  14,
+  16,
+  17,
+  18,
+  22,
+  23,
+  24
+ ],
+ "cases": {
+  "clean": {
+   "target": null,
+   "expected": []
+  },
+  "c01": {
+   "target": 1,
+   "expected": [
+    1
+   ]
+  },
+  "c02": {
+   "target": 2,
+   "expected": [
+    2
+   ]
+  },
+  "c03": {
+   "target": 3,
+   "expected": [
+    3
+   ]
+  },
+  "c04": {
+   "target": 4,
+   "expected": [
+    4
+   ]
+  },
+  "c05": {
+   "target": 5,
+   "expected": [
+    5
+   ]
+  },
+  "c06": {
+   "target": 6,
+   "expected": [
+    6,
+    7
+   ]
+  },
+  "c07": {
+   "target": 7,
+   "expected": [
+    7
+   ]
+  },
+  "c08": {
+   "target": 8,
+   "expected": [
+    8
+   ]
+  },
+  "c09": {
+   "target": 9,
+   "expected": [
+    9
+   ]
+  },
+  "c10": {
+   "target": 10,
+   "expected": [
+    10
+   ]
+  },
+  "c11": {
+   "target": 11,
+   "expected": [
+    11
+   ]
+  },
+  "c12": {
+   "target": 12,
+   "expected": [
+    12
+   ]
+  },
+  "c13": {
+   "target": 13,
+   "expected": [
+    13
+   ]
+  },
+  "c14": {
+   "target": 14,
+   "expected": [
+    14
+   ]
+  },
+  "c15": {
+   "target": 15,
+   "expected": [
+    15
+   ]
+  },
+  "c16": {
+   "target": 16,
+   "expected": [
+    16
+   ]
+  },
+  "c17": {
+   "target": 17,
+   "expected": [
+    17
+   ]
+  },
+  "c18": {
+   "target": 18,
+   "expected": [
+    18
+   ]
+  },
+  "c19": {
+   "target": 19,
+   "expected": [
+    19
+   ]
+  },
+  "c20": {
+   "target": 20,
+   "expected": [
+    20
+   ]
+  },
+  "c21": {
+   "target": 21,
+   "expected": [
+    21
+   ]
+  },
+  "c22": {
+   "target": 22,
+   "expected": [
+    22
+   ]
+  },
+  "c23": {
+   "target": 23,
+   "expected": [
+    23
+   ]
+  },
+  "c24": {
+   "target": 24,
+   "expected": [
+    24
+   ]
+  }
+ }
+}

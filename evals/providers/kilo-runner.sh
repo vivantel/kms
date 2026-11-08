@@ -50,6 +50,13 @@ FIXTURE_DIR="$(json_get "$CONFIG_JSON" "d.get('fixture_dir', '')" '')"
 MODEL="$(json_get "$CONFIG_JSON" "d.get('model', 'cohere/north-mini-code:free')" 'cohere/north-mini-code:free')"
 TIMEOUT_SECONDS="$(json_get "$CONFIG_JSON" "d.get('timeout_seconds', 180)" '180')"
 
+# A test's own `vars.fixture_dir` (third argument, promptfoo's context) overrides the provider's,
+# so one config can run many fixtures (evals/lint-matrix).
+CONTEXT_JSON="${3:-}"
+[ -z "$CONTEXT_JSON" ] && CONTEXT_JSON='{}'
+CASE_FIXTURE="$(json_get "$CONTEXT_JSON" "d.get('vars', {}).get('fixture_dir', '')" '')"
+[ -n "$CASE_FIXTURE" ] && FIXTURE_DIR="$CASE_FIXTURE"
+
 if [ -n "$FIXTURE_DIR" ]; then
   FIXTURE_DIR="$REPO_ROOT/$FIXTURE_DIR"
 fi
