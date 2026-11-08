@@ -20,3 +20,7 @@ The old lint eval had one fixture, three planted violations, one model and regex
 - **One fixture with all 24 violations**: cheap, but violations interact and recall per check is confounded by the others. Rejected.
 - **Free-text grading by a judge model**: richer, but adds a second noisy model. A numeric answer line keeps grading mechanical.
 - **Limits**: judgment mutations are clear-cut instances, so their recall is an upper bound; each check has one mutation, so per-check recall over repeats measures run-to-run noise, not coverage of violation variants; the base project's cleanliness for judgment checks is a human judgment, only the structural checks are verified by code.
+
+## Amendment 2026-11-08: first scored run
+
+The kilo free tier was unusable from the author's machine (sign-up wall, then usage limits), so the first run used the Nvidia provider, `nvidia/nvidia/nemotron-3.5-lightning-30b-a3b` (`gpt-oss-20b` hung on a trivial prompt). The runner takes `nvidia/...` model ids as they are and retries on 429 with `Retry-After` when kilo's event store has one (Nvidia sends none), else exponential backoff. Results are in `evals/lint-matrix/results-2026-11-08.md`. They do not compare with the CI baseline, which uses the pinned free model (decision 0057); the matrix is a separate instrument.

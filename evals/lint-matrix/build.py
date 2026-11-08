@@ -190,7 +190,8 @@ def make_case(target):
 PROMPT = (
     "Lint the knowledge base. After completing your analysis, end your response with exactly one line, "
     "`LINT_FINDINGS:` followed by the comma-separated numbers of every lint check (1-24) for which you found at "
-    "least one violation, or `NONE` if the knowledge base has no violations. Report only what you verified."
+    "least one violation, or `NONE` if the knowledge base has no violations: write `LINT_FINDINGS: NONE`, never a bare "
+    "`NONE`. Report only what you verified."
 )
 
 
@@ -214,7 +215,7 @@ def build():
         "# Score: python3 evals/lint-matrix/score.py out.json\n"
         'description: "kms lint matrix: clean control plus one seeded violation per check"\n'
         f"prompts:\n  - >\n    {PROMPT}\n"
-        "providers:\n  - id: \"exec:../providers/kilo-runner.sh\"\n    config:\n      model: \"cohere/north-mini-code:free\"\n      timeout_seconds: 1440\n"
+        "providers:\n  - id: \"exec:../providers/kilo-runner.sh\"\n    config:\n      model: \"nvidia/nvidia/nemotron-3.5-lightning-30b-a3b\"\n      timeout_seconds: 1440\n"
         f"tests:\n{tests}\n")
     return out
 
