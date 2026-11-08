@@ -59,3 +59,4 @@ id,title,tags,status
 0058-deterministic-structural-lint-checks,"Run lint's structural checks in a script, not through the model","kms, knowledge-management, eval-harness",active
 0059-lint-matrix-eval,"Measure lint per check with a clean control and one seeded violation per check","kms, eval-harness, knowledge-management",active
 0060-lint-checker-path-from-project-root,"The lint skill names the checker path so it resolves from the project root","kms, eval-harness, knowledge-management",active
+0061-label-lint-checks-structural-or-judgment,"Each lint check carries a structural or judgment label, checked by a second rater","kms, eval-harness, knowledge-management",active
