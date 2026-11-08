@@ -2,15 +2,23 @@
 """Deterministic structural checks for the `lint` skill.
 
 Usage: lint_check.py [--root DIR] [--json]
+       lint_check.py [--root DIR] --pin FILE   record the current revision of FILE's edge targets
 
 Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 7, 9, 12,
-15, 19, 20, 21 (numbers as in plugins/kms/skills/lint/SKILL.md). No model is involved; output is
-sorted, so identical input gives identical output. Exit status 1 when anything is found.
-Requires PyYAML.
+15, 19, 20, 21 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
+edge (`governed-by`, `grounded-in`) that carries a pin in the file's `pinned` map is stale when
+its target no longer hashes to the pin. Edges without a pin are left to the model. No model is
+involved; output is sorted, so identical input gives identical output. Exit status 1 when
+anything is found. Requires PyYAML.
+
+A pin is the first 12 hex digits of the SHA-256 of the target file with its edge fields
+(`governed-by`, `grounded-in`, `pinned`) and `date` removed from the frontmatter and all
+whitespace runs collapsed (decision 0062).
 """
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 import sys
@@ -30,6 +38,8 @@ REF_FIELDS = ("governed-by", "grounded-in", "superseded-by", "governed-facts", "
 LIST_FIELDS = ("grounded-in", "governed-facts", "operationalizes")
 PROSE_REF = re.compile(r"docs/(facts|decisions|guardrails|skills)/([\w.\-]+\.md)")
 NUMBERED = re.compile(r"^(\d{4})-")
+EDGE_FIELDS = ("governed-by", "grounded-in")
+PIN_IGNORED = EDGE_FIELDS + ("pinned", "date")
 
 
 def split_frontmatter(text):
@@ -59,6 +69,39 @@ def split_frontmatter(text):
     except yaml.YAMLError:
         return None, "unterminated frontmatter"
     return (data, "unterminated frontmatter") if isinstance(data, dict) else (None, "unterminated frontmatter")
+
+
+def revision(text):
+    """Pin value for an artifact file: a hash of its text without edge fields and `date`."""
+    lines = text.split("\n")
+    out, skipping, in_fm = [], False, False
+    if lines and lines[0].strip() == "---":
+        for i in range(1, len(lines)):
+            if lines[i].strip() == "---":
+                in_fm = True
+                head, body = lines[1:i], lines[i:]
+                break
+    if in_fm:
+        for line in head:
+            m = re.match(r"^([\w\-]+):", line)
+            if m:
+                skipping = m.group(1) in PIN_IGNORED
+            if not skipping:
+                out.append(line)
+        norm = "\n".join(out + body)
+    else:
+        norm = text
+    return hashlib.sha256(" ".join(norm.split()).encode("utf-8")).hexdigest()[:12]
+
+
+def edge_ids(fm):
+    ids = []
+    for f in EDGE_FIELDS:
+        v = (fm or {}).get(f)
+        for r in v if isinstance(v, list) else ([] if v is None else [v]):
+            if str(r) != "TBD" and str(r) not in ids:
+                ids.append(str(r))
+    return ids
 
 
 class Linter:
@@ -122,6 +165,14 @@ class Linter:
             for f in LIST_FIELDS:
                 if f in fm and not isinstance(fm[f], list) and fm[f] != "TBD":
                     self.add(2, rel, f"`{f}` must be a YAML list, got {type(fm[f]).__name__}")
+            if "pinned" in fm:
+                pins = fm["pinned"]
+                if not isinstance(pins, dict):
+                    self.add(2, rel, f"`pinned` must be a mapping of id to revision, got {type(pins).__name__}")
+                else:
+                    for k in pins:
+                        if str(k) not in edge_ids(fm):
+                            self.add(2, rel, f"`pinned` has `{k}`, which is not in `governed-by` or `grounded-in`")
             if a["type"] == "decisions" and "track" in fm and fm["track"] not in ("product", "process"):
                 self.add(15, rel, f"`track` is `{fm['track']}`, must be exactly `product` or `process`")
 
@@ -153,6 +204,45 @@ class Linter:
                 for n in range(1, max(nums)):
                     if n not in nums:
                         self.add(3, f"docs/{t}/", f"number {n:04d} is skipped")
+
+    def check_pins(self):  # 13, pinned edges only
+        by_id = {str(a["fm"]["id"]): a for a in self.arts if a["fm"] and "id" in a["fm"]}
+        for a in self.arts:
+            pins = (a["fm"] or {}).get("pinned")
+            if not isinstance(pins, dict):
+                continue
+            for k, want in pins.items():
+                t = by_id.get(str(k))
+                if t is not None and str(k) in edge_ids(a["fm"]) and revision(t["text"]) != str(want):
+                    self.add(13, a["rel"], f"pinned `{k}` at {want}, but it is now {revision(t['text'])}: re-derive and re-pin")
+
+    def pin(self, target):
+        """Rewrite FILE's `pinned` map to the current revision of every edge target."""
+        self.load()
+        path = Path(target)
+        path = path if path.is_absolute() else self.root / path
+        a = next((x for x in self.arts if x["path"].resolve() == path.resolve()), None)
+        if a is None or not a["fm"]:
+            raise SystemExit(f"{target}: not an artifact with frontmatter")
+        by_id = {str(x["fm"]["id"]): x for x in self.arts if x["fm"] and "id" in x["fm"]}
+        ids = edge_ids(a["fm"])
+        missing = [i for i in ids if i not in by_id]
+        if missing:
+            raise SystemExit("edge targets that do not exist: " + ", ".join(missing))
+        lines = a["text"].split("\n")
+        end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
+        head = []
+        skipping = False
+        for line in lines[1:end]:
+            m = re.match(r"^([\w\-]+):", line)
+            if m:
+                skipping = m.group(1) == "pinned"
+            if not skipping:
+                head.append(line)
+        if ids:
+            head.append("pinned:")
+            head += [f"  {i}: {revision(by_id[i]['text'])}" for i in ids]
+        path.write_text("\n".join(["---"] + head + lines[end:]), encoding="utf-8")
 
     def check_orphans(self):  # 7
         corpus = []
@@ -271,6 +361,7 @@ class Linter:
         for c in (
             self.check_fields,
             self.check_dangling,
+            self.check_pins,
             self.check_numbering,
             self.check_orphans,
             self.check_prose_refs,
@@ -288,7 +379,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--pin", metavar="FILE", help="record the current revision of FILE's edge targets")
     args = ap.parse_args()
+    if args.pin:
+        Linter(args.root).pin(args.pin)
+        return
     findings = Linter(args.root).run()
     if args.json:
         print(json.dumps([dict(check=c, file=f, message=m) for c, f, m in findings], indent=1))
