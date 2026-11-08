@@ -61,3 +61,4 @@ id,title,tags,status
 0060-lint-checker-path-from-project-root,"The lint skill names the checker path so it resolves from the project root","kms, eval-harness, knowledge-management",active
 0061-label-lint-checks-structural-or-judgment,"Each lint check carries a structural or judgment label, checked by a second rater","kms, eval-harness, knowledge-management",active
 0062-pin-edge-targets-by-content-hash,"Edges pin their targets by content hash in a parallel pinned map, compared by the checker","kms, knowledge-management, eval-harness",active
+0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active

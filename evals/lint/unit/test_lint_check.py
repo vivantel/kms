@@ -168,6 +168,20 @@ class LintCheck(unittest.TestCase):
             (Path(self.root) / rel).write_text(text, encoding="utf-8")
         return sorted({c for c, _, _ in Linter(self.root).run()})
 
+    def test_scope_valid_on_fact_is_clean(self):
+        f = FACT.replace("governed-by: 0001-weekly", "scope: {component: release-job, environment: ci}\ngoverned-by: 0001-weekly")
+        self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": f}), [])
+
+    def test_2_scope_bad_shape(self):
+        for bad in ("[ci]", "{}", "{region: eu}", "{version: ''}", "ci"):
+            with self.subTest(bad=bad):
+                f = FACT.replace("governed-by: 0001-weekly", f"scope: {bad}\ngoverned-by: 0001-weekly")
+                self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": f}), [2])
+
+    def test_2_scope_on_decision(self):
+        d = DECISION.replace("track:", "scope: {component: x}\ntrack:")
+        self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": d}), [2])
+
     def test_pin_writes_map_and_is_clean(self):
         self.assertEqual(self.pinned(), [])
         text = (Path(self.root) / "docs/guardrails/changelog.md").read_text()

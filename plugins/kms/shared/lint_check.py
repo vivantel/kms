@@ -40,6 +40,7 @@ PROSE_REF = re.compile(r"docs/(facts|decisions|guardrails|skills)/([\w.\-]+\.md)
 NUMBERED = re.compile(r"^(\d{4})-")
 EDGE_FIELDS = ("governed-by", "grounded-in")
 PIN_IGNORED = EDGE_FIELDS + ("pinned", "date")
+SCOPE_KEYS = ("component", "environment", "version")
 
 
 def split_frontmatter(text):
@@ -173,8 +174,23 @@ class Linter:
                     for k in pins:
                         if str(k) not in edge_ids(fm):
                             self.add(2, rel, f"`pinned` has `{k}`, which is not in `governed-by` or `grounded-in`")
+            if "scope" in fm:
+                if a["type"] != "facts":
+                    self.add(2, rel, "`scope` is only defined on facts")
+                else:
+                    self.check_scope(rel, fm["scope"])
             if a["type"] == "decisions" and "track" in fm and fm["track"] not in ("product", "process"):
                 self.add(15, rel, f"`track` is `{fm['track']}`, must be exactly `product` or `process`")
+
+    def check_scope(self, rel, sc):
+        if not isinstance(sc, dict) or not sc:
+            self.add(2, rel, f"`scope` must be a non-empty mapping of {' | '.join(SCOPE_KEYS)} to a value, got {type(sc).__name__}")
+            return
+        for k, v in sc.items():
+            if k not in SCOPE_KEYS:
+                self.add(2, rel, f"`scope` has `{k}`, not one of {' | '.join(SCOPE_KEYS)}")
+            elif not isinstance(v, (str, int, float)) or isinstance(v, bool) or not str(v).strip():
+                self.add(2, rel, f"`scope.{k}` must be a non-empty string")
 
     def check_dangling(self):  # 1
         for a in self.arts:

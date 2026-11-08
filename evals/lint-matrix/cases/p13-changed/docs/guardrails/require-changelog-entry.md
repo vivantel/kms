@@ -9,7 +9,7 @@ grounded-in: [0001-release-cadence, 0002-changelog-per-release]
 derivation-note: Weekly cadence plus the per-release entry rule imply one entry a week.
 pinned:
   0002-changelog-per-release: bcad97b39e40
-  0001-release-cadence: 8afefc727d10
+  0001-release-cadence: 281f62a1f965
 ---
 ## Guardrail
 
