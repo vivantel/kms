@@ -7,6 +7,12 @@ Scan every fact, decision, guardrail, and procedure in the project — not just 
 
 The default invocation's *health* checks (verbosity, staleness, contradiction-scanning) scan only the live set — artifacts under `docs/<type>/archive/` are excluded unless a deep pass is explicitly requested. This exclusion does NOT apply to check 1 (dangling references) or check 19 (index out of sync): resolving whether a `governed-by`/`grounded-in`/`superseded-by` id exists always searches both the live directory and its `archive/` subdirectory, otherwise archiving an artifact would immediately turn every reference to it into a false-positive dangling reference — and an archive's own `INDEX.md` needs the same sync-checking a live one gets, or it would never be validated at all once created.
 
+## Run the checker first
+
+Run `python3 ../../shared/lint_check.py --root <project root>` (needs PyYAML) before anything else. It performs checks 1, 2, 3, 7, 9, 12, 15, 19, 20 and 21 deterministically and prints one `check N: <file>: <problem>` line per violation, exit status 1 if any. Report those lines as that check's findings; do not re-derive or second-guess them by reading the files, and do not skip a check because its list is empty. If it cannot run, say so and do those ten checks by hand per the definitions below. Every other check is yours to judge.
+
+Known limits of check 9: a placeholder (`NNNN`) is skipped by the checker, but a conditionally-optional file or a reference a plan annotates as preserved history is reported — dismiss those two cases when you present the findings.
+
 ## What to check
 
 1. **Dangling references** — any `governed-by`, `grounded-in`, `superseded-by`, or `governed-facts` value pointing at an id that doesn't exist (`grounded-in` may resolve to a fact, decision, or guardrail id per `docs/decisions/0051-...`; the others resolve to a decision/fact id as before).
