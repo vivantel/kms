@@ -14,7 +14,8 @@ No argument and something's staged: the staged diff (`git diff --staged`). No ar
 1. Search `docs/{decisions,guardrails}/` for anything relevant to what the diff touches — by keyword, topic, path overlap, the same approach `query` uses.
 2. For each relevant guardrail, check whether the diff's actual changes appear to violate it. Cite the guardrail by path; cite the decision behind it too, for context on *why*, the same way `query` cites a superseding decision alongside the original.
 3. If nothing relevant is found, say so plainly rather than implying the knowledge base had an opinion it doesn't.
-4. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong.
+4. A `status: draft` guardrail or decision is reported as "proposed", never as a violation.
+5. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong.
 
 ## Out of scope
 

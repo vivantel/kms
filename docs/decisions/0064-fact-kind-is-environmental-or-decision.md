@@ -20,3 +20,7 @@ track: process
 - **Keep four values and define them**: `derived` stays ambiguous against `environmental` for any fact that counts or audits repository state, which is what drew the disagreement.
 - **Split into two orthogonal fields** (subject and verification): more expressive, but one more field for 14 facts, none of which needs it.
 - **Chosen: two values, by verification method.** Sample is 14 facts from one project, rated by models; the result shows the definitions are unambiguous on these facts, not on others.
+
+## Amendment 2026-11-12: facts stop requiring `kind` and `governed-by`
+
+Until the fact model is settled (step 2.1 of `docs/plans/kms-review-and-redesign.md`), `kind` is accepted with any value or absent and `governed-by` on a fact is optional: the checker's check 2 no longer requires either, and `TYPE_FIELDS` has no entry for facts. Reason: release 0.16.0 must not tell adopters to add both fields to every fact when the next release removes them. Also recorded here: `conform` and `query` report a `status: draft` guardrail or decision as "proposed", never as a violation or an answer. The `## Decision` text above is unchanged.

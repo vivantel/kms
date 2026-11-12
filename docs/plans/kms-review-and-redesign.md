@@ -34,6 +34,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.6 [done]: eval script limited to 5 CI cases; unit job added; docs updated
 - 2026-11-12 0.8 [done]: codex plan archived
 - 2026-11-12 1.2 [done]: all bullets fixed with unit tests (45 pass); check 9 skips archived plans by design; skill-body edits (lint, bootstrap) still need the CI eval on a PR
+- 2026-11-12 1.5 [done]: 0064 amended; checker drops fact kind/governed-by; conform/query draft sentences; matrix fixtures regenerated (pin quoting from 1.2)
 
 ## Phase 0 — Housekeeping
 
@@ -129,7 +130,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** A local run with a wrong model id yields the one error line and the summary script labels it infra (add a unit test for the summary script's parsing); versions pinned; fact 0012 has the paragraph.
 
-### 1.5 [pending] Make the checker tolerate the fact fields phase 2 removes (amendment, small)
+### 1.5 [done] Make the checker tolerate the fact fields phase 2 removes (amendment, small)
 
 **Why.** 0.16.0 must not tell adopters to add `kind`/`governed-by` to every fact (check 2 today) when 0.17.0 removes both (2.1). 0.15.0 adopters have four-valued `kind` and no checker; their first run must not be a wall of findings about fields that are about to go.
 
