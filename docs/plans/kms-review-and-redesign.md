@@ -23,6 +23,13 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **What the review found, in one paragraph.** The idea is sound and the decision record explains its reversals well. Four kinds of problem: (1) *Delivery*: the Kilo channel never ships `shared/` or `templates/`, so five skills point at files a Kilo user does not have; the checker crashes on a quoted template version and silently scans nothing on a non-`docs/` layout; the study's behaviour changes are unreleased. (2) *Model*: a plain fact cannot exist (it must carry `governed-by`, must ground something, must be referenced, and must not be "already carried" by config, so "the service listens on port 8080" fails admission and lint at once); `grounded-in` may equal `governed-by`, so the derivation recipe holds for 2 of 17 guardrails, one of which is also grounded in its own decision; three guardrails rest on facts the corpus cleanup deprecated and the flagship example in `ARCHITECTURE.md` has both sources retired; "immutable once accepted" is contradicted by eight `## Amendment` sections; `last-verified` and the "fitness-function inventory" are used by skills and defined nowhere; registries (indexes, tag list, docs manifest) are filed as facts and procedures. (3) *Process coverage*: the "decide" moment is covered, the "something happened" moment is not (incidents, retrospectives, experiments, external-fact re-verification); triggering is "remember to run it". (4) *Evidence*: 9 of 14 skills have no eval; on the free model the judgment lint checks have recall at or below 0.40 on 11 of 14 with a 0.20 false-alarm rate on a clean corpus; the admission numbers are development-set results from a different pipeline; `npm run eval` aborts on its first case without an Nvidia key; the unit tests never run in CI.
 
+**Resume protocol (reentrant, self-checkpointing).** A fresh session starts here: (1) `git switch plan/kms-review-and-redesign` (or the branch named in the Progress log) and `git status` — a dirty tree means a step was interrupted; finish or `git restore` it; (2) read the Progress log below, then take the first heading marked `[pending]` whose predecessors in "Order of execution" are done; (3) re-run that step's "Done when" first — if it already holds, just mark it `[done]`; (4) do the step, run its checks (`python3 -m unittest discover -s evals/lint/unit`, `python3 plugins/kms/shared/lint_check.py --root .` once it applies), flip the heading to `[done]` (or `[blocked: reason]`), add one Progress-log line, and commit code and plan update **together** — one step, one commit, so git history is the checkpoint; (5) stop and tell the owner when the next step is "decision needed", needs outward-facing actions (remote branch deletion, push, tag, release), or needs a live service. Never batch several steps into one commit.
+
+**Progress log** (append one line per step: date, step, commit subject).
+
+- 2026-11-12 plan made reentrant; no step executed yet.
+- 2026-11-12 0.3 [done]: bytecode untracked, .gitignore updated
+
 ## Phase 0 — Housekeeping
 
 ### 0.1 [pending] Record kms's positioning relative to go-getter (decision needed, not gating)
@@ -37,7 +44,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** `git branch` lists `master` and `plan/kms-review-and-redesign` (plus any branch cut from it); `git branch -r` lists `origin/master` and the three parked branches only.
 
-### 0.3 [pending] Untrack bytecode
+### 0.3 [done] Untrack bytecode
 
 **What.** `git rm -r --cached plugins/kms/shared/__pycache__ evals/lint/unit/__pycache__ evals/lint-matrix/__pycache__` (five `.pyc` files are tracked, one inside the shipped plugin); add `__pycache__/` and `*.pyc` to `.gitignore`.
 

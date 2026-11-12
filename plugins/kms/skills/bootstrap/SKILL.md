@@ -30,7 +30,7 @@ Scan git log and existing docs (README, planning notes, guardrail/skill files) f
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental, decision, or derived (see `../../shared/artifact-model.md`'s Artifact types). Apply the Admission section here too, then write one fact stub per admitted finding, `governed-by: TBD` when none exists yet.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental or decision (see `../../shared/artifact-model.md`'s Artifact types). Apply the Admission section here too, then write one fact stub per admitted finding, `governed-by: TBD` when none exists yet.
 
 ### 3. Doc manifest bootstrap
 
