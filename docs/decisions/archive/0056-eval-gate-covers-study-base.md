@@ -1,7 +1,8 @@
 ---
 id: 0056-eval-gate-covers-study-base
 title: Run the eval gate on pull requests into study/base as well as master
-status: active
+status: superseded
+superseded-by: 0068-eval-gate-master-only
 date: 2026-11-08
 tags: [kms, eval-harness, automation]
 track: process

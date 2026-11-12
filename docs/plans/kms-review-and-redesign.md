@@ -35,10 +35,12 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.8 [done]: codex plan archived
 - 2026-11-12 1.2 [done]: all bullets fixed with unit tests (45 pass); check 9 skips archived plans by design; skill-body edits (lint, bootstrap) still need the CI eval on a PR
 - 2026-11-12 1.5 [done]: 0064 amended; checker drops fact kind/governed-by; conform/query draft sentences; matrix fixtures regenerated (pin quoting from 1.2)
+- 2026-11-12 0.1 [done]: decision 0067 accepted (standalone)
+- 2026-11-12 0.7 [done]: decision 0068 supersedes 0056; workflow master-only
 
 ## Phase 0 — Housekeeping
 
-### 0.1 [pending] Record kms's positioning relative to go-getter (decision needed, not gating)
+### 0.1 [done] Record kms's positioning relative to go-getter (decision needed, not gating)
 
 **What.** A short `track: product` decision (`docs/decisions/NNNN-<slug>.md`, the next free number at the time it is written; 0067 is free today): kms is a standalone knowledge-system plugin for any git project; go-getter is a separate project that forked kms's skills in 2026-10 and owns its copy; kms does not vendor, sync with, or try to become it. Alternatives to record: upstream library (rejected by go-getter's own 0066), retirement (if chosen, finish phase 1, write a deprecation notice, stop). Do this whenever convenient; no other step depends on it.
 
@@ -76,7 +78,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** `node -e "console.log(require('./package.json').scripts.eval)"` names exactly the five cases; the workflow has a `unit` job with the six commands; the three `unittest discover` commands pass locally; the two doc sentences are changed.
 
-### 0.7 [pending] Drop the `study/base` CI trigger (decision needed, small)
+### 0.7 [done] Drop the `study/base` CI trigger (decision needed, small)
 
 **What.** The workflow still has `branches: [master, study/base]` (decision 0056). Write `docs/decisions/NNNN-eval-gate-master-only.md` (next free number at the time; `track: process`) superseding 0056; archive 0056 with pointer and index rows; change the workflow to `branches: [master]` in the same commit.
 

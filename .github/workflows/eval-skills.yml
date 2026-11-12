@@ -11,7 +11,7 @@ on:
   push:
   pull_request:
     types: [opened]
-    branches: [master, study/base]
+    branches: [master]
     paths:
       - "plugins/kms/skills/**"
       - "plugins/kms/shared/**"
