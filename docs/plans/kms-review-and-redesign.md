@@ -1,7 +1,7 @@
 ---
 id: kms-review-and-redesign
 title: Fix, clarify and redesign the kms knowledge system after the 2026-11 whole-repo review
-status: all steps pending
+status: 0.x and 1.2, 1.5 done; 1.1, 1.3, 1.4 blocked on kilo/Codex; next after those is 1.6
 date: 2026-11-12
 ---
 
@@ -38,6 +38,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.1 [done]: decision 0067 accepted (standalone)
 - 2026-11-12 0.7 [done]: decision 0068 supersedes 0056; workflow master-only
 - 2026-11-12 0.2 [done]: master fast-forwarded; 16 local and 18 remote study branches deleted
+- 2026-11-12 1.1, 1.3, 1.4 [blocked]: need kilo/Codex CLI (absent here). Unblock by running on a machine with `kilo` installed (1.1 also needs the branch pushed); then 1.6 (release, tag) and phase 2 (owner-run roadmap interviews) follow.
 
 ## Phase 0 — Housekeeping
 
@@ -93,7 +94,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 ## Phase 1 — Delivery, checker bugs, release 0.16.0
 
-### 1.1 [pending] Ship `shared/` and `templates/` through the Kilo remote channel
+### 1.1 [blocked: Done-when needs Kilo CLI + pushed branch for the live remote-skills test; no kilo here] Ship `shared/` and `templates/` through the Kilo remote channel
 
 **Why.** `plugins/kms/skills/index.json` lists, for all 14 skills, exactly `"files": ["SKILL.md", "examples.md"]`; Kilo fetches only listed files as `{url}/{skill-name}/{file}` (`docs/facts/0008-kilo-code-skills-spec.md:31`). Yet bootstrap, capture, roadmap, lint and uninstall reference `../../shared/artifact-model.md`, `../../templates/`, and lint plus the model require `shared/lint_check.py`. The eval harness masks it: `evals/providers/kilo-runner.sh:82-87` copies `shared/` and `templates/` into `.kilo/` by hand. A real `skills.urls` user gets five broken skills. `plugins/kms/skills/lint/SKILL.md:12` names a `.kilo/shared/lint_check.py` layout only the harness produces. Codex: `.codex-plugin/plugin.json` points `skills` at `./skills`; whether `shared/` and `templates/` are installed is unknown (fact 0003 says the install path itself is unconfirmed).
 
@@ -119,13 +120,13 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** Each bullet has a unit test that fails on the old code and passes on the new; `python3 -m unittest discover -s evals/lint/unit` passes; the checker exits 0 on this repo and on a copy with `docs/` renamed to `knowledge/` run with `--docs knowledge`.
 
-### 1.3 [pending] Test the Codex channel for real
+### 1.3 [blocked: no Codex CLI here] Test the Codex channel for real
 
 **What.** In an environment with the Codex CLI, install the plugin from this repo's path; confirm all fourteen skills are discovered and whether `shared/` and `templates/` are present. Record command and result as a dated re-verification in `docs/facts/0003-codex-plugin-manifest-schema.md`; update `INSTALLING.md`'s Codex section. If the sibling directories are absent, apply 1.1's option (b) for Codex.
 
 **Done when.** Fact 0003 has a 2026-11-or-later re-verification paragraph naming command and result; `INSTALLING.md` no longer says the command is unconfirmed (or says exactly what was tested).
 
-### 1.4 [pending] Make harness failures distinguishable from skill failures
+### 1.4 [blocked: Done-when needs kilo to run the wrong-model case and re-verify the judge model; no kilo here] Make harness failures distinguishable from skill failures
 
 **Why.** On 2026-11-08 all five CI cases failed with `Model not found: kilo/poolside/laguna-s-2.1:free` and read as five skill regressions (0057). `evals/providers/kilo-runner.sh` exits 0 at line 131 whatever Kilo returned and retries only on the literal "Too Many Requests"; `post-eval-summary.py` has no "infra" row; the judge model (`kilo-judge.sh`: `nvidia/nemotron-3-ultra-550b-a55b:free`) was never re-verified in 0057; `npm install -g @kilocode/cli` (workflow line 42) and `promptfoo/promptfoo-action@v1` are unpinned. Fact `docs/facts/0012-kilo-gateway-free-tier-access.md` (active, "no account or API key") is contradicted by 0059's amendment ("sign-up wall, then usage limits") and was never updated: a `capture` check 2 miss in kms's own dogfood.
 
