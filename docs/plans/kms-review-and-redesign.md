@@ -30,6 +30,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 plan made reentrant; no step executed yet.
 - 2026-11-12 0.3 [done]: bytecode untracked, .gitignore updated
 - 2026-11-12 0.4 [done]: removed 'or derived'; fixed model sentence
+- 2026-11-12 0.5 [done]: uninstall/roadmap/lint examples corrected
 
 ## Phase 0 — Housekeeping
 
@@ -57,7 +58,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** `grep -c "or derived" plugins/kms/skills/bootstrap/SKILL.md` prints `0`; the model sentence reads as two sentences.
 
-### 0.5 [pending] Fix the stale examples
+### 0.5 [done] Fix the stale examples
 
 **What.** `plugins/kms/skills/uninstall/examples.md:7` "4 seeded guardrails (`docs/guardrails/token-economy.md` and 3 siblings)" and `:13` "The other three are removed" → five templates exist: "5 seeded guardrails … and 4 siblings", "The other four are removed"; line 7's "3 generated files" list omits `docs/skills/tags.md` and every `INDEX.md` (stamped by bootstrap steps 7 and 10) → "the generated files (role lists if present, `docs/skills/tags.md`, `docs/facts/docs-manifest.md`, each `INDEX.md`)". `plugins/kms/skills/roadmap/examples.md:19` "fails the Admission section: it is easily reversible, unsurprising, visible in the diff and affects no one else" names gates the model does not have → "fails the **Not already carried** gate: a rename is visible in the diff". `plugins/kms/skills/lint/examples.md`: example 1 gains one sentence saying the checker runs first and its lines are reported as findings; example 3 moves "redundant guardrails" from the structural to the judgment list (check 5 is `[judgment]`). `plugins/kms/skills/capture/examples.md:7` keeps `last-verified` (phase 2 defines it).
 
