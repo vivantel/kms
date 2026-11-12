@@ -257,5 +257,97 @@ class LintCheck(unittest.TestCase):
         self.assertEqual(Linter(self.root).run(), Linter(self.root).run())
 
 
+class LintCheckBugFixes(unittest.TestCase):
+    """Step 1.2 of docs/plans/kms-review-and-redesign.md: one case per fixed defect."""
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def run_checks(self, **over):
+        project(self.root, **over)
+        return Linter(self.root).run()
+
+    def seeded(self, ver):
+        tmpl = Path(self.root, "plugins/kms/templates/guardrails/seeded.md")
+        tmpl.parent.mkdir(parents=True, exist_ok=True)
+        tmpl.write_text("---\nid: seeded\ntemplate-version: 2\n---\n")
+        g = GUARD.replace("id: changelog", "id: seeded").replace("tags: [release]", f"tags: [release]\nkms-seeded: true\nkms-template-version: {ver}")
+        return {"docs/guardrails/seeded.md": g, "docs/guardrails/INDEX.md": INDEX.format(
+            "changelog,Every release has a changelog entry,release,active\nseeded,Every release has a changelog entry,release,active")}
+
+    def test_12_quoted_template_version_does_not_crash(self):
+        got = self.run_checks(**self.seeded('"1"'))
+        self.assertEqual([(c, m) for c, _, m in got if c == 12], [(12, "seeded from template version 1, template is at 2")])
+
+    def test_12_non_numeric_template_version_is_a_finding(self):
+        got = self.run_checks(**self.seeded("two"))
+        self.assertTrue(any(c == 12 and "not a number" in m for c, _, m in got))
+
+    def test_7_seeded_guardrail_is_not_an_orphan(self):
+        got = self.run_checks(**self.seeded(2))
+        self.assertFalse([f for f in got if f[0] == 7])
+
+    def test_unparseable_frontmatter_does_not_cascade(self):
+        bad = GUARD.replace("title: Every release has a changelog entry", "title: Every release: has an entry")
+        got = self.run_checks(**{"docs/guardrails/changelog.md": bad})
+        self.assertEqual(sorted({c for c, _, _ in got}), [2])
+
+    def test_docs_dir_is_autodetected_and_overridable(self):
+        project(self.root)
+        Path(self.root, "docs").rename(Path(self.root, "knowledge"))
+        self.assertEqual(Linter(self.root).docs.name, "knowledge")
+        self.assertEqual(Linter(self.root).run(), [])
+        self.assertEqual(Linter(self.root, "knowledge").run(), [])
+
+    def test_empty_project_warns(self):
+        self.assertTrue(Linter(self.root).warnings)
+
+    def test_9_keys_on_type_and_name_and_follows_archive(self):
+        both = "See docs/facts/gone.md, docs/guardrails/gone.md, docs/guardrails/archive/old.md."
+        got = [m for c, _, m in self.run_checks(**{"docs/skills/deploy.md": PROC.replace("Body, see changelog.", both + " changelog")}) if c == 9]
+        self.assertEqual(len(got), 3)
+
+    def test_9_scans_readme_and_live_plans_not_archived_plans(self):
+        got = self.run_checks(**{
+            "README.md": "see docs/facts/gone.md",
+            "docs/plans/p.md": "see docs/facts/gone2.md",
+            "docs/plans/archive/q.md": "see docs/facts/gone3.md",
+        })
+        self.assertEqual(sorted(f for c, f, _ in got if c == 9), ["README.md", "docs/plans/p.md"])
+
+    def test_3_duplicate_id_and_pin_refuses(self):
+        over = {"docs/guardrails/changelog.md": GUARD.replace("id: changelog", "id: 0001-weekly")}
+        got = self.run_checks(**over)
+        self.assertTrue(any(c == 3 and "used by 2 files" in m for c, _, m in got))
+        with self.assertRaises(SystemExit):
+            Linter(self.root).pin("docs/guardrails/changelog.md")
+
+    def test_21_tags_md_accepts_bullets_and_separators(self):
+        for line in ("- release — meaning", "* release - meaning", "release: meaning", "release (umbrella) — meaning"):
+            tags = TAGS.replace("release — release process", line)
+            self.assertEqual([f for f in self.run_checks(**{"docs/skills/tags.md": tags}) if f[0] == 21], [], line)
+
+    def test_pin_quotes_values_and_preserves_crlf(self):
+        project(self.root, **{"docs/guardrails/changelog.md": None})
+        g = Path(self.root, "docs/guardrails/changelog.md")
+        g.write_bytes(GUARD.replace("\n", "\r\n").encode())
+        Linter(self.root).pin("docs/guardrails/changelog.md")
+        raw = g.read_bytes().decode()
+        self.assertRegex(raw, r'  0001-weekly: "[0-9a-f]{12}"\r\n')
+        self.assertNotIn("\n", raw.replace("\r\n", ""))
+
+    def test_pin_unterminated_frontmatter_is_a_message(self):
+        bad = GUARD.replace("---\nBody.\n", "")
+        project(self.root, **{"docs/guardrails/changelog.md": bad})
+        with self.assertRaises(SystemExit) as cm:
+            Linter(self.root).pin("docs/guardrails/changelog.md")
+        self.assertIn("unterminated", str(cm.exception))
+
+    def test_2_tags_must_be_a_list(self):
+        got = self.run_checks(**{"docs/skills/deploy.md": PROC.replace("tags: [release]", "tags: release")})
+        self.assertTrue(any(c == 2 and "`tags` must be a YAML list" in m for c, _, m in got))
+
+
 if __name__ == "__main__":
     unittest.main()

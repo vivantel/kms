@@ -82,7 +82,7 @@ drafting or reviewing a decision of that track, not a staffing
 assignment. Using the same repo-scan signals, compile
 `docs/skills/tags.md`: every tag already used across this project's
 artifacts (or, in a fresh project, domain vocabulary drawn from existing
-docs), one tag per line with a one-line meaning. Mark any tag carried by
+docs), one tag per line as `tag — meaning` (the checker also reads `- tag — meaning`, `tag - meaning` and `tag: meaning`). Mark any tag carried by
 over half of active decisions as `(umbrella)` — computed from the
 scan, not asserted — since `lint` check 16 excludes umbrella tags from
 its contradiction-scoping test. Same frontmatter and `kms-generated:

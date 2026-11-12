@@ -33,6 +33,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.5 [done]: uninstall/roadmap/lint examples corrected
 - 2026-11-12 0.6 [done]: eval script limited to 5 CI cases; unit job added; docs updated
 - 2026-11-12 0.8 [done]: codex plan archived
+- 2026-11-12 1.2 [done]: all bullets fixed with unit tests (45 pass); check 9 skips archived plans by design; skill-body edits (lint, bootstrap) still need the CI eval on a PR
 
 ## Phase 0 — Housekeeping
 
@@ -96,7 +97,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** `index.json` or the vendored copies deliver the model, the checker and the five templates; fact 0008 carries a dated re-verification paragraph recording a `kilo.jsonc` pointing at this branch's raw-GitHub URL resolving every sibling reference in the five skills (the live test is done once and its result recorded; the record is what is checked); `INSTALLING.md` has the three per-agent statements; `kilo-runner.sh` no longer copies `shared/`.
 
-### 1.2 [pending] Fix the checker's crash, cascade and silent misses (bug fixes only)
+### 1.2 [done] Fix the checker's crash, cascade and silent misses (bug fixes only)
 
 **Why.** Reproduced by two reviewers on scratch fixtures (record in `docs/plans/archive/2026-11-review-record.md`):
 

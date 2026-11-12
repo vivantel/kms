@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deterministic structural checks for the `lint` skill.
 
-Usage: lint_check.py [--root DIR] [--json]
+Usage: lint_check.py [--root DIR] [--docs DIR] [--json]
        lint_check.py [--root DIR] --pin FILE   record the current revision of FILE's edge targets
 
 Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 7, 9, 12,
@@ -22,6 +22,7 @@ import hashlib
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 import yaml
@@ -36,7 +37,6 @@ TYPE_FIELDS = {
 STATUSES = ("draft", "active", "superseded", "deprecated")
 REF_FIELDS = ("governed-by", "grounded-in", "superseded-by", "governed-facts", "operationalizes")
 LIST_FIELDS = ("grounded-in", "governed-facts", "operationalizes")
-PROSE_REF = re.compile(r"docs/(facts|decisions|guardrails|skills)/([\w.\-]+\.md)")
 NUMBERED = re.compile(r"^(\d{4})-")
 EDGE_FIELDS = ("governed-by", "grounded-in")
 PIN_IGNORED = EDGE_FIELDS + ("pinned", "date")
@@ -107,11 +107,31 @@ def edge_ids(fm):
 
 
 class Linter:
-    def __init__(self, root):
+    def __init__(self, root, docs=None):
         self.root = Path(root)
+        self.docs = self.find_docs(docs)
+        self.dn = self.docs.relative_to(self.root).as_posix()
+        self.prose_ref = re.compile(
+            r"(?<![\w\-/])" + re.escape(self.dn) + r"/(facts|decisions|guardrails|skills)/(?:archive/)?([\w.\-]+\.md)"
+        )
         self.findings = []  # (check, path, message)
+        self.warnings = []
         self.arts = []  # dicts: type, archived, path, rel, fm, text
         self.ids = set()
+        self.broken = set()  # (type, archived, id) of files whose frontmatter did not parse
+        if not any((self.docs / t).is_dir() for t in TYPES):
+            self.warnings.append(f"no {'/'.join(TYPES)} directories under {self.dn}/: nothing was checked (use --docs DIR)")
+
+    def find_docs(self, docs):
+        if docs:
+            d = Path(docs)
+            return d if d.is_absolute() else self.root / d
+        if (self.root / "docs").is_dir():
+            return self.root / "docs"
+        for d in sorted(p for p in self.root.iterdir() if p.is_dir() and not p.name.startswith(".")):
+            if (d / "decisions").is_dir():
+                return d
+        return self.root / "docs"
 
     def add(self, check, rel, msg):
         self.findings.append((check, str(rel), msg))
@@ -122,7 +142,7 @@ class Linter:
     def load(self):
         for t in TYPES:
             for archived in (False, True):
-                d = self.root / "docs" / t / ("archive" if archived else "")
+                d = self.docs / t / ("archive" if archived else "")
                 if not d.is_dir():
                     continue
                 for p in sorted(d.glob("*.md")):
@@ -137,14 +157,17 @@ class Linter:
                         self.add(2, self.rel(p), err)
                     if fm is not None and "id" in fm:
                         self.ids.add(str(fm["id"]))
+                    elif fm is None:
+                        self.ids.add(p.stem)
+                        self.broken.add((t, archived, p.stem))
 
     def tags_list(self):
-        p = self.root / "docs" / "skills" / "tags.md"
+        p = self.docs / "skills" / "tags.md"
         if not p.exists():
             return None
         tags = set()
         for line in p.read_text(encoding="utf-8").splitlines():
-            m = re.match(r"^([a-z0-9][\w\-]*)(?: \(umbrella\))? — ", line)
+            m = re.match(r"^\s*(?:[-*]\s+)?([a-z0-9][\w\-]*)(?: \(umbrella\))?(?:\s+[—–-]\s+|:\s+)", line)
             if m:
                 tags.add(m.group(1))
         return tags
@@ -167,6 +190,8 @@ class Linter:
             for f in LIST_FIELDS:
                 if f in fm and not isinstance(fm[f], list) and fm[f] != "TBD":
                     self.add(2, rel, f"`{f}` must be a YAML list, got {type(fm[f]).__name__}")
+            if "tags" in fm and not isinstance(fm["tags"], list):
+                self.add(2, rel, f"`tags` must be a YAML list, got {type(fm['tags']).__name__}")
             if "pinned" in fm:
                 pins = fm["pinned"]
                 if not isinstance(pins, dict):
@@ -218,11 +243,18 @@ class Linter:
                     nums.setdefault(int(m.group(1)), []).append(a["rel"])
             for n, rels in sorted(nums.items()):
                 if len(rels) > 1:
-                    self.add(3, f"docs/{t}/", f"number {n:04d} used by {len(rels)} files: " + ", ".join(map(str, rels)))
+                    self.add(3, f"{self.dn}/{t}/", f"number {n:04d} used by {len(rels)} files: " + ", ".join(map(str, rels)))
             if nums:
                 for n in range(1, max(nums)):
                     if n not in nums:
-                        self.add(3, f"docs/{t}/", f"number {n:04d} is skipped")
+                        self.add(3, f"{self.dn}/{t}/", f"number {n:04d} is skipped")
+        owners = {}
+        for a in self.arts:
+            if a["fm"] and "id" in a["fm"]:
+                owners.setdefault(str(a["fm"]["id"]), []).append(str(a["rel"]))
+        for i, rels in sorted(owners.items()):
+            if len(rels) > 1:
+                self.add(3, rels[0], f"id `{i}` is used by {len(rels)} files: " + ", ".join(rels))
 
     def check_pins(self):  # 13, pinned edges only
         by_id = {str(a["fm"]["id"]): a for a in self.arts if a["fm"] and "id" in a["fm"]}
@@ -244,12 +276,19 @@ class Linter:
         if a is None or not a["fm"]:
             raise SystemExit(f"{target}: not an artifact with frontmatter")
         by_id = {str(x["fm"]["id"]): x for x in self.arts if x["fm"] and "id" in x["fm"]}
+        dup = [i for i, n in Counter(str(x["fm"]["id"]) for x in self.arts if x["fm"] and "id" in x["fm"]).items() if n > 1]
         ids = edge_ids(a["fm"])
+        if any(i in dup for i in ids + [str(a["fm"].get("id"))]):
+            raise SystemExit("ambiguous id (used by more than one file): refusing to pin; fix check 3 first")
         missing = [i for i in ids if i not in by_id]
         if missing:
             raise SystemExit("edge targets that do not exist: " + ", ".join(missing))
-        lines = a["text"].split("\n")
-        end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
+        raw = path.read_bytes().decode("utf-8")
+        crlf = "\r\n" in raw
+        lines = raw.replace("\r\n", "\n").split("\n")
+        end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
+        if end is None:
+            raise SystemExit(f"{target}: unterminated frontmatter (no closing `---`); fix that first")
         head = []
         skipping = False
         for line in lines[1:end]:
@@ -260,8 +299,10 @@ class Linter:
                 head.append(line)
         if ids:
             head.append("pinned:")
-            head += [f"  {i}: {revision(by_id[i]['text'])}" for i in ids]
-        path.write_text("\n".join(["---"] + head + lines[end:]), encoding="utf-8")
+            head += [f'  {i}: "{revision(by_id[i]["text"])}"' for i in ids]
+        out = "\n".join(["---"] + head + lines[end:])
+        with path.open("w", encoding="utf-8", newline="") as f:
+            f.write(out.replace("\n", "\r\n") if crlf else out)
 
     def check_orphans(self):  # 7
         corpus = []
@@ -272,23 +313,30 @@ class Linter:
         for a in self.arts:
             if a["type"] not in ("facts", "guardrails") or a["archived"] or not a["fm"] or "id" not in a["fm"]:
                 continue
+            if a["fm"].get("kms-seeded") is True:  # a seeded guardrail is referenced by its template, not by project files
+                continue
             pat = re.compile(r"(?<![\w\-])" + re.escape(str(a["fm"]["id"])) + r"(?![\w\-])")
             if not any(p != a["path"] and pat.search(t) for p, t in corpus):
                 self.add(7, a["rel"], f"nothing references `{a['fm']['id']}`")
 
     def check_prose_refs(self):  # 9
-        for a in self.arts:
-            if a["archived"] or a["type"] == "decisions":  # decisions are immutable (check 20)
-                continue
+        corpus = [(a["rel"], a["text"]) for a in self.arts if not a["archived"] and a["type"] != "decisions"]  # decisions are immutable (check 20)
+        extra = [self.root / n for n in ("README.md", "AGENTS.md", "CONTRIBUTING.md")]
+        plans = self.docs / "plans"  # archived plans are history: they may name files long since removed
+        extra += sorted(p for p in plans.glob("*.md")) if plans.is_dir() else []
+        for p in extra:
+            if p.is_file():
+                corpus.append((self.rel(p), p.read_text(encoding="utf-8")))
+        for rel, text in corpus:
             seen = set()
-            for m in PROSE_REF.finditer(a["text"]):
+            for m in self.prose_ref.finditer(text):
                 t, name = m.groups()
-                if "NNNN" in name or name in seen:
+                if "NNNN" in name or (t, name) in seen:
                     continue
-                seen.add(name)
-                d = self.root / "docs" / t
+                seen.add((t, name))
+                d = self.docs / t
                 if not (d / name).exists() and not (d / "archive" / name).exists():
-                    self.add(9, a["rel"], f"mentions `docs/{t}/{name}`, which does not exist")
+                    self.add(9, rel, f"mentions `{self.dn}/{t}/{name}`, which does not exist")
 
     def check_templates(self):  # 12
         tdir = self.root / "plugins" / "kms" / "templates"
@@ -309,11 +357,15 @@ class Linter:
             }
             for tid, ver in tmpl.items():
                 if tid not in have:
-                    self.add(12, f"docs/{sub.name}/", f"template `{tid}` has no file here")
+                    self.add(12, f"{self.dn}/{sub.name}/", f"template `{tid}` has no file here")
                 elif have[tid]["fm"].get("kms-seeded") is True:
-                    cur = have[tid]["fm"].get("kms-template-version", 0)
-                    if cur < ver:
-                        self.add(12, have[tid]["rel"], f"seeded from template version {cur}, template is at {ver}")
+                    try:
+                        cur, want = int(have[tid]["fm"].get("kms-template-version", 0)), int(ver)
+                    except (TypeError, ValueError):
+                        self.add(12, have[tid]["rel"], f"`kms-template-version` is `{have[tid]['fm'].get('kms-template-version')}`, not a number")
+                        continue
+                    if cur < want:
+                        self.add(12, have[tid]["rel"], f"seeded from template version {cur}, template is at {want}")
             for hid, a in have.items():
                 if a["fm"].get("kms-seeded") is True and hid not in tmpl:
                     self.add(12, a["rel"], f"`kms-seeded` but template `{hid}` no longer exists")
@@ -321,7 +373,7 @@ class Linter:
     def check_index(self):  # 19
         for t in TYPES:
             for archived in (False, True):
-                d = self.root / "docs" / t / ("archive" if archived else "")
+                d = self.docs / t / ("archive" if archived else "")
                 idx = d / "INDEX.md"
                 if not d.is_dir() or not idx.exists():
                     continue
@@ -355,7 +407,7 @@ class Linter:
                         if w != g:
                             self.add(19, rel, f"row `{fid}`: {name} is `{g}`, file says `{w}`")
                 for rid in rows:
-                    if rid not in files:
+                    if rid not in files and (t, archived, rid) not in self.broken:
                         self.add(19, rel, f"row `{rid}` has no file in this directory")
 
     def check_archive(self):  # 20
@@ -373,7 +425,7 @@ class Linter:
                 tags = [tags]
             for tag in tags if isinstance(tags, list) else []:
                 if str(tag) not in allowed:
-                    self.add(21, a["rel"], f"tag `{tag}` is not in docs/skills/tags.md")
+                    self.add(21, a["rel"], f"tag `{tag}` is not in {self.dn}/skills/tags.md")
 
     def run(self):
         self.load()
@@ -397,13 +449,17 @@ class Linter:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
+    ap.add_argument("--docs", metavar="DIR", help="knowledge directory (default: docs/, else the first root-level directory holding decisions/)")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--pin", metavar="FILE", help="record the current revision of FILE's edge targets")
     args = ap.parse_args()
     if args.pin:
-        Linter(args.root).pin(args.pin)
+        Linter(args.root, args.docs).pin(args.pin)
         return
-    findings = Linter(args.root).run()
+    linter = Linter(args.root, args.docs)
+    findings = linter.run()
+    for w in linter.warnings:
+        print("warning: " + w, file=sys.stderr)
     if args.json:
         print(json.dumps([dict(check=c, file=f, message=m) for c, f, m in findings], indent=1))
     else:
