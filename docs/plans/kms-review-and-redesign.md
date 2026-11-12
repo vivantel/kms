@@ -29,6 +29,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 - 2026-11-12 plan made reentrant; no step executed yet.
 - 2026-11-12 0.3 [done]: bytecode untracked, .gitignore updated
+- 2026-11-12 0.4 [done]: removed 'or derived'; fixed model sentence
 
 ## Phase 0 — Housekeeping
 
@@ -50,7 +51,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** `git ls-files | grep -c pycache` prints `0`.
 
-### 0.4 [pending] Fix the two text defects left by the study merge
+### 0.4 [done] Fix the two text defects left by the study merge
 
 **What.** `plugins/kms/skills/bootstrap/SKILL.md:33` "classify it: environmental, decision, or derived" → delete "or derived" (0064 removed it; the checker rejects it). `plugins/kms/shared/artifact-model.md:40` "A claim that needs both is written as two facts and `governed-by: <decision-id>` (`TBD` = debt)." lost its verb in the merge → "A claim that needs both is written as two facts. Add `governed-by: <decision-id>` (`TBD` = debt)." (Phase 2 rewrites this paragraph; fix it now so the shipped text is not wrong meanwhile.)
 
