@@ -32,6 +32,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.4 [done]: removed 'or derived'; fixed model sentence
 - 2026-11-12 0.5 [done]: uninstall/roadmap/lint examples corrected
 - 2026-11-12 0.6 [done]: eval script limited to 5 CI cases; unit job added; docs updated
+- 2026-11-12 0.8 [done]: codex plan archived
 
 ## Phase 0 — Housekeeping
 
@@ -79,7 +80,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** Workflow lists only `master`; 0056 archived with `superseded-by`; `python3 plugins/kms/shared/lint_check.py --root .` exits 0.
 
-### 0.8 [pending] Close the dead live plan
+### 0.8 [done] Close the dead live plan
 
 **What.** `docs/plans/codex-plugin-support.md` ("steps 1-4 done; step 5 blocked (needs Codex CLI)" since 2026-07-29; names `/home/ubuntu/projects/sergemso/dev_skills`, version `2.1.0`, four skills) → `git mv` to `docs/plans/archive/` with a top note: "Archived 2026-11: steps 1-4 done; step 5 (live Codex install test) is carried by step 1.3 of `docs/plans/kms-review-and-redesign.md`."
 

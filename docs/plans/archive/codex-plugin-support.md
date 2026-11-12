@@ -4,6 +4,8 @@ title: Ship a native Codex plugin manifest for the kms skill set
 status: steps 1-4 done; step 5 blocked (needs Codex CLI)
 date: 2026-07-29
 ---
+> Archived 2026-11: steps 1-4 done; step 5 (live Codex install test) is carried by step 1.3 of `docs/plans/kms-review-and-redesign.md`.
+
 
 # Ship a native Codex plugin manifest for the kms skill set
 
