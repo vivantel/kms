@@ -37,6 +37,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 1.5 [done]: 0064 amended; checker drops fact kind/governed-by; conform/query draft sentences; matrix fixtures regenerated (pin quoting from 1.2)
 - 2026-11-12 0.1 [done]: decision 0067 accepted (standalone)
 - 2026-11-12 0.7 [done]: decision 0068 supersedes 0056; workflow master-only
+- 2026-11-12 0.2 [done]: master fast-forwarded; 16 local and 18 remote study branches deleted
 
 ## Phase 0 — Housekeeping
 
@@ -46,7 +47,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** The decision exists, `status: active`, `accepted-by` set, row in `docs/decisions/INDEX.md`.
 
-### 0.2 [pending] Fast-forward local `master`; delete merged and throwaway branches
+### 0.2 [done] Fast-forward local `master`; delete merged and throwaway branches
 
 **What.** After committing this plan on a feature branch: `git checkout master && git merge --ff-only origin/master`. Delete locally and on `origin`: every local `study/s*` branch (all merged, PRs #61-#80), `study/base`, `study/v2-base`, and the unmerged throwaways `origin/study/s1-baseline`, `origin/study/s1-throwaway`, `origin/study/s8-rerun-base`, `origin/study/s8-rerun-head`. Keep `origin/harness/impl/step_01`, `origin/scale-bootstrap-lint-chunking`, `origin/fix-eval-doc-drift` until step 5.7. Keep tags `study-v1`/`study-v2` (0065/0066 cite them); step 5.4 records them.
 
