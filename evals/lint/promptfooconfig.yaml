@@ -29,7 +29,7 @@ providers:
     config:
       fixture_dir: "evals/lint/fixture"
       model: "cohere/north-mini-code:free"
-      timeout_seconds: 1440
+      timeout_seconds: 600
 
 defaultTest:
   assert:

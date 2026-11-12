@@ -31,6 +31,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.3 [done]: bytecode untracked, .gitignore updated
 - 2026-11-12 0.4 [done]: removed 'or derived'; fixed model sentence
 - 2026-11-12 0.5 [done]: uninstall/roadmap/lint examples corrected
+- 2026-11-12 0.6 [done]: eval script limited to 5 CI cases; unit job added; docs updated
 
 ## Phase 0 — Housekeeping
 
@@ -64,7 +65,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Done when.** None of the four quoted phrases remains; the replacements are present.
 
-### 0.6 [pending] Make `npm run eval` runnable and run the unit tests in CI
+### 0.6 [done] Make `npm run eval` runnable and run the unit tests in CI
 
 **Why.** `package.json`'s `eval` script loops every `evals/*/promptfooconfig.yaml` alphabetically; `evals/admission/` and `evals/lint-matrix/` pin `nvidia/nvidia/nemotron-3.5-lightning-30b-a3b`, which `kilo-runner.sh` routes to a Kilo `nvidia` provider needing a key, so `admission` (first alphabetically) fails and `|| exit 1` aborts before the five CI cases. `AGENTS.md:54` and `CONTRIBUTING.md:46` still say no key is needed. `.github/workflows/eval-skills.yml` has no `unittest`/`pytest` step and no PyYAML install; three suites exist (`evals/lint/unit`: 32 tests; `evals/lint-matrix`: 8; `evals/admission`: 6).
 

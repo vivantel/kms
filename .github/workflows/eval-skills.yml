@@ -8,6 +8,7 @@ name: Eval skill changes
 # further and skips the autonomous Kilo run against fork content entirely, secrets or not.
 
 on:
+  push:
   pull_request:
     types: [opened]
     branches: [master, study/base]
@@ -22,6 +23,18 @@ permissions:
   pull-requests: write
 
 jobs:
+  unit:
+    name: unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyyaml
+      - run: python3 -m unittest discover -s evals/lint/unit
+      - run: python3 -m unittest discover -s evals/lint-matrix
+      - run: python3 -m unittest discover -s evals/admission
+      - run: python3 evals/lint-matrix/build.py --check
+      - run: python3 evals/admission/build.py --check
+
   eval:
     name: eval (${{ matrix.case }})
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
@@ -38,6 +51,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: pip install pyyaml
       - run: npm install
       - run: npm install -g @kilocode/cli
       - uses: promptfoo/promptfoo-action@v1
@@ -127,6 +141,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: pip install pyyaml
       - run: npm install
       - run: npm install -g @kilocode/cli
       - uses: promptfoo/promptfoo-action@v1
