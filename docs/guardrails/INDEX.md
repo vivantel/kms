@@ -5,7 +5,6 @@
 id,title,tags,status
 agent-agnostic-skill-content,"Skill instruction bodies must stay agent-neutral","kms, agent-agnostic, guardrail",active
 artifact-expires-must-be-reevaluated,"An artifact past its expires date or condition must be re-evaluated","kms, knowledge-management, guardrail",active
-decision-track-field,"Every decision must declare its track","kms, knowledge-management, guardrail",active
 every-skill-ships-examples,"Every skill must ship a colocated examples.md","kms, packaging, documentation, guardrail",active
 fact-governance-fields,"A fact must carry a `source` or be cited by another artifact","kms, knowledge-management, guardrail",active
 fact-not-audit-log,"A fact must not be an ungrounded audit-log record","kms, knowledge-management, guardrail",active

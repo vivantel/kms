@@ -4,7 +4,6 @@ title: kms owns durable knowledge artifacts and their validation; specs and coor
 status: draft
 date: 2026-11-15
 tags: [kms, scope]
-track: process
 ---
 
 ## Decision

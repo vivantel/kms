@@ -9,3 +9,6 @@ id,title,tags,status
 0056-eval-gate-covers-study-base,"Run the eval gate on pull requests into study/base as well as master","kms, eval-harness, automation",superseded
 0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",superseded
 0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",superseded
+0010-decision-track-field,"Add a track field (product | process) to decisions","kms, knowledge-management",superseded
+0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",superseded
+0013-ai-agent-role-lists-per-track,"bootstrap creates, steward maintains, product/process role lists for reviewing decisions","kms, knowledge-management",superseded

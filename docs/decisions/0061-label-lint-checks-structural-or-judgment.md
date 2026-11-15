@@ -4,7 +4,6 @@ title: Each lint check carries a structural or judgment label, checked by a seco
 status: active
 date: 2026-11-08
 tags: [kms, eval-harness, knowledge-management]
-track: process
 ---
 
 ## Decision

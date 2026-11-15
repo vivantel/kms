@@ -10,7 +10,7 @@ derivation-note: >
   unless re-observable or cited), every fact file must carry `source` or be
   cited by another artifact.
 pinned:
-  0071-facts-carry-no-outgoing-edges: "36e8e0e9165e"
+  0071-facts-carry-no-outgoing-edges: "9a5d50ae1319"
 ---
 
 ## Guardrail

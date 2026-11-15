@@ -10,8 +10,8 @@ derivation-note: >
   field applies to all four types), any artifact with status: superseded
   must carry superseded-by pointing at its successor.
 pinned:
-  0039-unify-lifecycle-and-drop-scope: "47bb511d9633"
-  0073-lifecycle-words-defined: "f0001b479b5e"
+  0039-unify-lifecycle-and-drop-scope: "350c1d6c874d"
+  0073-lifecycle-words-defined: "1ad4e76fa5e3"
 ---
 
 ## Guardrail

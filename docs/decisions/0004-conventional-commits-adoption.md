@@ -4,7 +4,6 @@ title: Adopt Conventional Commits type prefixes, applied only when the attribute
 status: active
 date: 2026-07-29
 tags: [kms, git, commit-messages]
-track: process
 ---
 
 ## Decision

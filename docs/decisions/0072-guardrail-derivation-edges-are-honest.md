@@ -4,7 +4,6 @@ title: Guardrail derivation edges are lists of decisions plus optional fact grou
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

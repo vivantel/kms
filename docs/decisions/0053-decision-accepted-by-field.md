@@ -4,7 +4,6 @@ title: Add an optional accepted-by field recording who is accountable for a deci
 status: active
 date: 2026-09-12
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

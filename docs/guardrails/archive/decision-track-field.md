@@ -1,7 +1,8 @@
 ---
 id: decision-track-field
 title: Every decision must declare its track
-status: active
+status: superseded
+superseded-by: 0079-drop-track-field
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
 governed-by: [0010-decision-track-field]
@@ -9,8 +10,10 @@ derivation-note: >
   Given decision 0010 (decisions distinguish product from process),
   every decision must declare which, or the distinction has no teeth.
 pinned:
-  0010-decision-track-field: "80307451ae66"
+  0010-decision-track-field: "243c4a1ada54"
 ---
+
+> **Superseded 2026-11-15** by `docs/guardrails/0079-drop-track-field.md` (draft; takes effect on owner acceptance, plan consolidation).
 
 ## Guardrail
 

@@ -4,7 +4,6 @@ title: Add optional scope and expires fields to decisions
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

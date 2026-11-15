@@ -4,7 +4,6 @@ title: Measure lint per check with a clean control and one seeded violation per 
 status: active
 date: 2026-11-08
 tags: [kms, eval-harness, knowledge-management]
-track: process
 ---
 
 ## Decision

@@ -4,7 +4,6 @@ title: Add query — an on-demand skill that answers questions from the knowledg
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

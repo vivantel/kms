@@ -4,7 +4,6 @@ title: Facts carry no outgoing edges; plain facts become admissible
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

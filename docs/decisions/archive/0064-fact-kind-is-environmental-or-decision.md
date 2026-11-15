@@ -5,7 +5,6 @@ status: superseded
 superseded-by: 0071-facts-carry-no-outgoing-edges
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 > **Superseded 2026-11-15** by `docs/decisions/0071-facts-carry-no-outgoing-edges.md` (draft; takes effect on owner acceptance, plan consolidation).

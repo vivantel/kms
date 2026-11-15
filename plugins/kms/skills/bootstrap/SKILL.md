@@ -24,7 +24,7 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
 - Apply `admission.md` to each finding first; skip a finding that fails a hard gate or whose estimated shelf life times recurrence does not exceed its rediscovery cost, and list skipped findings in one line each.
-- Cluster the admitted findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
+- Cluster the admitted findings by domain; write one decision stub per cluster: id, title, one-line motivation, `expires` if bounded or provisional, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
@@ -61,32 +61,15 @@ Propose domains that need their own skill, based on what's in the repo:
 
 For each: one paragraph on what it would own, one hard constraint, one fitness-function candidate. Proposals — the team decides adoption and naming. Domains governing irreversible decisions (published APIs, binary ABI, irreversible schema changes, legal/compliance commitments, public claims) are the highest priority to formalize first.
 
-### 7. Compile the track role lists and tag vocabulary
+### 7. Compile the tag vocabulary
 
-From the "Likely review role" column above, write
-`docs/skills/product-track-roles.md` and
-`docs/skills/process-track-roles.md` — base frontmatter (`id`, `title`,
-`status`, `date`, `tags`) plus `kms-generated: true` (constructed from
-this project's own signals, not a template, but still `uninstall`'s to
-recognize), like any other procedure, then one
-role per line: name plus a one-line scope (what kind of decision it
-should weigh in on). Sort each role by whether it bears on what the
-project is for (product) or how it's built (process) — a role can
-appear on both lists if it's relevant to both. When a role's track is
-genuinely ambiguous (e.g. a compliance, quality, or process-documentation
-role), default to process: these typically govern how something is
-built or reviewed, not what the project is for; only place a role on
-product if its scope is explicitly about mission, audience, or
-positioning. These are review perspectives an agent considers while
-drafting or reviewing a decision of that track, not a staffing
-assignment. Using the same repo-scan signals, compile
+From the same repo-scan signals, compile
 `docs/skills/tags.md`: every tag already used across this project's
 artifacts (or, in a fresh project, domain vocabulary drawn from existing
 docs), one tag per line as `tag — meaning` (the checker also reads `- tag — meaning`, `tag - meaning` and `tag: meaning`). Mark any tag carried by
 over half of active decisions as `(umbrella)` — computed from the
 scan, not asserted — since `lint` check 16 excludes umbrella tags from
-its contradiction-scoping test. Same frontmatter and `kms-generated:
-true` marking as the role lists above.
+its contradiction-scoping test. Frontmatter: the base fields plus `kms-generated: true` and `kms-registry: tags`.
 
 ### 8. Seed baseline artifacts
 

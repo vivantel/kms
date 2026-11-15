@@ -4,7 +4,6 @@ title: Defer a business-domain dimension until kms operates on a real multi-doma
 status: active
 date: 2026-09-12
 tags: [kms, knowledge-management, scale]
-track: process
 fitness-functions:
   - check: "Once kms is actually installed on a monorepo with multiple weakly-coupled product domains, check whether tags.md's flat clustering is still adequate for query/onboard scoping and check 16's contradiction-scoping, or whether a real domain-boundary field is by then justified by an observed problem, not a hypothetical one."
     enforced-by: none

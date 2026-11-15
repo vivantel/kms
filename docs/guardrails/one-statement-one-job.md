@@ -10,7 +10,7 @@ kms-template-version: 1
 derivation-note: >
   Given decision 0027 (baseline guardrails), one artifact must carry one claim so each can be verified and retired alone.
 pinned:
-  0027-baseline-guardrail-seeding: "35b7f519e641"
+  0027-baseline-guardrail-seeding: "6145614bf934"
 ---
 
 ## Guardrail

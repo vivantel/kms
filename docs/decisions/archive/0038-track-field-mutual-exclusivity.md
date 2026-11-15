@@ -1,11 +1,13 @@
 ---
 id: 0038-track-field-mutual-exclusivity
 title: track values are mutually exclusive; "both"/"mixed" is never stored
-status: active
+status: superseded
+superseded-by: 0079-drop-track-field
 date: 2026-09-01
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
+
+> **Superseded 2026-11-15** by `docs/decisions/0079-drop-track-field.md` (draft; takes effect on owner acceptance, plan consolidation).
 
 ## Decision
 

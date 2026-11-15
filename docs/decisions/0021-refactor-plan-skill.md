@@ -4,7 +4,6 @@ title: Add refactor-plan — a phased, guardrail-respecting refactor-planning sk
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

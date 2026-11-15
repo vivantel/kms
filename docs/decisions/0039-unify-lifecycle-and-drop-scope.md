@@ -4,7 +4,6 @@ title: Unify status and expires across all four artifact types; add superseded-b
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

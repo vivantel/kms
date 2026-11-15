@@ -7,7 +7,7 @@ Usage: lint_check.py [--root DIR] [--docs DIR] [--json] [--strict] [--stale-days
        lint_check.py [--root DIR] --pin FILE   record the current revision of FILE's edge targets
 
 Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 4, 7, 9, 12,
-15, 17, 18, 19, 20, 21, 24 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
+17, 18, 19, 20, 21, 24 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
 edge (`governed-by`, `grounded-in`) that carries a pin in the file's `pinned` map is stale when
 its target no longer hashes to the pin. Edges without a pin are left to the model. No model is
 involved; output is sorted, so identical input gives identical output. Exit status 1 when
@@ -40,7 +40,6 @@ TYPES = ("facts", "decisions", "guardrails", "skills")
 BASE_FIELDS = ("id", "title", "status", "date", "tags")
 TYPE_FIELDS = {
     "guardrails": ("governed-by", "derivation-note"),
-    "decisions": ("track",),
 }
 STATUSES = ("draft", "active", "superseded", "deprecated")
 REF_FIELDS = ("governed-by", "grounded-in", "superseded-by", "governed-facts", "operationalizes")
@@ -214,7 +213,7 @@ class Linter:
 
     # --- checks ---
 
-    def check_fields(self):  # 2, 15
+    def check_fields(self):  # 2
         for a in self.arts:
             fm, rel = a["fm"], a["rel"]
             if fm is None:
@@ -259,8 +258,8 @@ class Linter:
                     self.add(2, rel, "`scope` is only defined on facts")
                 else:
                     self.check_scope(rel, fm["scope"])
-            if a["type"] == "decisions" and "track" in fm and fm["track"] not in ("product", "process"):
-                self.add(15, rel, f"`track` is `{fm['track']}`, must be exactly `product` or `process`")
+            if a["type"] == "decisions" and "track" in fm:
+                self.legacy(2, rel, "`track` is not a decision field any more")
 
     def check_scope(self, rel, sc):
         if not isinstance(sc, dict) or not sc:

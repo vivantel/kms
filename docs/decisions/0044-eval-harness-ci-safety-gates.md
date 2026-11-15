@@ -4,7 +4,6 @@ title: Wire the eval harness into CI with fork and comment safety gates
 status: active
 date: 2026-09-04
 tags: [kms, eval-harness]
-track: process
 ---
 
 ## Decision

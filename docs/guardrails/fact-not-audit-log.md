@@ -9,7 +9,7 @@ derivation-note: >
   Given decision 0015 (kms stays a knowledge base, not a log), a fact that
   records an event rather than a lasting claim is noise, not knowledge.
 pinned:
-  0015-facts-must-not-be-audit-log-records: "64aa7cc47a97"
+  0015-facts-must-not-be-audit-log-records: "e4725c570f04"
 ---
 
 ## Guardrail

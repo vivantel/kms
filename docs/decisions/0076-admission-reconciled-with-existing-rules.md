@@ -4,7 +4,6 @@ title: Reconcile the admission test with the rules it contradicts
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

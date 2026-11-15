@@ -10,7 +10,7 @@ derivation-note: >
   from 0008 after 0006 was superseded), future skill bodies must stay
   agent-neutral.
 pinned:
-  0008-native-codex-plugin-support: "793c7301a540"
+  0008-native-codex-plugin-support: "533e650d6413"
 ---
 
 ## Guardrail

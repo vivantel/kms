@@ -8,7 +8,7 @@ Mechanical edits only, idempotent: a second run changes nothing.
   guardrails  scalar `governed-by` becomes a one-element list; `grounded-in` keeps fact ids only
               (removed ids are printed for re-derivation); `grounded-in: TBD` is dropped; a
               seeded provenance `derivation-note` becomes `TBD`
-  decisions   a non-date `expires` moves to `expires-when`; string `fitness-functions` entries
+  decisions   drop `track`; a non-date `expires` moves to `expires-when`; string `fitness-functions` entries
               become `{check: ...}` maps
   registries  INDEX.md gets a first-line `kms-registry` comment; tags.md and docs-manifest.md get
               a `kms-registry` frontmatter field
@@ -91,6 +91,8 @@ def migrate_file(path, typ, ids, notes):
             keep.append([key, lines])
             continue
         b = [key, lines]
+        if typ == "decisions" and key == "track":
+            continue
         if typ == "facts" and key in ("kind", "governed-by"):
             continue
         if typ == "guardrails" and key == "governed-by":

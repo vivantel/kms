@@ -10,10 +10,8 @@ id,title,tags,status
 0007-claude-md-agents-md-symlink,"Rewrite CLAUDE.md as AGENTS.md, keep CLAUDE.md as a symlink","kms, agent-agnostic, claude-md, agents-md",active
 0008-native-codex-plugin-support,"Ship a native Codex plugin manifest for the kms skill set; keep the current directory layout; defer Cursor","kms, agent-agnostic, codex, packaging",active
 0009-bootstrap-and-steward-skills,"Add bootstrap and steward as two skills, not one combined skill","kms, knowledge-management",active
-0010-decision-track-field,"Add a track field (product | process) to decisions","kms, knowledge-management",active
 0011-kms-domain-agnostic-beyond-software,"Generalize clarify/roadmap/bootstrap/steward beyond software projects","kms, knowledge-management, agent-agnostic",active
 0012-no-redundant-guardrails,"A guardrail must not be a pure restatement of one skill's own procedure","kms, knowledge-management",active
-0013-ai-agent-role-lists-per-track,"bootstrap creates, steward maintains, product/process role lists for reviewing decisions","kms, knowledge-management",active
 0014-decision-scope-and-expires-fields,"Add optional scope and expires fields to decisions","kms, knowledge-management",active
 0015-facts-must-not-be-audit-log-records,"Facts must not be audit-log records","kms, knowledge-management",active
 0016-lint-skill,"Add lint — an on-demand, full-repo validation skill, separate from steward","kms, knowledge-management",active
@@ -38,7 +36,6 @@ id,title,tags,status
 0035-native-kilo-code-support,"Ship a self-hosted Kilo remote-skills index; list on kilo-marketplace; no directory restructuring","kms, agent-agnostic, kilo, packaging",active
 0036-standalone-installing-doc,"Extract per-agent install steps into a standalone INSTALLING.md","kms, discoverability, packaging",active
 0037-plans-not-a-governed-artifact-type,"Plans are not a 5th governed artifact type","kms, knowledge-management, taxonomy",active
-0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",active
 0039-unify-lifecycle-and-drop-scope,"Unify status and expires across all four artifact types; add superseded-by; drop scope","kms, knowledge-management, taxonomy",active
 0040-lint-contradiction-and-staleness-checks,"Add lint checks for cross-artifact contradiction, stale debt, and stale fitness-functions","kms, knowledge-management, taxonomy",active
 0042-tag-vocabulary-and-scoped-contradiction-check,"Add a canonical tag vocabulary; scope the contradiction check to tag overlap","kms, knowledge-management, scale",active
@@ -74,3 +71,4 @@ id,title,tags,status
 0076-admission-reconciled-with-existing-rules,"Reconcile the admission test with the rules it contradicts","kms, knowledge-management, taxonomy",draft
 0077-more-structural-lint-checks-optional-pins,"Make four more lint checks structural; keep pins optional","kms, knowledge-management, eval-harness",draft
 0078-open-questions-are-draft-decisions,"Open questions and hypotheses are draft decisions with expires-when","kms, knowledge-management, taxonomy",draft
+0079-drop-track-field,"Drop the decision track field and the role lists built on it","kms, knowledge-management, taxonomy",draft

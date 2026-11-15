@@ -4,7 +4,6 @@ title: Ship kms's four Global Principles as templated, synced baseline guardrail
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail, packaging]
-track: process
 ---
 
 ## Decision

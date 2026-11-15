@@ -4,7 +4,6 @@ title: Thin, on-demand changelog skill reading from commit trailers
 status: active
 date: 2026-07-29
 tags: [kms, git, changelog]
-track: process
 ---
 
 ## Decision

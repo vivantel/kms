@@ -4,7 +4,6 @@ title: Generalize the templates sync mechanism from guardrails-only to any artif
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
-track: process
 ---
 
 ## Decision

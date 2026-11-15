@@ -27,7 +27,6 @@ title: Ship weekly
 status: active
 date: 2026-01-01
 tags: [release]
-track: process
 ---
 Body.
 """
@@ -96,7 +95,7 @@ class LintCheck(unittest.TestCase):
         self.assertEqual(self.checks(**{"docs/guardrails/changelog.md": GUARD.replace("[0001-cadence]", "[0099-none]")}), [1, 7])
 
     def test_2_missing_field(self):
-        self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("track: process\n", "")}), [2])
+        self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("date: 2026-01-01\n", "")}), [2])
 
     def test_2_bare_string_list(self):
         self.assertEqual(self.checks(**{"docs/guardrails/changelog.md": GUARD.replace("[0001-cadence]", "0001-cadence")}), [2])
@@ -140,8 +139,11 @@ class LintCheck(unittest.TestCase):
         t.write_text("---\ntemplate-version: 1\nid: extra\n---\n")
         self.assertEqual(sorted({c for c, _, _ in Linter(self.root).run()}), [12])
 
-    def test_15_track_both(self):
-        self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("track: process", "track: both")}), [15])
+    def test_track_is_an_older_shape(self):
+        # `track` was dropped (decision 0079): advisory by default, a finding under --strict
+        over = {"docs/decisions/0001-weekly.md": DECISION.replace("tags: [release]", "tags: [release]\ntrack: process")}
+        self.assertEqual(self.checks(**over), [])
+        self.assertIn(2, self.checks(kw={"strict": True}, **over))
 
     def test_19_index_row_missing(self):
         self.assertEqual(self.checks(**{"docs/decisions/INDEX.md": INDEX.format("")}), [19])
@@ -185,7 +187,7 @@ class LintCheck(unittest.TestCase):
                 self.assertEqual(self.checks(**{"docs/facts/0001-cadence.md": f}), [2])
 
     def test_2_scope_on_decision(self):
-        d = DECISION.replace("track:", "scope: {component: x}\ntrack:")
+        d = DECISION.replace("tags:", "scope: {component: x}\ntags:")
         self.assertEqual(self.checks(**{"docs/decisions/0001-weekly.md": d}), [2])
 
     def test_pin_writes_map_and_is_clean(self):
@@ -381,18 +383,18 @@ class NewRules(unittest.TestCase):
         self.assertEqual(self.run_checks(kw={"strict": True}, **over)[0], [])
 
     def test_4_expired_date(self):
-        self.assertEqual(self.run_checks(today="2026-03-01", **{"docs/decisions/0001-weekly.md": DECISION.replace("track: process", "track: process\nexpires: 2026-02-01")})[0], [4])
+        self.assertEqual(self.run_checks(today="2026-03-01", **{"docs/decisions/0001-weekly.md": DECISION.replace("tags: [release]", "tags: [release]\nexpires: 2026-02-01")})[0], [4])
 
     def test_17_stale_draft_and_open_question_exemption(self):
         d = DECISION.replace("status: active", "status: draft")
         idx = {"docs/decisions/INDEX.md": INDEX.format("0001-weekly,Ship weekly,release,draft")}
         self.assertEqual(self.run_checks(today="2026-09-01", **{"docs/decisions/0001-weekly.md": d}, **idx)[0], [17])
-        q = d.replace("track: process", "track: process\nexpires-when: the test closes")
+        q = d.replace("tags: [release]", "tags: [release]\nexpires-when: the test closes")
         self.assertEqual(self.run_checks(today="2026-09-01", **{"docs/decisions/0001-weekly.md": q}, **idx)[0], [])
 
     def test_18_fitness_function_staleness(self):
-        ff = "track: process\nfitness-functions:\n  - {check: weekly tag, enforced-by: ci, last-verified: 2026-01-01}"
-        over = {"docs/decisions/0001-weekly.md": DECISION.replace("track: process", ff)}
+        ff = "tags: [release]\nfitness-functions:\n  - {check: weekly tag, enforced-by: ci, last-verified: 2026-01-01}"
+        over = {"docs/decisions/0001-weekly.md": DECISION.replace("tags: [release]", ff)}
         self.assertEqual(self.run_checks(today="2026-02-01", **over)[0], [])
         self.assertEqual(self.run_checks(today="2026-09-01", **over)[0], [18])
 

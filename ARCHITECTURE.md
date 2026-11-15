@@ -34,14 +34,8 @@ Four governed types, each answering a different question:
 Every artifact carries base frontmatter — `id`, `title`, `status`,
 `date`, `tags` — plus type-specific fields (a fact's `kind` and
 `governed-by`; a guardrail's `governed-by`, `grounded-in`, and
-`derivation-note`; a decision's `track` and optional `accepted-by`; a
+`derivation-note`; a decision's optional `accepted-by`; a
 procedure's optional `operationalizes`).
-
-A decision's `track` says which kind of claim it is: **product** — what
-the project is for and who it serves — or **process** — how it's built,
-organized, or shipped. Exactly one value, never both; a rollup spanning
-several decisions is computed at read time, never stored as a third
-value (`docs/decisions/0038-track-field-mutual-exclusivity.md`).
 
 `status` moves through one shared lifecycle, with an optional `expires`
 (a date or condition) triggering early re-evaluation instead of letting

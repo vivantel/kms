@@ -5,7 +5,6 @@ status: active
 accepted-by: Sergei Strebulaev
 date: 2026-11-12
 tags: [kms, eval-harness, automation]
-track: process
 ---
 
 ## Decision

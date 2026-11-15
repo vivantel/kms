@@ -4,7 +4,6 @@ title: kms is the knowledge-base core; go-getter consumes it by pinned schema ve
 status: draft
 date: 2026-11-15
 tags: [kms, scope, packaging]
-track: process
 ---
 
 ## Decision

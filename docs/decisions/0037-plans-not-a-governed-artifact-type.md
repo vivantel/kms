@@ -4,7 +4,6 @@ title: Plans are not a 5th governed artifact type
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

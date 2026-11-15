@@ -4,7 +4,6 @@ title: Run lint's structural checks in a script, not through the model
 status: active
 date: 2026-11-08
 tags: [kms, knowledge-management, eval-harness]
-track: process
 ---
 
 ## Decision

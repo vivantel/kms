@@ -10,7 +10,7 @@ derivation-note: >
   checks and discovery work), any artifact's tags must be drawn from
   that list once one exists, whoever wrote the file.
 pinned:
-  0042-tag-vocabulary-and-scoped-contradiction-check: "6002b7007dd4"
+  0042-tag-vocabulary-and-scoped-contradiction-check: "b836e2c1dd02"
 ---
 
 ## Guardrail

@@ -4,7 +4,6 @@ title: Registries are identified by marker; the fitness-function inventory lives
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

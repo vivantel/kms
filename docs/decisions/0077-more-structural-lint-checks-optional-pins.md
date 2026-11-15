@@ -4,7 +4,6 @@ title: Make four more lint checks structural; keep pins optional
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, eval-harness]
-track: process
 ---
 
 ## Decision

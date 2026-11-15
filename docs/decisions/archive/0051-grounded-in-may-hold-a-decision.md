@@ -5,7 +5,6 @@ status: superseded
 superseded-by: 0072-guardrail-derivation-edges-are-honest
 date: 2026-09-12
 tags: [kms, knowledge-management, taxonomy, guardrail]
-track: process
 ---
 
 > **Superseded 2026-11-15** by `docs/decisions/0072-guardrail-derivation-edges-are-honest.md` (draft; takes effect on owner acceptance, plan consolidation).

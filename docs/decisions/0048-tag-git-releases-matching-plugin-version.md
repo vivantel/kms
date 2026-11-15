@@ -4,7 +4,6 @@ title: Tag git releases with the same version as plugin.json, not a separate seq
 status: active
 date: 2026-09-11
 tags: [kms, git, release, packaging]
-track: process
 fitness-functions:
   - check: "Once lint or a CI check can verify it cheaply, confirm every plugins/kms manifest version bump commit has a matching git tag of the same version pushed at or shortly after that commit — until then, this is manually maintained debt, not automated."
     enforced-by: none

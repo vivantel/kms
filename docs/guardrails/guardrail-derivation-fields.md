@@ -11,8 +11,8 @@ derivation-note: >
   guardrail must declare governed-by and derivation-note, and grounded-in
   only when an independent fact exists.
 pinned:
-  0009-bootstrap-and-steward-skills: "e8010f80b33e"
-  0072-guardrail-derivation-edges-are-honest: "7f5f4a0941af"
+  0009-bootstrap-and-steward-skills: "2d4a963a7104"
+  0072-guardrail-derivation-edges-are-honest: "1ecb83178e6b"
 ---
 
 ## Guardrail

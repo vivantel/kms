@@ -4,7 +4,6 @@ title: Settle the artifact names without renaming directories
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

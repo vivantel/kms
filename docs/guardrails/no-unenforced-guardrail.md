@@ -11,7 +11,7 @@ kms-template-version: 1
 derivation-note: >
   Given decision 0027 (baseline guardrails) and fact 0008-kilo-code-skills-spec (skills are the unit an agent loads), a guardrail on shipped behaviour is incomplete until the skill's body says so.
 pinned:
-  0027-baseline-guardrail-seeding: "35b7f519e641"
+  0027-baseline-guardrail-seeding: "6145614bf934"
   0008-kilo-code-skills-spec: "b3a953909e58"
 ---
 

@@ -1,11 +1,13 @@
 ---
 id: 0013-ai-agent-role-lists-per-track
 title: bootstrap creates, steward maintains, product/process role lists for reviewing decisions
-status: active
+status: superseded
+superseded-by: 0079-drop-track-field
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
+
+> **Superseded 2026-11-15** by `docs/decisions/0079-drop-track-field.md` (draft; takes effect on owner acceptance, plan consolidation).
 
 ## Decision
 

@@ -10,7 +10,7 @@ derivation-note: >
   justified them), a guardrail's source changing must trigger
   re-derivation, not silence.
 pinned:
-  0009-bootstrap-and-steward-skills: "e8010f80b33e"
+  0009-bootstrap-and-steward-skills: "2d4a963a7104"
 ---
 
 ## Guardrail

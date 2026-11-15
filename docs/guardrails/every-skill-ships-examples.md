@@ -11,7 +11,7 @@ derivation-note: >
   colocated examples.md is incomplete, the same way a guardrail
   missing its derivation fields is incomplete.
 pinned:
-  0018-per-skill-examples-convention: "892a18daf312"
+  0018-per-skill-examples-convention: "e22ce5c61827"
 ---
 
 ## Guardrail

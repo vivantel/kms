@@ -4,7 +4,6 @@ title: Use MySQL as the primary datastore
 status: active
 date: 2026-08-20
 tags: [datastore]
-track: process
 ---
 
 ## Decision

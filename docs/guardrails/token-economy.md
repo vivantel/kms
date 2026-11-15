@@ -11,7 +11,7 @@ derivation-note: >
   Given decision 0026 (token economy is a real, checked guardrail), any fact,
   guardrail, or procedure more verbose than needed is incomplete.
 pinned:
-  0026-token-economy-guardrail: "2f1a612d159d"
+  0026-token-economy-guardrail: "994a1eb2d1e4"
 ---
 
 ## Guardrail

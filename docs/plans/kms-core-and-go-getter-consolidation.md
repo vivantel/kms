@@ -90,7 +90,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 ## Phase B — Narrow kms's scope (merged into kms redesign phase 2)
 
-### B1 [pending] [kms] Drop the `track` field
+### B1 [done] [kms] Drop the `track` field
 
 **What.** Supersede `0010-decision-track-field` and `0038-track-field-mutual-exclusivity` (and archive `docs/guardrails/decision-track-field.md`). Remove `track` from the model's Decision section, from `lint_check.py` (required-field check and the id and tag handling that reads it), and from the six skills that read it (`bootstrap`, `capture`, `lint`, `onboard`, `roadmap`, `uninstall`). The 8 `track: product` decisions become ordinary decisions; their `track:` line is deleted by the migration step (kms 2.10). Product/process role lists (`docs/skills/{product,process}-track-roles.md`, decision 0013) are retired with it. `bootstrap` step 7 stops proposing them.
 
@@ -274,6 +274,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0076-admission-reconciled-with-existing-rules.md` (2.6) | As written | 2.9, 2.10 | Revert the 2.6 commit (restores 0015, 0065 text); revert dependents |
 | `docs/decisions/0077-more-structural-lint-checks-optional-pins.md` (2.7) | As written | 2.9, 2.10 | Revert the 2.7 commit (restores 0058, 0061, 0062); revert dependents |
 | `docs/decisions/0078-open-questions-are-draft-decisions.md` (2.8) | As written | 2.9 | Revert the 2.8 commit (restores 0030); revert dependents |
+| `docs/decisions/0079-drop-track-field.md` (B1) | As written | C, E, G | Revert the B1 commit (restores 0010, 0038, 0013, the guardrail and every `track:` line) |
 
 ## Repo question: when a new repo is warranted
 
@@ -326,4 +327,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 A4 [done]: consolidation decision 0070 drafted on A1 verdict cleanup; gate passed, plan continues (kms see git log Plan-Step: A4)
 - 2026-11-15 B2 [done]: satisfied by 0071 fact boundary sentence; model text lands in 2.9
 - 2026-11-15 B3 [done]: satisfied by 2.9: model file begins with schema-version
+- 2026-11-15 B1 [done]: decision 0079 drafted (supersedes 0010, 0038, 0013); track dropped from model, checker, skills, corpus and fixtures; checks 14/15 retired; matrix regenerated with 2.7 split
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

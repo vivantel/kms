@@ -4,7 +4,6 @@ title: Add brainstorm — a generative, write-nothing ideation skill
 status: active
 date: 2026-08-30
 tags: [kms, ideation]
-track: process
 ---
 
 ## Decision

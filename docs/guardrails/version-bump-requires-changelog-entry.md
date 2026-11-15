@@ -10,7 +10,7 @@ derivation-note: >
   of work), every future bump must have its entry before it's considered
   shipped.
 pinned:
-  0050-version-bump-changelog-linkage: "1df3f2b32fbd"
+  0050-version-bump-changelog-linkage: "8622759d8dce"
 ---
 
 ## Guardrail

@@ -4,7 +4,6 @@ title: Lifecycle words (immutability, deprecated, superseded, draft, expires) ar
 status: draft
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

@@ -8,7 +8,7 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 ## What to scan for
 
 1. **`kms-seeded: true` files** — anywhere under `docs/`, matching this skill's sibling `../../templates/` (one subdirectory per artifact type; currently just `guardrails/`).
-2. **`kms-generated: true` files** — scan for the marker anywhere under `docs/`, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time (currently `docs/skills/product-track-roles.md`, `docs/skills/process-track-roles.md`, and `docs/facts/docs-manifest.md`, all three written by a single `bootstrap` run).
+2. **`kms-generated: true` files** — scan for the marker anywhere under `docs/`, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time (currently `docs/skills/tags.md`, `docs/facts/docs-manifest.md` and the `INDEX.md` files, written by `bootstrap`; these registries also carry `kms-registry`).
 3. **The `<!-- kms:start -->`/`<!-- kms:end -->` block** in the project's agent-instructions file (`AGENTS.md` or whatever host-specific equivalent it uses), if present.
 4. **Still-`status: draft` decisions, or facts still `governed-by: TBD`** — a proposal (from `bootstrap` or from `capture`'s own check 1, which drafts stubs the same way) that nobody has acted on yet. Report these separately from categories 1-3 and note plainly that they carry no `kms-seeded`/`kms-generated` marker — they're identified by status, not by marker.
 

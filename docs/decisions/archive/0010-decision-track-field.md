@@ -1,11 +1,13 @@
 ---
 id: 0010-decision-track-field
 title: Add a track field (product | process) to decisions
-status: active
+status: superseded
+superseded-by: 0079-drop-track-field
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
+
+> **Superseded 2026-11-15** by `docs/decisions/0079-drop-track-field.md` (draft; takes effect on owner acceptance, plan consolidation).
 
 ## Decision
 

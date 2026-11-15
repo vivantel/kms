@@ -4,7 +4,6 @@ title: Facts carry an optional typed scope of component, environment and version
 status: active
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

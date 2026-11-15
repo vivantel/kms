@@ -10,7 +10,7 @@ kms-template-version: 1
 derivation-note: >
   Given decision 0027 (kms seeds baseline guardrails), a guardrail true only for one skill's own behaviour belongs in that skill's body.
 pinned:
-  0027-baseline-guardrail-seeding: "35b7f519e641"
+  0027-baseline-guardrail-seeding: "6145614bf934"
 ---
 
 ## Guardrail

@@ -4,7 +4,6 @@ title: Edges pin their targets by content hash in a parallel pinned map, compare
 status: active
 date: 2026-11-08
 tags: [kms, knowledge-management, eval-harness]
-track: process
 ---
 
 ## Decision

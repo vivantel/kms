@@ -4,7 +4,6 @@ title: Every skill ships a colocated examples.md with 2-3 worked usage examples
 status: active
 date: 2026-08-30
 tags: [kms, packaging, documentation]
-track: process
 ---
 
 ## Decision

@@ -5,7 +5,6 @@ status: superseded
 superseded-by: 0068-eval-gate-master-only
 date: 2026-11-08
 tags: [kms, eval-harness, automation]
-track: process
 ---
 
 ## Decision
