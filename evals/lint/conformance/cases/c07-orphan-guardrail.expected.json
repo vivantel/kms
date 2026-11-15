@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 7,
+   "file": "docs/guardrails/lonely.md",
+   "severity": "error"
+  }
+ ]
+}

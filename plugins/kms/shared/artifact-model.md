@@ -1,4 +1,5 @@
 schema-version: 1.0.0-draft
+<!-- Contract for consumers: docs/skills/core-contract.md -->
 
 ## Artifact types
 

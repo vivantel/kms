@@ -1,0 +1,15 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 7,
+   "file": "docs/guardrails/changelog.md",
+   "severity": "error"
+  },
+  {
+   "check": 9,
+   "file": "docs/skills/deploy.md",
+   "severity": "error"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 1,
+   "file": "docs/guardrails/changelog.md",
+   "severity": "error"
+  }
+ ]
+}

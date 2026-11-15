@@ -1,0 +1,12 @@
+{
+ "args": [
+  "--strict"
+ ],
+ "findings": [
+  {
+   "check": 2,
+   "file": "docs/facts/0001-cadence.md",
+   "severity": "error"
+  }
+ ]
+}

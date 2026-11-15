@@ -56,6 +56,10 @@ in [`INSTALLING.md`](INSTALLING.md). Quick start for Claude Code:
 /plugin install kms
 ```
 
+## The knowledge-base core
+
+The schema, the structural checker and the conformance fixtures form a versioned core that other tools can pin without the skills; see [`docs/skills/core-contract.md`](docs/skills/core-contract.md).
+
 ## Repo structure
 
 ```

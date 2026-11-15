@@ -110,7 +110,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 ## Phase C — Define the contract
 
-### C1 [pending] [kms] Specify what a consumer pins
+### C1 [done] [kms] Specify what a consumer pins
 
 **What.** A short `docs/skills/core-contract.md` in kms stating: the schema (frontmatter per type, lifecycle words, id format, archive layout); the checker's CLI (`python3 lint_check.py --root <dir>`, exit codes, JSON output keys) as a stable interface; the marker conventions; what is explicitly not part of the contract (skill bodies, eval harness, templates' wording). Define compatibility: a patch release never changes accept/reject on a previously valid corpus; a minor release may add optional fields or new warning-level checks; a major release may reject what was valid and ships a migration note. Schema version moves independently of plugin version, but a release note links the two.
 
@@ -328,4 +328,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 B2 [done]: satisfied by 0071 fact boundary sentence; model text lands in 2.9
 - 2026-11-15 B3 [done]: satisfied by 2.9: model file begins with schema-version
 - 2026-11-15 B1 [done]: decision 0079 drafted (supersedes 0010, 0038, 0013); track dropped from model, checker, skills, corpus and fixtures; checks 14/15 retired; matrix regenerated with 2.7 split
+- 2026-11-15 C1 [done]: core-contract.md written; linked from the model and README; lint_check.py --version prints 1.0.0-draft
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

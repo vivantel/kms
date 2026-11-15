@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 12,
+   "file": "docs/guardrails/",
+   "severity": "error"
+  }
+ ]
+}
