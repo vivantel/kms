@@ -1,6 +1,6 @@
 ---
 name: lint
-description: Full-repo validation pass over a project's fact/decision/guardrail/skill knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, verbosity, and stale derived artifacts — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems".
+description: Full-repo validation pass over a project's fact/decision/guardrail/procedure knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, verbosity, and stale derived artifacts — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems".
 ---
 
 Scan every fact, decision, guardrail, and procedure in the project — not just what changed recently — and report every structural violation found. `capture` handles what a session just produced (new decisions, changed facts, contradictions, doc drift); this is everything else — the whole knowledge base's structural health, checked here and only here.
@@ -15,7 +15,7 @@ Known limits of check 9: placeholders (`NNNN`) and anything inside a decision fi
 
 ## What to check
 
-1. **Dangling references** [structural] — any `governed-by`, `grounded-in`, `superseded-by`, or `governed-facts` value pointing at an id that doesn't exist (`grounded-in` may resolve to a fact, decision, or guardrail id per `docs/decisions/0051-...`; the others resolve to a decision/fact id as before).
+1. **Dangling references** [structural] — any `governed-by`, `grounded-in`, `superseded-by`, or `governed-facts` value pointing at an id that doesn't exist (`governed-by` and `superseded-by` resolve to decisions, `grounded-in` to facts, `operationalizes` to guardrails; per `../../shared/artifact-model.md`).
 2. **Missing required fields** [structural] — any of the four types missing base frontmatter (`id`, `title`, `status`, `date`, `tags`); guardrails without `governed-by`/`grounded-in`/`derivation-note`; decisions without `track`; any of the four types with a `status` value outside `draft | active | superseded | deprecated`; a decision `status: superseded` without `superseded-by`; a `scope` that is not a non-empty mapping over `component | environment | version` with string values, or that sits on anything but a fact; a `grounded-in`/`governed-facts`/`operationalizes` value that isn't a YAML list (even a single-entry one), per `../../shared/artifact-model.md`.
 3. **Numbering collisions or gaps** [structural] — duplicate or skipped numbers in `facts/`/`decisions/`.
 4. **Expired decisions** [judgment] — any of the four governed types carrying an `expires` field whose date has passed or condition has plausibly been met, still standing without re-evaluation.

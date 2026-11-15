@@ -1,13 +1,13 @@
 ---
 name: bootstrap
-description: One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract intents from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
+description: One-time setup of a fact/decision/guardrail/procedure knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract decisions from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
 ---
 
-Set up the knowledge system this plugin's other skills assume: intents (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and procedures (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
+Set up the knowledge system this plugin's other skills assume: decisions (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and procedures (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
 
 ## Artifact model
 
-This skill's sibling `../../shared/artifact-model.md` defines the four artifact types, their fields, the derivation recipe, and the economy rule for stubs written here — read it before drafting anything.
+This skill's siblings `../../shared/artifact-model.md` (the schema: types, fields, lifecycle) and `../../shared/admission.md` (the gates and economy rule for stubs written here) — read both before drafting anything.
 
 ## Before starting
 
@@ -23,14 +23,14 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
-- Apply the artifact model's Admission section to each finding first; skip a finding that fails a hard gate or whose estimated shelf life times recurrence does not exceed its rediscovery cost, and list skipped findings in one line each.
+- Apply `admission.md` to each finding first; skip a finding that fails a hard gate or whose estimated shelf life times recurrence does not exceed its rediscovery cost, and list skipped findings in one line each.
 - Cluster the admitted findings by domain; write one decision stub per cluster: id, title, one-line motivation, `track: product | process` (exactly one), `expires` if bounded or provisional, `status: draft`.
 - Flag ambiguous entries inline (`<!-- looks like a decision, could be a behavioral rule — classify before finalizing -->`) rather than guessing.
 - Stop at the stub. Full authorship (rationale, tradeoffs) belongs to the domain that owns the decision.
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it: environmental or decision (see `../../shared/artifact-model.md`'s Artifact types). Apply the Admission section here too, then write one fact stub per admitted finding, `governed-by: TBD` when none exists yet.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it; a value that restates a decision is not a fact. Apply `admission.md` here too, then write one fact stub per admitted finding, with `source` where one exists.
 
 ### 3. Doc manifest bootstrap
 
@@ -100,7 +100,7 @@ If the `<!-- kms:start -->` marker isn't already present, insert a marked sectio
 <!-- kms:start -->
 ## Knowledge base
 
-This project uses kms's fact/decision/guardrail/skill knowledge system.
+This project uses kms's fact/decision/guardrail/procedure knowledge system.
 See `docs/{facts,decisions,guardrails,skills}/` — facts (what's true),
 decisions (what's committed to and why), guardrails (what must/must not
 happen), procedures (how to act). Maintained via `capture`

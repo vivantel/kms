@@ -1,6 +1,6 @@
 ---
 name: query
-description: Answer a question from a project's fact/decision/guardrail/skill knowledge base, with citations to the artifacts the answer is drawn from — never from memory or inference when the knowledge base already has the answer. Use when the user asks what was decided, why a rule exists, or what's currently true about the project, e.g. "what did we decide about X", "why does this guardrail exist".
+description: Answer a question from a project's fact/decision/guardrail/procedure knowledge base, with citations to the artifacts the answer is drawn from — never from memory or inference when the knowledge base already has the answer. Use when the user asks what was decided, why a rule exists, or what's currently true about the project, e.g. "what did we decide about X", "why does this guardrail exist".
 ---
 
 Search `docs/{facts,decisions,guardrails,skills}/` for the artifacts relevant to the question, then answer using only what they say — never from memory or inference when a real artifact already settles it.
