@@ -117,11 +117,11 @@ class LintCheck(unittest.TestCase):
         got = self.checks(**{"docs/skills/deploy.md": PROC.replace("status: active", "status: live")})
         self.assertIn(2, got)
 
-    def test_3_gap(self):
+    def test_3_gap_is_advisory(self):
         # the added fact is unreferenced, so check 7 also fires
         self.assertEqual(
             self.checks(**{"docs/facts/0003-x.md": FACT.replace("0001-cadence", "0003-x"), "docs/facts/INDEX.md": INDEX.format("0001-cadence,Releases are weekly,release,active\n0003-x,Releases are weekly,release,active")}),
-            [3, 7],
+            [7],  # a gap is advisory (a warning), not a finding
         )
 
     def test_7_orphan(self):

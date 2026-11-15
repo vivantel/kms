@@ -305,7 +305,7 @@ class Linter:
             if nums:
                 for n in range(1, max(nums)):
                     if n not in nums:
-                        self.add(3, f"{self.dn}/{t}/", f"number {n:04d} is skipped")
+                        self.warnings.append(f"number {n:04d} is skipped in {self.dn}/{t}/")  # gaps follow deletions and parallel numbering; only duplicates are findings
         owners = {}
         for a in self.arts:
             if a["fm"] and "id" in a["fm"]:
@@ -370,6 +370,8 @@ class Linter:
             corpus.append((p, p.read_text(encoding="utf-8")))
         for a in self.arts:
             if a["type"] not in ("facts", "guardrails") or a["archived"] or not a["fm"] or "id" not in a["fm"]:
+                continue
+            if a["type"] == "guardrails" and a["fm"].get("enforced-by"):  # enforced by a named check, so not orphaned
                 continue
             if a["fm"].get("kms-seeded") is True:  # a seeded guardrail is referenced by its template, not by project files
                 continue

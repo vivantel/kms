@@ -24,7 +24,7 @@ Every artifact: `id`, `title`, `status`, `date`, `tags`. Optional: `expires: <da
 - `tags`: from `docs/skills/tags.md` when it exists. A new tag is proposed (name, meaning, why nothing fits) and confirmed before use.
 - `superseded-by: <id>`: any type; required when `status: superseded`.
 - Fact: optional `source: <url | path | command>`, `last-verified: <date>` (moves only on re-observation), `scope: {component, environment, version}` (any non-empty subset; set whenever the claim is limited).
-- Guardrail: `governed-by: [<decision-id>, ...]` (non-superseded decisions), `derivation-note: <one sentence naming every id in both edges: given X and Y, Z must or must not follow>`; optional `grounded-in: [<fact-id>, ...]` (absent means a direct consequence of the governing decisions); optional `pinned: {<id>: <revision>}`.
+- Guardrail: `governed-by: [<decision-id>, ...]` (non-superseded decisions), `derivation-note: <one sentence naming every id in both edges: given X and Y, Z must or must not follow>`; optional `enforced-by: <code path | ci job | hook>` (the check that enforces it, which also keeps it from counting as orphaned); optional `grounded-in: [<fact-id>, ...]` (absent means a direct consequence of the governing decisions); optional `pinned: {<id>: <revision>}`.
 - Decision: optional `governed-facts: [<fact-id>, ...]`, `fitness-functions: [{check, enforced-by, last-verified}, ...]`, `accepted-by: <name | role>` (who is accountable; set when `status` first becomes `active`).
 - Procedure: optional `governed-by`, `operationalizes: [<guardrail-id>, ...]`.
 
@@ -48,4 +48,4 @@ A registry is a non-governed file: `INDEX.md`, `docs/skills/tags.md`, role lists
 
 `Decision (why) + Fact (what is) → Guardrail (ought)`. If a source changes, re-apply and propose updated guardrail text.
 
-<!-- fields: id title status date tags expires expires-when superseded-by source last-verified scope governed-by derivation-note grounded-in pinned governed-facts fitness-functions accepted-by operationalizes kms-registry kms-seeded kms-generated -->
+<!-- fields: id title status date tags expires expires-when superseded-by source last-verified scope governed-by derivation-note enforced-by grounded-in pinned governed-facts fitness-functions accepted-by operationalizes kms-registry kms-seeded kms-generated -->
