@@ -168,7 +168,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 | `clarify` | removed after one deprecation release | folded into `discover` as its interview mechanic (resolves redesign 3.1's duplicated interview text once) |
 | `changelog` | removed after one deprecation release | folded into `release` |
 
-### E1 [pending] [kms] Decision needed: skill moves and the deprecation window
+### E1 [done] [kms] Decision needed: skill moves and the deprecation window
 
 **What.** Record the table above as one decision per repo. Default deprecation window: one minor release in which the kms skill's description starts with "Deprecated: moved to go-getter, removed in 0.19" and still works.
 
@@ -276,6 +276,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0078-open-questions-are-draft-decisions.md` (2.8) | As written | 2.9 | Revert the 2.8 commit (restores 0030); revert dependents |
 | `docs/decisions/0079-drop-track-field.md` (B1) | As written | C, E, G | Revert the B1 commit (restores 0010, 0038, 0013, the guardrail and every `track:` line) |
 | `docs/decisions/0080-core-is-vendored-by-pin.md` (C3) | Vendor by pin | D1, G1 | Delete file and INDEX row; D1 changes with it |
+| `docs/decisions/0081-skill-moves-and-deprecation-window.md` (E1) | As written | E2, E3, H1, H3 | Revert E1 and E2 commits |
 
 ## Repo question: when a new repo is warranted
 
@@ -332,4 +333,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 C1 [done]: core-contract.md written; linked from the model and README; lint_check.py --version prints 1.0.0-draft
 - 2026-11-15 C2 [done]: conformance fixtures: 21 cases under evals/lint/conformance, at least one per checker rule, run by `python3 -m unittest discover -s evals/lint -t .` (also in CI)
 - 2026-11-15 C3 [done]: decision 0080 drafted (vendor by pin)
+- 2026-11-15 E1 [done]: decision 0081 drafted (skill moves, one-release deprecation)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
