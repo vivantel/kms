@@ -42,6 +42,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.1 [done]: decision 0071 drafted (supersedes 0064, amends 0009); owner acceptance pending (kms Plan-Step: 2.1)
 - 2026-11-15 2.2 [done]: decision 0072 drafted (supersedes 0051, amends 0027) (kms Plan-Step: 2.2)
 - 2026-11-15 2.3 [done]: decision 0073 drafted (amends 0039) (kms Plan-Step: 2.3)
+- 2026-11-15 2.4 [done]: decision 0074 drafted (amends 0013, 0029) (kms Plan-Step: 2.4)
 
 ## Phase 0 — Housekeeping
 
@@ -185,7 +186,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; 0039 amended in the same commit; the six rules are listed in the decision verbatim as they will appear in the model.
 
-### 2.4 [pending] Registries by marker; define the fitness-function inventory and `last-verified` (decision needed)
+### 2.4 [done] Registries by marker; define the fitness-function inventory and `last-verified` (decision needed)
 
 **Why.** Files that are not instances of any type live in the type directories: every `INDEX.md`; `docs/skills/tags.md` (a vocabulary filed as a procedure, tagged `scale`); the role lists bootstrap step 7 prescribes; `docs/facts/docs-manifest.md` (a watch-path registry filed as an un-numbered environmental fact, violating the model's `NNNN-slug` rule, passing the checker only because `kind`/`governed-by` were added by hand). The "fitness-function inventory" is written by `bootstrap` step 5 and `capture` check 3 and exists nowhere; lint check 18 reads only the `fitness-functions` field on decisions (seven carry it). The `kms-seeded`/`kms-generated` markers are frontmatter on some files and an HTML comment on `INDEX.md`; the model mentions neither form (it contains no `kms-` string; the forms are described in bootstrap, uninstall and lint).
 

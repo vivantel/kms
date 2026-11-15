@@ -66,3 +66,7 @@ contributor already gets from `kms`'s own `AGENTS.md`.
   semantic difference `uninstall`'s logic depends on. Rejected.
 - **Chosen: `<!-- kms:start/end -->` markers for the AGENTS.md section;
   `kms-generated: true` for dynamically-constructed files.**
+
+## Amendment 2026-11-15 (draft, per 0074)
+
+`docs/facts/docs-manifest.md` is a registry (`kms-registry: docs-manifest`), not a fact. See `0074-registries-by-marker`. The `## Decision` text above is unchanged.

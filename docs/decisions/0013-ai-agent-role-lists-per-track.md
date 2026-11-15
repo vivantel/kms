@@ -70,3 +70,7 @@ would just restate their own procedure, which
 - **Chosen: a lightweight, two-file checklist; bootstrap creates it as
   part of existing signal-scanning; steward maintains it; roadmap
   consults it only when present.**
+
+## Amendment 2026-11-15 (draft, per 0074)
+
+Role lists are registries (`kms-registry` marker), proposal-only. See `0074-registries-by-marker`. The `## Decision` text above is unchanged.
