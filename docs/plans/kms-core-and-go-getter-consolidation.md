@@ -122,7 +122,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** `python3 -m unittest discover -s evals/lint` runs it, at least one fixture exists per checker rule, and the fixture set is published as a tarball or directory path in `core-contract.md`.
 
-### C3 [pending] [kms] Decision needed: how go-getter consumes the core
+### C3 [done] [kms] Decision needed: how go-getter consumes the core
 
 **What.** Recommended: **vendor by pin**, not a runtime dependency and not a shared package. go-getter already has `check plugin-pin`, `check deps` and `check generated`; add `check core-pin`: the vendored `shared/artifact-model.md`, `lint_check.py` and the conformance fixtures are copied from a named kms release tag, and CI fails if the copy differs from the tag or if the schema version in `package.json` metadata does not match. A `go-getter core update <tag>` verb does the copy. Alternatives to record: install the kms plugin as a prerequisite (rejected: breaks the go-getter one-install story and adds a second plugin manifest to keep in sync); git submodule or subtree (rejected: heavy for four files); npm or pip package (deferred until a third consumer exists).
 
@@ -275,6 +275,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0077-more-structural-lint-checks-optional-pins.md` (2.7) | As written | 2.9, 2.10 | Revert the 2.7 commit (restores 0058, 0061, 0062); revert dependents |
 | `docs/decisions/0078-open-questions-are-draft-decisions.md` (2.8) | As written | 2.9 | Revert the 2.8 commit (restores 0030); revert dependents |
 | `docs/decisions/0079-drop-track-field.md` (B1) | As written | C, E, G | Revert the B1 commit (restores 0010, 0038, 0013, the guardrail and every `track:` line) |
+| `docs/decisions/0080-core-is-vendored-by-pin.md` (C3) | Vendor by pin | D1, G1 | Delete file and INDEX row; D1 changes with it |
 
 ## Repo question: when a new repo is warranted
 
@@ -330,4 +331,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 B1 [done]: decision 0079 drafted (supersedes 0010, 0038, 0013); track dropped from model, checker, skills, corpus and fixtures; checks 14/15 retired; matrix regenerated with 2.7 split
 - 2026-11-15 C1 [done]: core-contract.md written; linked from the model and README; lint_check.py --version prints 1.0.0-draft
 - 2026-11-15 C2 [done]: conformance fixtures: 21 cases under evals/lint/conformance, at least one per checker rule, run by `python3 -m unittest discover -s evals/lint -t .` (also in CI)
+- 2026-11-15 C3 [done]: decision 0080 drafted (vendor by pin)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
