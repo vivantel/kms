@@ -1,21 +1,22 @@
 ---
-id: decision-expires-must-be-reevaluated
+id: artifact-expires-must-be-reevaluated
 title: An artifact past its expires date or condition must be re-evaluated
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0039-unify-lifecycle-and-drop-scope
-grounded-in: [0001-knowledge-artifact-storage-convention]
+governed-by: [0039-unify-lifecycle-and-drop-scope, 0073-lifecycle-words-defined]
 derivation-note: >
-  Given decision 0039 (expires extends from decision-only to all four
-  artifact types), any fact/decision/guardrail/procedure past its bound
-  must be re-evaluated, not left standing as current.
+  Given decisions 0039 (expires applies to all four types) and 0073
+  (`expires` is a date, `expires-when` a condition), any artifact past its
+  bound must be re-evaluated, not left standing as current.
+pinned:
+  0039-unify-lifecycle-and-drop-scope: "47bb511d9633"
+  0073-lifecycle-words-defined: "f0001b479b5e"
 ---
 
 ## Guardrail
 
-Any fact, decision, guardrail, or procedure carrying an `expires` field
-whose date has passed, or whose condition has plausibly been met, MUST
+Any fact, decision, guardrail, or procedure carrying `expires` (a date) that has passed, or `expires-when` (a condition) that has plausibly been met, MUST
 be re-evaluated — its `status` updated (`active`, `superseded`,
 `deprecated`, or re-affirmed with a new `expires`) — not left standing
 as `active`. Plans are exempt — they don't carry `expires`

@@ -4,8 +4,8 @@ title: Kilo Code CLI's skill format and remote-skill-source schema
 status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, kilo, packaging]
-kind: environmental
-governed-by: 0035-native-kilo-code-support
+source: "https://kilo.ai/docs/customize/skills"
+last-verified: 2026-08-30
 ---
 
 Confirmed 2026-08-30 via Kilo's own docs (`kilo.ai/docs/customize/skills`,

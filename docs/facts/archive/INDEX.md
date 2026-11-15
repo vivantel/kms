@@ -1,3 +1,4 @@
+<!-- kms-registry: index -->
 <!-- kms-generated: true -->
 # Facts archive index (CSV)
 

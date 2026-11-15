@@ -4,8 +4,6 @@ title: Fields carrying the "Vivantel KMS" display name
 status: deprecated
 date: 2026-08-30
 tags: [kms, naming, branding]
-kind: decision
-governed-by: 0022-vivantel-kms-display-name
 ---
 
 The display-name change decided in

@@ -46,7 +46,7 @@ value (`docs/decisions/0038-track-field-mutual-exclusivity.md`).
 `status` moves through one shared lifecycle, with an optional `expires`
 (a date or condition) triggering early re-evaluation instead of letting
 a bounded decision stand as current past its own stated limit
-(`docs/guardrails/decision-expires-must-be-reevaluated.md`):
+(`docs/guardrails/artifact-expires-must-be-reevaluated.md`):
 
 ```mermaid
 stateDiagram-v2

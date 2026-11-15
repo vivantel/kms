@@ -4,8 +4,6 @@ title: OpenRouter's free-tier model access, rate limits, and quota-extension mec
 status: deprecated
 date: 2026-09-04
 tags: [kms, openrouter]
-kind: environmental
-governed-by: 0043-eval-harness-for-shipped-skill-changes
 ---
 
 Confirmed 2026-09-04 via current pricing/aggregator sources: OpenRouter

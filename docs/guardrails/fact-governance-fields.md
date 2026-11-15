@@ -1,32 +1,23 @@
 ---
 id: fact-governance-fields
-title: Facts must declare their kind and governing decision
+title: A fact must carry a `source` or be cited by another artifact
 status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0009-bootstrap-and-steward-skills
-grounded-in: [0001-knowledge-artifact-storage-convention]
+governed-by: [0071-facts-carry-no-outgoing-edges]
 derivation-note: >
-  Given decision 0009 (facts must be traceable to their kind and
-  governing decision), every fact file must declare kind and
-  governed-by.
+  Given decision 0071 (facts carry no outgoing edges; a fact is noise
+  unless re-observable or cited), every fact file must carry `source` or be
+  cited by another artifact.
+pinned:
+  0071-facts-carry-no-outgoing-edges: "36e8e0e9165e"
 ---
 
 ## Guardrail
 
-Any fact file MUST carry `kind` (`environmental | decision`, per decision 0064)
-and `governed-by` (a decision id, or `TBD` when no decision has been
-recorded yet — itself debt, but declared debt) — whether written by
-`bootstrap`/`capture` or by hand.
+Any fact file MUST carry `source` (a URL, path or command to re-observe it) or be cited by at least one other artifact, and MUST NOT carry `kind` or `governed-by`. A fact with neither `source` nor a citer is noise: flag it for removal.
 
 ## Derivation
 
-- **Axiomatic basis**: `docs/decisions/0009-bootstrap-and-steward-skills.md`
-  — the team committed to every fact being traceable to whether it's
-  observed from the world or chosen by the team, and to the decision that
-  governs it.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
-  establishes the base `id/title/status/date/tags` frontmatter this
-  guardrail extends.
-- **Normative conclusion**: therefore any fact file carries `kind` and
-  `governed-by`, regardless of how it was created.
+- **Axiomatic basis**: `docs/decisions/0071-facts-carry-no-outgoing-edges.md` — facts carry no outgoing edges; the arrow runs from consumers to facts.
+- **Normative conclusion**: therefore a fact stays admissible only while it can be re-observed or something depends on it.

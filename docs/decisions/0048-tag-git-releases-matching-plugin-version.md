@@ -5,7 +5,10 @@ status: active
 date: 2026-09-11
 tags: [kms, git, release, packaging]
 track: process
-fitness-functions: ["Once lint or a CI check can verify it cheaply, confirm every plugins/kms manifest version bump commit has a matching git tag of the same version pushed at or shortly after that commit — until then, this is manually maintained debt, not automated."]
+fitness-functions:
+  - check: "Once lint or a CI check can verify it cheaply, confirm every plugins/kms manifest version bump commit has a matching git tag of the same version pushed at or shortly after that commit — until then, this is manually maintained debt, not automated."
+    enforced-by: none
+    last-verified: 2026-11-15
 ---
 
 ## Decision

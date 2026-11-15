@@ -4,13 +4,17 @@ title: Every plugin manifest's version field must be bumped together
 status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, kilo, packaging, guardrail]
-governed-by: 0008-native-codex-plugin-support
+governed-by: [0008-native-codex-plugin-support]
 grounded-in: [0003-codex-plugin-manifest-schema, 0008-kilo-code-skills-spec]
 derivation-note: >
   Given decision 0008 (one skill set, many manifests, later extended to
   Kilo by decision 0035) and facts 0003 and 0008 (Codex's manifest and
   Kilo's index.json each carry their own independent version
   field/values), every manifest's version must move together.
+pinned:
+  0008-native-codex-plugin-support: "793c7301a540"
+  0003-codex-plugin-manifest-schema: "38a404354837"
+  0008-kilo-code-skills-spec: "b3a953909e58"
 ---
 
 ## Guardrail

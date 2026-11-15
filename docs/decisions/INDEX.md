@@ -1,3 +1,4 @@
+<!-- kms-registry: index -->
 <!-- kms-generated: true -->
 # Decisions index (CSV)
 id,title,tags,status

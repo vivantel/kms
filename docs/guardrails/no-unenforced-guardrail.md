@@ -4,13 +4,15 @@ title: A guardrail describing shipped behavior is incomplete until that behavior
 status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
-governed-by: 0027-baseline-guardrail-seeding
-grounded-in: [0027-baseline-guardrail-seeding, 0008-kilo-code-skills-spec]
+governed-by: [0027-baseline-guardrail-seeding]
+grounded-in: [0008-kilo-code-skills-spec]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
-  Seeded from kms's shipped guardrail templates, per
-  docs/decisions/0027-baseline-guardrail-seeding.md.
+  Given decision 0027 (baseline guardrails) and fact 0008-kilo-code-skills-spec (skills are the unit an agent loads), a guardrail on shipped behaviour is incomplete until the skill's body says so.
+pinned:
+  0027-baseline-guardrail-seeding: "35b7f519e641"
+  0008-kilo-code-skills-spec: "b3a953909e58"
 ---
 
 ## Guardrail

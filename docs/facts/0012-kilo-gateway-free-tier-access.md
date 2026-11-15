@@ -4,8 +4,10 @@ title: Kilo Code CLI's built-in gateway serves :free models with no account or A
 status: active
 date: 2026-09-10
 tags: [kms, kilo]
-kind: environmental
-governed-by: 0043-eval-harness-for-shipped-skill-changes
+source: 'kilo run --auto -m kilo/<model>:free "<prompt>" --print-logs'
+last-verified: 2026-09-10
+scope:
+  component: Kilo Code CLI built-in gateway
 ---
 
 Confirmed by testing 2026-09-10: Kilo Code CLI's own built-in model gateway (provider id

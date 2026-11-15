@@ -4,21 +4,20 @@ title: Guardrails must declare their derivation
 status: active
 date: 2026-08-29
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0009-bootstrap-and-steward-skills
-grounded-in: [0014-guardrails-carry-derivation-prose]
+governed-by: [0009-bootstrap-and-steward-skills, 0072-guardrail-derivation-edges-are-honest]
 derivation-note: >
-  Given decision 0009 (every normative artifact must trace to its
-  sources), every guardrail must declare governed-by, grounded-in, and
-  derivation-note.
+  Given decisions 0009 (every normative artifact traces to its sources) and
+  0072 (edges are decision lists plus optional fact grounding), every
+  guardrail must declare governed-by and derivation-note, and grounded-in
+  only when an independent fact exists.
+pinned:
+  0009-bootstrap-and-steward-skills: "e8010f80b33e"
+  0072-guardrail-derivation-edges-are-honest: "7f5f4a0941af"
 ---
 
 ## Guardrail
 
-Any guardrail file MUST carry `governed-by`, `grounded-in`, and
-`derivation-note` frontmatter — whether written by `bootstrap`/`capture`
-or by hand. Missing any of the three makes the guardrail undeclared — a
-norm with no stated basis — and it MUST be flagged as debt rather than
-left silent.
+Any guardrail file MUST carry `governed-by` (a list of decision ids) and `derivation-note`, and `grounded-in` (fact ids) when an independent fact exists — whether written by `bootstrap`/`capture` or by hand. Missing either required field makes the guardrail undeclared — a norm with no stated basis — and it MUST be flagged as debt rather than left silent.
 
 ## Derivation
 
@@ -26,9 +25,5 @@ left silent.
   — the team committed to a knowledge system where every normative
   artifact traces to the axiomatic and descriptive artifacts that
   produced it.
-- **Descriptive basis**: `docs/facts/0014-guardrails-carry-derivation-prose.md`
-  — this repo's own guardrails already carry `## Derivation` sections in
-  prose; this makes that existing pattern a structured, machine-checkable
-  frontmatter requirement rather than only a prose convention.
-- **Normative conclusion**: therefore any guardrail file carries these
-  three fields, regardless of how it was created.
+- **Axiomatic basis (edges)**: `docs/decisions/0072-guardrail-derivation-edges-are-honest.md` — `grounded-in` is optional and fact-only.
+- **Normative conclusion**: therefore any guardrail file carries these fields, regardless of how it was created.

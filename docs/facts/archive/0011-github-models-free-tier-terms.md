@@ -4,8 +4,6 @@ title: GitHub Models' free-tier API, GITHUB_TOKEN access, and context-window lim
 status: deprecated
 date: 2026-09-04
 tags: [kms, github-models]
-kind: environmental
-governed-by: 0043-eval-harness-for-shipped-skill-changes
 ---
 
 Confirmed 2026-09-04 via current documentation/aggregator sources:

@@ -4,13 +4,14 @@ title: Every skill must ship a colocated examples.md
 status: active
 date: 2026-08-30
 tags: [kms, packaging, documentation, guardrail]
-governed-by: 0018-per-skill-examples-convention
-grounded-in: TBD
+governed-by: [0018-per-skill-examples-convention]
 derivation-note: >
   Given decision 0018 (every skill ships worked usage examples,
   applied to all skills, not just new ones), a skill added without a
   colocated examples.md is incomplete, the same way a guardrail
   missing its derivation fields is incomplete.
+pinned:
+  0018-per-skill-examples-convention: "892a18daf312"
 ---
 
 ## Guardrail

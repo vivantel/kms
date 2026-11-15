@@ -6,7 +6,6 @@ status: active
 date: TBD
 tags: [knowledge-management, guardrail]
 governed-by: TBD
-grounded-in: TBD
 derivation-note: >
   Seeded from kms's shipped guardrail templates; if kept, draft a
   decision recording why, so this isn't permanent debt.

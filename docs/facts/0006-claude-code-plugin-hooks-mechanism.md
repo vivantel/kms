@@ -4,8 +4,8 @@ title: Claude Code plugin hooks — file location, schema, and event options
 status: active
 date: 2026-08-30
 tags: [kms, packaging, claude-code, hooks]
-kind: environmental
-governed-by: 0024-automate-steward-nudge-hook
+source: "https://code.claude.com/docs/en/hooks.md"
+last-verified: 2026-08-30
 ---
 
 Confirmed 2026-08-30 via Claude Code's own docs

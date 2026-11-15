@@ -4,12 +4,13 @@ title: Any artifact's tags must come from the canonical tag list, when one exist
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0042-tag-vocabulary-and-scoped-contradiction-check
-grounded-in: [0001-knowledge-artifact-storage-convention]
+governed-by: [0042-tag-vocabulary-and-scoped-contradiction-check]
 derivation-note: >
   Given decision 0042 (a canonical tag vocabulary exists so tag-scoped
   checks and discovery work), any artifact's tags must be drawn from
   that list once one exists, whoever wrote the file.
+pinned:
+  0042-tag-vocabulary-and-scoped-contradiction-check: "6002b7007dd4"
 ---
 
 ## Guardrail

@@ -7,6 +7,7 @@ tags: [kms, knowledge-management, documentation]
 kind: environmental
 governed-by: 0029-bootstrap-full-traceability
 kms-generated: true
+kms-registry: docs-manifest
 ---
 
 Maps each human-facing doc's sections to what they describe and what
@@ -63,7 +64,7 @@ this to decide whether a session's changes touched a watched path;
 | Section | Describes | Watch paths | Last verified |
 |---|---|---|---|
 | Overview | The core thesis | `docs/decisions/0052-...` | |
-| The artifact model | Type table, `track`, lifecycle (incl. `expires`/archive), derivation recipe worked example | `plugins/kms/shared/artifact-model.md`, `docs/decisions/0038-...`, `docs/guardrails/decision-expires-must-be-reevaluated.md`, `docs/guardrails/agent-agnostic-skill-content.md` (the worked example's own sources, `0006`/`0002`, if either is ever superseded/changed) | |
+| The artifact model | Type table, `track`, lifecycle (incl. `expires`/archive), derivation recipe worked example | `plugins/kms/shared/artifact-model.md`, `docs/decisions/0038-...`, `docs/guardrails/artifact-expires-must-be-reevaluated.md`, `docs/guardrails/agent-agnostic-skill-content.md` (the worked example's own sources, `0006`/`0002`, if either is ever superseded/changed) | |
 | Governance | Traceability/change-control/enforcement/accountability synthesis; explicit non-additions (`scope`, quality score, `domain`) | `docs/decisions/0053-...`, `0054-...`, `0039-...` | |
 | The four layers | `docs/` vs. `plugins/kms/skills/` vs. `templates/` vs. `hooks/` | `docs/skills/kms-architecture.md` (the agent-facing version of the same content — keep in sync) | |
 | How the skills fit together | All 14 skills grouped by role | `plugins/kms/skills/*/SKILL.md` (any added/removed/reclassified), actual skill count | |

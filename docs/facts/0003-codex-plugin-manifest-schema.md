@@ -4,8 +4,8 @@ title: Codex's plugin manifest schema and location
 status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
-kind: environmental
-governed-by: 0008-native-codex-plugin-support
+source: "https://developers.openai.com/codex/plugins/build"
+last-verified: 2026-07-29
 ---
 
 Confirmed 2026-07-29 via OpenAI's own developer docs

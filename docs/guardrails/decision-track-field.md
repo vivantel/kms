@@ -4,11 +4,12 @@ title: Every decision must declare its track
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0010-decision-track-field
-grounded-in: [0001-knowledge-artifact-storage-convention]
+governed-by: [0010-decision-track-field]
 derivation-note: >
   Given decision 0010 (decisions distinguish product from process),
   every decision must declare which, or the distinction has no teeth.
+pinned:
+  0010-decision-track-field: "80307451ae66"
 ---
 
 ## Guardrail

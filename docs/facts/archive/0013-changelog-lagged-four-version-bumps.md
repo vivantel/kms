@@ -4,8 +4,6 @@ title: CHANGELOG.md lagged four manifest version bumps before being backfilled
 status: deprecated
 date: 2026-09-12
 tags: [kms, git, changelog, release]
-kind: environmental
-governed-by: 0050-version-bump-changelog-linkage
 ---
 
 ## Fact
