@@ -25,3 +25,7 @@ The paper's claim that checks are mechanical applies only to the structural set,
 - **Label by "has a checker"**: simple, but circular. Check 9 shows the gap: the checker covers it, yet its exemptions are judged by the model.
 - **Relabel after the second rater**: would raise agreement artificially. The labels stay as fixed beforehand; the two disagreements (9, 24) are recorded.
 - **Chosen**: pre-fixed labels, one independent model rater, disagreements published. One rater is a model, so this shows the text is classifiable, not that people would agree.
+
+## Amendment 2026-11-15 (draft, per 0077)
+
+Checks 4, 17, 18, 24 become structural; checks 5, 6, 8, 10, 11, 16 are labelled "advisory". See `0077-more-structural-lint-checks-optional-pins`. The `## Decision` text above is unchanged.

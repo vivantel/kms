@@ -24,3 +24,7 @@ The script is new code, not the `hooks/lint_check.py` on `harness/impl/step_01`.
 - **Keep checks 7, 9 and 12 judgment-based**: avoids the two residual exemptions in check 9, but leaves lookups to the model's attention.
 - **A stricter check 9 that drops reports inside decision files**: fewer false positives, but a stale path in a decision is still a finding under check 20's own wording.
 - **Chosen: script all ten, document the check 9 limit.**
+
+## Amendment 2026-11-15 (draft, per 0077)
+
+Checks 4, 17, 18 and 24 join the script. See `0077-more-structural-lint-checks-optional-pins`. The `## Decision` text above is unchanged.

@@ -45,6 +45,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.4 [done]: decision 0074 drafted (amends 0013, 0029) (kms Plan-Step: 2.4)
 - 2026-11-15 2.5 [done]: decision 0075 drafted (kms Plan-Step: 2.5)
 - 2026-11-15 2.6 [done]: decision 0076 drafted (amends 0015, 0065) (kms Plan-Step: 2.6)
+- 2026-11-15 2.7 [done]: decision 0077 drafted (amends 0062, 0061, 0058) (kms Plan-Step: 2.7)
 
 ## Phase 0 — Housekeeping
 
@@ -218,7 +219,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; the two amendments are in the same commit; the four sentences are listed verbatim for 2.9.
 
-### 2.7 [pending] Make four more lint checks deterministic; keep pins optional (decision needed)
+### 2.7 [done] Make four more lint checks deterministic; keep pins optional (decision needed)
 
 **Why.** `evals/lint-matrix/results-2026-11-08.md`: judgment recall 0.00 on checks 5, 6, 8, 10, 11, 14, 24; 0.20 on 13, 16, 18; 0.40 on 17, 22, 23; 0.80 on 4; precision 0.20 on 23; 0.20 false-alarm rate on a clean corpus. Pinned edges moved check 13 from 0.20 recall to 1.00 with no false alarms. Checks 17 and 22 are "judged the same relative way check 14 judges a role gone cold" (`lint/SKILL.md:34,39`) while 14 defines no method and 18 says only "in a long time"; none is reproducible. But mandatory pins would make `python3` plus PyYAML a precondition for authoring a guardrail (a human in an editor, or a Codex/Kilo agent without Python, writes a file that fails check 2), against decision 0011's git-plus-Markdown substrate.
 

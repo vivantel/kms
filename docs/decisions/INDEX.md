@@ -71,3 +71,4 @@ id,title,tags,status
 0074-registries-by-marker,"Registries are identified by marker; the fitness-function inventory lives on decisions","kms, knowledge-management, taxonomy",draft
 0075-settle-names-keep-directories,"Settle the artifact names without renaming directories","kms, knowledge-management, taxonomy",draft
 0076-admission-reconciled-with-existing-rules,"Reconcile the admission test with the rules it contradicts","kms, knowledge-management, taxonomy",draft
+0077-more-structural-lint-checks-optional-pins,"Make four more lint checks structural; keep pins optional","kms, knowledge-management, eval-harness",draft
