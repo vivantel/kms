@@ -41,6 +41,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 1.1, 1.3, 1.4 [blocked]: need kilo/Codex CLI (absent here). Unblock by running on a machine with `kilo` installed (1.1 also needs the branch pushed); then 1.6 (release, tag) and phase 2 (owner-run roadmap interviews) follow.
 - 2026-11-15 2.1 [done]: decision 0071 drafted (supersedes 0064, amends 0009); owner acceptance pending (kms Plan-Step: 2.1)
 - 2026-11-15 2.2 [done]: decision 0072 drafted (supersedes 0051, amends 0027) (kms Plan-Step: 2.2)
+- 2026-11-15 2.3 [done]: decision 0073 drafted (amends 0039) (kms Plan-Step: 2.3)
 
 ## Phase 0 — Housekeeping
 
@@ -174,7 +175,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; 0051 archived with pointer; the decision lists the 17 guardrails' new edges (filled in 2.10).
 
-### 2.3 [pending] Define the lifecycle words the model already uses (decision needed)
+### 2.3 [done] Define the lifecycle words the model already uses (decision needed)
 
 **Why.** Eight `## Amendment` sections in four accepted decisions (0043 ×3, 0044 ×3, 0047, 0059); `fitness-functions` rewritten after acceptance (0040 at `4b356a4`, 0043 at `f025262`); 0008 gained `fitness-functions` 44 days after acceptance (`4db79fd`); `capture` check 1 itself edits an accepted decision's `status`/`superseded-by`; yet the model says "immutable once accepted" and `CONTRIBUTING.md:76-78` says "never an edit to the original". `date` is undefined. `deprecated` is undefined and 0066 used it for facts that are still true. `draft` has no stated force (1.5 fixes the `conform`/`query` half). `superseded-by` is decision-only in the model (0039), `status: superseded` is allowed on all four types, the checker demands `superseded-by` on all four, and a replaced fact (0012 replacing archived 0010, "now superseded") has no pointer. `expires` is "a date or condition" in one field, which is why check 4 is judgment. `docs/<type>/archive/` is described in an archived decision (0041), the lint preamble and bootstrap step 10, not in the model.
 

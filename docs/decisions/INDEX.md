@@ -67,3 +67,4 @@ id,title,tags,status
 0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",draft
 0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",draft
 0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",draft
+0073-lifecycle-words-defined,"Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once","kms, knowledge-management, taxonomy",draft
