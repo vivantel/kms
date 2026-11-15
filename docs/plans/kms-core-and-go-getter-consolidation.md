@@ -132,7 +132,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 All `[go-getter]` steps run in the worktree `feat/adopt-kms-core` (see Execution mode). They start after B3, C1 and C2 are `[done]` and the A4 verdict is *cleanup*.
 
-### D0 [pending] [go-getter] Twin decisions
+### D0 [done] [go-getter] Twin decisions
 
 **What.** Create the worktree and branch. Write go-getter-side drafts, same numbering rule as its `docs/decisions/INDEX.md`: boundary (twin of A3), consolidation superseding 0066 (twin of A4), vendor-by-pin (C3), skill moves (E1), eval ownership (F1). Each `status: draft`, no `accepted-by`, cross-linked to its kms twin by path, and added to the Owner decisions pending list. Run `npm run check:indexes`.
 
@@ -278,6 +278,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0080-core-is-vendored-by-pin.md` (C3) | Vendor by pin | D1, G1 | Delete file and INDEX row; D1 changes with it |
 | `docs/decisions/0081-skill-moves-and-deprecation-window.md` (E1) | As written | E2, E3, H1, H3 | Revert E1 and E2 commits |
 | `docs/decisions/0082-core-evals-live-in-kms.md` (F1) | As written | D3, F2 | Delete file and INDEX row |
+| go-getter `docs/decisions/0210..0214` on `feat/adopt-kms-core` (D0) | As written | D1-D3, E3 | Revert the D0 commit in the go-getter worktree |
 
 ## Repo question: when a new repo is warranted
 
@@ -337,4 +338,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 E1 [done]: decision 0081 drafted (skill moves, one-release deprecation)
 - 2026-11-15 F1 [done]: decision 0082 drafted (evals stay in kms)
 - 2026-11-15 E2 [done]: decide skill added (SKILL.md, examples.md, eval case evals/decide, CI matrix); roadmap, refactor-plan, brainstorm, clarify, changelog marked deprecated; README and index.json updated; versions untouched. The decide eval has not been run (blocked: no kilo CLI here)
+- 2026-11-15 D0 [done]: go-getter worktree created; five twin drafts 0210-0214 on feat/adopt-kms-core; check:indexes, docs-consistency, tags ok (go-getter 750fc14)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
