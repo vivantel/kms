@@ -48,7 +48,6 @@ id,title,tags,status
 0048-tag-git-releases-matching-plugin-version,"Tag git releases with the same version as plugin.json, not a separate sequence","kms, git, release, packaging",active
 0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active
 0050-version-bump-changelog-linkage,"Require a CHANGELOG entry for every plugin manifest version bump","kms, git, changelog, release, packaging",active
-0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",active
 0052-state-the-core-thesis-in-positioning-copy,"State kms's core thesis in its own positioning copy, not just its feature list","kms, discoverability, marketing",active
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
@@ -67,3 +66,4 @@ id,title,tags,status
 0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",draft
 0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",draft
 0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",draft
+0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",draft

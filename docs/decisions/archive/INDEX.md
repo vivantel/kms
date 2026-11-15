@@ -7,3 +7,4 @@ id,title,tags,status
 0046-tag-git-releases-independent-of-plugin-version,"Tag git releases, starting fresh at 0.1.0, independent of plugin.json's own version","kms, git, release, packaging",superseded
 0056-eval-gate-covers-study-base,"Run the eval gate on pull requests into study/base as well as master","kms, eval-harness, automation",superseded
 0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",superseded
+0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",superseded

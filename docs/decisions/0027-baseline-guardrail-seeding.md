@@ -100,3 +100,7 @@ like `templates/` (or `hooks/`, shipped earlier) at all, versus only the
 `skills` path its manifest declares, is unconfirmed — see
 `docs/facts/0003-codex-plugin-manifest-schema.md`'s own unconfirmed
 gaps. Not resolved here; flagged rather than assumed away.
+
+## Amendment 2026-11-15 (draft, per 0072)
+
+Seeded guardrail templates ship `governed-by: TBD`, no `grounded-in`, and `derivation-note: TBD`; `template-version` stays 1. See `0072-guardrail-derivation-edges-are-honest`. The `## Decision` text above is unchanged.

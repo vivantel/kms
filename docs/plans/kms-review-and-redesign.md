@@ -40,6 +40,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.2 [done]: master fast-forwarded; 16 local and 18 remote study branches deleted
 - 2026-11-12 1.1, 1.3, 1.4 [blocked]: need kilo/Codex CLI (absent here). Unblock by running on a machine with `kilo` installed (1.1 also needs the branch pushed); then 1.6 (release, tag) and phase 2 (owner-run roadmap interviews) follow.
 - 2026-11-15 2.1 [done]: decision 0071 drafted (supersedes 0064, amends 0009); owner acceptance pending (kms Plan-Step: 2.1)
+- 2026-11-15 2.2 [done]: decision 0072 drafted (supersedes 0051, amends 0027) (kms Plan-Step: 2.2)
 
 ## Phase 0 — Housekeeping
 
@@ -163,7 +164,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active with `accepted-by`; 0064 archived with pointer and index rows; 0009 amended; the decision names the five texts 2.9/2.10 will change.
 
-### 2.2 [pending] Make the derivation edges honest (decision needed)
+### 2.2 [done] Make the derivation edges honest (decision needed)
 
 **Why.** The model says a guardrail is "derived from an axiomatic commitment plus a descriptive fact" and "only valid while its sources are current", but `grounded-in` may hold "the same id already in `governed-by`" (0051). Tally over the 17 live guardrails: 6 "grounded" in `0001-knowledge-artifact-storage-convention` as filler ("establishes the base frontmatter"); 3 in their own `governed-by` (`one-statement-one-job` [0027], `token-economy` [0026], `no-unenforced-guardrail` [0027 plus fact 0008]); 1 in another decision; 2 in a sibling guardrail; 3 in facts now `deprecated` in `docs/facts/archive/` (`agent-agnostic-skill-content` → 0002, `guardrail-derivation-fields` → 0014, `version-bump-requires-changelog-entry` → 0013); 1 `TBD`; 2 in live independent facts (`plugin-manifest-version-sync` → 0003, 0008; and `no-unenforced-guardrail`'s second entry, 0008, already counted above among the self-grounded). The seven buckets sum to 18 because that one file is counted twice. `ARCHITECTURE.md:67-69`'s flagship example (0006 + 0002 → `agent-agnostic-skill-content`) has both sources retired and the guardrail is `active`, still `governed-by: 0006` (superseded); 0066 said "Nothing else is changed", contradicting the model. Nothing says what a guardrail does when its decision is superseded. `governed-by` is scalar while `plugin-manifest-version-sync` has two governing decisions (0008, 0035 as an "Extension" bullet). `derivation-note` has a stated shape ("given decision X and fact Y, Z must follow") but nothing checks it and three seeded copies carry a provenance line ("Seeded from kms's shipped guardrail templates, per 0027") instead. Procedures have `operationalizes` but no `governed-by`, although 0013 and 0042 created procedures.
 
