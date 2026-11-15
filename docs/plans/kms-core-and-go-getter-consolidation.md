@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1, A2 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-A3 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -64,7 +64,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** `consolidation-skill-diff.md` has one row per skill and per check with a verdict: identical, kms-ahead, go-getter-ahead, divergent. The totals decide the direction of every later port.
 
-### A3 [pending] [kms] Decision needed: boundary and non-goals (both repos, `track: process`)
+### A3 [done] [kms] Decision needed: boundary and non-goals (both repos, `track: process`)
 
 **What.** One decision per repo with the same text, linked from each:
 
@@ -264,6 +264,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 
 | Decision (file) | Recommended | Dependent steps | To revert |
 |---|---|---|---|
+| `docs/decisions/0069-kms-owns-durable-knowledge-not-specs-or-coordination.md` (A3) | As written (kms owns the four artifacts; specs and coordination out) | B2, E1, G1 | Delete the file and its INDEX row; revert dependents |
 
 ## Repo question: when a new repo is warranted
 
@@ -312,4 +313,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 plan drafted; branch `feat/kms-core-consolidation` cut from `plan/kms-review-and-redesign` @ 746aa93; no step executed.
 - 2026-11-15 A1 [done]: model diff written, verdict cleanup (9 identical, 4 kms-only, 3 go-getter-only, 2 conflicting) (kms see git log Plan-Step: A1)
 - 2026-11-15 A2 [done]: skill/checker diff written; 5 identical, 1 kms-ahead, 3 go-getter-ahead, 5 divergent; checker direction kms to go-getter (kms see git log Plan-Step: A2)
+- 2026-11-15 A3 [done]: boundary decision 0069 drafted, listed in Owner decisions pending (kms see git log Plan-Step: A3)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

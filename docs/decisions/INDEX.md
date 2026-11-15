@@ -65,3 +65,4 @@ id,title,tags,status
 0066-corpus-cleanup-under-admission-test,"Six facts that fail the admission test are deprecated; the other contested records stay","kms, knowledge-management, taxonomy",active
 0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",active
 0068-eval-gate-master-only,"Run the eval gate on pull requests into master only","kms, eval-harness, automation",active
+0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",draft
