@@ -46,6 +46,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.5 [done]: decision 0075 drafted (kms Plan-Step: 2.5)
 - 2026-11-15 2.6 [done]: decision 0076 drafted (amends 0015, 0065) (kms Plan-Step: 2.6)
 - 2026-11-15 2.7 [done]: decision 0077 drafted (amends 0062, 0061, 0058) (kms Plan-Step: 2.7)
+- 2026-11-15 2.8 [done]: decision 0078 drafted (amends 0030) (kms Plan-Step: 2.8)
 
 ## Phase 0 — Housekeeping
 
@@ -229,7 +230,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active with the three amendments; the decision lists the final structural/judgment split by number (expected: structural 1, 2, 3, 4, 7, 9, 12, 13-pinned, 15, 17, 18, 19, 20, 21, 24; judgment 5, 6, 8, 10, 11, 13-unpinned, 14, 16, 22, 23; 3.4 later adds structural check 25).
 
-### 2.8 [pending] Give open questions and hypotheses a stated home (decision needed, small)
+### 2.8 [done] Give open questions and hypotheses a stated home (decision needed, small)
 
 **Why.** Kinds of knowledge with no home: open questions (0053:35 refers to "the still-open question of stating kms's own governance" living only in prose), assumptions, risks, hypotheses (0014 gives "when the hypothesis test completes" as its example `expires` condition, with no record for the hypothesis itself), goals (every plan is disposable per 0037), experiment results (0065's tables live in a decision body), ownership beyond `accepted-by`.
 
