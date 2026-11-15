@@ -270,6 +270,10 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0072-guardrail-derivation-edges-are-honest.md` (2.2) | As written | 2.3-2.10 | Revert the 2.2 commit (restores 0051, 0027); revert dependents |
 | `docs/decisions/0073-lifecycle-words-defined.md` (2.3) | As written | 2.7-2.10 | Revert the 2.3 commit (restores 0039); revert dependents |
 | `docs/decisions/0074-registries-by-marker.md` (2.4) | As written | 2.7, 2.9, 2.10 | Revert the 2.4 commit (restores 0013, 0029); revert dependents |
+| `docs/decisions/0075-settle-names-keep-directories.md` (2.5) | As written | 2.9, 2.10 | Revert the 2.5 commit; revert dependents |
+| `docs/decisions/0076-admission-reconciled-with-existing-rules.md` (2.6) | As written | 2.9, 2.10 | Revert the 2.6 commit (restores 0015, 0065 text); revert dependents |
+| `docs/decisions/0077-more-structural-lint-checks-optional-pins.md` (2.7) | As written | 2.9, 2.10 | Revert the 2.7 commit (restores 0058, 0061, 0062); revert dependents |
+| `docs/decisions/0078-open-questions-are-draft-decisions.md` (2.8) | As written | 2.9 | Revert the 2.8 commit (restores 0030); revert dependents |
 
 ## Repo question: when a new repo is warranted
 

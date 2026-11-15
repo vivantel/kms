@@ -80,4 +80,4 @@ can't prove is its own.
 
 ## Amendment 2026-11-15 (draft, per 0078)
 
-Category 4 ("stale drafts") exempts a draft carrying `expires-when`, which is an open question. See `0078-open-questions-are-draft-decisions`. The `## Decision` text above is unchanged.
+Category 4 ("still-`status: draft` decisions") exempts a draft carrying `expires-when`, which is an open question. See `0078-open-questions-are-draft-decisions`. The `## Decision` text above is unchanged.
