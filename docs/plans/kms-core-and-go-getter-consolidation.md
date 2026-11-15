@@ -267,6 +267,9 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0069-kms-owns-durable-knowledge-not-specs-or-coordination.md` (A3) | As written (kms owns the four artifacts; specs and coordination out) | B2, E1, G1 | Delete the file and its INDEX row; revert dependents |
 | `docs/decisions/0070-kms-is-the-knowledge-base-core-consumed-by-pin.md` (A4) | Cleanup path: kms is the core, supersede 0067 on acceptance | B, C, D, E, F, G | Delete file and INDEX row; revert dependents; 0067 stays active |
 | `docs/decisions/0071-facts-carry-no-outgoing-edges.md` (2.1, B2) | As written | 2.2-2.10, B2 | Revert the 2.1 commit (restores 0064 and 0009); revert dependents |
+| `docs/decisions/0072-guardrail-derivation-edges-are-honest.md` (2.2) | As written | 2.3-2.10 | Revert the 2.2 commit (restores 0051, 0027); revert dependents |
+| `docs/decisions/0073-lifecycle-words-defined.md` (2.3) | As written | 2.7-2.10 | Revert the 2.3 commit (restores 0039); revert dependents |
+| `docs/decisions/0074-registries-by-marker.md` (2.4) | As written | 2.7, 2.9, 2.10 | Revert the 2.4 commit (restores 0013, 0029); revert dependents |
 
 ## Repo question: when a new repo is warranted
 

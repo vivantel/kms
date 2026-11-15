@@ -43,6 +43,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.2 [done]: decision 0072 drafted (supersedes 0051, amends 0027) (kms Plan-Step: 2.2)
 - 2026-11-15 2.3 [done]: decision 0073 drafted (amends 0039) (kms Plan-Step: 2.3)
 - 2026-11-15 2.4 [done]: decision 0074 drafted (amends 0013, 0029) (kms Plan-Step: 2.4)
+- 2026-11-15 2.5 [done]: decision 0075 drafted (kms Plan-Step: 2.5)
 
 ## Phase 0 — Housekeeping
 
@@ -196,7 +197,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; the two amendments are in the same commit; the decision names the skills 2.9 will update (`bootstrap` 3/5/7/10, `capture` 3/5/7, `lint` 18/19/21, `uninstall`, `query`/`onboard` index reads).
 
-### 2.5 [pending] Settle the names without renaming directories (decision needed, small)
+### 2.5 [done] Settle the names without renaming directories (decision needed, small)
 
 **Why.** The type is "Procedure" (model); the directory is `docs/skills/`; the index says "Skills index"; the tag is `procedural`; bootstrap and README say "fact/decision/guardrail/skill"; decision 0013 says "skill-prescription artifacts"; bootstrap calls decisions "intents" ("Intent extraction"); `roadmap/SKILL.md:84` lists "fact / intent / guardrail / skill / plan" and `:26` says "knowledge-steward-style" (0031 renamed steward to capture). The guardrail id `decision-expires-must-be-reevaluated` applies to all four types.
 

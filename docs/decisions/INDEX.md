@@ -69,3 +69,4 @@ id,title,tags,status
 0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",draft
 0073-lifecycle-words-defined,"Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once","kms, knowledge-management, taxonomy",draft
 0074-registries-by-marker,"Registries are identified by marker; the fitness-function inventory lives on decisions","kms, knowledge-management, taxonomy",draft
+0075-settle-names-keep-directories,"Settle the artifact names without renaming directories","kms, knowledge-management, taxonomy",draft
