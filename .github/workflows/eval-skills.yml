@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pip install pyyaml
-      - run: python3 -m unittest discover -s evals/lint/unit
+      - run: python3 -m unittest discover -s evals/lint -t .
       - run: python3 -m unittest discover -s evals/lint-matrix
       - run: python3 -m unittest discover -s evals/admission
       - run: python3 evals/lint-matrix/build.py --check

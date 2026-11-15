@@ -116,7 +116,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** The file exists, is linked from `plugins/kms/shared/artifact-model.md` and `README.md`, and `lint_check.py --version` prints the schema version it implements.
 
-### C2 [pending] [kms] Conformance fixtures
+### C2 [done] [kms] Conformance fixtures
 
 **What.** Add `evals/lint/conformance/` with a corpus of small valid and invalid artifact trees, each with its expected checker output (rule id, file, severity). It extends the existing `evals/lint/unit` tests (45 pass today). It is the thing go-getter runs to prove its vendored checker still agrees with kms's.
 
@@ -329,4 +329,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 B3 [done]: satisfied by 2.9: model file begins with schema-version
 - 2026-11-15 B1 [done]: decision 0079 drafted (supersedes 0010, 0038, 0013); track dropped from model, checker, skills, corpus and fixtures; checks 14/15 retired; matrix regenerated with 2.7 split
 - 2026-11-15 C1 [done]: core-contract.md written; linked from the model and README; lint_check.py --version prints 1.0.0-draft
+- 2026-11-15 C2 [done]: conformance fixtures: 21 cases under evals/lint/conformance, at least one per checker rule, run by `python3 -m unittest discover -s evals/lint -t .` (also in CI)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
