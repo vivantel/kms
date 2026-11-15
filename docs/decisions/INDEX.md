@@ -74,3 +74,4 @@ id,title,tags,status
 0079-drop-track-field,"Drop the decision track field and the role lists built on it","kms, knowledge-management, taxonomy",draft
 0080-core-is-vendored-by-pin,"go-getter consumes the knowledge-base core by vendoring it at a pinned release tag","kms, packaging",draft
 0081-skill-moves-and-deprecation-window,"Five skills leave kms after a one-release deprecation window; roadmap becomes decide","kms, scope, packaging",draft
+0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",draft

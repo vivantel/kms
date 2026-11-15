@@ -188,7 +188,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 ## Phase F — One eval suite
 
-### F1 [pending] [kms] Decision needed: where core evals run
+### F1 [done] [kms] Decision needed: where core evals run
 
 **What.** The core's skill evals (Kilo CLI against its free gateway, orchestrated by `promptfoo`; lint matrix; admission eval) stay in kms. go-getter runs only the conformance fixtures and its own harness evals. Record this so the same behaviour is not measured twice with two different harnesses. Note both repos use promptfoo (go-getter pins 0.123.1); align the version.
 
@@ -277,6 +277,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | `docs/decisions/0079-drop-track-field.md` (B1) | As written | C, E, G | Revert the B1 commit (restores 0010, 0038, 0013, the guardrail and every `track:` line) |
 | `docs/decisions/0080-core-is-vendored-by-pin.md` (C3) | Vendor by pin | D1, G1 | Delete file and INDEX row; D1 changes with it |
 | `docs/decisions/0081-skill-moves-and-deprecation-window.md` (E1) | As written | E2, E3, H1, H3 | Revert E1 and E2 commits |
+| `docs/decisions/0082-core-evals-live-in-kms.md` (F1) | As written | D3, F2 | Delete file and INDEX row |
 
 ## Repo question: when a new repo is warranted
 
@@ -334,4 +335,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 C2 [done]: conformance fixtures: 21 cases under evals/lint/conformance, at least one per checker rule, run by `python3 -m unittest discover -s evals/lint -t .` (also in CI)
 - 2026-11-15 C3 [done]: decision 0080 drafted (vendor by pin)
 - 2026-11-15 E1 [done]: decision 0081 drafted (skill moves, one-release deprecation)
+- 2026-11-15 F1 [done]: decision 0082 drafted (evals stay in kms)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
