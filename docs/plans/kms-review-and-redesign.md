@@ -39,6 +39,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-12 0.7 [done]: decision 0068 supersedes 0056; workflow master-only
 - 2026-11-12 0.2 [done]: master fast-forwarded; 16 local and 18 remote study branches deleted
 - 2026-11-12 1.1, 1.3, 1.4 [blocked]: need kilo/Codex CLI (absent here). Unblock by running on a machine with `kilo` installed (1.1 also needs the branch pushed); then 1.6 (release, tag) and phase 2 (owner-run roadmap interviews) follow.
+- 2026-11-15 2.1 [done]: decision 0071 drafted (supersedes 0064, amends 0009); owner acceptance pending (kms Plan-Step: 2.1)
 
 ## Phase 0 — Housekeeping
 
@@ -152,7 +153,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadmap` run producing one decision plus the disposition of the decisions it touches. Then 2.9 rewrites the model once and 2.10 migrates once. Nothing in phase 2 ships to users before 2.10 is complete; adopters see one format change in one CHANGELOG entry.
 
-### 2.1 [pending] Facts carry no outgoing edges; plain facts become admissible (decision needed)
+### 2.1 [done] Facts carry no outgoing edges; plain facts become admissible (decision needed)
 
 **Why.** Today a fact must carry `governed-by` (else `TBD` = debt aged by check 17), must "ground, or could plausibly ground, a decision or guardrail" (`docs/guardrails/fact-not-audit-log.md`), must be referenced (check 7), and must not be "stated in code, tests, config" (Admission gate 1). `ARCHITECTURE.md:29`'s own example "The service runs on port 8080" fails all four; the admission gold labels agree (`evals/admission/cases.tsv` c85 → `none`). `governed-by` means two things the model never separates: on a `kind: decision` fact, the decision that fixes the value; on every live environmental fact the arrow is inverted (fact 0003 "is the descriptive basis for 0008" yet carries `governed-by: 0008`; same in 0006, 0008, 0009, 0012). `kind: decision` facts are inadmissible by construction under gate 1 (a restatement of a sibling record); 0066 deprecated every one that existed; all seven live facts are environmental; the capture eval fixture still teaches the rejected shape (`evals/capture/fixture/docs/facts/0001-datastore-choice.md`). `last-verified` is used by `capture` check 2 (`SKILL.md:15`), `bootstrap` step 3 (`:37`) and `capture/examples.md:7` but is not a field in the model.
 

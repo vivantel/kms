@@ -96,7 +96,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** `grep -rn "track" plugins/kms` returns no model or checker hits except historical changelog text, the checker passes on a corpus with no `track`, and 0010/0038 are archived.
 
-### B2 [pending] [kms] Narrow facts to environmental and process facts
+### B2 [done] [kms] Narrow facts to environmental and process facts
 
 **What.** Folded into kms redesign step 2.1. A fact states something true about the environment or the process (tool behaviour, upstream contract, a figure recomputed from observation); it does not restate product behaviour. Product behaviour that must hold is a guardrail; what the product should do is a spec and lives in OpenSpec. Update the Admission section: "not already carried elsewhere" gains "or a spec tool".
 
@@ -266,6 +266,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 |---|---|---|---|
 | `docs/decisions/0069-kms-owns-durable-knowledge-not-specs-or-coordination.md` (A3) | As written (kms owns the four artifacts; specs and coordination out) | B2, E1, G1 | Delete the file and its INDEX row; revert dependents |
 | `docs/decisions/0070-kms-is-the-knowledge-base-core-consumed-by-pin.md` (A4) | Cleanup path: kms is the core, supersede 0067 on acceptance | B, C, D, E, F, G | Delete file and INDEX row; revert dependents; 0067 stays active |
+| `docs/decisions/0071-facts-carry-no-outgoing-edges.md` (2.1, B2) | As written | 2.2-2.10, B2 | Revert the 2.1 commit (restores 0064 and 0009); revert dependents |
 
 ## Repo question: when a new repo is warranted
 
@@ -316,4 +317,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 A2 [done]: skill/checker diff written; 5 identical, 1 kms-ahead, 3 go-getter-ahead, 5 divergent; checker direction kms to go-getter (kms see git log Plan-Step: A2)
 - 2026-11-15 A3 [done]: boundary decision 0069 drafted, listed in Owner decisions pending (kms see git log Plan-Step: A3)
 - 2026-11-15 A4 [done]: consolidation decision 0070 drafted on A1 verdict cleanup; gate passed, plan continues (kms see git log Plan-Step: A4)
+- 2026-11-15 B2 [done]: satisfied by 0071 fact boundary sentence; model text lands in 2.9
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

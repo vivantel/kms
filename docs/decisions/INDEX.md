@@ -60,10 +60,10 @@ id,title,tags,status
 0061-label-lint-checks-structural-or-judgment,"Each lint check carries a structural or judgment label, checked by a second rater","kms, eval-harness, knowledge-management",active
 0062-pin-edge-targets-by-content-hash,"Edges pin their targets by content hash in a parallel pinned map, compared by the checker","kms, knowledge-management, eval-harness",active
 0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
-0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",active
 0065-admission-test-for-new-records,"New records pass an admission test of hard gates and three estimated signals","kms, knowledge-management, taxonomy",active
 0066-corpus-cleanup-under-admission-test,"Six facts that fail the admission test are deprecated; the other contested records stay","kms, knowledge-management, taxonomy",active
 0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",active
 0068-eval-gate-master-only,"Run the eval gate on pull requests into master only","kms, eval-harness, automation",active
 0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",draft
 0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",draft
+0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",draft
