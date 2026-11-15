@@ -73,7 +73,10 @@ def kinds_by_id(docs):
             for p in d.glob("*.md") if d.is_dir() else []:
                 parts = split(p.read_text(encoding="utf-8"))
                 if parts:
-                    fm = yaml.safe_load("\n".join(parts[0])) or {}
+                    try:
+                        fm = yaml.safe_load("\n".join(parts[0])) or {}
+                    except yaml.YAMLError:
+                        fm = {}  # unparseable frontmatter: reported by lint_check, left alone here
                     ids[str(fm.get("id", p.stem))] = t
     return ids
 
@@ -84,6 +87,11 @@ def migrate_file(path, typ, ids, notes):
     if not parts:
         return text
     head, tail = parts
+    try:
+        yaml.safe_load("\n".join(head))
+    except yaml.YAMLError:
+        notes.append(f"{path.name}: unparseable frontmatter, skipped")
+        return text
     bl = blocks(head)
     keep = []
     for key, lines in bl:
