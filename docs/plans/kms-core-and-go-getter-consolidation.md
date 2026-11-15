@@ -138,7 +138,7 @@ All `[go-getter]` steps run in the worktree `feat/adopt-kms-core` (see Execution
 
 **Done when.** Five draft decision files exist on `feat/adopt-kms-core`, index rows added, `check:indexes` and `check:docs-consistency` pass.
 
-### D1 [pending] [go-getter] Add the pin and replace the fork
+### D1 [done] [go-getter] Add the pin and replace the fork
 
 **What.** Implement `check core-pin` and `core update` (C3). Replace `shared/artifact-model.md`, `src/shared/artifact-model.md` and go-getter's checker with the vendored copies. Keep go-getter's own additions (compiler `check` verbs for plans, indexes, packs and the harness) as separate checks that run after the core checker and never edit core files.
 
@@ -339,4 +339,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 F1 [done]: decision 0082 drafted (evals stay in kms)
 - 2026-11-15 E2 [done]: decide skill added (SKILL.md, examples.md, eval case evals/decide, CI matrix); roadmap, refactor-plan, brainstorm, clarify, changelog marked deprecated; README and index.json updated; versions untouched. The decide eval has not been run (blocked: no kilo CLI here)
 - 2026-11-15 D0 [done]: go-getter worktree created; five twin drafts 0210-0214 on feat/adopt-kms-core; check:indexes, docs-consistency, tags ok (go-getter 750fc14)
+- 2026-11-15 D1 [done]: core pinned at kms a47033c (src/core-pin.json); check core-pin, core update/status, core-pin test; artifact-extensions.md holds go-getter additions; npm test 1438 pass. Not done: 0066 remains active until the owner accepts 0211 (go-getter 9ea0f2b)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
