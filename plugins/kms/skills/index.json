@@ -57,6 +57,14 @@
       ]
     },
     {
+      "name": "decide",
+      "version": "0.15.0",
+      "files": [
+        "SKILL.md",
+        "examples.md"
+      ]
+    },
+    {
       "name": "lint",
       "version": "0.15.0",
       "files": [

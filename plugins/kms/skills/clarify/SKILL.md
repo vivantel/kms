@@ -1,6 +1,6 @@
 ---
 name: clarify
-description: Interview the user relentlessly about a plan, decision, or idea until reaching shared understanding. Use when the user wants their thinking stress-tested, or asks to be "grilled" or "interviewed".
+description: "Deprecated: moved to go-getter, removed in 0.19. Interview the user relentlessly about a plan, decision, or idea until reaching shared understanding. Use when the user wants their thinking stress-tested, or asks to be \"grilled\" or \"interviewed\"."
 ---
 
 Interview me relentlessly about every aspect of this until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one.

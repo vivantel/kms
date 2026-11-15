@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: Generate a CHANGELOG.md entry from git commit history (since the last tag, or full history if none exists), grouped Keep a Changelog style from Conventional Commit type prefixes and Why-bodies. Use when the user wants a changelog produced or updated, e.g. "generate a changelog", "update the changelog for this release".
+description: "Deprecated: moved to go-getter, removed in 0.19. Generate a CHANGELOG.md entry from git commit history (since the last tag, or full history if none exists), grouped Keep a Changelog style from Conventional Commit type prefixes and Why-bodies. Use when the user wants a changelog produced or updated, e.g. \"generate a changelog\", \"update the changelog for this release\"."
 ---
 
 Generate a `CHANGELOG.md` entry from git commit history. This skill only runs when explicitly invoked — never automatically.

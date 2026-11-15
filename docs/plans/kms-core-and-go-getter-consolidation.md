@@ -174,7 +174,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 **Done when.** The kms decision exists as a draft (go-getter twin in D0) and `docs/skills/kms-architecture.md` "Which skill does what" matches the table.
 
-### E2 [pending] [kms] Implement the moves in kms
+### E2 [done, eval run blocked: no kilo CLI] [kms] Implement the moves in kms
 
 **What.** Add `decide` (new body derived from `roadmap`'s record steps, with `examples.md` and an eval case per the every-skill-ships-examples guardrail). Mark the other four deprecated in their frontmatter descriptions. Update `README.md` skill table, `plugins/kms/skills/index.json`, the Codex and Claude manifests and all three versions in lockstep (`docs/guardrails/plugin-manifest-version-sync.md`).
 
@@ -336,4 +336,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 C3 [done]: decision 0080 drafted (vendor by pin)
 - 2026-11-15 E1 [done]: decision 0081 drafted (skill moves, one-release deprecation)
 - 2026-11-15 F1 [done]: decision 0082 drafted (evals stay in kms)
+- 2026-11-15 E2 [done]: decide skill added (SKILL.md, examples.md, eval case evals/decide, CI matrix); roadmap, refactor-plan, brainstorm, clarify, changelog marked deprecated; README and index.json updated; versions untouched. The decide eval has not been run (blocked: no kilo CLI here)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

@@ -1,6 +1,6 @@
 ---
 name: roadmap
-description: Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, decisions, guardrails, procedures) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. "interview me and save this as knowledge", "capture this as an ADR", "turn this into a roadmap".
+description: "Deprecated: moved to go-getter, removed in 0.19. Use `decide` for records. Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, decisions, guardrails, procedures) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. \"interview me and save this as knowledge\", \"capture this as an ADR\", \"turn this into a roadmap\"."
 ---
 
 Interview the user relentlessly about every aspect of the plan or decision until you reach a shared understanding, then convert that understanding into durable knowledge artifacts on disk. This skill shares its interview mechanics with the `clarify` skill but does not stop at shared understanding — its job is to generate and save new knowledge as artifacts, following whatever structure the project already uses.
