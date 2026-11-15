@@ -47,6 +47,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.6 [done]: decision 0076 drafted (amends 0015, 0065) (kms Plan-Step: 2.6)
 - 2026-11-15 2.7 [done]: decision 0077 drafted (amends 0062, 0061, 0058) (kms Plan-Step: 2.7)
 - 2026-11-15 2.8 [done]: decision 0078 drafted (amends 0030) (kms Plan-Step: 2.8)
+- 2026-11-15 2.9 [done]: model split into artifact-model.md (617 words) and admission.md (492); checker and tests updated (55 pass); skills re-pointed; schema-version 1.0.0-draft (kms Plan-Step: 2.9)
 
 ## Phase 0 — Housekeeping
 
@@ -240,7 +241,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; 0030 amended in the same commit; the rejection sentences are listed verbatim for 2.9.
 
-### 2.9 [pending] Rewrite the shared model as two files
+### 2.9 [done] Rewrite the shared model as two files
 
 **What.** Split `plugins/kms/shared/artifact-model.md` into (1) `artifact-model.md`, the normative **schema** read by every skill: types (four governed, registries by marker), one definition per field (`id`, `title`, `status`, `date`, `tags`, `expires`, `expires-when`, `source`, `last-verified`, `scope`, `governed-by`, `grounded-in`, `derivation-note`, `pinned`, `track`, `superseded-by`, `governed-facts`, `fitness-functions` map form, `accepted-by`, `operationalizes`, markers), lifecycle (status meanings, immutability scope, supersession and deprecation rules, `archive/`), edges (direction, list-ness, allowed targets, re-derivation on retirement), knowledge-directory detection ("the directory containing `decisions/`; procedures live in `skills/`"), file formats, index CSV, the 180-day threshold; target 600 words, exactly what the checker enforces; and (2) `admission.md`, the **writing guide** read only by `bootstrap`, `capture`, `roadmap` (and `quickstart` through them): the gates and signals as amended by 2.6, the rejection list from 2.8, the economy rule. `lint`, `conform`, `uninstall`, `query`, `onboard` load only the schema. Remove the parentheticals citing this repo's decisions (`0063-...`, `0051-...`). Update every skill that restates part of the model to say "per the artifact model" (the `roadmap` paragraphs restating modes, `track`, `status`, `expires`, `accepted-by`; the index rule stated in four skills; the umbrella-tag exclusion stated in four; the "apply Admission, say which gate failed" sentence stated in four). Update `lint_check.py` to the schema (list `governed-by` on guardrails, fact-only `grounded-in`, typed targets per field, `superseded-by` on all types, `expires` date check, `fitness-functions` map, `--refs <id>`, registry marker exclusion, detection sentence, threshold flag, advisory unpinned line, the bounded check 7 for facts from 2.1d, the check 17 exemption for a draft carrying `expires-when` from 2.8a, and a tolerant mode: a 0.16.0-shaped file (fact `kind`/`governed-by`, scalar guardrail `governed-by`, string `fitness-functions` entries) yields one advisory line per file and no finding unless `--strict` is passed) with unit tests, and the lint skill's check list and labels per 2.7. Ship both files through 1.1's channel.
 

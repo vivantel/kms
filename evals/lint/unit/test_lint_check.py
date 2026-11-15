@@ -83,9 +83,10 @@ class LintCheck(unittest.TestCase):
         self.root = tempfile.mkdtemp()
         self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
 
-    def checks(self, **over):
+    def checks(self, kw=None, **over):
+        kw = kw or {}
         project(self.root, **over)
-        return sorted({c for c, _, _ in Linter(self.root).run()})
+        return sorted({c for c, _, _ in Linter(self.root, today="2026-02-01", **kw).run()})
 
     def test_clean_project(self):
         self.assertEqual(self.checks(), [])
@@ -203,11 +204,12 @@ class LintCheck(unittest.TestCase):
     def test_13_source_body_changed(self):
         self.assertEqual(self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("Body.", "Releases are now monthly.")}), [13])
 
-    def test_13_source_status_changed(self):
+    def test_13_ignores_lifecycle_fields(self):
+        # pins track content, not lifecycle (decision 0077): a status change is check 20's business only
         self.assertEqual(
             self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("status: active", "status: deprecated"),
                            "docs/facts/INDEX.md": INDEX.format("0001-cadence,Releases are weekly,release,deprecated")}),
-            [13, 20],  # a deprecated fact is also an archive candidate
+            [20],
         )
 
     def test_13_ignores_date_cosmetics_and_own_edges(self):
@@ -351,3 +353,70 @@ class LintCheckBugFixes(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NewRules(unittest.TestCase):
+    def setUp(self):
+        self.root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def run_checks(self, today="2026-02-01", **over):
+        kw = over.pop("kw", {})
+        project(self.root, **over)
+        lin = Linter(self.root, today=today, **kw)
+        return sorted({c for c, _, _ in lin.run()}), lin
+
+    def test_legacy_shapes_are_advisory_then_strict_findings(self):
+        checks, lin = self.run_checks()
+        self.assertEqual(checks, [])
+        self.assertTrue(any("older shape: docs/facts/0001-cadence.md" in w for w in lin.warnings))
+        checks, _ = self.run_checks(kw={"strict": True})
+        self.assertEqual(checks, [2])
+
+    def test_strict_clean_new_shape(self):
+        over = {
+            "docs/facts/0001-cadence.md": FACT.replace("kind: environmental\ngoverned-by: 0001-weekly\n", "source: CHANGELOG.md\n"),
+            "docs/guardrails/changelog.md": GUARD.replace("governed-by: 0001-weekly", "governed-by: [0001-weekly]"),
+        }
+        self.assertEqual(self.run_checks(kw={"strict": True}, **over)[0], [])
+
+    def test_4_expired_date(self):
+        self.assertEqual(self.run_checks(today="2026-03-01", **{"docs/decisions/0001-weekly.md": DECISION.replace("track: process", "track: process\nexpires: 2026-02-01")})[0], [4])
+
+    def test_17_stale_draft_and_open_question_exemption(self):
+        d = DECISION.replace("status: active", "status: draft")
+        idx = {"docs/decisions/INDEX.md": INDEX.format("0001-weekly,Ship weekly,release,draft")}
+        self.assertEqual(self.run_checks(today="2026-09-01", **{"docs/decisions/0001-weekly.md": d}, **idx)[0], [17])
+        q = d.replace("track: process", "track: process\nexpires-when: the test closes")
+        self.assertEqual(self.run_checks(today="2026-09-01", **{"docs/decisions/0001-weekly.md": q}, **idx)[0], [])
+
+    def test_18_fitness_function_staleness(self):
+        ff = "track: process\nfitness-functions:\n  - {check: weekly tag, enforced-by: ci, last-verified: 2026-01-01}"
+        over = {"docs/decisions/0001-weekly.md": DECISION.replace("track: process", ff)}
+        self.assertEqual(self.run_checks(today="2026-02-01", **over)[0], [])
+        self.assertEqual(self.run_checks(today="2026-09-01", **over)[0], [18])
+
+    def test_24_completed_plan_not_archived(self):
+        plan = "---\nid: p\n---\n### 1 [done]\n### 2 [done]\n"
+        self.assertEqual(self.run_checks(**{"docs/plans/p.md": plan})[0], [24])
+        self.assertEqual(self.run_checks(**{"docs/plans/p.md": plan.replace("### 2 [done]", "### 2 [pending]")})[0], [])
+
+    def test_7_fact_with_source_is_not_an_orphan(self):
+        fact = FACT.replace("kind: environmental\ngoverned-by: 0001-weekly\n", "source: CHANGELOG.md\n")
+        guard = GUARD.replace("grounded-in: [0001-cadence]\n", "")
+        self.assertEqual(self.run_checks(**{"docs/facts/0001-cadence.md": fact, "docs/guardrails/changelog.md": guard})[0], [])
+        self.assertEqual(self.run_checks(**{"docs/facts/0001-cadence.md": FACT, "docs/guardrails/changelog.md": guard})[0], [7])
+
+    def test_registry_is_skipped(self):
+        reg = "---\nkms-registry: roles\n---\nnot an artifact\n"
+        self.assertEqual(self.run_checks(**{"docs/skills/roles.md": reg})[0], [])
+
+    def test_refs(self):
+        project(self.root)
+        self.assertEqual(Linter(self.root).refs("0001-weekly"), ["docs/facts/0001-cadence.md", "docs/guardrails/changelog.md"])
+
+    def test_governed_by_superseded_decision(self):
+        over = {"docs/decisions/0001-weekly.md": DECISION.replace("status: active", "status: superseded\nsuperseded-by: 0002-x"),
+                "docs/guardrails/changelog.md": GUARD.replace("governed-by: 0001-weekly", "governed-by: [0001-weekly]")}
+        checks, _ = self.run_checks(kw={"strict": True}, **over)
+        self.assertIn(1, checks)

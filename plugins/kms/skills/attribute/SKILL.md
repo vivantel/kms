@@ -16,7 +16,7 @@ This skill only runs when explicitly invoked. Never apply its conventions to a p
    - Blank line.
    - A body paragraph explaining the intent — not merely what changed.
    - Blank line.
-   - One `Refs: <repo-relative-path>` git trailer per confirmed artifact (e.g. `Refs: docs/decisions/0003-commit-trailer-traceability.md`). Never use an issue number or a prose mention in place of this trailer.
+   - One `Refs: <repo-relative-path>` git trailer per confirmed artifact (e.g. `Refs: docs/decisions/000X-slug.md`). Never use an issue number or a prose mention in place of this trailer.
 
 ## Writing a PR description
 

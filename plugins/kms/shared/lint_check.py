@@ -1,23 +1,32 @@
 #!/usr/bin/env python3
 """Deterministic structural checks for the `lint` skill.
 
-Usage: lint_check.py [--root DIR] [--docs DIR] [--json]
+Usage: lint_check.py [--root DIR] [--docs DIR] [--json] [--strict] [--stale-days N] [--today DATE]
+       lint_check.py [--root DIR] --refs ID        list the files that cite ID
+       lint_check.py --version                     print the schema version this checker implements
        lint_check.py [--root DIR] --pin FILE   record the current revision of FILE's edge targets
 
-Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 7, 9, 12,
-15, 19, 20, 21 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
+Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 4, 7, 9, 12,
+15, 17, 18, 19, 20, 21, 24 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
 edge (`governed-by`, `grounded-in`) that carries a pin in the file's `pinned` map is stale when
 its target no longer hashes to the pin. Edges without a pin are left to the model. No model is
 involved; output is sorted, so identical input gives identical output. Exit status 1 when
 anything is found. Requires PyYAML.
+
+A file in an older shape (fact `kind`/`governed-by`, a scalar guardrail `governed-by`, a string
+`fitness-functions` entry, a non-date `expires`) yields one advisory line on stderr and no
+finding; `--strict` turns those into findings (check 2).
 
 A pin is the first 12 hex digits of the SHA-256 of the target file with its edge fields
 (`governed-by`, `grounded-in`, `pinned`) and `date` removed from the frontmatter and all
 whitespace runs collapsed (decision 0062).
 """
 
+SCHEMA_VERSION = "1.0.0-draft"  # first line of shared/artifact-model.md
+
 import argparse
 import csv
+import datetime
 import hashlib
 import json
 import re
@@ -30,15 +39,28 @@ import yaml
 TYPES = ("facts", "decisions", "guardrails", "skills")
 BASE_FIELDS = ("id", "title", "status", "date", "tags")
 TYPE_FIELDS = {
-    "guardrails": ("governed-by", "grounded-in", "derivation-note"),
+    "guardrails": ("governed-by", "derivation-note"),
     "decisions": ("track",),
 }
 STATUSES = ("draft", "active", "superseded", "deprecated")
 REF_FIELDS = ("governed-by", "grounded-in", "superseded-by", "governed-facts", "operationalizes")
 LIST_FIELDS = ("grounded-in", "governed-facts", "operationalizes")
+STALE_DAYS = 180
+STEP = re.compile(r"^#{2,4}\s+\S+\s+\[(done|pending|blocked[^\]]*)\]", re.M)
+
+
+def as_date(v):
+    if isinstance(v, datetime.datetime):
+        return v.date()
+    if isinstance(v, datetime.date):
+        return v
+    try:
+        return datetime.date.fromisoformat(str(v))
+    except ValueError:
+        return None
 NUMBERED = re.compile(r"^(\d{4})-")
 EDGE_FIELDS = ("governed-by", "grounded-in")
-PIN_IGNORED = EDGE_FIELDS + ("pinned", "date")
+PIN_IGNORED = EDGE_FIELDS + ("pinned", "date", "accepted-by", "last-verified", "status", "superseded-by", "expires", "expires-when")
 SCOPE_KEYS = ("component", "environment", "version")
 
 
@@ -105,7 +127,11 @@ def edge_ids(fm):
 
 
 class Linter:
-    def __init__(self, root, docs=None):
+    def __init__(self, root, docs=None, strict=False, stale_days=STALE_DAYS, today=None):
+        self.strict = strict
+        self.stale_days = stale_days
+        self.today = as_date(today) if today else datetime.date.today()
+        self.legacy_files = {}  # rel -> [message]
         self.root = Path(root)
         self.docs = self.find_docs(docs)
         self.dn = self.docs.relative_to(self.root).as_posix()
@@ -134,6 +160,20 @@ class Linter:
     def add(self, check, rel, msg):
         self.findings.append((check, str(rel), msg))
 
+    def legacy(self, check, rel, msg):
+        """A finding under --strict, else one advisory line per file for an older-shape field."""
+        if self.strict:
+            self.add(check, rel, msg)
+        else:
+            self.legacy_files.setdefault(str(rel), []).append(msg)
+
+    def is_registry(self, text, fm):
+        return bool(fm and "kms-registry" in fm) or text.lstrip().startswith("<!-- kms-registry:")
+
+    def age(self, d):
+        d = as_date(d)
+        return None if d is None else (self.today - d).days
+
     def rel(self, p):
         return p.relative_to(self.root)
 
@@ -148,6 +188,8 @@ class Linter:
                         continue
                     text = p.read_text(encoding="utf-8")
                     fm, err = split_frontmatter(text)
+                    if self.is_registry(text, fm):
+                        continue
                     self.arts.append(
                         dict(type=t, archived=archived, path=p, rel=self.rel(p), fm=fm, text=text, err=err)
                     )
@@ -185,6 +227,20 @@ class Linter:
                 self.add(2, rel, f"`status` is `{st}`, not one of {' | '.join(STATUSES)}")
             if st == "superseded" and "superseded-by" not in fm:
                 self.add(2, rel, "`status: superseded` without `superseded-by`")
+            if a["type"] == "guardrails" and "governed-by" in fm and not isinstance(fm["governed-by"], list) and fm["governed-by"] != "TBD":
+                self.legacy(2, rel, "`governed-by` on a guardrail should be a YAML list of decision ids")
+            if a["type"] == "facts":
+                for f in ("kind", "governed-by"):
+                    if f in fm:
+                        self.legacy(2, rel, f"`{f}` is not a fact field any more")
+            if "expires" in fm and as_date(fm["expires"]) is None:
+                self.legacy(2, rel, "`expires` must be a date; move a condition to `expires-when`")
+            ff = fm.get("fitness-functions")
+            if isinstance(ff, list):
+                for e in ff:
+                    if not isinstance(e, dict) or "check" not in e:
+                        self.legacy(2, rel, "`fitness-functions` entries should be maps with `check`")
+                        break
             for f in LIST_FIELDS:
                 if f in fm and not isinstance(fm[f], list) and fm[f] != "TBD":
                     self.add(2, rel, f"`{f}` must be a YAML list, got {type(fm[f]).__name__}")
@@ -217,6 +273,7 @@ class Linter:
                 self.add(2, rel, f"`scope.{k}` must be a non-empty string")
 
     def check_dangling(self):  # 1
+        by_id = {str(a["fm"]["id"]): a for a in self.arts if a["fm"] and "id" in a["fm"]}
         for a in self.arts:
             fm = a["fm"] or {}
             for f in REF_FIELDS:
@@ -227,6 +284,12 @@ class Linter:
                     r = str(r)
                     if r != "TBD" and r not in self.ids:
                         self.add(1, a["rel"], f"`{f}` points at `{r}`, which does not exist")
+                    elif r != "TBD" and a["type"] == "guardrails" and not a["archived"]:
+                        t = by_id.get(r)
+                        if t and f == "governed-by" and t["type"] == "decisions" and (t["fm"] or {}).get("status") == "superseded":
+                            self.legacy(1, a["rel"], f"`governed-by` points at `{r}`, a superseded decision: re-derive")
+                        if t and f == "grounded-in" and t["type"] != "facts":
+                            self.legacy(1, a["rel"], f"`grounded-in` points at `{r}`, which is not a fact")
 
     def check_numbering(self):  # 3
         for t in ("facts", "decisions"):
@@ -310,6 +373,8 @@ class Linter:
             if a["type"] not in ("facts", "guardrails") or a["archived"] or not a["fm"] or "id" not in a["fm"]:
                 continue
             if a["fm"].get("kms-seeded") is True:  # a seeded guardrail is referenced by its template, not by project files
+                continue
+            if a["type"] == "facts" and a["fm"].get("source"):  # a fact with a source is not noise
                 continue
             pat = re.compile(r"(?<![\w\-])" + re.escape(str(a["fm"]["id"])) + r"(?![\w\-])")
             if not any(p != a["path"] and pat.search(t) for p, t in corpus):
@@ -406,6 +471,53 @@ class Linter:
                     if rid not in files and (t, archived, rid) not in self.broken:
                         self.add(19, rel, f"row `{rid}` has no file in this directory")
 
+    def check_dates(self):  # 4, 17, 18
+        for a in self.arts:
+            fm, rel = a["fm"], a["rel"]
+            if not fm or a["archived"]:
+                continue
+            exp = as_date(fm.get("expires")) if "expires" in fm else None
+            if exp is not None and exp < self.today:
+                self.add(4, rel, f"`expires: {exp}` has passed")
+            if fm.get("status") == "draft" and "expires-when" in fm:
+                continue  # an open question, not an abandoned stub
+            tbd = [f for f in EDGE_FIELDS if fm.get(f) == "TBD" or (isinstance(fm.get(f), list) and "TBD" in fm[f])]
+            n = self.age(fm.get("date"))
+            if (tbd or fm.get("status") == "draft") and n is not None and n > self.stale_days:
+                what = ", ".join(f"`{f}: TBD`" for f in tbd) or "`status: draft`"
+                self.add(17, rel, f"{what} unresolved for {n} days (threshold {self.stale_days})")
+            for e in fm.get("fitness-functions") or []:
+                if isinstance(e, dict):
+                    n = self.age(e.get("last-verified")) if "last-verified" in e else None
+                    if "last-verified" not in e or n is None:
+                        self.add(18, rel, f"fitness function `{str(e.get('check'))[:40]}` has no `last-verified` date")
+                    elif n > self.stale_days:
+                        self.add(18, rel, f"fitness function `{str(e.get('check'))[:40]}` last verified {n} days ago (threshold {self.stale_days})")
+
+    def check_plans(self):  # 24
+        plans = self.docs / "plans"
+        for p in sorted(plans.glob("*.md")) if plans.is_dir() else []:
+            states = [m.group(1).split(":")[0] for m in STEP.finditer(p.read_text(encoding="utf-8"))]
+            if states and all(x == "done" for x in states):
+                self.add(24, self.rel(p), "every step is `done`, but the plan is not under plans/archive/")
+
+    def refs(self, target):
+        """Files that cite TARGET in an edge field or in prose."""
+        self.load()
+        pat = re.compile(r"(?<![\w\-])" + re.escape(target) + r"(?![\w\-])")
+        out = []
+        for a in self.arts:
+            own = str((a["fm"] or {}).get("id", a["path"].stem))
+            if own != target and pat.search(a["text"]):
+                out.append(str(a["rel"]))
+        return sorted(out)
+
+    def check_unpinned(self):  # advisory
+        for a in self.arts:
+            fm = a["fm"] or {}
+            if a["type"] == "guardrails" and not a["archived"] and edge_ids(fm) and not fm.get("pinned"):
+                self.warnings.append(f"unpinned: {a['rel']}: run `--pin`")
+
     def check_archive(self):  # 20
         for a in self.arts:
             if not a["archived"] and a["fm"] and a["fm"].get("status") in ("superseded", "deprecated"):
@@ -429,6 +541,9 @@ class Linter:
             self.check_fields,
             self.check_dangling,
             self.check_pins,
+            self.check_dates,
+            self.check_plans,
+            self.check_unpinned,
             self.check_numbering,
             self.check_orphans,
             self.check_prose_refs,
@@ -439,6 +554,8 @@ class Linter:
         ):
             c()
         self.findings = sorted(set(self.findings))
+        for rel in sorted(self.legacy_files):
+            self.warnings.append(f"older shape: {rel}: " + "; ".join(self.legacy_files[rel]))
         return self.findings
 
 
@@ -448,11 +565,23 @@ def main():
     ap.add_argument("--docs", metavar="DIR", help="knowledge directory (default: docs/, else the first root-level directory holding decisions/)")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--pin", metavar="FILE", help="record the current revision of FILE's edge targets")
+    ap.add_argument("--refs", metavar="ID", help="list the files that cite ID")
+    ap.add_argument("--strict", action="store_true", help="report older-shape fields as findings")
+    ap.add_argument("--stale-days", type=int, default=STALE_DAYS)
+    ap.add_argument("--today", metavar="DATE", help="override today's date (YYYY-MM-DD), for tests")
+    ap.add_argument("--version", action="store_true", help="print the schema version and exit")
     args = ap.parse_args()
+    if args.version:
+        print(SCHEMA_VERSION)
+        return
+    if args.refs:
+        for r in Linter(args.root, args.docs).refs(args.refs):
+            print(r)
+        return
     if args.pin:
         Linter(args.root, args.docs).pin(args.pin)
         return
-    linter = Linter(args.root, args.docs)
+    linter = Linter(args.root, args.docs, args.strict, args.stale_days, args.today)
     findings = linter.run()
     for w in linter.warnings:
         print("warning: " + w, file=sys.stderr)

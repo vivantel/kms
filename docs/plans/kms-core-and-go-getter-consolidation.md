@@ -102,7 +102,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** Redesign 2.1 and 2.6 name this boundary and the model has one sentence for it.
 
-### B3 [pending] [kms] Fix the model's shape by owner decision
+### B3 [done] [kms] Fix the model's shape by owner decision
 
 **What.** Redesign steps 2.2 to 2.9 stay as written. This plan adds one requirement to 2.9: the model file begins with a `schema-version:` line (semver, starts at `1.0.0` on the first release after 2.10) and a changelog of schema changes. That version is what go-getter pins (phase C).
 
@@ -325,4 +325,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 A3 [done]: boundary decision 0069 drafted, listed in Owner decisions pending (kms see git log Plan-Step: A3)
 - 2026-11-15 A4 [done]: consolidation decision 0070 drafted on A1 verdict cleanup; gate passed, plan continues (kms see git log Plan-Step: A4)
 - 2026-11-15 B2 [done]: satisfied by 0071 fact boundary sentence; model text lands in 2.9
+- 2026-11-15 B3 [done]: satisfied by 2.9: model file begins with schema-version
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
