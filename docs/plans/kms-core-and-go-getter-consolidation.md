@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: ready to execute; no step done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -52,7 +52,7 @@ This plan is executed end to end by an agent on **feature branches**, in as many
 
 All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (no worktree needed).
 
-### A1 [pending] [kms] Diff the two artifact models
+### A1 [done] [kms] Diff the two artifact models
 
 **What.** Produce `docs/plans/archive/consolidation-model-diff.md` comparing `plugins/kms/shared/artifact-model.md` with go-getter `shared/artifact-model.md` field by field: base frontmatter, per-type fields, lifecycle words, admission rules, derivation recipe, archive layout, id format, tag vocabulary, marker conventions (`kms-seeded`, `kms-generated`, `<!-- kms:start -->`) and what go-getter renamed or added (it uses `track`, `accepted-by`, `governed-facts`, `enforcement` fields in its own corpus; confirm each). Classify every difference as identical, cosmetic, additive in one side, or conflicting.
 
@@ -310,4 +310,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 ## Progress log
 
 - 2026-11-15 plan drafted; branch `feat/kms-core-consolidation` cut from `plan/kms-review-and-redesign` @ 746aa93; no step executed.
+- 2026-11-15 A1 [done]: model diff written, verdict cleanup (9 identical, 4 kms-only, 3 go-getter-only, 2 conflicting) (kms see git log Plan-Step: A1)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
