@@ -44,6 +44,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.3 [done]: decision 0073 drafted (amends 0039) (kms Plan-Step: 2.3)
 - 2026-11-15 2.4 [done]: decision 0074 drafted (amends 0013, 0029) (kms Plan-Step: 2.4)
 - 2026-11-15 2.5 [done]: decision 0075 drafted (kms Plan-Step: 2.5)
+- 2026-11-15 2.6 [done]: decision 0076 drafted (amends 0015, 0065) (kms Plan-Step: 2.6)
 
 ## Phase 0 — Housekeeping
 
@@ -207,7 +208,7 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 **Done when.** Decision active; `grep -nE "knowledge-steward|skill prescription|fact / intent|fact/decision/guardrail/skill" plugins/kms/skills/*/SKILL.md plugins/kms/shared/*.md` returns nothing (checked after 2.9).
 
-### 2.6 [pending] Reconcile the admission test with the rules it contradicts (decision needed)
+### 2.6 [done] Reconcile the admission test with the rules it contradicts (decision needed)
 
 **Why.** 0015:36 (active): "A one-time observation that actually grounds a guardrail … is exactly the kind of fact this system wants"; the Admission section (0065, active): "Reject a raw reading, run result, status or timestamped event"; 0066 then deprecated fact 0013 ("CHANGELOG.md lagged four manifest version bumps"), 0015's archetype and the sole `grounded-in` of `version-bump-requires-changelog-entry`. Admission says "Name a role or system, not a person" while `accepted-by` holds a person's name in 0065/0066. Gate 1's "not already carried … in a sibling record" collides with the requirement that a fact be cited: once a decision cites and restates it, the fact is "carried". 0066 concedes 27 legacy records bundle several claims and gives adopters no guidance. 0065's known misses (c10, c14, c26) are all real kms decisions.
 

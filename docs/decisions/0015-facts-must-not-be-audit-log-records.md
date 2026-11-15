@@ -49,3 +49,7 @@ be as unenforceable as the guardrails already removed in
   this), not something true only "whenever `steward` runs."
 - **Chosen: grounds-a-decision-or-guardrail vs. no-forward-looking-purpose
   as the test, enforced by both a steward check and a guardrail.**
+
+## Amendment 2026-11-15 (draft, per 0076)
+
+An incident-grounded fact is admitted only while a guardrail cites it in `grounded-in`, and retires with that guardrail. See `0076-admission-reconciled-with-existing-rules`. The `## Decision` text above is unchanged.
