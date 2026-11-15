@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-A3 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-A4 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -77,7 +77,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** The kms decision exists as `status: draft` (next free number, `track: process` until B1 removes the field), is added to the Owner decisions pending list, and names the go-getter twin it will be linked to (written in D0). It supersedes nothing yet. Skill moves are separate (phase E).
 
-### A4 [pending] [kms] Decision needed: consolidation and the clean-break gate
+### A4 [done] [kms] Decision needed: consolidation and the clean-break gate
 
 **What.** After A1 and A2, record one decision in each repo that supersedes kms 0067 and go-getter 0066: the knowledge-base core is defined once and consumed by pinned schema version; go-getter ships no fork of it. Chosen path depends on A1's verdict:
 
@@ -265,6 +265,7 @@ Every decision drafted by an agent step is listed here with its file path, recom
 | Decision (file) | Recommended | Dependent steps | To revert |
 |---|---|---|---|
 | `docs/decisions/0069-kms-owns-durable-knowledge-not-specs-or-coordination.md` (A3) | As written (kms owns the four artifacts; specs and coordination out) | B2, E1, G1 | Delete the file and its INDEX row; revert dependents |
+| `docs/decisions/0070-kms-is-the-knowledge-base-core-consumed-by-pin.md` (A4) | Cleanup path: kms is the core, supersede 0067 on acceptance | B, C, D, E, F, G | Delete file and INDEX row; revert dependents; 0067 stays active |
 
 ## Repo question: when a new repo is warranted
 
@@ -314,4 +315,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 A1 [done]: model diff written, verdict cleanup (9 identical, 4 kms-only, 3 go-getter-only, 2 conflicting) (kms see git log Plan-Step: A1)
 - 2026-11-15 A2 [done]: skill/checker diff written; 5 identical, 1 kms-ahead, 3 go-getter-ahead, 5 divergent; checker direction kms to go-getter (kms see git log Plan-Step: A2)
 - 2026-11-15 A3 [done]: boundary decision 0069 drafted, listed in Owner decisions pending (kms see git log Plan-Step: A3)
+- 2026-11-15 A4 [done]: consolidation decision 0070 drafted on A1 verdict cleanup; gate passed, plan continues (kms see git log Plan-Step: A4)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.

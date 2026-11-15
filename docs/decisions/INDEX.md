@@ -66,3 +66,4 @@ id,title,tags,status
 0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",active
 0068-eval-gate-master-only,"Run the eval gate on pull requests into master only","kms, eval-harness, automation",active
 0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",draft
+0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",draft
