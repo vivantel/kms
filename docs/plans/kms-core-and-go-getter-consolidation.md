@@ -340,5 +340,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 E2 [done]: decide skill added (SKILL.md, examples.md, eval case evals/decide, CI matrix); roadmap, refactor-plan, brainstorm, clarify, changelog marked deprecated; README and index.json updated; versions untouched. The decide eval has not been run (blocked: no kilo CLI here)
 - 2026-11-15 D0 [done]: go-getter worktree created; five twin drafts 0210-0214 on feat/adopt-kms-core; check:indexes, docs-consistency, tags ok (go-getter 750fc14)
 - 2026-11-15 D1 [done]: core pinned at kms a47033c (src/core-pin.json); check core-pin, core update/status, core-pin test; artifact-extensions.md holds go-getter additions; npm test 1438 pass. Not done: 0066 remains active until the owner accepts 0211 (go-getter 9ea0f2b)
-- 2026-11-16 D2 [blocked]: corpus migrated (go-getter %s); 21 facts lack source/citer; tests unverified because disk is full. Stopped; see docs/plans/archive/consolidation-handover.md
+- 2026-11-16 D2 [blocked]: corpus migrated (go-getter branch tip); 21 facts lack source/citer; tests unverified because disk is full. Stopped; see docs/plans/archive/consolidation-handover.md
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
