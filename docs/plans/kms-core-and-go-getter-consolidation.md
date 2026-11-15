@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1, A2 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -58,7 +58,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 **Done when.** The file exists and has a count per class and a one-paragraph verdict: "alignment is a cleanup" (at most about 5 conflicting items, all mechanical) or "alignment is a rewrite" (otherwise).
 
-### A2 [pending] [kms] Diff the 14 shared skills and the two checkers
+### A2 [done] [kms] Diff the 14 shared skills and the two checkers
 
 **What.** For each of the 14 skills present in both repos (`attribute`, `bootstrap`, `brainstorm`, `capture`, `changelog`, `clarify`, `conform`, `lint`, `onboard`, `query`, `quickstart`, `refactor-plan`, `roadmap`, `uninstall`), record body word count in each repo, normalised diff size and whether the divergence is host-specific (go-getter targets 7 hosts through a compiler) or semantic. Compare `lint_check.py` with go-getter's lint (a skill plus `check` verbs in `compiler/`) and with its `check docs-consistency`, `check indexes`, `check tags`, `check plans`. List what go-getter's checks cover that kms's do not, and the reverse.
 
@@ -311,4 +311,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 
 - 2026-11-15 plan drafted; branch `feat/kms-core-consolidation` cut from `plan/kms-review-and-redesign` @ 746aa93; no step executed.
 - 2026-11-15 A1 [done]: model diff written, verdict cleanup (9 identical, 4 kms-only, 3 go-getter-only, 2 conflicting) (kms see git log Plan-Step: A1)
+- 2026-11-15 A2 [done]: skill/checker diff written; 5 identical, 1 kms-ahead, 3 go-getter-ahead, 5 divergent; checker direction kms to go-getter (kms see git log Plan-Step: A2)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
