@@ -73,7 +73,7 @@ its contradiction-scoping test. Frontmatter: the base fields plus `kms-generated
 
 ### 8. Seed baseline artifacts
 
-This skill's sibling `../../templates/` holds one subdirectory per artifact type kms ships seed content for (currently just `guardrails/`). For each `<type>/` subdirectory and each template not yet present (by `id`) in this project's `docs/<type>/`, write it directly, like any other stub this skill produces: copy the template as-is, replace `date: TBD` with today's date, drop its `template-version` field, and add `kms-seeded: true` and `kms-template-version: <the template's own template-version>`. Leave whichever debt-marking fields apply to that artifact type (see `../../shared/artifact-model.md` — e.g. `governed-by`/`grounded-in` for a guardrail, `governed-by` alone for a fact) as `TBD` unless the team later drafts a decision for it.
+This skill's sibling `../../templates/` holds one subdirectory per artifact type kms ships seed content for (currently just `guardrails/`). For each `<type>/` subdirectory and each template not yet present (by `id`) in this project's `docs/<type>/`, write it directly, like any other stub this skill produces: copy the template as-is, replace `date: TBD` with today's date, drop its `template-version` field, and add `kms-seeded: true` and `kms-template-version: <the template's own template-version>`. Leave whichever debt-marking fields apply to that artifact type (see `../../shared/artifact-model.md` — e.g. `governed-by`/`grounded-in` for a guardrail; a fact has none) as `TBD` unless the team later drafts a decision for it.
 
 ### 9. Wire into the project's own agent-instructions file
 

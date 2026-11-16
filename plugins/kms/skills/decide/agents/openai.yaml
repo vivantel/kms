@@ -1,0 +1,5 @@
+interface:
+  display_name: "Decide"
+  short_description: "Interview a decision into admissible knowledge records"
+policy:
+  allow_implicit_invocation: false

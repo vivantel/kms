@@ -10,15 +10,15 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 1. **`kms-seeded: true` files** — anywhere under `docs/`, matching this skill's sibling `../../templates/` (one subdirectory per artifact type; currently just `guardrails/`).
 2. **`kms-generated: true` files** — scan for the marker anywhere under `docs/`, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time (currently `docs/skills/tags.md`, `docs/facts/docs-manifest.md` and the `INDEX.md` files, written by `bootstrap`; these registries also carry `kms-registry`).
 3. **The `<!-- kms:start -->`/`<!-- kms:end -->` block** in the project's agent-instructions file (`AGENTS.md` or whatever host-specific equivalent it uses), if present.
-4. **Still-`status: draft` decisions, or facts still `governed-by: TBD`** — a proposal (from `bootstrap` or from `capture`'s own check 1, which drafts stubs the same way) that nobody has acted on yet. Report these separately from categories 1-3 and note plainly that they carry no `kms-seeded`/`kms-generated` marker — they're identified by status, not by marker.
+4. **Still-`status: draft` decisions** — a proposal (from `bootstrap` or from `capture`'s own check 1, which drafts stubs the same way) that nobody has acted on yet. Skip a draft that carries `expires-when`: that is an open question the team is keeping. Report these separately from categories 1-3 and note plainly that they carry no `kms-seeded`/`kms-generated` marker — they're identified by status, not by marker.
 
 ## Report first, then act
 
-List everything found, grouped by category, before asking about any of it — never surface per-file prompts one at a time with no overview. Then, per finding, ask: **detach** (strip `kms-seeded`/`kms-generated`, or the AGENTS.md markers alone leaving the section text, keeping everything else as the team's own) or **remove** (delete the file, or delete just the marked block from AGENTS.md, or delete the still-draft decision/fact). Same confirmation for both — propose, wait for an explicit yes, exactly like every other skill in this plugin.
+List everything found, grouped by category, before asking about any of it — never surface per-file prompts one at a time with no overview. Then, per finding, ask: **detach** (strip `kms-seeded`/`kms-generated`, or the AGENTS.md markers alone leaving the section text, keeping everything else as the team's own) or **remove** (delete the file, or delete just the marked block from AGENTS.md, or delete the still-draft decision). Same confirmation for both — propose, wait for an explicit yes, exactly like every other skill in this plugin.
 
 ## Never touch
 
-Any decision/fact past `status: draft`/`governed-by: TBD` — that's the team's own commitment, regardless of topic, marker or no marker. Any guardrail without a `kms-seeded` marker, or any other file without `kms-generated`, outside of category 4 above — that's project-owned. Custom guardrails the team wrote themselves, even ones that resemble something `kms` seeds.
+Any decision past `status: draft`, and any draft carrying `expires-when`, and any fact — that's the team's own commitment, regardless of topic, marker or no marker. Any guardrail without a `kms-seeded` marker, or any other file without `kms-generated`, outside of category 4 above — that's project-owned. Custom guardrails the team wrote themselves, even ones that resemble something `kms` seeds.
 
 ## Out of scope
 

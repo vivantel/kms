@@ -15,6 +15,9 @@ on:
     paths:
       - "plugins/kms/skills/**"
       - "plugins/kms/shared/**"
+      - "evals/lint/**"
+      - "evals/lint-matrix/**"
+      - "evals/admission/**"
   issue_comment:
     types: [created]
 
@@ -25,6 +28,7 @@ permissions:
 jobs:
   unit:
     name: unit tests
+    if: github.event_name != 'issue_comment'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
