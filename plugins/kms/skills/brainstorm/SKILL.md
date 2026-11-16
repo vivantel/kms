@@ -1,6 +1,6 @@
 ---
 name: brainstorm
-description: "Deprecated: moved to go-getter, removed in 0.19. Generative ideation partner that explores multiple approaches to a problem or feature without writing anything or consulting the knowledge base. Use when the user wants options generated before any decision exists, e.g. \"brainstorm approaches for implementing websocket reconnection logic\", \"what are some ways to solve X\"."
+description: "Deprecated: moved to go-getter, removed in 0.17. Generative ideation partner that explores multiple approaches to a problem or feature without writing anything or consulting the knowledge base. Use when the user wants options generated before any decision exists, e.g. \"brainstorm approaches for implementing websocket reconnection logic\", \"what are some ways to solve X\"."
 ---
 
 Generate distinct approaches to a problem, then synthesize a recommendation — without writing to disk or querying `docs/{facts,decisions,guardrails,skills}/`.

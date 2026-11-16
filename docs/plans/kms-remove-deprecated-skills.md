@@ -1,13 +1,13 @@
 ---
 id: kms-remove-deprecated-skills
 title: Remove the five kms skills deprecated in favour of go-getter
-status: pending; starts one minor release after the deprecation ships (decision 0081)
+status: pending; ships in 0.17, the minor release after the deprecation (decision 0081, amended 2026-11-16)
 date: 2026-11-16
 ---
 
 # Remove the deprecated kms skills
 
-Steps are `[pending]` until the release that deprecated `roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog` is out and one minor release has passed.
+Steps are `[pending]` until 0.17 is being prepared: 0.16 deprecated `roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog`, and the window is that one minor release.
 
 ### R1 [pending] Delete the skill directories
 **What.** Remove `plugins/kms/skills/{roadmap,brainstorm,clarify,refactor-plan,changelog}/` and their `evals/` cases and CI matrix rows.
