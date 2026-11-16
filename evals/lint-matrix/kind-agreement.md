@@ -1,6 +1,6 @@
 # Fact `kind`: rater agreement before and after (2026-11-08)
 
-14 facts (12 live, 2 archived), `kind` removed from the text, labelled from the definitions plus the fact text only. Two raters per condition, same two models in both: R1 = Sonnet-class subagent, R2 = Haiku-class subagent. No repository access. Raters are models, so this measures whether the definitions are unambiguous to a reader, not human agreement.
+14 facts (12 live, 2 archived), `kind` removed from the text, labelled from the definitions plus the fact text only. Two raters per condition, same two models in both: R1 = Sonnet-class subagent, R2 = Haiku-class subagent. No repository access. Raters are models, so this shows the facts are classifiable by a model reader; it is not inter-rater reliability, and the result is a fit to these 14 facts, not a held-out test.
 
 Before: `environmental | decision | derived | mixed`, with the definitions then in `artifact-model.md`. After: `environmental | decision`, defined by verification method (decision 0064).
 

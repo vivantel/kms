@@ -74,3 +74,5 @@ id,title,tags,status
 0080-core-is-vendored-by-pin,"go-getter consumes the knowledge-base core by vendoring it at a pinned release tag","kms, packaging",active
 0081-skill-moves-and-deprecation-window,"Five skills leave kms after a one-release deprecation window; roadmap becomes decide","kms, scope, packaging",active
 0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",active
+0083-conform-covers-whole-changeset,"conform checks the whole changeset, including knowledge-base files and the facts a diff may falsify","kms, knowledge-management",draft
+0084-study-tags-and-unmerged-branches,"Study tags are measurement snapshots exempt from the release-tag rule; three study branches were not merged","kms, packaging",draft
