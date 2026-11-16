@@ -6,6 +6,8 @@ date: 2026-09-12
 tags: [kms, knowledge-management, audit]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); a dated count that one grep re-derives.
+
 As of 2026-09-12, all 17 live guardrails under `docs/guardrails/` carry
 a `## Derivation` prose section stating their axiomatic/descriptive
 basis and normative conclusion — the observation

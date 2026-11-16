@@ -6,6 +6,8 @@ date: 2026-08-30
 tags: [kms, naming, branding]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); the fields are visible in the manifests and restate decision 0022.
+
 The display-name change decided in
 `docs/decisions/0022-vivantel-kms-display-name.md` touches these fields:
 

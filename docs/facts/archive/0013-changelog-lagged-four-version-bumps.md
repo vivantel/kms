@@ -6,6 +6,8 @@ date: 2026-09-12
 tags: [kms, git, changelog, release]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); a timestamped past lag already recorded in history and `CHANGELOG.md`.
+
 ## Fact
 
 As of 2026-09-12, `plugins/kms/.claude-plugin/plugin.json`'s `version`

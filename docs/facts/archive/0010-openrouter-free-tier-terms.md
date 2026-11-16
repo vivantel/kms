@@ -6,6 +6,8 @@ date: 2026-09-04
 tags: [kms, openrouter]
 ---
 
+Deprecated: the eval harness moved to Kilo's own free gateway (decision 0043 amendment), so nothing depends on OpenRouter's terms; kept as the record of the path tried first.
+
 Confirmed 2026-09-04 via current pricing/aggregator sources: OpenRouter
 offers 27+ models at $0/token (id suffix `:free`), usable with a $0
 balance and no credit card, including coding-capable options (Qwen3
