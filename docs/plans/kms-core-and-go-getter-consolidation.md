@@ -150,7 +150,7 @@ All `[go-getter]` steps run in the worktree `feat/adopt-kms-core` (see Execution
 
 **Done when.** The core checker passes on go-getter's own `docs/` with no suppressed findings, and `npm test` plus `npm run check:docs-consistency` pass.
 
-### D3 [pending] [go-getter] Re-run go-getter's own evals
+### D3 [blocked: evals and e2e spend money and read ~/.claude credentials; owner runs them] [go-getter] Re-run go-getter's own evals
 
 **What.** Run `npm run eval` and `eval:bypass` and the lifecycle e2e (`scripts/e2e/lifecycle.mjs`) against the migrated corpus and core skills.
 
@@ -342,4 +342,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 D1 [done]: core pinned at kms a47033c (src/core-pin.json); check core-pin, core update/status, core-pin test; artifact-extensions.md holds go-getter additions; npm test 1438 pass. Not done: 0066 remains active until the owner accepts 0211 (go-getter 9ea0f2b)
 - 2026-11-16 D2 [blocked]: superseded by the line below (cleared in a later session)
 - 2026-11-16 D2 [done]: 21 facts given a `source`; core checker clean (advisory warnings only); npm test 1438 pass, check:generated/docs-consistency/indexes/versions/core-pin ok (go-getter a37d4ea)
+- 2026-11-16 D3 [blocked]: `npm run eval`, `eval:bypass` and `e2e:lifecycle` call real model providers (cost, ~/.claude token); not run. Offline `npm test` 1438 pass stands in
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
