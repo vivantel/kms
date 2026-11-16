@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-G1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-H1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -208,7 +208,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 **Done when.** Both READMEs link to each other and to `core-contract.md`; `lint` and `conform` pass on both repos.
 
-### G2 [pending] [kms] Dogfood and traceability
+### G2 [done] [kms] Dogfood and traceability
 
 **What.** Record this work in each repo's knowledge base through the new `decide` flow once available: boundary, consolidation, skill moves, pin mechanism. Archive superseded decisions with index rows. Run `lint` and `conform` on both.
 
@@ -216,7 +216,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 ## Phase H — Release preparation (the agent prepares, the owner releases)
 
-### H1 [pending] [kms] Prepare the kms release
+### H1 [done] [kms] Prepare the kms release
 
 **What.** Write the `CHANGELOG.md` entry (via the repo's own conventions), the schema-version note, the deprecation notices and the upgrade note for users of the five deprecated skills. Do **not** change `version` in any manifest, tag, or push. Leave a `docs/plans/release-notes-next.md` the owner can paste from.
 
@@ -346,4 +346,6 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 E3 [done]: five skills kept (count unchanged, 17); bootstrap/capture/lint/roadmap and examples drop `track`, role lists and restated field rules; lint check 2 defers to the core checker; build and npm test 1438 pass. Not done: folding clarify into discover and changelog into release (no `release` skill exists; kept as is, left to the owner with 0213) (go-getter 4aabae4)
 - 2026-11-16 F2 [done]: conformance fixtures run in kms CI (existing) and in go-getter `npm test` (new core-pin test, CHECKER=vendored checker); pin moved to kms fdd1bba; npm test 1439 pass (kms fdd1bba / go-getter c24e10b)
 - 2026-11-16 G1 [done]: kms README/ARCHITECTURE/INSTALLING and go-getter README state the story, link each other and core-contract.md, give the OpenSpec boundary; thesis sentence kept; structural checker clean on both (the `lint`/`conform` skills themselves are model-run and not executed here) (kms see git log Plan-Step: G1 / go-getter fa90e06)
+- 2026-11-16 G2 [done]: the work is recorded as the drafts in the Owner decisions list (kms 0069-0082, go-getter 0210-0214); archive moves for 0066/0067 wait for acceptance; structural checker clean on both repos; model-run `decide`/`lint`/`conform` not executed (no provider)
+- 2026-11-16 H1 [done]: CHANGELOG `[Unreleased]` entry and docs/plans/release-notes-next.md; no version, tag or push
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
