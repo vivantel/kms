@@ -60,6 +60,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.8 [done]: decision 0078 drafted (amends 0030) (kms Plan-Step: 2.8)
 - 2026-11-15 2.9 [done]: model split into artifact-model.md (617 words) and admission.md (492); checker and tests updated (55 pass); skills re-pointed; schema-version 1.0.0-draft (kms Plan-Step: 2.9)
 - 2026-11-15 2.10 [done]: migrate.py written; docs/ and four eval fixtures migrated; 17 guardrails re-derived and pinned; facts carry source/last-verified; strict checker clean on docs/ except one forward reference fixed in C1. Not done (blocked: needs eval provider key): lint-matrix labels/build.py regrade of the 2.7 split and `npm run eval` (kms Plan-Step: 2.10)
+- 2026-11-16 5.7 [done early]: the three parked branches deleted from origin at the owner's request; tip SHAs in 5.7; 3.6, 5.3 and 5.4 still pending and now cite SHAs
 - 2026-11-16 reconciled with the consolidation: phases 0-2 and 1.6 shipped as 0.16.0-0.16.3 (`kms-schema-1.0.0`); 3.1 superseded; 3.5, 3.6, 4.1, 5.1, 5.5, 5.2 re-scoped; this plan's release is 0.18.0 because 0.17 removes the deprecated skills (0081). Open: 1.1, 1.3, 1.4 (blocked), 3.2-3.4, 4.2-4.3, 5.1-5.7, 5.8
 
 ## Phase 0 — Housekeeping
@@ -313,7 +314,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 ### 3.6 [pending, re-scoped: skip the role-list bullet and the `roadmap`/`changelog` bullets, apply the `roadmap` numbering and synonym fixes to `decide` if it has them] Smaller skill fixes found by the review (one commit each)
 
 - `bootstrap` step 7: role lists become a proposal written only on confirmation (every consumer says "if present"; kms's own repo never had them; `CONTRIBUTING.md:69-70` says there is no role list); the inline rationale shrinks to "default to process when ambiguous". Steps 5-7 each start with "ask before writing".
-- `bootstrap` step 1: print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine (recommend two years). Salvaged from `origin/scale-bootstrap-lint-chunking` (`a6a583b`).
+- `bootstrap` step 1: print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine (recommend two years). Salvaged from `scale-bootstrap-lint-chunking` (`a6a583b`; branch deleted 2026-11-16, tip 0767100ab21f, see 5.7).
 - `bootstrap` step 3: state the docs manifest's frontmatter (registry marker) and row shape.
 - `bootstrap` step 6: add non-software rows (data provenance, method choice, literature claim, approval or publication gate) so 0011 has teeth; `onboard` takes a duration (default five days).
 - `bootstrap`/`capture` stub recipes: "base frontmatter per the model, plus …" (today they omit `date`, `tags`).
@@ -377,7 +378,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **What.** One process decision: `study-v1` and `study-v2` are measurement snapshots exempt from 0048's "tags match plugin.json" rule, never reused; `origin/harness/impl/step_01` (an autonomous self-improvement loop on OpenCode: its checker was rejected in 0058; its 13 draft decisions 0060-0072 collide with master's 0060-0066; auto-commit contradicts `lint`'s never-fix rule) and `origin/fix-eval-doc-drift` (a model-first README superseded by 0052 and PR #51; two tables salvaged in 5.3) were not merged; `origin/scale-bootstrap-lint-chunking` (checkpointed bootstrap/lint: `shared/checkpointing.md`, `docs/.kms-checkpoints/`, abandoned when its resume evals failed with `spawn E2BIG`) is deferred with trigger "a reported bootstrap failure on a large repository after 3.6's history-size prompt is in use".
 
-**Done when.** The decision is active and names the three branches and two tags.
+**Done when.** The decision is active and names the three branches (deleted 2026-11-16, tips in 5.7) and two tags.
 
 ### 5.5 [pending, mostly absorbed: the consolidation dispositioned 0067-0082; re-run the three queries and paste them] Verify the decision corpus is consistent
 
@@ -391,9 +392,9 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** Counts per check are pasted here and every finding has a resolution line.
 
-### 5.7 [pending] Delete the three parked branches
+### 5.7 [done 2026-11-16, early, at the owner's request: 3.6, 5.3 and 5.4 had not run] Delete the three parked branches
 
-**What.** After 3.6 and 5.3 took what they needed and 5.4 recorded why: `git push origin --delete harness/impl/step_01 scale-bootstrap-lint-chunking fix-eval-doc-drift`.
+**What.** After 3.6 and 5.3 took what they needed and 5.4 recorded why: `git push origin --delete harness/impl/step_01 scale-bootstrap-lint-chunking fix-eval-doc-drift`. Done early: the three branches were deleted from `origin` on 2026-11-16. Tips, for restoring with `git push origin <sha>:refs/heads/<name>` while GitHub still holds the objects: `harness/impl/step_01` 206f4aefc50e, `scale-bootstrap-lint-chunking` 0767100ab21f, `fix-eval-doc-drift` 5593e6a4f11b. 3.6 and 5.3 now salvage from those SHAs (or fetch them first), and 5.4 cites them.
 
 **Done when.** `git branch -r` lists only `origin/master` and open feature branches.
 
