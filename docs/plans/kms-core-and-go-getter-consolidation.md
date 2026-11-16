@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-H3 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-I1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -236,7 +236,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 ## Phase I — Owner review gate
 
-### I1 [pending] [kms] Hand over
+### I1 [done] [kms] Hand over
 
 **What.** Produce `docs/plans/archive/consolidation-handover.md`: the Owner decisions pending list with one line each (file, recommended option, commits that depend on it, how to revert), every `[blocked]` step with what unblocks it, both branch names and tip commits, the test and check results at the tips, and the release sequence the owner runs next (kms 1.6 prerequisites, tag, then go-getter pin). Then stop and report; do not merge.
 
@@ -350,4 +350,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 H1 [done]: CHANGELOG `[Unreleased]` entry and docs/plans/release-notes-next.md; no version, tag or push
 - 2026-11-16 H2 [done]: go-getter CHANGELOG `[Unreleased]` entry naming tag kms-schema-1.0.0 and `core update`; versions unchanged; check:versions ok (go-getter 168ae02)
 - 2026-11-16 H3 [done]: docs/plans/kms-remove-deprecated-skills.md written
+- 2026-11-16 I1 [done]: handover written; stopped, nothing merged to master
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
