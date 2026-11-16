@@ -13,7 +13,7 @@ tags: [kms, knowledge-management, procedural]
 - **`plugins/kms/templates/<artifact-type>/`** — shippable product assets, distinct from this repo's own `docs/`. `bootstrap` seeds them into an adopting project's `docs/<artifact-type>/`; `lint`/`capture` keep them synced afterward (`docs/decisions/0027`, `0028`).
 - **`plugins/kms/hooks/`** — automation shipped with the plugin itself (e.g. the `capture` nudge), auto-activated on install, never written into an adopting project's own repo.
 
-For the 4-artifact-type model itself (fact/decision/guardrail/procedure, their fields, the derivation recipe) — see `bootstrap` or `capture`'s own `SKILL.md`, not repeated here; both already carry it in full since each must be self-sufficient at runtime (`docs/decisions/0016`).
+For the 4-artifact-type model itself (fact/decision/guardrail/procedure, their fields, the derivation recipe) — see `plugins/kms/shared/artifact-model.md` (the schema, read by every skill) and `plugins/kms/shared/admission.md` (the writing guide, read by `bootstrap`, `capture`, `decide`), not repeated here.
 
 A plan (`docs/plans/<slug>.md`, produced by `roadmap`) is not a 5th layer or artifact type (`docs/decisions/0037-plans-not-a-governed-artifact-type.md`). The four governed types are all parametric — a decision, guardrail, fact, or procedure states a general claim without naming the specific objects it acts on. A plan is fully applied — it names concrete files, decisions, and steps for one occasion, which is why it's disposable where the four types are durable, and why `lint` doesn't structurally validate it the way it validates them.
 
@@ -21,9 +21,10 @@ A plan (`docs/plans/<slug>.md`, produced by `roadmap`) is not a 5th layer or art
 
 - **`kms-seeded: true` + `kms-template-version: N`** — this file was copied from `plugins/kms/templates/<type>/`; `N` tracks that specific template's own version, not the plugin's overall release. `lint`/`capture` sync it (add/update/remove); deleting both fields permanently detaches it as project-owned.
 - **`kms-generated: true`** — `bootstrap` constructed this file from project-specific analysis (no template exists to compare against): `docs/skills/{product,process}-track-roles.md`, `docs/facts/docs-manifest.md`.
+- **`kms-registry: <name>`** (or `<!-- kms-registry: <name> -->` as the first line of a CSV) — a non-governed file such as `INDEX.md`, `docs/skills/tags.md` or the docs manifest; skipped by the type checks, kept in sync by `lint`/`capture`, listed by `uninstall` under one category.
 - **`<!-- kms:start -->`/`<!-- kms:end -->`** — marks the section `bootstrap` inserted into the project's own `AGENTS.md`/equivalent, pointing at its knowledge base.
 
-`uninstall` is what finds and removes/detaches all three, plus any still-`status: draft` decision or `governed-by: TBD` fact nobody acted on.
+`uninstall` is what finds and removes/detaches all three, plus any still-`status: draft` decision (unless it carries `expires-when`, which makes it an open question) nobody acted on.
 
 ## Which skill does what
 

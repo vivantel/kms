@@ -73,9 +73,12 @@ team). A decision becomes `active` once the maintainer accepts it, and
 `accepted-by` records who — independent of whoever ran the commit,
 which matters once an agent is doing the drafting and committing on the
 maintainer's behalf (`docs/decisions/0053-decision-accepted-by-field.md`).
-Per `plugins/kms/shared/artifact-model.md`, a decision is then immutable
-— a later change comes as a *new* decision superseding it, never an
-edit to the original. This may formalize further if `kms` gains other
+Per `plugins/kms/shared/artifact-model.md`, a decision's `## Decision`,
+`## Why` and `## Tradeoffs considered` are then frozen: a change of
+substance comes as a *new* decision superseding it. Only `status`,
+`superseded-by`, `accepted-by`, `tags`, expiry, `fitness-functions` and
+dated, additive `## Amendment <date>` sections stay editable.
+This may formalize further if `kms` gains other
 maintainers.
 
 ## Validation
@@ -89,10 +92,10 @@ changes do get CI, via the eval suite in `.github/workflows/eval-skills.yml`.)
 - Any `SKILL.md` or `agents/*.yaml` you touched has well-formed YAML
   frontmatter.
 - Grep your skill body for agent-specific language before submitting:
-  `grep -niE "claude|anthropic|bash tool|read tool|slash command" plugins/kms/skills/*/SKILL.md`
+  `grep -niE "claude|anthropic|kilo|codex|openai|bash tool|read tool|slash command" plugins/kms/skills/*/SKILL.md`
   should return nothing.
 - Grep for a shipped skill naming one of `kms`'s own files instead of
-  stating its check inline: `grep -nE "docs/(facts|decisions|guardrails|skills)/[A-Za-z0-9_-]+\.md" plugins/kms/skills/*/SKILL.md`,
+  stating its check inline: `grep -nE "docs/(facts|decisions|guardrails|skills)/[0-9A-Za-z_-]+" plugins/kms/skills/*/SKILL.md plugins/kms/shared/*.md`,
   then judge each hit per `docs/skills/scoping-shipped-vs-repo-rules.md`.
 
 ## Pull requests

@@ -50,7 +50,7 @@ Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 ## Installing
 
 Supports Claude Code, Codex, and Kilo Code CLI — full per-agent steps
-in [`INSTALLING.md`](INSTALLING.md). Quick start for Claude Code:
+in [`INSTALLING.md`](INSTALLING.md) (which also says what each agent does and does not receive: the checker needs `python3` plus PyYAML, and the `SessionStart` nudges are Claude Code only). Quick start for Claude Code:
 
 ```
 /plugin marketplace add vivantel/kms

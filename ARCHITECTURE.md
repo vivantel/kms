@@ -36,13 +36,19 @@ Four governed types, each answering a different question:
 | **Procedure** | How do you decide or act? | procedural | "Steps for adding a new coding-agent target." |
 
 Every artifact carries base frontmatter — `id`, `title`, `status`,
-`date`, `tags` — plus type-specific fields (a fact's `kind` and
-`governed-by`; a guardrail's `governed-by`, `grounded-in`, and
-`derivation-note`; a decision's optional `accepted-by`; a
-procedure's optional `operationalizes`).
+`date`, `tags` — plus type-specific fields (a fact's optional `source`,
+`last-verified` and `scope`, and no outgoing edges; a guardrail's
+`governed-by` list, optional fact-only `grounded-in`, `derivation-note`
+and optional `pinned` content hashes; a decision's optional
+`accepted-by`; a procedure's optional `operationalizes`). Index files,
+the tag list and the docs manifest are *registries*, marked
+`kms-registry`, not records of any type. A new fact, decision or
+guardrail must also pass the *admission test*
+(`plugins/kms/shared/admission.md`): a record that restates what a
+file already says, or logs an event, is rejected.
 
 `status` moves through one shared lifecycle, with an optional `expires`
-(a date or condition) triggering early re-evaluation instead of letting
+(`expires: <date>` or `expires-when: <condition>`) triggering early re-evaluation instead of letting
 a bounded decision stand as current past its own stated limit
 (`docs/guardrails/artifact-expires-must-be-reevaluated.md`):
 
@@ -62,14 +68,14 @@ A guardrail is never invented from nothing — it's *derived*:
 
 ```mermaid
 flowchart LR
-    D["Decision (why)<br/><br/>0006: skill content stays<br/>agent-neutral across agents"] --> G
-    F["Fact (what is)<br/><br/>0002: the shipped skill bodies<br/>already meet that bar"] --> G
-    G["Guardrail (ought)<br/><br/>agent-agnostic-skill-content:<br/>future bodies must not regress it"]
+    D["Decision (why)<br/><br/>0008: one skill set,<br/>many agent manifests"] --> G
+    F["Fact (what is)<br/><br/>0003, 0008: each manifest carries<br/>its own version field"] --> G
+    G["Guardrail (ought)<br/><br/>plugin-manifest-version-sync:<br/>bump every manifest together"]
 ```
 
 If either source changes — the decision gets superseded, or the fact
 stops being true — the guardrail is stale and `lint` flags it (check
-13). This is the mechanism that keeps `kms`'s own knowledge base from
+13; with a `pinned` hash the checker detects the change deterministically). This is the mechanism that keeps `kms`'s own knowledge base from
 silently drifting out of sync with itself, and it's the same mechanism
 any adopting project gets for free.
 
@@ -104,9 +110,10 @@ any adopting project gets for free.
 A few dimensions were deliberately left out, not overlooked — worth
 saying so explicitly rather than leaving a future reader to wonder:
 
-- **A `scope` field**: tried once (`0014`), dropped (`0039`) because
-  nothing that existed ever used it. Not resurrected without a sharper
-  definition than last time.
+- **A free-form `scope` field on decisions**: tried once (`0014`),
+  dropped (`0039`) because nothing that existed ever used it. A typed
+  `scope: {component, environment, version}` was later reinstated on
+  *facts* only (`0063`), where it says what a claim is limited to.
 - **A composite "quality" score**: no such field exists. What it would
   mean is already decomposed into three separately-checked things —
   lifecycle `status` (draft = not yet trusted), structural completeness
@@ -149,6 +156,7 @@ flowchart LR
     subgraph "Session-scoped"
         capture
         roadmap
+        decide
     end
     subgraph "On-demand validation"
         lint
@@ -181,9 +189,33 @@ demand, independent of any one session, and owns every check that
 isn't genuinely session-scoped. `conform` is the odd one out — the only
 skill that reads code or content *outside* `docs/` and checks it
 against the knowledge base, rather than validating the knowledge base
-itself. `query`/`onboard` read and answer; `roadmap`/`refactor-plan`/`brainstorm`/`clarify`
-plan without writing (except `roadmap`, which does); `attribute`/`changelog`
+itself. `query`/`onboard` read and answer; `decide` interviews the user to one decision record; the older
+`roadmap`/`refactor-plan`/`brainstorm`/`clarify`
+plan without writing (except `roadmap`, which does) and leave in 0.17 (`0081`); `attribute`/`changelog`
 write git history; `uninstall` reverses everything `bootstrap` added.
+
+Reads, writes and blocks, per skill:
+
+| Skill | Reads | Writes | Blocks |
+|---|---|---|---|
+| `bootstrap` | git history, docs, the model | the four directories, indexes, registries | nothing; asks before each batch |
+| `capture` | the session, the knowledge base | decisions, facts, pins | nothing |
+| `lint` | the whole knowledge base (checker first) | nothing | nothing |
+| `conform` | a diff, guardrails, decisions, facts | nothing | nothing; reports |
+| `query`, `onboard` | the knowledge base | nothing | nothing |
+| `decide` | the user, the knowledge base | one decision record | nothing |
+| `attribute` | a staged diff, decisions | a commit message | nothing |
+| `uninstall` | everything `bootstrap` added | on confirmation only | nothing |
+
+What this system does not do:
+
+| Not done | Why |
+|---|---|
+| Specify product behaviour | what a product should do is a spec, kept in a spec tool; a fact describes the environment, a guardrail what must hold |
+| Retrieve by similarity | the thesis is a vocabulary, not a vector search (`0052`) |
+| Fix what `lint` finds | `lint` reports and never edits; `capture` and the owner decide |
+| Enforce itself | no hook or CI gate runs `conform`; two `SessionStart` nudges exist, Claude Code only |
+| Store anything outside git and Markdown | `0011` |
 
 ## How the design got here
 
@@ -199,6 +231,9 @@ use exposed a gap. A few of the pivotal ones:
 - [`0047`](docs/decisions/0047-operationalizes-field-and-unoperationalized-guardrail-check.md) — closing a gap where a guardrail's required behavior could go unenforced with nothing to catch it.
 - [`0049`](docs/decisions/0049-plain-csv-index-not-toon.md) — a self-correction: an earlier choice (naming the index format after an external spec) caused real, measured harm and was reverted to something simpler.
 - [`0050`](docs/decisions/0050-version-bump-changelog-linkage.md)/[`0051`](docs/decisions/0051-grounded-in-may-hold-a-decision.md) — closing two more gaps a full self-audit found: version bumps shipping with no changelog entry, and guardrails structurally unable to record their real basis.
+- [`0058`](docs/decisions/0058-deterministic-structural-lint-checks.md)/[`0062`](docs/decisions/0062-pin-edge-targets-by-content-hash.md) — a deterministic checker for every structural check, and optional content-hash pins that make a stale derivation detectable by script.
+- [`0065`](docs/decisions/0065-admission-test-for-new-records.md) — the admission test for new records, after a cleanup found a corpus full of restatements and event logs.
+- [`0071`](docs/decisions/0071-facts-carry-no-outgoing-edges.md)–[`0078`](docs/decisions/0078-open-questions-are-draft-decisions.md) — the model redesign: facts without edges, honest derivation edges, defined lifecycle words, registries by marker, more deterministic checks, open questions as draft decisions.
 - [`0053`](docs/decisions/0053-decision-accepted-by-field.md)/[`0054`](docs/decisions/0054-defer-business-domain-dimension.md) — governance dimensions considered together: accountability made explicit (accepted-by), domain boundaries deliberately deferred until a real need exists, not built ahead of one.
 
 Full history: `docs/decisions/` (plus `docs/decisions/archive/` for
@@ -209,5 +244,5 @@ which side of that line it's on).
 
 - **Using `kms`**: [`README.md`](README.md), [`INSTALLING.md`](INSTALLING.md).
 - **Contributing**: [`CONTRIBUTING.md`](CONTRIBUTING.md), `AGENTS.md`.
-- **The agent-facing internals**: `docs/skills/kms-architecture.md`, `plugins/kms/shared/artifact-model.md`.
+- **The agent-facing internals**: `docs/skills/kms-architecture.md`, `plugins/kms/shared/artifact-model.md`, `plugins/kms/shared/admission.md`.
 - **Why this design, in prose**: [the Medium article](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a).

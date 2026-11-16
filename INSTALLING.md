@@ -46,3 +46,10 @@ Track this skill set with no per-project copying by adding to your
 Kilo re-fetches automatically whenever a skill's version changes — see
 [`plugins/kms/skills/index.json`](plugins/kms/skills/index.json) and
 [`docs/facts/0008-kilo-code-skills-spec.md`](docs/facts/0008-kilo-code-skills-spec.md).
+
+## What each agent receives
+
+- **Claude Code** installs the whole plugin: skills, `shared/` (schema, writing guide, checker, migration script), `templates/` and the two `SessionStart` nudge hooks.
+- **Codex** points at `plugins/kms/skills/` only. Whether `shared/` and `templates/` are installed beside it is unconfirmed (no Codex CLI test has been run); install the plugin root whole, and run the nudges' recipe by hand (`docs/skills/automating-capture.md`).
+- **Kilo Code CLI** fetches only what `plugins/kms/skills/index.json` lists: `SKILL.md` and `examples.md` per skill. `shared/` and `templates/` are not delivered through the remote-skills channel, so skills that read them (`bootstrap`, `capture`, `lint`, `uninstall`, `decide`) need a checkout of this repo or the files copied beside the skills. No hooks.
+- **`lint`'s checker** needs `python3` plus PyYAML on every agent.
