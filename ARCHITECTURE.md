@@ -20,6 +20,10 @@ role, checkable by a shipped skill rather than trusted to a probability
 score. [The full argument is here](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a);
 this file is about how `kms` actually implements it.
 
+## Relationship to go-getter and OpenSpec
+
+`kms` is the reference implementation of the knowledge-base core (schema, checker, conformance fixtures; [`docs/skills/core-contract.md`](docs/skills/core-contract.md)) and works on its own. [go-getter](https://github.com/vivantel/go-getter) pins the core by schema version and owns the coordination artifacts (briefs, units, meters, charters, harness config) that `kms` does not store. Product specs belong to a spec tool such as OpenSpec; a `kms` record points at a change with `source`.
+
 ## The artifact model
 
 Four governed types, each answering a different question:

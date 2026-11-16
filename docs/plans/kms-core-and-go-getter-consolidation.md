@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-F2 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-G1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -202,7 +202,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 ## Phase G — Distribution and docs
 
-### G1 [pending] [kms] Make the story consistent in both repos
+### G1 [done] [kms] Make the story consistent in both repos
 
 **What.** kms `README.md`, `ARCHITECTURE.md`, `INSTALLING.md`: kms is the lightweight knowledge-base plugin and the reference implementation of the core; it works alone; go-getter builds on it. go-getter `README.md`: it adopts the core by pin; it does not define knowledge artifacts. Both state the OpenSpec boundary in one sentence. Keep the thesis sentence required by kms decision 0052.
 
@@ -345,4 +345,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 D3 [blocked]: `npm run eval`, `eval:bypass` and `e2e:lifecycle` call real model providers (cost, ~/.claude token); not run. Offline `npm test` 1438 pass stands in
 - 2026-11-16 E3 [done]: five skills kept (count unchanged, 17); bootstrap/capture/lint/roadmap and examples drop `track`, role lists and restated field rules; lint check 2 defers to the core checker; build and npm test 1438 pass. Not done: folding clarify into discover and changelog into release (no `release` skill exists; kept as is, left to the owner with 0213) (go-getter 4aabae4)
 - 2026-11-16 F2 [done]: conformance fixtures run in kms CI (existing) and in go-getter `npm test` (new core-pin test, CHECKER=vendored checker); pin moved to kms fdd1bba; npm test 1439 pass (kms fdd1bba / go-getter c24e10b)
+- 2026-11-16 G1 [done]: kms README/ARCHITECTURE/INSTALLING and go-getter README state the story, link each other and core-contract.md, give the OpenSpec boundary; thesis sentence kept; structural checker clean on both (the `lint`/`conform` skills themselves are model-run and not executed here) (kms see git log Plan-Step: G1 / go-getter fa90e06)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
