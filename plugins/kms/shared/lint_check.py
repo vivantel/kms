@@ -306,8 +306,14 @@ class Linter:
                         self.add(1, a["rel"], f"`{f}` points at `{r}`, which does not exist")
                     elif r != "TBD" and a["type"] == "guardrails" and not a["archived"]:
                         t = by_id.get(r)
-                        if t and f == "governed-by" and t["type"] == "decisions" and (t["fm"] or {}).get("status") == "superseded":
-                            self.legacy(1, a["rel"], f"`governed-by` points at `{r}`, a superseded decision: re-derive")
+                        # a pin says the guardrail was derived from the source's content, so a retired source is a finding, not an older shape
+                        pinned = bool((a["fm"] or {}).get("pinned"))
+                        report = self.add if pinned else self.legacy
+                        tstatus = (t["fm"] or {}).get("status") if t else None
+                        if t and f == "governed-by" and t["type"] == "decisions" and tstatus == "superseded":
+                            report(1, a["rel"], f"`governed-by` points at `{r}`, a superseded decision: re-derive")
+                        if t and f == "grounded-in" and t["type"] == "facts" and tstatus in ("deprecated", "superseded") and pinned:
+                            self.add(1, a["rel"], f"`grounded-in` points at `{r}`, a {tstatus} fact: re-derive")
                         if t and f == "grounded-in" and t["type"] != "facts":
                             self.legacy(1, a["rel"], f"`grounded-in` points at `{r}`, which is not a fact")
 

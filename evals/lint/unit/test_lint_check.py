@@ -207,12 +207,18 @@ class LintCheck(unittest.TestCase):
         self.assertEqual(self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("Body.", "Releases are now monthly.")}), [13])
 
     def test_13_ignores_lifecycle_fields(self):
-        # pins track content, not lifecycle (decision 0077): a status change is check 20's business only
+        # pins track content, not lifecycle (decision 0077): retiring a pinned fact is never check 13; check 1 asks to re-derive
+        # (the pin makes it a finding, not an older-shape advisory) and check 20 is about the file's location
         self.assertEqual(
             self.pinned(**{"docs/facts/0001-cadence.md": FACT.replace("status: active", "status: deprecated"),
                            "docs/facts/INDEX.md": INDEX.format("0001-cadence,Releases are weekly,release,deprecated")}),
-            [20],
+            [1, 20],
         )
+
+    def test_retired_pinned_decision_is_a_finding_without_strict(self):
+        checks = self.pinned(**{"docs/decisions/0001-weekly.md": DECISION.replace("status: active", "status: superseded\nsuperseded-by: 0001-weekly")})
+        self.assertIn(1, checks)
+        self.assertNotIn(13, checks)
 
     def test_13_ignores_date_cosmetics_and_own_edges(self):
         self.assertEqual(

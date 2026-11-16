@@ -112,6 +112,12 @@ def _(f):
     g = f["docs/guardrails/changelog.md"]
     f["docs/guardrails/changelog.md"] = g.replace("---\nGuardrail.", 'pinned:\n  0001-weekly: "{}"\n  0001-cadence: "{}"\n---\nGuardrail.'.format(revision(f["docs/decisions/0001-weekly.md"]), revision(f["docs/facts/0001-cadence.md"])))
     sub(f, "docs/facts/0001-cadence.md", "tags: [release]\n", "tags: [release]\nlast-verified: '2026-11-01'\n")
+@case("c01-pinned-source-retired")
+def _(f):
+    g = f["docs/guardrails/changelog.md"]
+    f["docs/guardrails/changelog.md"] = g.replace("---\nGuardrail.", 'pinned:\n  0001-weekly: "{}"\n  0001-cadence: "{}"\n---\nGuardrail.'.format(revision(f["docs/decisions/0001-weekly.md"]), revision(f["docs/facts/0001-cadence.md"])))
+    sub(f, "docs/decisions/0001-weekly.md", "status: active", "status: superseded\nsuperseded-by: 0002-x")
+    f["docs/decisions/0002-x.md"] = art(id="0002-x", title="Ship daily", status="active", date="2026-01-01", tags=["release"])
 @case("c17-stale-draft")
 def _(f): f["docs/decisions/0002-stale.md"] = art(id="0002-stale", title="Stale", status="draft", date="2026-01-01", tags=["release"])
 @case("c18-stale-fitness-function")
