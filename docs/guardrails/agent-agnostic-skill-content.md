@@ -40,7 +40,7 @@ is inherently Claude-Code-specific — see
 
 ## Derivation
 
-- **Descriptive basis**: `docs/facts/0002-skill-bodies-already-agent-neutral.md`
+- **Descriptive basis**: `docs/facts/archive/0002-skill-bodies-already-agent-neutral.md`
   — the four existing skill bodies were audited and already meet this bar.
 - **Axiomatic basis**: `docs/decisions/archive/0006-agent-agnostic-scope.md` — the
   team committed to keeping skill *content* portable across agents even

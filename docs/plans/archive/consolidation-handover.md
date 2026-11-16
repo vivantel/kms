@@ -27,6 +27,14 @@ Nine findings fixed in six commits on the kms branch: checker crashes (invalid d
 
 **Design call left for you (not a bug fix):** decisions 0073/0077 make pins ignore lifecycle fields, so superseding and archiving a pinned source with a plain `status`/`superseded-by` flip no longer fails the checker (master: check 13; here: a stderr warning, exit 0; `--strict` exits 1). Options: count the advisory in the exit code, or make check 13 fire again when a pinned source is retired. Decide when you accept 0073 and 0077.
 
+## Second review sweep: fixed, and open
+Fixed: `migrate.py` fixed point (plain ids stay unquoted), non-UTF-8 files and re-entrant `Linter`, `--refs` with `--pin` is an error, `date: soon` is check 2, check 9 reports a live path that moved to `archive/` (four paths updated), the INDEX tag-cell format restored in the model, `decide` rule and example for replacing a decision.
+
+Open, for you (none blocks the other work):
+- **6. Derivation prose.** 7 of 16 guardrails' `## Derivation` bodies still name retired bases (superseded decision 0006, deprecated facts 0002 and 0013, filler decisions 0001 and 0012) while frontmatter was re-derived; the 8 archived deprecated facts lack the first body line saying why (model line 22, decision 0073). Re-derive the bodies after accepting 0072/0073.
+- **7. Draft decisions that describe what does not exist** (edit before accepting): 0071 (`query` printing "cited by" via `--refs`; no skill calls it), 0072 (capture check 1 re-pointing guardrails), 0074 (fitness-function inventory "exists nowhere", yet capture check 3 and bootstrap step 5 still log to it; role lists kept though 0079 retires them), 0075 (index title, "Intent extraction"), 0077 (final split lists retired checks 14/15), 0078 (check 24 reads a status line; it reads the step legend). Also `bootstrap` step 2 has no sprawl cap.
+- **8. Test strength.** Single-line mutants of `lint_check.py` survive the unit and conformance suites: check 17 TBD aging, superseded-without-`superseded-by`, most legacy-shape advisories, five check 19 branches, the 180-day default, the `kms-seeded` orphan exemption, the `plugins/**` corpus. Some tests pass for the wrong reason (`test_track_is_an_older_shape`, `test_governed_by_superseded_decision`, `test_7_seeded_guardrail_is_not_an_orphan`). Add a mutation pass or targeted cases.
+
 ## Release sequence
 1. Review and accept the drafts; run the blocked evals.
 2. kms: bump three manifests in lockstep, rename `[Unreleased]`, set schema-version to `1.0.0`, tag `kms-schema-1.0.0` (notes: `docs/plans/release-notes-next.md`).

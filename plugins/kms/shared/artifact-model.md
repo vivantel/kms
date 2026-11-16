@@ -42,7 +42,7 @@ Stale threshold: 180 days, overridable by one line in the project's AGENTS.md bl
 
 A registry is a non-governed file: `INDEX.md`, `docs/skills/tags.md`, role lists, the docs manifest. It carries `kms-registry: <name>` in frontmatter, or `<!-- kms-registry: <name> -->` as the first line of a pure CSV, and is skipped by the type checks. Other markers: `kms-seeded`, `kms-generated`, same two forms.
 
-`INDEX.md` per type: CSV, header `id, title, tags, status`, one row per artifact; a value with a comma is double-quoted. After writing an artifact, add or update its row.
+`INDEX.md` per type: CSV, header `id, title, tags, status`, one row per artifact; a value with a comma is double-quoted, and a multi-tag `tags` cell joins its items with comma and space inside the quotes (`"kms, naming"`), exactly as the checker compares it. After writing an artifact, add or update its row.
 
 ## Derivation
 

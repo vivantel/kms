@@ -32,7 +32,7 @@ is stale.
   applied retroactively to the whole set, not just new additions.
 - **Descriptive basis**: TBD — no existing fact currently documents the
   full skill roster; `bootstrap`/`capture` would generate one
-  (`docs/facts/0001-kms-skill-names.md`-style) as the natural grounding
+  (`docs/facts/archive/0001-kms-skill-names.md`-style) as the natural grounding
   fact for this guardrail once the roster changes again.
 - **Normative conclusion**: therefore any skill added to this plugin
   going forward ships `examples.md` in the same change that adds

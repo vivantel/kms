@@ -16,4 +16,10 @@
 
 **Prompt:** "Save our decision to cap retries at three."
 
-**What happens:** An existing decision `0004-cap-retry-backoff.md` already covers retries. The skill proposes extending it rather than writing a new file and waits for confirmation.
+**What happens:** An existing decision `0004-cap-retry-backoff.md` already covers retries. The change is additive (a cap, not a reversal), so the skill proposes an amendment to it rather than a new file and waits for confirmation.
+
+## 4. A decision is replaced
+
+**Prompt:** "We're switching the rate limiter from the fixed window to a token bucket; interview me and save this."
+
+**What happens:** The active `0001-fixed-window-rate-limit.md` matches. Its sections are frozen, so after the interview the skill proposes a new decision `0002-token-bucket-rate-limit`, setting `0001` to `status: superseded` with `superseded-by: 0002-token-bucket-rate-limit`, moving it to `decisions/archive/` with both `INDEX.md` files updated, and re-deriving each guardrail that cited it. It lists all of that before touching disk and waits for the go-ahead.

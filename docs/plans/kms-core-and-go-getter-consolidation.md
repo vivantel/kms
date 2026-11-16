@@ -92,7 +92,7 @@ All `[kms]` unless stated; A1 and A2 read go-getter's main checkout read-only (n
 
 ### B1 [done] [kms] Drop the `track` field
 
-**What.** Supersede `0010-decision-track-field` and `0038-track-field-mutual-exclusivity` (and archive `docs/guardrails/decision-track-field.md`). Remove `track` from the model's Decision section, from `lint_check.py` (required-field check and the id and tag handling that reads it), and from the six skills that read it (`bootstrap`, `capture`, `lint`, `onboard`, `roadmap`, `uninstall`). The 8 `track: product` decisions become ordinary decisions; their `track:` line is deleted by the migration step (kms 2.10). Product/process role lists (`docs/skills/{product,process}-track-roles.md`, decision 0013) are retired with it. `bootstrap` step 7 stops proposing them.
+**What.** Supersede `0010-decision-track-field` and `0038-track-field-mutual-exclusivity` (and archive `docs/guardrails/archive/decision-track-field.md`). Remove `track` from the model's Decision section, from `lint_check.py` (required-field check and the id and tag handling that reads it), and from the six skills that read it (`bootstrap`, `capture`, `lint`, `onboard`, `roadmap`, `uninstall`). The 8 `track: product` decisions become ordinary decisions; their `track:` line is deleted by the migration step (kms 2.10). Product/process role lists (`docs/skills/{product,process}-track-roles.md`, decision 0013) are retired with it. `bootstrap` step 7 stops proposing them.
 
 **Done when.** `grep -rn "track" plugins/kms` returns no model or checker hits except historical changelog text, the checker passes on a corpus with no `track`, and 0010/0038 are archived.
 

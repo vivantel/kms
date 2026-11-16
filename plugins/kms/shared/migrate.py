@@ -68,7 +68,8 @@ def value(block):
 
 
 def flow(items):
-    return "[" + ", ".join(json.dumps(str(x), ensure_ascii=False) for x in items) + "]"
+    """A YAML flow list; plain ids stay unquoted so an already migrated corpus is a fixed point."""
+    return "[" + ", ".join(str(x) if re.fullmatch(r"[A-Za-z0-9][\w.\-]*", str(x)) else json.dumps(str(x), ensure_ascii=False) for x in items) + "]"
 
 
 def jsonable(o):

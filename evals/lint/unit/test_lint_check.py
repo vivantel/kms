@@ -461,3 +461,25 @@ class NewRules(unittest.TestCase):
     def test_dot_slash_prose_reference_is_checked(self):
         checks, _ = self.run_checks(**{"README.md": "see ./docs/facts/gone.md\n"})
         self.assertIn(9, checks)
+
+    def test_archived_target_of_a_live_path_is_check_9(self):
+        over = {"README.md": "see docs/facts/0002-old.md\n", "docs/facts/archive/0002-old.md": FACT.replace("0001-cadence", "0002-old")}
+        self.assertIn(9, self.run_checks(**over)[0])
+        over["README.md"] = "see docs/facts/archive/0002-old.md\n"
+        self.assertNotIn(9, self.run_checks(**over)[0])
+
+    def test_non_utf8_file_does_not_abort(self):
+        project(self.root)
+        (Path(self.root) / "README.md").write_bytes("Caf\xe9 docs/facts/0001-cadence.md".encode("latin-1"))
+        Linter(self.root, today="2026-02-01").run()
+
+    def test_linter_is_reentrant(self):
+        project(self.root)
+        lin = Linter(self.root, today="2026-02-01")
+        first = lin.run()
+        self.assertEqual(lin.run(), first)
+
+    def test_date_that_is_not_a_date_is_check_2(self):
+        checks, _ = self.run_checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("2026-01-01", "soon")})
+        self.assertIn(2, checks)
+

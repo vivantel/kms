@@ -72,6 +72,12 @@ class Migrate(unittest.TestCase):
         self.assertIn("kms-registry: tags", self.get("skills/tags.md"))
         self.assertIn("0 file(s) changed", self.run_migrate().stderr)
 
+    def test_migrated_corpora_are_fixed_points(self):
+        repo = Path(__file__).resolve().parents[3]
+        for d in (repo / "docs", repo / "evals" / "lint" / "fixture" / "docs", repo / "evals" / "lint" / "conformance" / "cases" / "valid" / "docs"):
+            r = subprocess.run([sys.executable, str(MIGRATE), "--docs", str(d), "--dry-run"], capture_output=True, text=True)
+            self.assertIn("0 file(s) would change", r.stderr, d)
+
 
 if __name__ == "__main__":
     unittest.main()

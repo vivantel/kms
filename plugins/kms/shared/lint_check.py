@@ -48,6 +48,11 @@ STALE_DAYS = 180
 STEP = re.compile(r"^#{2,4}\s+[^\n]*?\[(done|pending|blocked)([^\]]*)\]", re.M)
 
 
+def read(p):
+    """File text; bytes that are not UTF-8 are replaced so one stray file cannot abort the run."""
+    return Path(p).read_text(encoding="utf-8", errors="replace")
+
+
 def as_date(v):
     if isinstance(v, datetime.datetime):
         return v.date()
@@ -186,6 +191,7 @@ class Linter:
             return p
 
     def load(self):
+        self.arts, self.ids, self.broken = [], set(), set()  # reentrant: run() then pin() must not double-count
         for t in TYPES:
             for archived in (False, True):
                 d = self.docs / t / ("archive" if archived else "")
@@ -194,7 +200,7 @@ class Linter:
                 for p in sorted(d.glob("*.md")):
                     if p.name == "INDEX.md":
                         continue
-                    text = p.read_text(encoding="utf-8")
+                    text = read(p)
                     fm, err = split_frontmatter(text)
                     if self.is_registry(text, fm):
                         continue
@@ -214,7 +220,7 @@ class Linter:
         if not p.exists():
             return None
         tags = set()
-        lines = p.read_text(encoding="utf-8").splitlines()
+        lines = read(p).splitlines()
         if lines and lines[0].strip() == "---":  # frontmatter keys are not tags
             end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), -1)
             lines = lines[end + 1:]
@@ -234,6 +240,8 @@ class Linter:
             for f in BASE_FIELDS + TYPE_FIELDS.get(a["type"], ()):
                 if f not in fm:
                     self.add(2, rel, f"missing required field `{f}`")
+            if "date" in fm and as_date(fm["date"]) is None and str(fm["date"]) != "TBD":
+                self.add(2, rel, f"`date: {fm['date']}` is not a date (YYYY-MM-DD)")
             st = fm.get("status")
             if "status" in fm and st not in STATUSES:
                 self.add(2, rel, f"`status` is `{st}`, not one of {' | '.join(STATUSES)}")
@@ -380,7 +388,7 @@ class Linter:
         for a in self.arts:
             corpus.append((a["path"], a["text"]))
         for p in sorted((self.root / "plugins").glob("**/*.md")) if (self.root / "plugins").is_dir() else []:
-            corpus.append((p, p.read_text(encoding="utf-8")))
+            corpus.append((p, read(p)))
         for a in self.arts:
             if a["type"] not in ("facts", "guardrails") or a["archived"] or not a["fm"] or "id" not in a["fm"]:
                 continue
@@ -401,17 +409,19 @@ class Linter:
         extra += sorted(p for p in plans.glob("*.md")) if plans.is_dir() else []
         for p in extra:
             if p.is_file():
-                corpus.append((self.rel(p), p.read_text(encoding="utf-8")))
+                corpus.append((self.rel(p), read(p)))
         for rel, text in corpus:
             seen = set()
             for m in self.prose_ref.finditer(text):
                 t, name = m.groups()
-                if "NNNN" in name or (t, name) in seen:
+                if "NNNN" in name or m.group(0) in seen:
                     continue
-                seen.add((t, name))
+                seen.add(m.group(0))
                 d = self.docs / t
-                if not (d / name).exists() and not (d / "archive" / name).exists():
-                    self.add(9, rel, f"mentions `{self.dn}/{t}/{name}`, which does not exist")
+                in_archive = "/archive/" in m.group(0)
+                if not (d / ("archive" if in_archive else "") / name).exists():
+                    where = " (it moved to archive/: update the path)" if not in_archive and (d / "archive" / name).exists() else ""
+                    self.add(9, rel, f"mentions `{self.dn}/{t}/{'archive/' if in_archive else ''}{name}`, which does not exist{where}")
 
     def check_templates(self):  # 12
         tdir = self.root / "plugins" / "kms" / "templates"
@@ -422,7 +432,7 @@ class Linter:
         for sub in sorted(p for p in tdir.iterdir() if p.is_dir()):
             tmpl = {}
             for p in sorted(sub.glob("*.md")):
-                fm, _ = split_frontmatter(p.read_text(encoding="utf-8"))
+                fm, _ = split_frontmatter(read(p))
                 if fm and "id" in fm:
                     tmpl[str(fm["id"])] = fm.get("template-version", 1)
             have = {
@@ -454,7 +464,7 @@ class Linter:
                     continue
                 rel = self.rel(idx)
                 rows = {}
-                lines = idx.read_text(encoding="utf-8").splitlines()
+                lines = read(idx).splitlines()
                 try:
                     start = next(i for i, l in enumerate(lines) if l.startswith("id,"))
                 except StopIteration:
@@ -514,7 +524,7 @@ class Linter:
     def check_plans(self):  # 24
         plans = self.docs / "plans"
         for p in sorted(plans.glob("*.md")) if plans.is_dir() else []:
-            states = ["partial" if "except" in m.group(2) else m.group(1) for m in STEP.finditer(p.read_text(encoding="utf-8"))]
+            states = ["partial" if "except" in m.group(2) else m.group(1) for m in STEP.finditer(read(p))]
             if states and all(x == "done" for x in states):
                 self.add(24, self.rel(p), "every step is `done`, but the plan is not under plans/archive/")
 
@@ -591,6 +601,8 @@ def main():
     if args.version:
         print(SCHEMA_VERSION)
         return
+    if args.refs and args.pin:
+        ap.error("--refs and --pin cannot be combined")
     if args.refs:
         for r in Linter(args.root, args.docs).refs(args.refs):
             print(r)
