@@ -1,6 +1,6 @@
 <!-- kms-registry: index -->
 <!-- kms-generated: true -->
-# Skills index (CSV)
+# Procedures index (CSV)
 
 id,title,tags,status
 adding-agent-support,"Procedure for adding a new coding-agent target to this repo","kms, agent-agnostic, packaging, procedural",active

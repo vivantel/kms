@@ -1,7 +1,8 @@
 ---
 id: 0075-settle-names-keep-directories
 title: Settle the artifact names without renaming directories
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -21,4 +22,4 @@ The type is "Procedure" in the model, `docs/skills/` on disk, "Skills index" in 
 
 ## Dispositions
 
-0001 and 0031 left active. Check after 2.9: `grep -nE "knowledge-steward|skill prescription|fact / intent|fact/decision/guardrail/skill" plugins/kms/skills/*/SKILL.md plugins/kms/shared/*.md` returns nothing. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.5.
+0001 and 0031 left active. Check after 2.9: `grep -nE "knowledge-steward|skill prescription|fact / intent|fact/decision/guardrail/skill" plugins/kms/skills/*/SKILL.md plugins/kms/shared/*.md` returns nothing. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.5.

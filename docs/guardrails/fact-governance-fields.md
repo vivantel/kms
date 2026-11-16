@@ -10,7 +10,7 @@ derivation-note: >
   unless re-observable or cited), every fact file must carry `source` or be
   cited by another artifact.
 pinned:
-  0071-facts-carry-no-outgoing-edges: "9a5d50ae1319"
+  0071-facts-carry-no-outgoing-edges: "cc14b3b082c4"
 ---
 
 ## Guardrail
@@ -20,4 +20,5 @@ Any fact file MUST carry `source` (a URL, path or command to re-observe it) or b
 ## Derivation
 
 - **Axiomatic basis**: `docs/decisions/0071-facts-carry-no-outgoing-edges.md` — facts carry no outgoing edges; the arrow runs from consumers to facts.
+- **Re-derived 2026-11-16 from 0071**: the text was corrected before acceptance (backlinks are `--refs`, run by an agent); the consequence stands.
 - **Normative conclusion**: therefore a fact stays admissible only while it can be re-observed or something depends on it.

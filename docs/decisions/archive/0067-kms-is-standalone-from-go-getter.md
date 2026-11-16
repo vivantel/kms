@@ -1,7 +1,8 @@
 ---
 id: 0067-kms-is-standalone-from-go-getter
 title: kms stays a standalone knowledge-system plugin; go-getter owns its fork
-status: active
+status: superseded
+superseded-by: 0070-kms-is-the-knowledge-base-core-consumed-by-pin
 accepted-by: Sergei Strebulaev
 date: 2026-11-12
 tags: [kms, scope, packaging]

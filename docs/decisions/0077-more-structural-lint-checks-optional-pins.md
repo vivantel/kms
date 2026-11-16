@@ -1,7 +1,8 @@
 ---
 id: 0077-more-structural-lint-checks-optional-pins
 title: Make four more lint checks structural; keep pins optional
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, eval-harness]
 ---
@@ -12,7 +13,7 @@ With 0073's fields: check 4 on `expires:` dates is structural (`expires-when` st
 
 Pins stay optional (0062 stands): an unpinned edge yields one advisory line ("unpinned: run `--pin`"); `bootstrap` and `capture` pin when the checker is available. `PIN_IGNORED` widens to `accepted-by`, `last-verified`, `status`, `superseded-by`, `expires`, `expires-when` (pins track content, not lifecycle). Checks 14, 22 and 23 are deferred until their registries carry dates. Checks 5, 6, 8, 10, 11, 16 stay judgment and the lint output labels them "advisory" (that word only; no recall numbers in user output). Relabel per 0061's rule and record a second-rater pass on the relabelled texts.
 
-Final split: structural 1, 2, 3, 4, 7, 9, 12, 13 (pinned), 15, 17, 18, 19, 20, 21, 24; judgment 5, 6, 8, 10, 11, 13 (unpinned), 14, 16, 22, 23; 3.4 later adds structural check 25.
+Final split: structural 1, 2, 3, 4, 7, 9, 12, 13 (pinned), 17, 18, 19, 20, 21, 24; judgment 5, 6, 8, 10, 11, 13 (unpinned), 16, 22, 23; 14 and 15 are retired by 0079 and their numbers stay unused; 3.4 later adds structural check 25.
 
 ## Why
 
@@ -25,4 +26,4 @@ Final split: structural 1, 2, 3, 4, 7, 9, 12, 13 (pinned), 15, 17, 18, 19, 20, 2
 
 ## Dispositions
 
-0062 amended (`PIN_IGNORED`). 0061 amended (new labels). 0058 amended (checks 4, 17, 18, 24 join the script). 0040 and 0047 left active. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.7.
+0062 amended (`PIN_IGNORED`). 0061 amended (new labels). 0058 amended (checks 4, 17, 18, 24 join the script). 0040 and 0047 left active. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.7.

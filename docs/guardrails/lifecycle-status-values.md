@@ -11,7 +11,7 @@ derivation-note: >
   four defined values.
 pinned:
   0039-unify-lifecycle-and-drop-scope: "350c1d6c874d"
-  0073-lifecycle-words-defined: "1ad4e76fa5e3"
+  0073-lifecycle-words-defined: "859c60f82c92"
 ---
 
 ## Guardrail
@@ -29,7 +29,7 @@ them from this lifecycle model; their own per-step legend is unaffected.
 - **Axiomatic basis**: `docs/decisions/0039-unify-lifecycle-and-drop-scope.md`
   — the team committed to one shared lifecycle vocabulary across the
   four governed types.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
+- **Context**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base frontmatter (including `status`) this guardrail's
   enum constrains.
 - **Normative conclusion**: therefore any of the four governed types'

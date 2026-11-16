@@ -26,7 +26,7 @@ to be specific to X, in which case reword it as a system-wide invariant.
   — kms's own copy of a guardrail it also ships as a template to every
   adopting project. Originally established for this repo by
   `docs/decisions/0012-no-redundant-guardrails.md`.
-- **Descriptive basis**: `docs/decisions/0012-no-redundant-guardrails.md` — the
+- **Context**: `docs/decisions/0012-no-redundant-guardrails.md` — the
   decision that originally established this principle for this repo, before
   it was later re-packaged as a seeded template by `0027`.
 - **Normative conclusion**: therefore any guardrail found only true

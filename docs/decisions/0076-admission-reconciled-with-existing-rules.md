@@ -1,7 +1,8 @@
 ---
 id: 0076-admission-reconciled-with-existing-rules
 title: Reconcile the admission test with the rules it contradicts
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -26,4 +27,4 @@ Sentences 2 and 4 are the adopter-facing text for `admission.md`; 1 and 3 tidy k
 
 ## Dispositions
 
-0015 amended (point 1). 0065 amended (points 2 to 4). 0066 left active. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.6 (carries consolidation B2).
+0015 amended (point 1). 0065 amended (points 2 to 4). 0066 left active. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.6 (carries consolidation B2).

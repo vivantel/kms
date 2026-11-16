@@ -1,7 +1,8 @@
 ---
 id: 0072-guardrail-derivation-edges-are-honest
 title: Guardrail derivation edges are lists of decisions plus optional fact grounding
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -21,4 +22,4 @@ The model says a guardrail derives from a commitment plus a descriptive fact and
 
 ## Dispositions
 
-0051 superseded by this decision. 0039 amended (`superseded-by` scope, see 2.3). 0027 and 0045 left active; the template frontmatter change is an amendment to 0027. The 17 guardrails' new edges are filled in 2.10. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.2.
+0051 superseded by this decision. 0039 amended (`superseded-by` scope, see 2.3). 0027 and 0045 left active; the template frontmatter change is an amendment to 0027. The 17 guardrails' new edges are filled in 2.10. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.2.

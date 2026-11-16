@@ -1,7 +1,8 @@
 ---
 id: 0079-drop-track-field
 title: Drop the decision track field and the role lists built on it
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -21,4 +22,4 @@ Plan consolidation B1: kms owns durable knowledge, not product specs (0069), so 
 
 ## Dispositions
 
-0010 and 0038 superseded by this decision; 0013 superseded (role lists retired); guardrail `decision-track-field` archived. Draft; owner acceptance in plan phase I. Plan: `kms-core-and-go-getter-consolidation.md` B1.
+0010 and 0038 superseded by this decision; 0013 superseded (role lists retired); guardrail `decision-track-field` archived. Accepted 2026-11-16 by the owner. Plan: `kms-core-and-go-getter-consolidation.md` B1.

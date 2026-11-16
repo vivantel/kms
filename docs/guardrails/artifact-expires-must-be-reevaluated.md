@@ -11,7 +11,7 @@ derivation-note: >
   bound must be re-evaluated, not left standing as current.
 pinned:
   0039-unify-lifecycle-and-drop-scope: "350c1d6c874d"
-  0073-lifecycle-words-defined: "1ad4e76fa5e3"
+  0073-lifecycle-words-defined: "859c60f82c92"
 ---
 
 ## Guardrail
@@ -29,7 +29,7 @@ as `active`. Plans are exempt — they don't carry `expires`
   conditional not being treated as permanent once their bound is
   reached. `docs/decisions/0039-unify-lifecycle-and-drop-scope.md`
   extends that commitment to facts/guardrails/procedures too.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
+- **Context**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base frontmatter this guardrail's field extends.
 - **Normative conclusion**: therefore any of the four governed types
   past its `expires` bound is re-evaluated, regardless of whether `lint`

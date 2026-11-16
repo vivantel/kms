@@ -1,7 +1,8 @@
 ---
 id: 0074-registries-by-marker
 title: Registries are identified by marker; the fitness-function inventory lives on decisions
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -15,7 +16,7 @@ tags: [kms, knowledge-management, taxonomy]
 
 ## Why
 
-Files that are not instances of any type sit in the type directories: every `INDEX.md`, `docs/skills/tags.md` (a vocabulary filed as a procedure), the role lists, and `docs/facts/docs-manifest.md` (an un-numbered fact that passes the checker only because fields were added by hand). The "fitness-function inventory" is written by `bootstrap` step 5 and `capture` check 3 and exists nowhere; lint check 18 reads only the field on decisions. The `kms-seeded`/`kms-generated` markers take two forms and the model mentions neither.
+Files that are not instances of any type sit in the type directories: every `INDEX.md`, `docs/skills/tags.md` (a vocabulary filed as a procedure), the role lists (retired by 0079), and `docs/facts/docs-manifest.md` (an un-numbered fact that passes the checker only because fields were added by hand). The "fitness-function inventory" is written by `bootstrap` step 5 and `capture` check 3 and exists nowhere; lint check 18 reads only the field on decisions. The `kms-seeded`/`kms-generated` markers take two forms and the model mentions neither.
 
 ## Tradeoffs considered
 
@@ -24,4 +25,4 @@ Files that are not instances of any type sit in the type directories: every `IND
 
 ## Dispositions
 
-0049 left active (indexes are registries; format unchanged). 0013 amended (role lists are registries, proposal-only per 3.6). 0029 amended (docs manifest is a registry). 2.9 updates `bootstrap` 3/5/7/10, `capture` 3/5/7, `lint` 18/19/21, `uninstall`, `query` and `onboard` index reads. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.4.
+0049 left active (indexes are registries; format unchanged). 0013 amended (role lists are registries, proposal-only per 3.6). 0029 amended (docs manifest is a registry). 2.9 updates `bootstrap` 3/5/7/10, `capture` 3/5/7, `lint` 18/19/21, `uninstall`, `query` and `onboard` index reads. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.4.

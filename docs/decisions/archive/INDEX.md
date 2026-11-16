@@ -12,3 +12,4 @@ id,title,tags,status
 0010-decision-track-field,"Add a track field (product | process) to decisions","kms, knowledge-management",superseded
 0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",superseded
 0013-ai-agent-role-lists-per-track,"bootstrap creates, steward maintains, product/process role lists for reviewing decisions","kms, knowledge-management",superseded
+0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",superseded

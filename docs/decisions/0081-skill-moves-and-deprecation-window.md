@@ -1,7 +1,8 @@
 ---
 id: 0081-skill-moves-and-deprecation-window
 title: Five skills leave kms after a one-release deprecation window; roadmap becomes decide
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, scope, packaging]
 ---
@@ -31,4 +32,4 @@ Plans, brainstorms and changelogs are not durable knowledge (0069); go-getter al
 
 ## Twin
 
-go-getter twin: written in D0. Draft by an agent; owner acceptance in plan phase I. Plan: `kms-core-and-go-getter-consolidation.md` E1.
+go-getter twin: written in D0. Accepted 2026-11-16 by the owner. Plan: `kms-core-and-go-getter-consolidation.md` E1.

@@ -11,7 +11,7 @@ derivation-note: >
   must carry superseded-by pointing at its successor.
 pinned:
   0039-unify-lifecycle-and-drop-scope: "350c1d6c874d"
-  0073-lifecycle-words-defined: "1ad4e76fa5e3"
+  0073-lifecycle-words-defined: "859c60f82c92"
 ---
 
 ## Guardrail
@@ -27,7 +27,7 @@ test, extended to this field.
 - **Axiomatic basis**: `docs/decisions/0039-unify-lifecycle-and-drop-scope.md`
   — the team committed to a structured supersession pointer instead of
   prose glued onto `status`.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
+- **Context**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base frontmatter this guardrail's field extends; `docs/decisions/0073-lifecycle-words-defined.md` extends the field to all four types.
 - **Normative conclusion**: therefore any artifact found `superseded`
   without a valid `superseded-by` pointer is debt to resolve, not a

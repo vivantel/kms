@@ -26,7 +26,7 @@ unnamed/exploratory work between versions still needs no entry.
 - **Axiomatic basis**: `docs/decisions/0050-version-bump-changelog-linkage.md`
   — the team committed to treating a version bump and its changelog entry
   as one unit of work, without reopening `0005`'s on-demand design.
-- **Descriptive basis**: `docs/facts/archive/0013-changelog-lagged-four-version-bumps.md`
+- **Background (retired fact)**: `docs/facts/archive/0013-changelog-lagged-four-version-bumps.md`
   — four manifest version bumps landed with zero corresponding entries
   before this rule existed.
 - **Normative conclusion**: therefore a version bump and its `CHANGELOG.md`

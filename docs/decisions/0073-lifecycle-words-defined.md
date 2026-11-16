@@ -1,7 +1,8 @@
 ---
 id: 0073-lifecycle-words-defined
 title: Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, knowledge-management, taxonomy]
 ---
@@ -28,4 +29,4 @@ Eight `## Amendment` sections in four accepted decisions, `fitness-functions` re
 
 ## Dispositions
 
-0039 amended (rules 3, 4, 6). 0053 left active. Guardrails `lifecycle-status-values`, `superseded-decision-requires-pointer`, `decision-expires-must-be-reevaluated` re-derived in 2.10. `CONTRIBUTING.md` Governance paragraph rewritten in 5.3. Draft; owner acceptance in plan phase I. Plan: `kms-review-and-redesign.md` 2.3.
+0039 amended (rules 3, 4, 6). 0053 left active. Guardrails `lifecycle-status-values`, `superseded-decision-requires-pointer`, `decision-expires-must-be-reevaluated` re-derived in 2.10. `CONTRIBUTING.md` Governance paragraph rewritten in 5.3. Accepted 2026-11-16 by the owner. Plan: `kms-review-and-redesign.md` 2.3.

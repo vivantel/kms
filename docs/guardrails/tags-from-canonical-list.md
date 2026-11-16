@@ -28,7 +28,7 @@ or the file should use an existing tag instead of a near-duplicate.
   — the team committed to a controlled tag vocabulary so tag-based
   clustering (discovery, and the scoped contradiction check) stays
   meaningful as the knowledge base grows.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
+- **Context**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base `id/title/status/date/tags` frontmatter this
   guardrail's field constrains.
 - **Normative conclusion**: therefore any of the four governed types'

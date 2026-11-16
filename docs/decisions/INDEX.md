@@ -59,19 +59,18 @@ id,title,tags,status
 0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
 0065-admission-test-for-new-records,"New records pass an admission test of hard gates and three estimated signals","kms, knowledge-management, taxonomy",active
 0066-corpus-cleanup-under-admission-test,"Six facts that fail the admission test are deprecated; the other contested records stay","kms, knowledge-management, taxonomy",active
-0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",active
 0068-eval-gate-master-only,"Run the eval gate on pull requests into master only","kms, eval-harness, automation",active
-0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",draft
-0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",draft
-0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",draft
-0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",draft
-0073-lifecycle-words-defined,"Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once","kms, knowledge-management, taxonomy",draft
-0074-registries-by-marker,"Registries are identified by marker; the fitness-function inventory lives on decisions","kms, knowledge-management, taxonomy",draft
-0075-settle-names-keep-directories,"Settle the artifact names without renaming directories","kms, knowledge-management, taxonomy",draft
-0076-admission-reconciled-with-existing-rules,"Reconcile the admission test with the rules it contradicts","kms, knowledge-management, taxonomy",draft
-0077-more-structural-lint-checks-optional-pins,"Make four more lint checks structural; keep pins optional","kms, knowledge-management, eval-harness",draft
-0078-open-questions-are-draft-decisions,"Open questions and hypotheses are draft decisions with expires-when","kms, knowledge-management, taxonomy",draft
-0079-drop-track-field,"Drop the decision track field and the role lists built on it","kms, knowledge-management, taxonomy",draft
-0080-core-is-vendored-by-pin,"go-getter consumes the knowledge-base core by vendoring it at a pinned release tag","kms, packaging",draft
-0081-skill-moves-and-deprecation-window,"Five skills leave kms after a one-release deprecation window; roadmap becomes decide","kms, scope, packaging",draft
-0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",draft
+0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",active
+0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",active
+0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",active
+0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",active
+0073-lifecycle-words-defined,"Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once","kms, knowledge-management, taxonomy",active
+0074-registries-by-marker,"Registries are identified by marker; the fitness-function inventory lives on decisions","kms, knowledge-management, taxonomy",active
+0075-settle-names-keep-directories,"Settle the artifact names without renaming directories","kms, knowledge-management, taxonomy",active
+0076-admission-reconciled-with-existing-rules,"Reconcile the admission test with the rules it contradicts","kms, knowledge-management, taxonomy",active
+0077-more-structural-lint-checks-optional-pins,"Make four more lint checks structural; keep pins optional","kms, knowledge-management, eval-harness",active
+0078-open-questions-are-draft-decisions,"Open questions and hypotheses are draft decisions with expires-when","kms, knowledge-management, taxonomy",active
+0079-drop-track-field,"Drop the decision track field and the role lists built on it","kms, knowledge-management, taxonomy",active
+0080-core-is-vendored-by-pin,"go-getter consumes the knowledge-base core by vendoring it at a pinned release tag","kms, packaging",active
+0081-skill-moves-and-deprecation-window,"Five skills leave kms after a one-release deprecation window; roadmap becomes decide","kms, scope, packaging",active
+0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",active

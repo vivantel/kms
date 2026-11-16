@@ -1,7 +1,8 @@
 ---
 id: 0069-kms-owns-durable-knowledge-not-specs-or-coordination
 title: kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, scope]
 ---
@@ -24,4 +25,4 @@ The cut is by artifact ownership: kms owns what outlives the work; go-getter own
 
 ## Twin and status
 
-Go-getter twin: written in plan step D0 (`docs/decisions/` in the go-getter `feat/adopt-kms-core` branch). Draft by an agent; the owner accepts it (set `status: active` and `accepted-by`) in plan phase I. Recommended option: as written. Plan: `docs/plans/kms-core-and-go-getter-consolidation.md` step A3.
+Go-getter twin: written in plan step D0 (`docs/decisions/` in the go-getter `feat/adopt-kms-core` branch). Accepted 2026-11-16 by the owner. Recommended option: as written. Plan: `docs/plans/kms-core-and-go-getter-consolidation.md` step A3.

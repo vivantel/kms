@@ -1,7 +1,8 @@
 ---
 id: 0082-core-evals-live-in-kms
 title: Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, eval-harness]
 ---
@@ -21,4 +22,4 @@ The same skill behaviour must not be measured twice with two harnesses. kms owns
 
 ## Twin
 
-go-getter twin: written in D0; its `eval` change is made in D3. Draft by an agent; owner acceptance in plan phase I. Plan: `kms-core-and-go-getter-consolidation.md` F1.
+go-getter twin: written in D0; its `eval` change is made in D3. Accepted 2026-11-16 by the owner. Plan: `kms-core-and-go-getter-consolidation.md` F1.

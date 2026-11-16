@@ -1,7 +1,8 @@
 ---
 id: 0080-core-is-vendored-by-pin
 title: go-getter consumes the knowledge-base core by vendoring it at a pinned release tag
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, packaging]
 ---
@@ -22,4 +23,4 @@ go-getter already has `check plugin-pin`, `check deps` and `check generated`, so
 
 ## Twin
 
-go-getter twin: written in D0. Draft by an agent; owner acceptance in plan phase I. Plan: `kms-core-and-go-getter-consolidation.md` C3.
+go-getter twin: written in D0. Accepted 2026-11-16 by the owner. Plan: `kms-core-and-go-getter-consolidation.md` C3.

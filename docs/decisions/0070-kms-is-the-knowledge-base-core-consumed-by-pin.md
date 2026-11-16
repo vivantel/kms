@@ -1,7 +1,8 @@
 ---
 id: 0070-kms-is-the-knowledge-base-core-consumed-by-pin
 title: kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-15
 tags: [kms, scope, packaging]
 ---
@@ -22,4 +23,4 @@ Plan step A1 measured the two models: 9 identical items, 4 kms-only, 3 go-getter
 
 ## Dependency
 
-Rests on verdict *cleanup* from A1. Go-getter twin: written in D0. Draft by an agent; accepting means `status: active` plus `accepted-by`, then archive 0067 and update both INDEX files. Plan step A4.
+Rests on verdict *cleanup* from A1. Go-getter twin: written in D0. Accepted 2026-11-16 by the owner. Plan step A4.

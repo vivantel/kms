@@ -12,7 +12,7 @@ derivation-note: >
   only when an independent fact exists.
 pinned:
   0009-bootstrap-and-steward-skills: "2d4a963a7104"
-  0072-guardrail-derivation-edges-are-honest: "1ecb83178e6b"
+  0072-guardrail-derivation-edges-are-honest: "e88736350c53"
 ---
 
 ## Guardrail

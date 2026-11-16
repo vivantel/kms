@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: One-time setup of a fact/decision/guardrail/procedure knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract decisions from git history, extract facts from existing docs, audit guardrails for missing derivation, and inventory fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
+description: One-time setup of a fact/decision/guardrail/procedure knowledge system in a project that has none yet, or a gap-fill pass over one that's incomplete — extract decisions from git history, extract facts from existing docs, audit guardrails for missing derivation, and record fitness functions. Use when the user wants to set up knowledge management for a project, e.g. "bootstrap the knowledge system here", "set up facts/decisions/guardrails for this repo".
 ---
 
 Set up the knowledge system this plugin's other skills assume: decisions (what the team commits to), facts (what's currently true), guardrails (what must or must not happen, derived from the first two), and procedures (how to act). Run once per project, or as a gap-fill pass on an incomplete one. Once artifacts exist, `capture` maintains them across sessions.
@@ -19,7 +19,7 @@ Write files directly — this is a setup pass, not a chat recommendation. If a f
 
 ## Steps
 
-### 1. Intent extraction from history
+### 1. Decision extraction from history
 
 Scan git log and existing docs (README, planning notes, guardrail/skill files) for decision language: project-specific markers (`DECISION:`/`RFC:`/`APPROVED:`) or natural language (`why`, `because`, `must`, `never`, `required by`).
 
@@ -30,7 +30,7 @@ Scan git log and existing docs (README, planning notes, guardrail/skill files) f
 
 ### 2. Fact extraction
 
-For every table, value list, or configuration default embedded in a skill or guardrail file, classify it; a value that restates a decision is not a fact. Apply `admission.md` here too, then write one fact stub per admitted finding, with `source` where one exists.
+For every table, value list, or configuration default embedded in a skill or guardrail file, classify it; a value that restates a decision is not a fact. Apply `admission.md` here too, then write one fact stub per admitted finding, with `source` where one exists. Write location or aggregation facts (a path, a count) only when the user asks, and state the cap.
 
 ### 3. Doc manifest bootstrap
 
@@ -40,9 +40,9 @@ For every human-facing doc (README, planning notes, roadmap, other `docs/` markd
 
 For every existing guardrail file, check whether `governed-by`, `grounded-in`, and `derivation-note` are present. If any are missing, flag it as undeclared, propose the most likely governing decision(s) and grounding fact(s), and draft the `derivation-note`. Log undeclared guardrails as debt.
 
-### 5. Fitness function inventory
+### 5. Fitness functions
 
-Scan existing checks (CI/build config, review checklists, approval gates) for rules already enforced, and record them. Scan skill/guardrail files for rules that *could* be automated but aren't, and log each as debt: rule text, why not automated yet, governing decision (or `TBD`).
+Scan existing checks (CI/build config, review checklists, approval gates) for rules already enforced, and record them. Scan skill/guardrail files for rules that *could* be automated but aren't, and add each as `{check, enforced-by: none, last-verified}` to the governing decision's `fitness-functions` (or draft a `status: draft` decision stub when none governs it).
 
 ### 6. Skill gap detection
 
