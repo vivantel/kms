@@ -12,7 +12,9 @@ The same `plugins/kms/hooks/hooks.json` `SessionStart` hook that runs
 `capture-nudge.sh` also runs `plugins/kms/hooks/lint-nudge.sh` — a
 separate script, not a mode of the first one, matching
 `docs/guardrails/one-statement-one-job.md`. It counts commits touching
-`docs/{facts,decisions,guardrails,skills}/` in the last 14 days and, at
+`docs/{facts,decisions,guardrails,skills}/` in the last 14 days (or the
+same four subdirectories of the first top-level directory holding
+`decisions/`, when there is no `docs/`) and, at
 5 or more, prints a note suggesting `lint`. Same context-not-message
 caveat as `capture-nudge.sh`
 (`docs/decisions/0024-automate-steward-nudge-hook.md`): `SessionStart`

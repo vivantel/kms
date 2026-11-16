@@ -67,6 +67,7 @@ def project(root, **over):
         "docs/guardrails/INDEX.md": INDEX.format("changelog,Every release has a changelog entry,release,active"),
         "docs/skills/INDEX.md": INDEX.format("deploy,Deploy steps,release,active\ntags,Tags,release,active"),
         "plugins/kms/templates/guardrails/.keep": "",
+        "CHANGELOG.md": "# Changelog\n",
     }
     files.update(over)
     for rel, text in files.items():

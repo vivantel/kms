@@ -7,7 +7,7 @@ Usage: lint_check.py [--root DIR] [--docs DIR] [--json] [--strict] [--stale-days
        lint_check.py [--root DIR] --pin FILE   record the current revision of FILE's edge targets
 
 Runs the lint checks that need only frontmatter, file names and file text: 1, 2, 3, 4, 7, 9, 12,
-17, 18, 19, 20, 21, 24 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
+17, 18, 19, 20, 21, 24, 25 (numbers as in plugins/kms/skills/lint/SKILL.md), and the pinned part of 13: an
 edge (`governed-by`, `grounded-in`) that carries a pin in the file's `pinned` map is stale when
 its target no longer hashes to the pin. Edges without a pin are left to the model. No model is
 involved; output is sorted, so identical input gives identical output. Exit status 1 when
@@ -527,6 +527,21 @@ class Linter:
                     elif n > self.stale_days:
                         self.add(18, rel, f"fitness function `{str(e.get('check'))[:40]}` last verified {n} days ago (threshold {self.stale_days})")
 
+    def check_sources(self):  # 25
+        for a in self.arts:
+            fm = a["fm"]
+            if a["type"] != "facts" or a["archived"] or not fm or not fm.get("source"):
+                continue
+            src, rel = str(fm["source"]).strip(), a["rel"]
+            external = re.match(r"https?://", src) or re.search(r"\s", src)  # URL or command
+            if not external and not (self.root / src).exists():
+                self.add(25, rel, f"`source: {src}` is a repo path that no longer exists")
+            n = self.age(fm.get("last-verified")) if "last-verified" in fm else None
+            if n is None:
+                self.warnings.append(f"never verified: {rel}: no `last-verified` date")
+            elif external and n > self.stale_days:
+                self.add(25, rel, f"`source` last verified {n} days ago (threshold {self.stale_days})")
+
     def check_plans(self):  # 24
         plans = self.docs / "plans"
         for p in sorted(plans.glob("*.md")) if plans.is_dir() else []:
@@ -576,6 +591,7 @@ class Linter:
             self.check_pins,
             self.check_dates,
             self.check_plans,
+            self.check_sources,
             self.check_unpinned,
             self.check_numbering,
             self.check_orphans,
