@@ -422,3 +422,42 @@ class NewRules(unittest.TestCase):
                 "docs/guardrails/changelog.md": GUARD.replace("governed-by: 0001-weekly", "governed-by: [0001-weekly]")}
         checks, _ = self.run_checks(kw={"strict": True}, **over)
         self.assertIn(1, checks)
+
+    def test_calendar_invalid_date_is_a_finding_not_a_crash(self):
+        checks, _ = self.run_checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("2026-01-01", "2026-02-30")})
+        self.assertIn(2, checks)
+
+    def test_absolute_docs_with_relative_root(self):
+        import os
+        project(self.root)
+        cwd = os.getcwd()
+        os.chdir(self.root)
+        try:
+            lin = Linter(".", docs=str(Path(self.root).resolve() / "docs"), today="2026-02-01")
+            self.assertEqual(sorted({c for c, _, _ in lin.run()}), [])
+        finally:
+            os.chdir(cwd)
+
+    def test_scalar_fitness_functions_is_check_2(self):
+        checks, _ = self.run_checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("tags: [release]", "tags: [release]\nfitness-functions: true")})
+        self.assertEqual(checks, [2])
+
+    def test_open_question_still_gets_check_18(self):
+        fm = "status: draft\nexpires-when: answered\nfitness-functions: [{check: x}]"
+        checks, _ = self.run_checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("status: active", fm)})
+        self.assertIn(18, checks)
+        self.assertNotIn(17, checks)
+
+    def test_plan_step_headings(self):
+        plan = "### 1 [done]\n### 2 [done]\n### Step 3: C [pending]\n"
+        self.assertNotIn(24, self.run_checks(**{"docs/plans/p.md": plan})[0])
+        self.assertNotIn(24, self.run_checks(**{"docs/plans/p.md": "### 1 [done]\n### 2.10 [done, except x: blocked]\n"})[0])
+        self.assertIn(24, self.run_checks(**{"docs/plans/p.md": "## Step 1. A [done]\n### 2 [done]\n"})[0])
+
+    def test_tags_frontmatter_keys_are_not_tags(self):
+        checks, _ = self.run_checks(**{"docs/decisions/0001-weekly.md": DECISION.replace("[release]", "[status]")})
+        self.assertIn(21, checks)
+
+    def test_dot_slash_prose_reference_is_checked(self):
+        checks, _ = self.run_checks(**{"README.md": "see ./docs/facts/gone.md\n"})
+        self.assertIn(9, checks)

@@ -45,7 +45,7 @@ STATUSES = ("draft", "active", "superseded", "deprecated")
 REF_FIELDS = ("governed-by", "grounded-in", "superseded-by", "governed-facts", "operationalizes")
 LIST_FIELDS = ("grounded-in", "governed-facts", "operationalizes")
 STALE_DAYS = 180
-STEP = re.compile(r"^#{2,4}\s+\S+\s+\[(done|pending|blocked[^\]]*)\]", re.M)
+STEP = re.compile(r"^#{2,4}\s+[^\n]*?\[(done|pending|blocked)([^\]]*)\]", re.M)
 
 
 def as_date(v):
@@ -73,8 +73,8 @@ def split_frontmatter(text):
         if lines[i].strip() == "---":
             try:
                 data = yaml.safe_load("\n".join(lines[1:i])) or {}
-            except yaml.YAMLError as e:
-                return None, "unparseable frontmatter: " + str(e).splitlines()[0]
+            except (yaml.YAMLError, ValueError) as e:  # ValueError: calendar-invalid timestamps
+                return None, "unparseable frontmatter: " + (str(e).splitlines() or [type(e).__name__])[0]
             if not isinstance(data, dict):
                 return None, "frontmatter is not a mapping"
             return data, None
@@ -131,11 +131,14 @@ class Linter:
         self.stale_days = stale_days
         self.today = as_date(today) if today else datetime.date.today()
         self.legacy_files = {}  # rel -> [message]
-        self.root = Path(root)
+        self.root = Path(root).resolve()
         self.docs = self.find_docs(docs)
-        self.dn = self.docs.relative_to(self.root).as_posix()
+        try:
+            self.dn = self.docs.relative_to(self.root).as_posix()
+        except ValueError:
+            self.dn = self.docs.as_posix()
         self.prose_ref = re.compile(
-            r"(?<![\w\-/])" + re.escape(self.dn) + r"/(facts|decisions|guardrails|skills)/(?:archive/)?([\w.\-]+\.md)"
+            r"(?<![\w\-/])(?:\.{1,2}/)*" + re.escape(self.dn) + r"/(facts|decisions|guardrails|skills)/(?:archive/)?([\w.\-]+\.md)"
         )
         self.findings = []  # (check, path, message)
         self.warnings = []
@@ -148,12 +151,15 @@ class Linter:
     def find_docs(self, docs):
         if docs:
             d = Path(docs)
-            return d if d.is_absolute() else self.root / d
+            return d.resolve() if d.is_absolute() else self.root / d
         if (self.root / "docs").is_dir():
             return self.root / "docs"
-        for d in sorted(p for p in self.root.iterdir() if p.is_dir() and not p.name.startswith(".")):
-            if (d / "decisions").is_dir():
-                return d
+        try:
+            for d in sorted(p for p in self.root.iterdir() if p.is_dir() and not p.name.startswith(".")):
+                if (d / "decisions").is_dir():
+                    return d
+        except OSError:
+            pass
         return self.root / "docs"
 
     def add(self, check, rel, msg):
@@ -174,7 +180,10 @@ class Linter:
         return None if d is None else (self.today - d).days
 
     def rel(self, p):
-        return p.relative_to(self.root)
+        try:
+            return p.relative_to(self.root)
+        except ValueError:
+            return p
 
     def load(self):
         for t in TYPES:
@@ -205,7 +214,11 @@ class Linter:
         if not p.exists():
             return None
         tags = set()
-        for line in p.read_text(encoding="utf-8").splitlines():
+        lines = p.read_text(encoding="utf-8").splitlines()
+        if lines and lines[0].strip() == "---":  # frontmatter keys are not tags
+            end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), -1)
+            lines = lines[end + 1:]
+        for line in lines:
             m = re.match(r"^\s*(?:[-*]\s+)?([a-z0-9][\w\-]*)(?: \(umbrella\))?(?:\s+[—–-]\s+|:\s+)", line)
             if m:
                 tags.add(m.group(1))
@@ -480,14 +493,17 @@ class Linter:
             exp = as_date(fm.get("expires")) if "expires" in fm else None
             if exp is not None and exp < self.today:
                 self.add(4, rel, f"`expires: {exp}` has passed")
-            if fm.get("status") == "draft" and "expires-when" in fm:
-                continue  # an open question, not an abandoned stub
+            open_question = fm.get("status") == "draft" and "expires-when" in fm  # not an abandoned stub: exempt from 17 only
             tbd = [f for f in EDGE_FIELDS if fm.get(f) == "TBD" or (isinstance(fm.get(f), list) and "TBD" in fm[f])]
             n = self.age(fm.get("date"))
-            if (tbd or fm.get("status") == "draft") and n is not None and n > self.stale_days:
+            if not open_question and (tbd or fm.get("status") == "draft") and n is not None and n > self.stale_days:
                 what = ", ".join(f"`{f}: TBD`" for f in tbd) or "`status: draft`"
                 self.add(17, rel, f"{what} unresolved for {n} days (threshold {self.stale_days})")
-            for e in fm.get("fitness-functions") or []:
+            ff = fm.get("fitness-functions")
+            if ff is not None and not isinstance(ff, list):
+                self.add(2, rel, "`fitness-functions` must be a YAML list")
+                ff = []
+            for e in ff or []:
                 if isinstance(e, dict):
                     n = self.age(e.get("last-verified")) if "last-verified" in e else None
                     if "last-verified" not in e or n is None:
@@ -498,7 +514,7 @@ class Linter:
     def check_plans(self):  # 24
         plans = self.docs / "plans"
         for p in sorted(plans.glob("*.md")) if plans.is_dir() else []:
-            states = [m.group(1).split(":")[0] for m in STEP.finditer(p.read_text(encoding="utf-8"))]
+            states = ["partial" if "except" in m.group(2) else m.group(1) for m in STEP.finditer(p.read_text(encoding="utf-8"))]
             if states and all(x == "done" for x in states):
                 self.add(24, self.rel(p), "every step is `done`, but the plan is not under plans/archive/")
 
