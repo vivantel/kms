@@ -26,6 +26,7 @@ class Conformance(unittest.TestCase):
                 self.assertEqual(got, sorted({(x["check"], x["file"]) for x in exp["findings"]}))
                 self.assertEqual(r.returncode, 1 if exp["findings"] else 0)
 
+    @unittest.skipUnless((HERE / "build.py").exists(), "generator is kms-only; not vendored")
     def test_generator_is_current(self):
         r = subprocess.run([sys.executable, str(HERE / "build.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
