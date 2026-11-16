@@ -3,7 +3,9 @@
 
 Usage: migrate.py --docs DIR [--dry-run]
 
-Mechanical edits only, idempotent: a second run changes nothing.
+Mechanical edits only, idempotent: a second run changes nothing. All files are computed before any is
+written, line endings are kept, and a fitness function that was a bare string becomes `{check: ...}` with no
+`last-verified` (it was never verified; check 18 asks for a date, and a note lists each one).
   facts       drop `kind` and `governed-by`
   guardrails  scalar `governed-by` becomes a one-element list; `grounded-in` keeps fact ids only
               (removed ids are printed for re-derivation); `grounded-in: TBD` is dropped; a
@@ -11,7 +13,7 @@ Mechanical edits only, idempotent: a second run changes nothing.
   decisions   drop `track`; a non-date `expires` moves to `expires-when`; string `fitness-functions` entries
               become `{check: ...}` maps
   registries  INDEX.md gets a first-line `kms-registry` comment; tags.md and docs-manifest.md get
-              a `kms-registry` frontmatter field
+              a `kms-registry` frontmatter field, and their rows leave the sibling INDEX.md
 Requires PyYAML.
 """
 
@@ -52,8 +54,33 @@ def blocks(head):
     return out
 
 
+def load(lines):
+    """Parsed frontmatter mapping, or None when it does not parse (YAMLError, or ValueError for a calendar-invalid date) or is not a mapping."""
+    try:
+        data = yaml.safe_load("\n".join(lines)) or {}
+    except (yaml.YAMLError, ValueError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def value(block):
-    return yaml.safe_load("\n".join(block[1])).get(block[0])
+    return (load(block[1]) or {}).get(block[0])
+
+
+def flow(items):
+    return "[" + ", ".join(json.dumps(str(x), ensure_ascii=False) for x in items) + "]"
+
+
+def jsonable(o):
+    return o.isoformat() if isinstance(o, (datetime.date, datetime.datetime)) else str(o)
+
+
+def read(p):
+    return p.read_bytes().decode("utf-8")
+
+
+def write(p, text):
+    p.write_bytes(text.encode("utf-8"))
 
 
 def is_date(v):
@@ -71,28 +98,26 @@ def kinds_by_id(docs):
     for t in TYPES:
         for d in (docs / t, docs / t / "archive"):
             for p in d.glob("*.md") if d.is_dir() else []:
-                parts = split(p.read_text(encoding="utf-8"))
+                parts = split(read(p).replace("\r\n", "\n"))
                 if parts:
-                    try:
-                        fm = yaml.safe_load("\n".join(parts[0])) or {}
-                    except yaml.YAMLError:
-                        fm = {}  # unparseable frontmatter: reported by lint_check, left alone here
+                    fm = load(parts[0]) or {}  # unparseable frontmatter: reported by lint_check, left alone here
                     ids[str(fm.get("id", p.stem))] = t
     return ids
 
 
 def migrate_file(path, typ, ids, notes):
-    text = path.read_text(encoding="utf-8")
+    raw = read(path)
+    crlf = "\r\n" in raw
+    text = raw.replace("\r\n", "\n")
     parts = split(text)
     if not parts:
-        return text
+        return raw
     head, tail = parts
-    try:
-        yaml.safe_load("\n".join(head))
-    except yaml.YAMLError:
-        notes.append(f"{path.name}: unparseable frontmatter, skipped")
-        return text
+    if load(head) is None:
+        notes.append(f"{path.name}: unparseable frontmatter or not a mapping, skipped")
+        return raw
     bl = blocks(head)
+    has_when = any(k == "expires-when" for k, _ in bl)
     keep = []
     for key, lines in bl:
         if key is None:
@@ -105,8 +130,8 @@ def migrate_file(path, typ, ids, notes):
             continue
         if typ == "guardrails" and key == "governed-by":
             v = value(b)
-            if not isinstance(v, list):
-                b = [key, [f"governed-by: [{v}]"]]
+            if v is not None and not isinstance(v, list):
+                b = [key, [f"governed-by: {flow([v])}"]]
         if typ == "guardrails" and key == "grounded-in":
             v = value(b)
             if v == "TBD":
@@ -118,26 +143,32 @@ def migrate_file(path, typ, ids, notes):
                 notes.append(f"{path.name}: grounded-in dropped {', '.join(gone)}: re-derive")
             if not facts:
                 continue
-            b = [key, ["grounded-in: [" + ", ".join(facts) + "]"]]
+            b = [key, [f"grounded-in: {flow(facts)}"]]
         if typ == "guardrails" and key == "derivation-note":
             if "Seeded from kms's shipped guardrail templates" in " ".join(" ".join(lines).split()):
                 b = [key, ["derivation-note: TBD"]]
         if key == "expires":
             v = value(b)
+            if v is None:
+                continue  # an empty `expires:` says nothing
             if not is_date(v):
-                keep.append(["expires-when", [f"expires-when: {json.dumps(str(v))}"]])
+                if not has_when:
+                    keep.append(["expires-when", [f"expires-when: {json.dumps(str(v), ensure_ascii=False)}"]])
                 continue
         if key == "fitness-functions":
             v = value(b)
             if isinstance(v, list) and any(not isinstance(e, dict) for e in v):
                 out = ["fitness-functions:"]
                 for e in v:
-                    out.append("  - check: " + json.dumps(e if not isinstance(e, dict) else e["check"], ensure_ascii=False)
-                               if not isinstance(e, dict) else "  - " + json.dumps(e, ensure_ascii=False))
+                    if isinstance(e, dict):
+                        out.append("  - " + json.dumps(e, ensure_ascii=False, default=jsonable))
+                    else:
+                        out.append("  - check: " + json.dumps(str(e), ensure_ascii=False))
+                        notes.append(f"{path.name}: fitness function `{str(e)[:40]}` has no `last-verified`: verify it and add the date")
                 b = [key, out]
         keep.append(b)
     new = "\n".join(["---"] + [l for _, ls in keep for l in ls] + tail)
-    return new
+    return new.replace("\n", "\r\n") if crlf else new
 
 
 def main():
@@ -147,26 +178,32 @@ def main():
     args = ap.parse_args()
     docs = Path(args.docs)
     ids = kinds_by_id(docs)
-    notes, changed = [], []
+    notes, pending = [], []
     for t in TYPES:
         for d in (docs / t, docs / t / "archive"):
             if not d.is_dir():
                 continue
             for p in sorted(d.glob("*.md")):
-                text = p.read_text(encoding="utf-8")
+                text = read(p)
                 if p.name == "INDEX.md":
                     new = text if text.startswith("<!-- kms-registry:") else "<!-- kms-registry: index -->\n" + text
+                    for name in REGISTRY_FILES:  # a registry is not an artifact: its row leaves the index
+                        if (d / name).exists():
+                            new = re.sub(rf"^{re.escape(name[:-3])},[^\n]*\r?\n?", "", new, flags=re.M)
                 elif p.name in REGISTRY_FILES:
-                    parts = split(text)
+                    parts = split(text.replace("\r\n", "\n"))
                     new = text
                     if parts and "kms-registry" not in "\n".join(parts[0]):
                         new = "\n".join(["---"] + parts[0] + [f"kms-registry: {REGISTRY_FILES[p.name]}"] + parts[1])
+                        new = new.replace("\n", "\r\n") if "\r\n" in text else new
                 else:
                     new = migrate_file(p, t, ids, notes)
                 if new != text:
-                    changed.append(str(p))
-                    if not args.dry_run:
-                        p.write_text(new, encoding="utf-8")
+                    pending.append((p, new))
+    if not args.dry_run:
+        for p, new in pending:
+            write(p, new)
+    changed = [str(p) for p, _ in pending]
     for n in notes:
         print("re-derive: " + n)
     print(f"{len(changed)} file(s) {'would change' if args.dry_run else 'changed'}", file=sys.stderr)
