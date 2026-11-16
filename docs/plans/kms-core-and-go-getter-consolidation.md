@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-H1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-H3 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -222,13 +222,13 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 **Done when.** The entry and notes exist and `python3 -m json.tool` passes on all manifests (unchanged).
 
-### H2 [pending] [go-getter] Prepare the go-getter release
+### H2 [done] [go-getter] Prepare the go-getter release
 
 **What.** Same for go-getter: changelog entry, the pinned kms tag name it expects (`kms-schema-1.0.0`, to be created by the owner at release), and what `go-getter core update` does. No version bump.
 
 **Done when.** Entry exists; `npm run check:versions` still passes unchanged.
 
-### H3 [pending] [kms] Plan the removal release
+### H3 [done] [kms] Plan the removal release
 
 **What.** Write the small follow-up plan for removing the five deprecated skills one minor release after the deprecation ships: `docs/plans/kms-remove-deprecated-skills.md` with steps and "Done when" lines.
 
@@ -348,4 +348,6 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 G1 [done]: kms README/ARCHITECTURE/INSTALLING and go-getter README state the story, link each other and core-contract.md, give the OpenSpec boundary; thesis sentence kept; structural checker clean on both (the `lint`/`conform` skills themselves are model-run and not executed here) (kms see git log Plan-Step: G1 / go-getter fa90e06)
 - 2026-11-16 G2 [done]: the work is recorded as the drafts in the Owner decisions list (kms 0069-0082, go-getter 0210-0214); archive moves for 0066/0067 wait for acceptance; structural checker clean on both repos; model-run `decide`/`lint`/`conform` not executed (no provider)
 - 2026-11-16 H1 [done]: CHANGELOG `[Unreleased]` entry and docs/plans/release-notes-next.md; no version, tag or push
+- 2026-11-16 H2 [done]: go-getter CHANGELOG `[Unreleased]` entry naming tag kms-schema-1.0.0 and `core update`; versions unchanged; check:versions ok (go-getter 168ae02)
+- 2026-11-16 H3 [done]: docs/plans/kms-remove-deprecated-skills.md written
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
