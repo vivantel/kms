@@ -22,6 +22,11 @@ kms 0069-0082: accept = `status: active` + `accepted-by`; revert hints are in th
 - E3 residual: clarify to discover and changelog to release folds not done (no `release` skill exists; all five kept, skill count unchanged).
 - `lint`, `conform`, `decide` skills are model-run and were not executed; only the structural checker ran.
 
+## Code-review fixes (after the handover)
+Nine findings fixed in six commits on the kms branch: checker crashes (invalid date, absolute `--docs`, scalar `fitness-functions`), check 18 for open questions, plan/tag/prose-ref regexes, `migrate.py` (compute before write, CRLF, registry index rows, None and broken YAML), the check-3 matrix mutation, the CI unit job and `npm run eval`, the `decide` sidecar, `uninstall` category 4 and `bootstrap` step 8. Unit tests cover each (71 pass). The go-getter pin must be refreshed to the new kms tip before release.
+
+**Design call left for you (not a bug fix):** decisions 0073/0077 make pins ignore lifecycle fields, so superseding and archiving a pinned source with a plain `status`/`superseded-by` flip no longer fails the checker (master: check 13; here: a stderr warning, exit 0; `--strict` exits 1). Options: count the advisory in the exit code, or make check 13 fire again when a pinned source is retired. Decide when you accept 0073 and 0077.
+
 ## Release sequence
 1. Review and accept the drafts; run the blocked evals.
 2. kms: bump three manifests in lockstep, rename `[Unreleased]`, set schema-version to `1.0.0`, tag `kms-schema-1.0.0` (notes: `docs/plans/release-notes-next.md`).
