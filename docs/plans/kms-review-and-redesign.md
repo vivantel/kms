@@ -1,11 +1,22 @@
 ---
 id: kms-review-and-redesign
 title: Fix, clarify and redesign the kms knowledge system after the 2026-11 whole-repo review
-status: 0.x and 1.2, 1.5 done; 1.1, 1.3, 1.4 blocked on kilo/Codex; next after those is 1.6
+status: reconciled 2026-11-16 with the consolidation (0.16.0-0.16.3 shipped phases 0-2); open: 1.1, 1.3, 1.4 (blocked), phases 3-5 re-scoped below; next release 0.18.0, because 0.17 removes the deprecated skills (decision 0081)
 date: 2026-11-12
 ---
 
 # Fix, clarify and redesign the kms knowledge system
+
+## Reconciliation 2026-11-16
+
+`kms-core-and-go-getter-consolidation.md` ran after this plan was written and changed what is left. It shipped as 0.16.0, 0.16.1, 0.16.2 and 0.16.3 (schema 1.0.0, tag `kms-schema-1.0.0`). Read the phases below with these corrections; step text is otherwise unchanged.
+
+- **Phases 0-2 and 1.6 are done.** The format change this plan reserved for 0.17.0 (schema split, facts without outgoing edges, `source`/`last-verified`, `migrate.py`, `enforced-by`, the `track` field dropped) shipped in 0.16.0.
+- **Release numbering.** 0.17 is the release that removes `roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog` (decision 0081, amended 2026-11-16; `kms-remove-deprecated-skills.md`). This plan's release is therefore **0.18.0** (every `0.17.0` below was renamed).
+- **Skills.** kms has fifteen skills until 0.17: the fourteen plus `decide` (0081), which replaces `roadmap` for records. Five skills are deprecated and move to go-getter. A step that edits one of them is dropped or retargeted to `decide`: 3.1 is superseded, 3.5 and the `roadmap`, `changelog` and `quickstart` bullets of 3.6 are retargeted, 4.1 drops four of its nine cases.
+- **Role lists** are gone (0079), so the `bootstrap` role-list bullets of 3.6 and the role-list question in 5.1 are moot.
+- **Still blocked:** 1.1 and 1.4 need the `kilo` CLI (a CI-only gap, since CI has it); 1.3 needs the Codex CLI; 4.2 needs a provider key.
+- **Eval flakes seen 2026-11-16** (free model `cohere/north-mini-code:free`): `capture` and `attribute` fail on a share of runs even when the right skill loads, on master as well as on PRs; `bootstrap` once errored with `spawn E2BIG` until the runner capped its transcript (0.16.2). Step 1.4 is the place to make such failures distinguishable and to decide which cases gate a merge.
 
 ## Context for a fresh session
 
@@ -17,7 +28,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 **Sibling project.** `/home/sergei/projects/vivantel/go-getter` forked kms's skills in 2026-10 (its archived decision 0006 vendored kms; its decision 0066 then took ownership: "There is no upstream to sync from"). It has diverged. This plan assumes **kms stays a standalone, focused knowledge-system plugin** and borrows ideas from go-getter (a tooling-readable marker), not code. Step 0.1 records that positioning; nothing else is gated on it.
 
-**How the plan is organised.** Six phases and two releases. Phase 0 is housekeeping. Phase 1 makes what already ships reach users, fixes the checker's bugs, and cuts **0.16.0** with a checker that tolerates the fact fields the next release will remove. Phase 2 is the model redesign: eight owner decisions (each a `roadmap` interview, because decisions are the owner's), then one rewrite of the model and one migration. Phase 3 adjusts skills for the processes the review found uncovered. Phase 4 makes the evidence real. Phase 5 updates kms's own dogfood and human docs and cuts **0.17.0**. A "Minimal path" section at the end says what to do if there are two weekends, not two months, and a "Deferred" section lists what was cut, each with the trigger that would bring it back.
+**How the plan is organised.** Six phases and two releases. Phase 0 is housekeeping. Phase 1 makes what already ships reach users, fixes the checker's bugs, and cuts **0.16.0** with a checker that tolerates the fact fields the next release will remove. Phase 2 is the model redesign: eight owner decisions (each a `roadmap` interview, because decisions are the owner's), then one rewrite of the model and one migration. Phase 3 adjusts skills for the processes the review found uncovered. Phase 4 makes the evidence real. Phase 5 updates kms's own dogfood and human docs and cuts **0.18.0**. A "Minimal path" section at the end says what to do if there are two weekends, not two months, and a "Deferred" section lists what was cut, each with the trigger that would bring it back.
 
 **Conventions.** Each step heading carries `[pending]`, `[done]` or `[blocked: reason]`, updated in place. "Done when" is checkable from the files alone, by the step itself. "Decision needed" marks a step whose content the owner chooses; the recommendation is stated; the step is done when the decision record is `status: active` with `accepted-by` set, and every earlier decision it conflicts with has been disposed of **in the same commit** (left active, amended with a dated additive section following the precedent in 0043/0044/0047/0059 until step 2.3 ratifies that rule, or superseded: `status: superseded`, `superseded-by`, moved to `docs/decisions/archive/`, both index rows updated). `capture` check 1 already requires the same-commit rule. Nothing edits an accepted decision's `## Decision`/`## Why`/`## Tradeoffs considered` text. Every `SKILL.md` edit ends with one re-read of the whole file; every change under `plugins/kms/skills/**` or `plugins/kms/shared/**` goes through the eval suite on a same-repo PR into `master`. Shipped text never cites one of this repo's own `docs/decisions/NNNN` files (`docs/skills/scoping-shipped-vs-repo-rules.md`). This plan and its review record are committed on branch `plan/kms-review-and-redesign`, created from `origin/master`; execute the plan there (or on branches cut from it), not on `study/s6b-cleanup`, which step 0.2 deletes. Where a Done-when needs a live service (a Kilo or Codex install, a model run, CI), the thing checked is the *recorded result*: a named file or paragraph stating command, date and outcome; if the service is unavailable, mark the step `[blocked: no Kilo/Codex here]` rather than claiming the result.
 
@@ -49,6 +60,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-15 2.8 [done]: decision 0078 drafted (amends 0030) (kms Plan-Step: 2.8)
 - 2026-11-15 2.9 [done]: model split into artifact-model.md (617 words) and admission.md (492); checker and tests updated (55 pass); skills re-pointed; schema-version 1.0.0-draft (kms Plan-Step: 2.9)
 - 2026-11-15 2.10 [done]: migrate.py written; docs/ and four eval fixtures migrated; 17 guardrails re-derived and pinned; facts carry source/last-verified; strict checker clean on docs/ except one forward reference fixed in C1. Not done (blocked: needs eval provider key): lint-matrix labels/build.py regrade of the 2.7 split and `npm run eval` (kms Plan-Step: 2.10)
+- 2026-11-16 reconciled with the consolidation: phases 0-2 and 1.6 shipped as 0.16.0-0.16.3 (`kms-schema-1.0.0`); 3.1 superseded; 3.5, 3.6, 4.1, 5.1, 5.5, 5.2 re-scoped; this plan's release is 0.18.0 because 0.17 removes the deprecated skills (0081). Open: 1.1, 1.3, 1.4 (blocked), 3.2-3.4, 4.2-4.3, 5.1-5.7, 5.8
 
 ## Phase 0 — Housekeeping
 
@@ -146,13 +158,13 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 
 ### 1.5 [done] Make the checker tolerate the fact fields phase 2 removes (amendment, small)
 
-**Why.** 0.16.0 must not tell adopters to add `kind`/`governed-by` to every fact (check 2 today) when 0.17.0 removes both (2.1). 0.15.0 adopters have four-valued `kind` and no checker; their first run must not be a wall of findings about fields that are about to go.
+**Why.** 0.16.0 must not tell adopters to add `kind`/`governed-by` to every fact (check 2 today) when 0.18.0 removes both (2.1). 0.15.0 adopters have four-valued `kind` and no checker; their first run must not be a wall of findings about fields that are about to go.
 
 **What.** A dated, additive `## Amendment` section on 0064 (following the precedent in 0043/0044/0047/0059; ratified by 2.3a): until the fact model is settled, `kind` is accepted with any value or absent, and `governed-by` on facts is optional; the checker's check 2 stops requiring them (`TYPE_FIELDS["facts"]` becomes empty; the `KINDS` test is removed). Also, from 2.3d but cheap and valuable now: `conform` and `query` each gain one sentence — a `status: draft` guardrail or decision is reported as "proposed", never as a violation or an answer. Record both in the same amendment.
 
 **Done when.** 0064 carries the dated amendment; checker has no fact-kind finding (unit test: a fact with `kind: mixed` and no `governed-by` yields no check 2 line); the two sentences are in the two skills.
 
-### 1.6 [pending] Cut release 0.16.0
+### 1.6 [done: 0.16.0 tagged 2026-11-16, then 0.16.1-0.16.3] Cut release 0.16.0
 
 **What.** Bump `version` in `plugins/kms/.claude-plugin/plugin.json`, `plugins/kms/.codex-plugin/plugin.json` and all 14 entries of `plugins/kms/skills/index.json` to `0.16.0` (`docs/guardrails/plugin-manifest-version-sync.md`); add `## [0.16.0] - <date>` to `CHANGELOG.md` via the `changelog` skill from history since tag `0.15.0`, covering 0056-0066 plus the phase-0 decisions and phases 0-1, and stating what a 0.15.0 adopter's first checker run will report (check 12 if templates moved; nothing about fact `kind`); tag `0.16.0` (0048).
 
@@ -256,9 +268,9 @@ Interviews 2.1-2.8 first, in order (each builds on the previous), each a `roadma
 
 ## Phase 3 — Cover the processes the system misses
 
-Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` files at 0.17.0 is at or below the sum at 0.16.0; per-file growth is allowed only in `conform` (+120 words, 3.2), `capture` (+60, 3.4), `query`/`onboard`/`refactor-plan` (+25 each, 3.4), `changelog`/`quickstart`/`uninstall` (+40 each, 3.6); 2.9's de-duplication and 3.6's `lint`/`bootstrap`/`roadmap` cuts pay for them.
+Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` files at 0.18.0 is at or below the sum at 0.16.0; per-file growth is allowed only in `conform` (+120 words, 3.2), `capture` (+60, 3.4), `query`/`onboard`/`refactor-plan` (+25 each, 3.4), `changelog`/`quickstart`/`uninstall` (+40 each, 3.6); 2.9's de-duplication and 3.6's `lint`/`bootstrap`/`roadmap` cuts pay for them.
 
-### 3.1 [pending] Stop duplicating the interview mechanics
+### 3.1 [superseded: `roadmap` and `clarify` are deprecated and leave in 0.17; `decide` carries the interview] Stop duplicating the interview mechanics
 
 **Why.** `plugins/kms/skills/clarify/SKILL.md:7-18` is reproduced near-verbatim in `roadmap/SKILL.md` ("Interview mechanics"; three small wording differences, one bullet missing). `clarify` is self-contained and works on every channel today.
 
@@ -290,7 +302,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The four skill texts carry the rule; check 25 has a unit test and a lint-matrix fixture; kms's seven live facts carry `last-verified`.
 
-### 3.5 [pending] Give events an entry point inside `roadmap`
+### 3.5 [pending, retarget: put the paragraph in `decide`, not `roadmap`] Give events an entry point inside `roadmap`
 
 **Why.** Incidents, postmortems, retrospectives and failed experiments produce exactly the residue kms stores, but no skill starts from an event: `roadmap` interviews toward a change plan, `capture` needs a session that touched records, and Admission rejects the event itself (correctly) without saying where it goes. A fifteenth skill was considered and rejected for this release: it doubles the surface a one-maintainer project keeps green, on no more evidence of need than the `question` type 2.8 declined.
 
@@ -298,7 +310,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The paragraph is in `roadmap` (its `description` gains "turn an incident or retro into knowledge"); example 4 exists; the eval case passes once.
 
-### 3.6 [pending] Smaller skill fixes found by the review (one commit each)
+### 3.6 [pending, re-scoped: skip the role-list bullet and the `roadmap`/`changelog` bullets, apply the `roadmap` numbering and synonym fixes to `decide` if it has them] Smaller skill fixes found by the review (one commit each)
 
 - `bootstrap` step 7: role lists become a proposal written only on confirmation (every consumer says "if present"; kms's own repo never had them; `CONTRIBUTING.md:69-70` says there is no role list); the inline rationale shrinks to "default to process when ambiguous". Steps 5-7 each start with "ask before writing".
 - `bootstrap` step 1: print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine (recommend two years). Salvaged from `origin/scale-bootstrap-lint-chunking` (`a6a583b`).
@@ -319,13 +331,13 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 ## Phase 4 — Make the evidence real
 
-### 4.1 [pending] Eval cases for the unmeasured skills
+### 4.1 [pending, re-scoped: no cases for `clarify`, `brainstorm`, `refactor-plan` or `changelog`] Eval cases for the unmeasured skills
 
 **Why.** Nine of fourteen skills have no eval (`quickstart`, `brainstorm`, `clarify`, `query`, `onboard`, `refactor-plan`, `conform`, `changelog`, `uninstall`); `attribute`'s eval is two regexes on the transcript and passes whether or not a commit was made; the CI `lint` case grades three violations that are all structural now, with no clean control.
 
 **What.** Regex-gradeable cases with a sentinel line, as `evals/lint` does: `query` (answer ends with `Refs:` lines naming the two planted artifacts; says "nothing relevant" on an unanswerable question); `conform` (3.2); `changelog` (section headings, one bullet per planted commit, no `[Unreleased]`); `uninstall` (reports the planted seeded guardrail, registry and draft stub, writes nothing); `attribute` (assert on `git log -1 --format=%B` in the fixture, not the transcript). Add a clean-control test to `evals/lint` (all sentinels `NO` on the unmodified fixture). `brainstorm`, `clarify`, `onboard`, `refactor-plan`, `quickstart` stay unmeasured; `AGENTS.md` says so.
 
-**Done when.** The five cases exist; the workflow matrix and `package.json` list them; one green run is recorded in the 0.17.0 CHANGELOG entry.
+**Done when.** The five cases exist; the workflow matrix and `package.json` list them; one green run is recorded in the 0.18.0 CHANGELOG entry.
 
 ### 4.2 [pending] Re-run the lint matrix and the admission eval on the pinned model, once, after 2.10 and 3.4
 
@@ -341,15 +353,15 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** Every evidence citation in 0059-0066 resolves to a committed file or an explicit "not committed" line.
 
-## Phase 5 — Dogfood, human docs, release 0.17.0
+## Phase 5 — Dogfood, human docs, release 0.18.0
 
-### 5.1 [pending] Run `bootstrap` gap-fill and `capture` on kms itself
+### 5.1 [pending, role lists moot; check which `fitness-functions` and `last-verified` items the consolidation already did] Run `bootstrap` gap-fill and `capture` on kms itself
 
 **What.** Fill every blank `last-verified` in `docs/facts/docs-manifest.md` (blank since creation 2026-09-12 while README/AGENTS/ARCHITECTURE changed); convert the seven decisions' `fitness-functions` to the map form with `enforced-by` and `last-verified`; role lists only if the owner confirms (otherwise one sentence in the AGENTS.md block says kms uses none); add kms's own `<!-- kms:start -->` block to `AGENTS.md` or one sentence in 0029's amendment exempting the plugin repo (today the marker exists only inside a comment).
 
 **Done when.** No blank `last-verified` in the manifest; all seven `fitness-functions` fields are maps; the AGENTS.md question is settled either way.
 
-### 5.2 [pending] Rewrite `AGENTS.md`
+### 5.2 [pending, also: fifteen skills incl. `decide`, five deprecated, `CLAUDE.md` mirrors it] Rewrite `AGENTS.md`
 
 **What.** Last substantive edit `fa9e08d` (2026-09-10). Wrong today: line 7 "plus one small POSIX shell script" (two hooks and a 416-line checker needing PyYAML); line 63 "There are no automated checks" (three unit suites, two eval matrices, a checker); the Structure block lists `hooks/hooks.json`, `shared/<topic>.md`, `evals/<case>/promptfooconfig.yaml` and `evals/providers/kilo-runner.sh` and omits `hooks/lint-nudge.sh`, `shared/lint_check.py`, `shared/admission.md`, `shared/migrate.py`, `evals/{lint-matrix,admission,lint/unit,conform}`, `evals/providers/kilo-judge.sh`; the Validation section must name the unit tests and `npm run eval`'s scope (0.6). Keep it terse.
 
@@ -367,7 +379,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The decision is active and names the three branches and two tags.
 
-### 5.5 [pending] Verify the decision corpus is consistent
+### 5.5 [pending, mostly absorbed: the consolidation dispositioned 0067-0082; re-run the three queries and paste them] Verify the decision corpus is consistent
 
 **What.** Verification only (dispositions were done inside 2.1-2.8 and 3.2): `python3 plugins/kms/shared/lint_check.py --root .` exits 0; `query` "what governs fact fields", "what is a registry", "may a guardrail be grounded in a decision" each land on the phase-2 decision, not the superseded one; no two active decisions on the taxonomy tags state opposite rules (read them; this is a judgment pass, record the result).
 
@@ -385,15 +397,15 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** `git branch -r` lists only `origin/master` and open feature branches.
 
-### 5.8 [pending] Cut release 0.17.0
+### 5.8 [pending] Cut release 0.18.0 (after the 0.17 removal release)
 
-**What.** Bump every manifest to `0.17.0`; CHANGELOG entry via `changelog`: the format change first, with the migration command (`python3 <plugin>/shared/migrate.py --docs docs`) and what an unmigrated 0.16.0 corpus will see (nothing fatal: the checker accepts the old shapes for this minor version and prints advisory lines; `--strict` enforces the new schema); the new checks, the conform and roadmap changes, the eval results; tag.
+**What.** Bump every manifest to `0.18.0`; CHANGELOG entry (the `changelog` skill leaves in 0.17, so write it by hand or with go-getter's): the format change already shipped in 0.16.0, so list the new checks, the `conform` and `decide` changes and the eval results; tag. Create the GitHub Release from the entry.
 
-**Done when.** Same checks as 1.6 for `0.17.0`; the checker run with `--strict` exits 0 on this repo and without `--strict` exits 0 on a 0.15.0-shaped scratch corpus (`kind: mixed`, scalar `governed-by`, no pins) with only advisory lines.
+**Done when.** Same checks as 1.6 for `0.18.0`; the checker run with `--strict` exits 0 on this repo and without `--strict` exits 0 on a 0.15.0-shaped scratch corpus (`kind: mixed`, scalar `governed-by`, no pins) with only advisory lines.
 
 ## Minimal path (two weekends)
 
-Weekend one: 0.3-0.6, 1.2, 1.1 via option (b) plus `INSTALLING.md`'s three per-agent sentences, 1.5, 1.6 (release 0.16.0). Weekend two: 2.1 (facts drop `kind`/`governed-by`, gain optional `source`/`last-verified`, gate 1 reworded), 2.3 (d and e only: draft = proposed, `expires` split), 2.7 (checks 4, 17, 24 deterministic on one 180-day threshold), the schema half of 2.9, a ten-line `migrate.py`, the `kms-declined` line and the `conform` docs pass from 3.2/3.6, release 0.17.0 with a CHANGELOG entry that tells adopters what their first lint run will say. Everything else moves to the Deferred list with its trigger.
+Weekend one: 0.3-0.6, 1.2, 1.1 via option (b) plus `INSTALLING.md`'s three per-agent sentences, 1.5, 1.6 (release 0.16.0). Weekend two: 2.1 (facts drop `kind`/`governed-by`, gain optional `source`/`last-verified`, gate 1 reworded), 2.3 (d and e only: draft = proposed, `expires` split), 2.7 (checks 4, 17, 24 deterministic on one 180-day threshold), the schema half of 2.9, a ten-line `migrate.py`, the `kms-declined` line and the `conform` docs pass from 3.2/3.6, release 0.18.0 with a CHANGELOG entry that tells adopters what their first lint run will say. Everything else moves to the Deferred list with its trigger.
 
 ## Deferred, with triggers
 
@@ -418,4 +430,4 @@ Weekend one: 0.3-0.6, 1.2, 1.1 via option (b) plus `INSTALLING.md`'s three per-a
 
 ## Order of execution, summarised
 
-0.2-0.8 (0.1 whenever) → 1.1-1.5 → 1.6 (release 0.16.0) → 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7 → 2.8 → 2.9 → 2.10 → 3.1-3.6 and 4.1-4.3 (interleaved; 4.2 after 2.10 and 3.4) → 5.1-5.7 → 5.8 (release 0.17.0).
+0.2-0.8 (0.1 whenever) → 1.1-1.5 → 1.6 (release 0.16.0) → 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7 → 2.8 → 2.9 → 2.10 → 3.1-3.6 and 4.1-4.3 (interleaved; 4.2 after 2.10 and 3.4) → 5.1-5.7 → 5.8 (release 0.18.0).
