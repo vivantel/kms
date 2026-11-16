@@ -7,7 +7,7 @@ Interview the user about every aspect of a decision until you reach a shared und
 
 ## Interview mechanics
 
-Walk down each branch of the decision tree, resolving dependencies one by one. Ask one question at a time and wait for the answer.
+Walk down each branch of the decision tree, resolving dependencies one by one. Each turn contains exactly one question, never a numbered list of questions, with your recommended answer; then stop and wait for the reply.
 
 If a *fact* can be found by exploring the environment (filesystem, tools), look it up rather than asking. The *decisions* are the user's: put each to them with your recommended answer.
 
