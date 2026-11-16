@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.2] - 2026-11-16
+
+### Fixed
+
+- Eval harness: the runner caps the transcript it hands the judge at 60000 characters, so a long `bootstrap` run no longer errors with `spawn E2BIG`. No change to any skill.
+
 ## [0.16.1] - 2026-11-16
 
 ### Fixed
