@@ -115,6 +115,14 @@ AFTER_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 CHANGED_FILES="$(LC_ALL=C comm -13 <(echo "$BEFORE_FILES") <(echo "$AFTER_FILES"))"
 GIT_LOG="$(git log --format='%s' -n 5 2>/dev/null)"
 
+# The graded output reaches the judge as one argv string, and Linux caps a single argument at 128 KiB
+# (spawn E2BIG), so a long transcript keeps its tail, where the model's conclusion is.
+MAX_TRANSCRIPT_BYTES=60000
+if [ "${#TRANSCRIPT}" -gt "$MAX_TRANSCRIPT_BYTES" ]; then
+  TRANSCRIPT="[transcript truncated to its last ${MAX_TRANSCRIPT_BYTES} characters]
+${TRANSCRIPT: -$MAX_TRANSCRIPT_BYTES}"
+fi
+
 echo "=== KILO TRANSCRIPT (exit ${KILO_EXIT}) ==="
 echo "$TRANSCRIPT"
 echo
