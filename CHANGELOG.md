@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.3] - 2026-11-16
+
+### Fixed
+
+- The five deprecated skills said "removed in 0.19"; decision 0081's window is one minor release, so removal is 0.17. Their descriptions, the 0.16.0 notes and a dated amendment on 0081 now agree. No behaviour change.
+
 ## [0.16.2] - 2026-11-16
 
 ### Fixed
@@ -27,7 +33,7 @@
 
 ### Deprecated
 
-- `roadmap` (use `decide`), `brainstorm`, `clarify`, `refactor-plan`, `changelog`: moved to go-getter, still working, removed in 0.19 (0081). Upgrade: switch `roadmap` users to `decide`; keep using the others until removal or install go-getter.
+- `roadmap` (use `decide`), `brainstorm`, `clarify`, `refactor-plan`, `changelog`: moved to go-getter, still working, removed in 0.17 (0081, amended 2026-11-16). Upgrade: switch `roadmap` users to `decide`; keep using the others until removal or install go-getter.
 
 ### Notes
 

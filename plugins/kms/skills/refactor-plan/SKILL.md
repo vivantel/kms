@@ -1,6 +1,6 @@
 ---
 name: refactor-plan
-description: "Deprecated: moved to go-getter, removed in 0.19. Produces a safe, phased refactoring plan that respects existing decisions and guardrails, without writing anything. Use when the user wants a refactor planned against what the project has already committed to, e.g. \"plan a refactor of the payment module to use Stripe instead of Braintree\", \"plan migrating from REST to GraphQL\"."
+description: "Deprecated: moved to go-getter, removed in 0.17. Produces a safe, phased refactoring plan that respects existing decisions and guardrails, without writing anything. Use when the user wants a refactor planned against what the project has already committed to, e.g. \"plan a refactor of the payment module to use Stripe instead of Braintree\", \"plan migrating from REST to GraphQL\"."
 ---
 
 Given a refactoring goal, produce a phased plan grounded in the project's existing knowledge base — without writing to disk.

@@ -15,7 +15,7 @@ Released as 0.16.0 with schema `1.0.0` (tag `kms-schema-1.0.0`); decisions 0069-
 
 ### Deprecated
 
-- `roadmap` (use `decide`), `brainstorm`, `clarify`, `refactor-plan`, `changelog`: moved to go-getter, still working, removed in 0.19 (0081). Upgrade: switch `roadmap` users to `decide`; keep using the others until removal or install go-getter.
+- `roadmap` (use `decide`), `brainstorm`, `clarify`, `refactor-plan`, `changelog`: moved to go-getter, still working, removed in 0.17 (0081). Upgrade: switch `roadmap` users to `decide`; keep using the others until removal or install go-getter.
 
 ### Notes for the owner
 
