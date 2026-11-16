@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-I1 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: done except D3 (blocked: go-getter evals that spend money and read ~/.claude run by the owner); shipped as kms 0.16.0-0.16.3 and go-getter 0.6.0
 date: 2026-11-15
 ---
 
