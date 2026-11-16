@@ -1,6 +1,6 @@
 ---
 name: decide
-description: Interview the user about a decision, then write the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) — records only, no plan file. Use when the user wants a decision captured as project knowledge, not just discussed, e.g. "interview me and save this as knowledge", "capture this as an ADR", "record what we decided".
+description: Interview the user about a decision, then write the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) — records only, no plan file. Use when the user wants a decision captured as project knowledge, not just discussed, or turn an incident or retro into knowledge, e.g. "interview me and save this as knowledge", "capture this as an ADR", "record what we decided".
 ---
 
 Interview the user about every aspect of a decision until you reach a shared understanding, then write that understanding as durable knowledge artifacts on disk, in the structure the project already uses. This skill shares its interview mechanics with `clarify` but does not stop at shared understanding. It writes records only: no plan file, no step list.
@@ -21,7 +21,11 @@ For discrete options:
 
 Before writing, find how the project stores knowledge: a known convention (a skill file describing the formats), else existing decisions/facts/guardrails directories whose format you infer from real examples, else ask the user where and in what format. Never invent a directory convention.
 
-Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md`, 4-digit, 1-based, per directory (count existing files for the next number). Guardrails and procedures: `docs/{guardrails,skills}/slug.md`, no numeric prefix.
+Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md`, 4-digit, 1-based, per directory (next number = highest across the directory and its `archive/`, plus one). Guardrails and procedures: `docs/{guardrails,skills}/slug.md`, no numeric prefix.
+
+## When the input is an event
+
+For an incident, failed experiment, retrospective or dependency breakage, interview from the event to its admissible residue: a root-cause fact with `source` pointing at the incident record, a generalised guardrail (a one-incident prohibition needs a cause that generalises), a procedure, a process decision. The event record itself fails admission and stays in the tracker the fact's `source` names.
 
 ## Classify at the end, not during
 

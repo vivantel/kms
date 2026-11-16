@@ -23,3 +23,9 @@
 **Prompt:** "We're switching the rate limiter from the fixed window to a token bucket; interview me and save this."
 
 **What happens:** The active `0001-fixed-window-rate-limit.md` matches. Its sections are frozen, so after the interview the skill proposes a new decision `0002-token-bucket-rate-limit`, setting `0001` to `status: superseded` with `superseded-by: 0002-token-bucket-rate-limit`, moving it to `decisions/archive/` with both `INDEX.md` files updated, and re-deriving each guardrail that cited it. It lists all of that before touching disk and waits for the go-ahead.
+
+## Example: an incident
+
+**Trigger:** "we had an outage when a migration ran twice; turn that into knowledge."
+
+**Interaction:** the skill interviews from the event, one question at a time, to its residue: a fact (the migration runner has no idempotency lock, `source` = the incident ticket), a guardrail (migrations must be idempotent, because the cause generalises) and a procedure for rollback. The incident narrative is listed under "Not recorded: event record, fails admission; stays in the tracker".

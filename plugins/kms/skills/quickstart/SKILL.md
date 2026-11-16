@@ -7,7 +7,7 @@ Run `bootstrap`'s setup, then immediately capture one real, current decision as 
 
 ## Step 1: setup
 
-If `docs/{facts,decisions,guardrails,skills}/` doesn't exist or is clearly incomplete, run `bootstrap`. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
+If no knowledge directory exists (detected as `bootstrap` does, not by testing `docs/` literally) or is clearly incomplete, run `bootstrap`. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
 
 ## Step 2: find one real decision
 
@@ -15,7 +15,7 @@ Ask what decision or plan is currently live for the user — something they're a
 
 ## Step 3: capture it
 
-Run `decide`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. Don't shortcut it; the point is a real, complete artifact, not a demo.
+Run `decide`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. `decide` writes records only, so no plan file is written. Don't shortcut it; the point is a real, complete artifact, not a demo.
 
 ## Step 4: show what just happened
 
