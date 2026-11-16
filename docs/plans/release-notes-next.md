@@ -1,6 +1,6 @@
 # Release notes, next kms release (paste source)
 
-Schema version `1.0.0` stays `1.0.0-draft` in the checker until the owner accepts decisions 0069-0082 and tags `kms-schema-1.0.0`. Then bump the three manifests in lockstep (`docs/guardrails/plugin-manifest-version-sync.md`), rename `[Unreleased]` in `CHANGELOG.md` to the version and date, and paste:
+Released as 0.16.0 with schema `1.0.0` (tag `kms-schema-1.0.0`); decisions 0069-0082 accepted 2026-11-16. Paste:
 
 ### Changed
 

@@ -1,4 +1,4 @@
-schema-version: 1.0.0-draft
+schema-version: 1.0.0
 <!-- Contract for consumers: docs/skills/core-contract.md -->
 
 ## Artifact types

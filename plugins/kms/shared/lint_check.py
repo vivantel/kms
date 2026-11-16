@@ -22,7 +22,7 @@ A pin is the first 12 hex digits of the SHA-256 of the target file with its edge
 whitespace runs collapsed (decision 0062).
 """
 
-SCHEMA_VERSION = "1.0.0-draft"  # first line of shared/artifact-model.md
+SCHEMA_VERSION = "1.0.0"  # first line of shared/artifact-model.md
 
 import argparse
 import csv

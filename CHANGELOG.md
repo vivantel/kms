@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.16.0] - 2026-11-16
 
 ### Changed
 
@@ -17,9 +17,9 @@
 
 - `roadmap` (use `decide`), `brainstorm`, `clarify`, `refactor-plan`, `changelog`: moved to go-getter, still working, removed in 0.19 (0081). Upgrade: switch `roadmap` users to `decide`; keep using the others until removal or install go-getter.
 
-### Notes for the owner
+### Notes
 
-- Not done here: version bumps, tag `kms-schema-1.0.0`, `decide` eval run, lint-matrix relabel (need kilo and a provider key).
+- Schema `1.0.0` is tagged `kms-schema-1.0.0`; go-getter vendors it by that tag. A retired source of a pinned guardrail is now a check-1 finding (0073, 0077).
 
 ## [0.15.0] - 2026-09-12
 
