@@ -352,4 +352,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 H3 [done]: docs/plans/kms-remove-deprecated-skills.md written
 - 2026-11-16 I1 [done]: handover written; stopped, nothing merged to master
 - 2026-11-16 review: /code-review found 10 items; 9 fixed (checker, migrate.py, matrix m3, CI unit job and eval script, decide sidecar, uninstall/bootstrap text); the pinned-source retirement question is left to the owner with 0073/0077 (see the handover)
+- 2026-11-16 release: owner accepted the drafts; kms 0.16.0 and schema 1.0.0 prepared; decide, bootstrap and lint evals pass on Kilo, capture/attribute/roadmap fail the same on master (see the handover)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
