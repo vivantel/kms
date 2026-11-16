@@ -65,3 +65,15 @@ A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should pass the e
 ## Validation
 
 Manifests have no schema check: verify JSON validity (`python3 -m json.tool <file>` or `jq . <file>`) and that each `SKILL.md` has well-formed frontmatter. Automated checks that do exist: `python3 plugins/kms/shared/lint_check.py --root . --strict` (the knowledge base); `python3 -m unittest discover -s evals/lint/unit` (also `evals/lint-matrix`, `evals/admission`); and `npm run eval`, which runs only the skill cases under `evals/` listed in `evals/run-all.sh` (the matrix and admission evals run via `npm run eval:matrix` / `eval:admission`).
+
+<!-- kms:start -->
+## Knowledge base
+
+This project uses kms's fact/decision/guardrail/procedure knowledge system.
+See `docs/{facts,decisions,guardrails,skills}/` — facts (what's true),
+decisions (what's committed to and why), guardrails (what must/must not
+happen), procedures (how to act). Maintained via `capture`
+after work sessions; validated via `lint` on demand; queried via
+`query`. Run `conform` before committing. Run `query` before designing
+anything that touches a recorded decision.
+<!-- kms:end -->

@@ -28,3 +28,8 @@ defaultTest:
         const first = m.trim().split('\n')[0] || '';
         return first !== 'feat: add retry-with-backoff client helper'
           && /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: \S/.test(first);
+    # The trailer must be in the commit itself, not only in the transcript.
+    - type: javascript
+      value: |
+        const body = (output.split('=== LAST COMMIT BODY ===')[1] || '');
+        return /Refs: docs\/decisions\/0001-cap-retry-backoff\.md/.test(body);

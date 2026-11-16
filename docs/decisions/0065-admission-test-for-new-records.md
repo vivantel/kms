@@ -39,3 +39,7 @@ Model classifiers (sonnet subagents, one family), labels by one author, 66 devel
 ## Amendment 2026-11-15 (draft, per 0076)
 
 `accepted-by` may name a person (or a role); "carried" excludes a fact merely cited by a decision; legacy records are not split retroactively. See `0076-admission-reconciled-with-existing-rules`. The `## Decision` text above is unchanged.
+
+## Amendment 2026-11-17
+
+The sealed held-out set is not in the repo and has never been run. Pinned-model numbers (step 4.2 of the review plan) are still to be recorded after a run with a provider key.
