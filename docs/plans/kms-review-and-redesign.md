@@ -7,6 +7,15 @@ date: 2026-11-12
 
 # Fix, clarify and redesign the kms knowledge system
 
+## State 2026-11-17 (branch `plan/kms-review-open-steps`)
+
+**Proven by deterministic checks** (unit suites 123+8+6 pass; `lint_check.py --strict` exits 0; skill greps and word budget 6239 vs 6280 at 0.16.3): 3.2 skill text, 3.3, 3.4 (check 25 + text; `c25` matrix case), 3.5 (in `decide`), 3.6 applicable bullets, 4.3, 5.2, 5.3 (tables written fresh), 5.4 and 5.1 manifest part.
+
+**Proven only on fakes / not run:** new eval cases `conform`, `query`, `uninstall`, `lint-clean` and the `attribute` assertion are written and wired into `run-all.sh` and the workflow, but never run (no `kilo` here). No skill-body change has passed the eval suite; CI must run on this PR.
+
+**Open, owner decides:** decisions 0083 (conform scope, step 3.2) and 0084 (study tags, step 5.4) are `draft`, `accepted-by` unset; 5.1 kms's own AGENTS.md block or a 0029 exemption; 5.8 release 0.18.0 (after the 0.17 removal release; outward-facing).
+**Open, blocked:** 1.1, 1.3, 1.4 (kilo/Codex CLI); 4.2 (provider key; only `cases.tsv` wording stripped); 4.1 `attribute` `Refs:` assertion (`kilo-runner.sh` prints subjects only); 3.4 docs-manifest `last-verified` set without re-observing sources; 5.3 `fix-eval-doc-drift` unfetchable (SHA gone); 5.5 and 5.6 (query/lint/conform pass pasted into steps) not run; `lint --changed-since` is text only; `capture`/`lint`/`uninstall` examples not updated.
+
 ## Reconciliation 2026-11-16
 
 `kms-core-and-go-getter-consolidation.md` ran after this plan was written and changed what is left. It shipped as 0.16.0, 0.16.1, 0.16.2 and 0.16.3 (schema 1.0.0, tag `kms-schema-1.0.0`). Read the phases below with these corrections; step text is otherwise unchanged.
