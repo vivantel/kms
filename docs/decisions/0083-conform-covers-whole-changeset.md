@@ -1,7 +1,8 @@
 ---
 id: 0083-conform-covers-whole-changeset
 title: conform checks the whole changeset, including knowledge-base files and the facts a diff may falsify
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-16
 tags: [kms, knowledge-management]
 ---

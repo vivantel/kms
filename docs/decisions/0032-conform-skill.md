@@ -59,3 +59,7 @@ health, never a mix of both in one pass.
   scope-blur `docs/decisions/0031` just resolved. Rejected.
 - **Chosen: a new, separate, read-only skill, scoped to non-KB changes
   against existing guardrails.**
+
+## Amendment 2026-11-17
+
+`0083-conform-covers-whole-changeset` lifts the exclusion of knowledge-base changes: `conform` also runs the checker on the post-diff tree and lists facts a diff may falsify. It remains read-only.

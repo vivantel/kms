@@ -1,7 +1,8 @@
 ---
 id: 0084-study-tags-and-unmerged-branches
 title: Study tags are measurement snapshots exempt from the release-tag rule; three study branches were not merged
-status: draft
+status: active
+accepted-by: Sergei Strebulaev
 date: 2026-11-16
 tags: [kms, packaging]
 ---

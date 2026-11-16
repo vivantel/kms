@@ -13,7 +13,7 @@ date: 2026-11-12
 
 **Proven only on fakes / not run:** new eval cases `conform`, `query`, `uninstall`, `lint-clean` and the `attribute` assertion are written and wired into `run-all.sh` and the workflow, but never run (no `kilo` here). No skill-body change has passed the eval suite; CI must run on this PR.
 
-**Open, owner decides:** decisions 0083 (conform scope, step 3.2) and 0084 (study tags, step 5.4) are `draft`, `accepted-by` unset; 5.1 kms's own AGENTS.md block or a 0029 exemption; 5.8 release 0.18.0 (after the 0.17 removal release; outward-facing).
+**Open, owner decides:** decisions 0083 (step 3.2) and 0084 (step 5.4) were accepted 2026-11-17 at the owner's request (0032 amended); 5.1 kms's own AGENTS.md block or a 0029 exemption; 5.8 release 0.18.0 (after the 0.17 removal release; outward-facing).
 **Open, blocked:** 1.1, 1.3, 1.4 (kilo/Codex CLI); 4.2 (provider key; only `cases.tsv` wording stripped); 4.1 `attribute` `Refs:` assertion (`kilo-runner.sh` prints subjects only); 3.4 docs-manifest `last-verified` set without re-observing sources; 5.3 `fix-eval-doc-drift` unfetchable (SHA gone); 5.5 and 5.6 (query/lint/conform pass pasted into steps) not run; `lint --changed-since` is text only; `capture`/`lint`/`uninstall` examples not updated.
 
 ## Reconciliation 2026-11-16
