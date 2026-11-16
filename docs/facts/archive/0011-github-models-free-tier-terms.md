@@ -6,6 +6,8 @@ date: 2026-09-04
 tags: [kms, github-models]
 ---
 
+Deprecated: GitHub Models was retired on 2026-07-30, before this fact was written, so it was stale from the start; kept as the record of what it claimed.
+
 Confirmed 2026-09-04 via current documentation/aggregator sources:
 GitHub Models exposes an OpenAI-compatible Chat Completions endpoint at
 `https://models.github.ai/inference/chat/completions`, usable with the

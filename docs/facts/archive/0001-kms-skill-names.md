@@ -6,6 +6,8 @@ date: 2026-07-29
 tags: [kms, naming]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); skill names are visible in the skills directory and frontmatter.
+
 The two skills designed in `docs/decisions/0002-commit-pr-attribution-skill-design.md`
 are named:
 

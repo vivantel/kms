@@ -6,6 +6,8 @@ date: 2026-08-29
 tags: [kms, naming, knowledge-management]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); skill names are visible in the skills directory, and the `steward` to `capture` rename made it stale.
+
 The two skills added by
 `docs/decisions/0009-bootstrap-and-steward-skills.md` are named:
 

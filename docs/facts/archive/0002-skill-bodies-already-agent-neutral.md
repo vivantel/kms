@@ -6,6 +6,8 @@ date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
 ---
 
+Deprecated: fails the admission test (decisions 0065, 0066); a dated audit reading that one grep re-derives.
+
 As of 2026-08-30, an audit of all fourteen skill instruction bodies —
 `plugins/kms/skills/{clarify,roadmap,bootstrap,capture,lint,query,attribute,changelog,quickstart,brainstorm,onboard,refactor-plan,conform,uninstall}/SKILL.md`
 — found no occurrences of "Claude", "Claude Code", "Anthropic", specific
