@@ -4,7 +4,6 @@ title: Ship a self-hosted Kilo remote-skills index; list on kilo-marketplace; no
 status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, kilo, packaging]
-track: product
 ---
 
 ## Decision

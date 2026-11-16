@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 21,
+   "file": "docs/skills/deploy.md",
+   "severity": "error"
+  }
+ ]
+}

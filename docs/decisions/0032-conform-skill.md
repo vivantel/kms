@@ -4,7 +4,6 @@ title: Add conform — validates a pending changeset against existing decisions 
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

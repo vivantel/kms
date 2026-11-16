@@ -32,18 +32,19 @@ Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 | Skill | What it does | Examples |
 |---|---|---|
 | `quickstart` | Sets up the knowledge system and captures one real decision live, in the same sitting — for a first-time user. | [examples](plugins/kms/skills/quickstart/examples.md) |
-| `brainstorm` | Generates and synthesizes distinct approaches to a problem or feature — writes nothing, never consults the knowledge base. | [examples](plugins/kms/skills/brainstorm/examples.md) |
-| `clarify` | Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. | [examples](plugins/kms/skills/clarify/examples.md) |
-| `roadmap` | Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) plus a self-sufficient implementation plan. | [examples](plugins/kms/skills/roadmap/examples.md) |
+| `brainstorm` | **Deprecated, moved to go-getter.** Generates and synthesizes distinct approaches to a problem or feature — writes nothing, never consults the knowledge base. | [examples](plugins/kms/skills/brainstorm/examples.md) |
+| `clarify` | **Deprecated, moved to go-getter.** Interviews you relentlessly about a plan, decision, or idea until reaching shared understanding — writes nothing. | [examples](plugins/kms/skills/clarify/examples.md) |
+| `decide` | Interviews you about a decision, then writes the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) — records only, no plan file. | [examples](plugins/kms/skills/decide/examples.md) |
+| `roadmap` | **Deprecated, moved to go-getter.** Runs the same interview, then captures the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) plus a self-sufficient implementation plan. | [examples](plugins/kms/skills/roadmap/examples.md) |
 | `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. | [examples](plugins/kms/skills/bootstrap/examples.md) |
 | `capture` | Turns a work session's output into decisions and facts: new decisions, changed facts, contradictions, doc drift. | [examples](plugins/kms/skills/capture/examples.md) |
 | `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions, stale derived artifacts — independent of what changed this session. | [examples](plugins/kms/skills/lint/examples.md) |
 | `query` | Answers a question from the knowledge base, with citations, instead of from memory. | [examples](plugins/kms/skills/query/examples.md) |
 | `onboard` | Reads the knowledge base to produce a role-tailored, 5-day onboarding plan — writes nothing. | [examples](plugins/kms/skills/onboard/examples.md) |
-| `refactor-plan` | Produces a phased refactor plan that respects existing decisions and guardrails — writes nothing. | [examples](plugins/kms/skills/refactor-plan/examples.md) |
+| `refactor-plan` | **Deprecated, moved to go-getter.** Produces a phased refactor plan that respects existing decisions and guardrails — writes nothing. | [examples](plugins/kms/skills/refactor-plan/examples.md) |
 | `conform` | Checks whether a pending changeset conforms to existing decisions and guardrails before it lands. | [examples](plugins/kms/skills/conform/examples.md) |
 | `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. | [examples](plugins/kms/skills/attribute/examples.md) |
-| `changelog` | Generates a `CHANGELOG.md` entry from commit history on demand. | [examples](plugins/kms/skills/changelog/examples.md) |
+| `changelog` | **Deprecated, moved to go-getter.** Generates a `CHANGELOG.md` entry from commit history on demand. | [examples](plugins/kms/skills/changelog/examples.md) |
 | `uninstall` | Finds everything `bootstrap`/`capture` added and offers to detach or remove it — run manually before uninstalling the plugin. | [examples](plugins/kms/skills/uninstall/examples.md) |
 
 ## Installing
@@ -55,6 +56,12 @@ in [`INSTALLING.md`](INSTALLING.md). Quick start for Claude Code:
 /plugin marketplace add vivantel/kms
 /plugin install kms
 ```
+
+## The knowledge-base core
+
+`kms` is the lightweight knowledge-base plugin and the reference implementation of a versioned core: the schema, the structural checker and the conformance fixtures, which other tools can pin without the skills (see [`docs/skills/core-contract.md`](docs/skills/core-contract.md)). It works alone. [go-getter](https://github.com/vivantel/go-getter) builds on it for coordinating humans and agents toward outcomes: it vendors the core by pinned schema version and ships no fork of it.
+
+Scope: `kms` holds what outlives the work (facts, decisions, guardrails, procedures). Product specs stay in a spec tool such as OpenSpec; a record points at a change with `source` and does not copy it.
 
 ## Repo structure
 

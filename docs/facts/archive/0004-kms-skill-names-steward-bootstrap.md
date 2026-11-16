@@ -4,8 +4,6 @@ title: Names of the bootstrap and steward skills
 status: deprecated
 date: 2026-08-29
 tags: [kms, naming, knowledge-management]
-kind: decision
-governed-by: 0009-bootstrap-and-steward-skills
 ---
 
 The two skills added by

@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 3,
+   "file": "docs/decisions/",
+   "severity": "error"
+  }
+ ]
+}

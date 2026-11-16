@@ -4,7 +4,6 @@ title: Extend the seeded guardrail templates to include tags-from-canonical-list
 status: active
 date: 2026-09-05
 tags: [kms, knowledge-management, guardrail]
-track: process
 ---
 
 ## Decision

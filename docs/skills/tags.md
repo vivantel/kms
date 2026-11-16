@@ -5,6 +5,7 @@ status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, scale]
 kms-generated: true
+kms-registry: tags
 ---
 
 # Canonical tag vocabulary

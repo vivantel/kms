@@ -4,7 +4,6 @@ title: Ship a Claude Code SessionStart hook that nudges toward steward after a r
 status: active
 date: 2026-08-30
 tags: [kms, automation, claude-code, hooks]
-track: process
 ---
 
 ## Decision

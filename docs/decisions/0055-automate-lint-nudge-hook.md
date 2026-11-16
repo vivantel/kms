@@ -4,7 +4,6 @@ title: Ship a Claude Code SessionStart hook that nudges toward lint on KB churn
 status: active
 date: 2026-09-12
 tags: [kms, automation, claude-code, hooks]
-track: process
 ---
 
 ## Decision

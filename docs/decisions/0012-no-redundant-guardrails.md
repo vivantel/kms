@@ -4,7 +4,6 @@ title: A guardrail must not be a pure restatement of one skill's own procedure
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

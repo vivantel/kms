@@ -4,7 +4,6 @@ title: Define the per-type index as plain, strictly-specified CSV, not TOON
 status: active
 date: 2026-09-12
 tags: [kms, knowledge-management, scale, eval-harness]
-track: process
 ---
 
 ## Decision

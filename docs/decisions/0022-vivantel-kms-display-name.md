@@ -4,7 +4,6 @@ title: Display name becomes "Vivantel KMS", technical identifiers stay "kms"
 status: active
 date: 2026-08-30
 tags: [kms, naming, branding]
-track: product
 ---
 
 ## Decision

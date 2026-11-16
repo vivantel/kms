@@ -4,8 +4,6 @@ title: "Every guardrail carries a ## Derivation prose section"
 status: deprecated
 date: 2026-09-12
 tags: [kms, knowledge-management, audit]
-kind: environmental
-governed-by: 0009-bootstrap-and-steward-skills
 ---
 
 As of 2026-09-12, all 17 live guardrails under `docs/guardrails/` carry

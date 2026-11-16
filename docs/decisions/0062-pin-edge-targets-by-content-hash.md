@@ -4,7 +4,6 @@ title: Edges pin their targets by content hash in a parallel pinned map, compare
 status: active
 date: 2026-11-08
 tags: [kms, knowledge-management, eval-harness]
-track: process
 ---
 
 ## Decision
@@ -21,3 +20,7 @@ Check 13 asked the model to notice that a source changed since a guardrail was d
 - **Version field in the target**: relies on someone bumping it, so a missed bump is silent staleness, the failure this removes.
 - **`id@hash` inside `grounded-in`**: more compact, but changes every consumer of the field (checks 1, 2, 7, 9, templates, fixtures).
 - **Chosen: content hash, parallel map.** Edge fields and `date` are left out of the hash so re-pinning one file does not make everything pointing at it stale. Cosmetic edits to the body still change the hash, so a pin can over-report; the cost is a re-derive and re-pin. Pins are optional, so existing projects keep working and the check is only as strong as pin adoption. Check 13 stays labelled judgment (decision 0061): its pinned part is mechanical, the rest is not.
+
+## Amendment 2026-11-15 (draft, per 0077)
+
+`PIN_IGNORED` widens to `accepted-by`, `last-verified`, `status`, `superseded-by`, `expires`, `expires-when`. See `0077-more-structural-lint-checks-optional-pins`. The `## Decision` text above is unchanged.

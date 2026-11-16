@@ -4,9 +4,11 @@ title: Require a CHANGELOG entry for every plugin manifest version bump
 status: active
 date: 2026-09-12
 tags: [kms, git, changelog, release, packaging]
-track: process
 governed-facts: [0013-changelog-lagged-four-version-bumps]
-fitness-functions: ["A lint check comparing the latest manifest version against CHANGELOG.md's headings, flagging a mismatch, once worth the setup cost — currently manual discipline only, same debt shape as docs/guardrails/plugin-manifest-version-sync.md's own unenforced status logged on docs/decisions/0008-native-codex-plugin-support.md."]
+fitness-functions:
+  - check: "A lint check comparing the latest manifest version against CHANGELOG.md's headings, flagging a mismatch, once worth the setup cost — currently manual discipline only, same debt shape as docs/guardrails/plugin-manifest-version-sync.md's own unenforced status logged on docs/decisions/0008-native-codex-plugin-support.md."
+    enforced-by: none
+    last-verified: 2026-11-15
 ---
 
 ## Decision

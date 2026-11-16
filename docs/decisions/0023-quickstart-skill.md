@@ -4,7 +4,6 @@ title: Add quickstart — bootstrap plus one real decision captured live
 status: active
 date: 2026-08-30
 tags: [kms, onboarding, knowledge-management]
-track: process
 ---
 
 ## Decision

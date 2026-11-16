@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 19,
+   "file": "docs/facts/INDEX.md",
+   "severity": "error"
+  }
+ ]
+}

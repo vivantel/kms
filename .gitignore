@@ -8,3 +8,7 @@ node_modules/
 # these are local eval-run artifacts this repo's own tooling produces.
 evals/scratch/
 *.eval-baseline.json
+
+# Python bytecode
+__pycache__/
+*.pyc

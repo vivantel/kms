@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 4,
+   "file": "docs/decisions/0001-weekly.md",
+   "severity": "error"
+  }
+ ]
+}

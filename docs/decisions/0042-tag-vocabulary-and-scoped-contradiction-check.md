@@ -4,7 +4,6 @@ title: Add a canonical tag vocabulary; scope the contradiction check to tag over
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, scale]
-track: process
 ---
 
 ## Decision

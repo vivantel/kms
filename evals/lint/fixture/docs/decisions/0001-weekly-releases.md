@@ -2,7 +2,6 @@
 id: 0001-weekly-releases
 title: Ship on a weekly release cadence
 status: active
-date: 2026-05-01
 tags: [release]
 ---
 

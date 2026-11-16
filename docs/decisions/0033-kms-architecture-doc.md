@@ -4,7 +4,6 @@ title: Add a single reference doc synthesizing kms's own layers and marker conve
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, documentation]
-track: process
 ---
 
 ## Decision

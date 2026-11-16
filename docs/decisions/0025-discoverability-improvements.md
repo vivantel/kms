@@ -4,7 +4,6 @@ title: Improve discoverability — README badges, GitHub topics and description 
 status: active
 date: 2026-08-30
 tags: [kms, discoverability, marketing]
-track: product
 ---
 
 ## Decision

@@ -4,7 +4,6 @@ title: Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 wa
 status: active
 date: 2026-11-08
 tags: [kms, eval-harness, kilo]
-track: process
 ---
 
 ## Decision

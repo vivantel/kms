@@ -24,8 +24,9 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "plugins" / "kms" / "shared"))
 from lint_check import Linter, split_frontmatter  # noqa: E402
 
-STRUCTURAL = [1, 2, 3, 7, 9, 12, 15, 19, 20, 21]  # checks run by lint_check.py (decision 0058)
-JUDGMENT = [4, 5, 6, 8, 10, 11, 13, 14, 16, 17, 18, 22, 23, 24]
+STRUCTURAL = [1, 2, 3, 4, 7, 9, 12, 17, 18, 19, 20, 21, 24]  # checks run by lint_check.py (decisions 0058, 0077); 14 and 15 are retired (0079)
+JUDGMENT = [5, 6, 8, 10, 11, 13, 16, 22, 23]
+TODAY = "2026-11-08"  # fixed so date-based checks do not depend on when the generator runs
 
 
 def art(id, title, tags, body, status="active", date="2026-10-01", **extra):
@@ -38,14 +39,14 @@ def base():
     f = {}
     f["docs/decisions/0001-weekly-releases.md"] = art(
         "0001-weekly-releases", "Ship a release every week", ["release"],
-        "## Decision\n\nCut a release every Thursday.\n", track="process",
-        **{"fitness-functions": ["CI fails when a week passes without a release tag (last verified 2026-10-30)"]})
+        "## Decision\n\nCut a release every Thursday.\n",
+        **{"fitness-functions": [{"check": "CI fails when a week passes without a release tag", "enforced-by": "ci job release-cadence", "last-verified": "2026-10-30"}]})
     f["docs/decisions/0002-changelog-per-release.md"] = art(
         "0002-changelog-per-release", "Each release carries a changelog entry", ["release", "documentation"],
-        "## Decision\n\nEvery release adds an entry to CHANGELOG.md.\n", track="process")
+        "## Decision\n\nEvery release adds an entry to CHANGELOG.md.\n")
     f["docs/decisions/0003-pr-before-merge.md"] = art(
         "0003-pr-before-merge", "Changes reach main through pull requests", ["git"],
-        "## Decision\n\nNo direct pushes to main.\n", track="process")
+        "## Decision\n\nNo direct pushes to main.\n")
     f["docs/facts/0001-release-cadence.md"] = art(
         "0001-release-cadence", "Releases go out on Thursdays", ["release"],
         "The release job runs Thursdays at 10:00 UTC.", kind="environmental",
@@ -70,9 +71,6 @@ def base():
         "deploy-checklist", "Deploy checklist", ["release"],
         "Steps: update CHANGELOG.md, tag the release, run the release job. Guardrails: pr-before-merge.",
         operationalizes=["require-changelog-entry"])
-    f["docs/skills/process-track-roles.md"] = art(
-        "process-track-roles", "Process-track roles", ["release"],
-        "release manager — last matched a decision 2026-10-20\nci owner — last matched a decision 2026-10-24")
     f["docs/skills/tags.md"] = art(
         "tags", "Canonical tag vocabulary", ["release"],
         "release — the release process\ndocumentation — docs structure and prose\ngit — git workflow", **{"kms-generated": True})
@@ -86,7 +84,7 @@ def base():
 def sub(files, old, new, only=None):
     for k in list(files):
         if only is None or k == only:
-            files[k] = files[k].replace(old, new)
+            files[k] = old.sub(new, files[k]) if hasattr(old, "sub") else files[k].replace(old, new)
 
 
 def rename_id(files, old, new):
@@ -107,9 +105,9 @@ def add_guardrail(files, id, title, body, **extra):
 # --- mutations: target check -> (pre-index function, post-index function or None, declared co-fires)
 
 def m1(f): sub(f, "governed-by: 0001-weekly-releases", "governed-by: 0099-nonexistent", "docs/facts/0001-release-cadence.md")
-def m2(f): sub(f, "track: process\n", "", "docs/decisions/0003-pr-before-merge.md")
-def m3(f): rename_id(f, "0002-ci-runs-on-pr", "0003-ci-runs-on-pr")
-def m4(f): sub(f, "track: process\n", "track: process\nexpires: 2026-06-01\n", "docs/decisions/0003-pr-before-merge.md")
+def m2(f): sub(f, re.compile(r"^date: .*\n", re.M), "", "docs/decisions/0003-pr-before-merge.md")
+def m3(f): rename_id(f, "0002-ci-runs-on-pr", "0001-ci-runs-on-pr")  # duplicate number; a gap is advisory only
+def m4(f): sub(f, re.compile(r"^(tags: .*\n)", re.M), r"\1expires: 2026-06-01\n", "docs/decisions/0003-pr-before-merge.md")
 def m5(f): add_guardrail(f, "changelog-skill-writes-entry", "The changelog skill writes a Keep a Changelog entry",
                          "## Guardrail\n\nWhenever the changelog skill runs, it writes a Keep a Changelog entry and nothing else.\n\n## Derivation\n\nOnly restates that skill's own procedure.")
 def m6(f):
@@ -130,17 +128,15 @@ def m11(f): add_guardrail(f, "changelog-and-linked-issue", "Releases need a chan
 def m12(f): f["plugins/kms/templates/guardrails/missing-here.md"] = "---\ntemplate-version: 1\nid: missing-here\ntitle: A template\n---\n"
 def m13(f):
     f["docs/decisions/archive/0004-monthly-reviews.md"] = art("0004-monthly-reviews", "Review the guardrails monthly", ["process-review"], "## Decision\n\nReview monthly.\n",
-                                                              status="superseded", track="process", **{"superseded-by": "0005-quarterly-reviews"})
-    f["docs/decisions/0005-quarterly-reviews.md"] = art("0005-quarterly-reviews", "Review the guardrails quarterly", ["process-review"], "## Decision\n\nReview quarterly, not monthly.\n", track="process")
+                                                              status="superseded", **{"superseded-by": "0005-quarterly-reviews"})
+    f["docs/decisions/0005-quarterly-reviews.md"] = art("0005-quarterly-reviews", "Review the guardrails quarterly", ["process-review"], "## Decision\n\nReview quarterly, not monthly.\n")
     add_guardrail(f, "monthly-guardrail-review", "Guardrails are reviewed every month", "## Guardrail\n\nReview every guardrail once a month.\n\n## Derivation\n\nFollows the monthly review decision.",
                   **{"governed-by": "0005-quarterly-reviews", "grounded-in": ["0004-monthly-reviews"], "tags": ["process-review"]})
     sub(f, "git — git workflow", "git — git workflow\nprocess-review — how guardrails are reviewed", "docs/skills/tags.md")
-def m14(f): sub(f, "ci owner — last matched a decision 2026-10-24", "ci owner — last matched a decision 2026-10-24\ndata-privacy officer — last matched a decision 2025-02-10", "docs/skills/process-track-roles.md")
-def m15(f): sub(f, "track: process", "track: both", "docs/decisions/0003-pr-before-merge.md")
-def m16(f): f.update({"docs/decisions/0004-monthly-releases.md": art("0004-monthly-releases", "Ship a release once a month", ["release"], "## Decision\n\nCut a release on the first Thursday of each month; weekly releases are too frequent.\n", track="process")})
+def m16(f): f.update({"docs/decisions/0004-monthly-releases.md": art("0004-monthly-releases", "Ship a release once a month", ["release"], "## Decision\n\nCut a release on the first Thursday of each month; weekly releases are too frequent.\n")})
 def m17(f): add_guardrail(f, "sign-release-tags", "Release tags are signed", "## Guardrail\n\nTBD\n", status="draft", date="2025-12-01",
                           **{"governed-by": "TBD", "grounded-in": "TBD", "derivation-note": "TBD"})
-def m18(f): sub(f, "(last verified 2026-10-30)", "(last verified 2025-01-15)", "docs/decisions/0001-weekly-releases.md")
+def m18(f): sub(f, "last-verified: '2026-10-30'", "last-verified: '2025-01-15'", "docs/decisions/0001-weekly-releases.md")
 def m19(f): pass
 def m20(f): sub(f, "status: active", "status: superseded\nsuperseded-by: 0001-weekly-releases", "docs/decisions/0003-pr-before-merge.md")
 def m21(f): sub(f, "tags:\n- git", "tags:\n- gitt", "docs/facts/0002-ci-runs-on-pr.md"); sub(f, "tags: [git]", "tags: [gitt]", "docs/facts/0002-ci-runs-on-pr.md")
@@ -156,7 +152,7 @@ def p19(f): sub(f, "Ship a release every week", "Ship a release every day", "doc
 MUTATIONS = {  # check -> (pre, post, cofires)
     1: (m1, None, []), 2: (m2, None, []), 3: (m3, None, []), 4: (m4, None, []), 5: (m5, None, []),
     6: (m6, None, [7]), 7: (m7, None, []), 8: (m8, None, []), 9: (m9, None, []), 10: (m10, None, []),
-    11: (m11, None, []), 12: (m12, None, []), 13: (m13, None, []), 14: (m14, None, []), 15: (m15, None, []),
+    11: (m11, None, []), 12: (m12, None, []), 13: (m13, None, []),
     16: (m16, None, []), 17: (m17, None, []), 18: (m18, None, []), 19: (m19, p19, []), 20: (m20, None, []),
     21: (m21, None, []), 22: (m22, None, []), 23: (m23, None, []), 24: (m24, None, []),
 }
@@ -264,7 +260,7 @@ def Linter_run(files):
             p = Path(d, rel)
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text(text, encoding="utf-8")
-        return Linter(d).run()
+        return Linter(d, today=TODAY).run()
 
 
 def main():

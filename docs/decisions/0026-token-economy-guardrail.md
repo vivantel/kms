@@ -4,7 +4,6 @@ title: Promote token economy from unenforced steward prose to a governed, checke
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
-track: process
 ---
 
 ## Decision

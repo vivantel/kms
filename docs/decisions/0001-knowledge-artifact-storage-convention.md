@@ -4,7 +4,6 @@ title: Knowledge artifacts live under docs/{facts,decisions,guardrails,skills}/
 status: active
 date: 2026-07-29
 tags: [kms, roadmap, knowledge-management]
-track: process
 ---
 
 ## Decision

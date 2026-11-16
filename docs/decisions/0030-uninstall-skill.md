@@ -4,7 +4,6 @@ title: Add uninstall — a manual pre-uninstall step that reverses everything bo
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
-track: process
 ---
 
 ## Decision
@@ -77,3 +76,7 @@ can't prove is its own.
   Rejected as unneeded extra friction.
 - **Chosen: a new, separate, manual pre-uninstall skill, scoped strictly
   to marked/traceable content.**
+
+## Amendment 2026-11-15 (draft, per 0078)
+
+Category 4 ("still-`status: draft` decisions") exempts a draft carrying `expires-when`, which is an open question. See `0078-open-questions-are-draft-decisions`. The `## Decision` text above is unchanged.

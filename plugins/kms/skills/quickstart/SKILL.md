@@ -3,7 +3,7 @@ name: quickstart
 description: Sets up a project's knowledge system and captures one real decision live, in the same sitting, so the value is felt immediately rather than left for later. Use when a user is trying this plugin for the first time, e.g. "get me started with this", "set this up and show me how it works".
 ---
 
-Run `bootstrap`'s setup, then immediately capture one real, current decision as a full artifact — first value in one sitting, not a cold "now go use `roadmap` sometime."
+Run `bootstrap`'s setup, then immediately capture one real, current decision as a full artifact — first value in one sitting, not a cold "now go use `decide` sometime."
 
 ## Step 1: setup
 
@@ -15,7 +15,7 @@ Ask what decision or plan is currently live for the user — something they're a
 
 ## Step 3: capture it
 
-Run `roadmap`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. Don't shortcut it; the point is a real, complete artifact, not a demo.
+Run `decide`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. Don't shortcut it; the point is a real, complete artifact, not a demo.
 
 ## Step 4: show what just happened
 
@@ -23,4 +23,4 @@ Close by pointing at the artifact(s) written and naming 2-3 next skills relevant
 
 ## Out of scope
 
-Everything `bootstrap` and `roadmap` already cover in depth — this skill only sequences them for a first-time user. Don't duplicate their instructions; run them.
+Everything `bootstrap` and `decide` already cover in depth — this skill only sequences them for a first-time user. Don't duplicate their instructions; run them.

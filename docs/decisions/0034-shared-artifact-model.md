@@ -4,7 +4,6 @@ title: Extract the shared artifact-type model into one file, read by sibling ref
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, packaging]
-track: process
 ---
 
 ## Decision

@@ -4,7 +4,6 @@ title: The lint skill names the checker path so it resolves from the project roo
 status: active
 date: 2026-11-08
 tags: [kms, eval-harness, knowledge-management]
-track: process
 ---
 
 ## Decision

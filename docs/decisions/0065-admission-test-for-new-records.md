@@ -5,7 +5,6 @@ status: active
 accepted-by: Sergei Strebulaev
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision
@@ -36,3 +35,7 @@ The `study-v1` behaviour recorded 5 of 26 non-record cases (named-person pointer
 ## Limits
 
 Model classifiers (sonnet subagents, one family), labels by one author, 66 development cases. The CI model (nemotron) and the kilo skill-loading path were not run on `evals/admission` (kilo is not installed where the samples were taken). The sealed held-out set has not been run.
+
+## Amendment 2026-11-15 (draft, per 0076)
+
+`accepted-by` may name a person (or a role); "carried" excludes a fact merely cited by a decision; legacy records are not split retroactively. See `0076-admission-reconciled-with-existing-rules`. The `## Decision` text above is unchanged.

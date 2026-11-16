@@ -4,7 +4,6 @@ title: Rate-limit the public API with a fixed window
 status: active
 date: 2026-04-01
 tags: [api, rate-limiting]
-track: process
 ---
 
 ## Decision

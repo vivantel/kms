@@ -4,7 +4,6 @@ title: Use PostgreSQL as the primary datastore
 status: active
 date: 2026-06-01
 tags: [datastore]
-track: process
 ---
 
 ## Decision

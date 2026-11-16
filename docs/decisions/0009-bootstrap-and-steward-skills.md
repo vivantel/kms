@@ -4,7 +4,6 @@ title: Add bootstrap and steward as two skills, not one combined skill
 status: active
 date: 2026-08-29
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision
@@ -68,3 +67,7 @@ The artifact frontmatter these two skills introduce (`kind`,
   `docs/decisions/0002-commit-pr-attribution-skill-design.md`'s reasoning.
 - **Chosen: two skills, `bootstrap` (one-time) and `steward` (ongoing),
   in the existing `kms` plugin.**
+
+## Amendment 2026-11-15 (draft, per 0071)
+
+The fact frontmatter named above (`kind`, `governed-by`) is replaced for facts by optional `source` and `last-verified`; see `0071-facts-carry-no-outgoing-edges`. The `## Decision` text above is unchanged.

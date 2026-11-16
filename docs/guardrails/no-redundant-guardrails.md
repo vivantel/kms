@@ -4,13 +4,13 @@ title: A guardrail true only "whenever skill X does Y" belongs in skill X's own 
 status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
-governed-by: 0027-baseline-guardrail-seeding
-grounded-in: [0012-no-redundant-guardrails]
+governed-by: [0027-baseline-guardrail-seeding]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
-  Seeded from kms's shipped guardrail templates, per
-  docs/decisions/0027-baseline-guardrail-seeding.md.
+  Given decision 0027 (kms seeds baseline guardrails), a guardrail true only for one skill's own behaviour belongs in that skill's body.
+pinned:
+  0027-baseline-guardrail-seeding: "6145614bf934"
 ---
 
 ## Guardrail
@@ -26,7 +26,7 @@ to be specific to X, in which case reword it as a system-wide invariant.
   — kms's own copy of a guardrail it also ships as a template to every
   adopting project. Originally established for this repo by
   `docs/decisions/0012-no-redundant-guardrails.md`.
-- **Descriptive basis**: `docs/decisions/0012-no-redundant-guardrails.md` — the
+- **Context**: `docs/decisions/0012-no-redundant-guardrails.md` — the
   decision that originally established this principle for this repo, before
   it was later re-packaged as a seeded template by `0027`.
 - **Normative conclusion**: therefore any guardrail found only true

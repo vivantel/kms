@@ -5,7 +5,6 @@ status: superseded
 superseded-by: 0001-weekly-releases
 date: '2026-10-01'
 tags: [git]
-track: process
 ---
 ## Decision
 

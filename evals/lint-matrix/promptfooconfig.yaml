@@ -52,12 +52,6 @@ tests:
   - description: "c13"
     vars:
       fixture_dir: "evals/lint-matrix/cases/c13"
-  - description: "c14"
-    vars:
-      fixture_dir: "evals/lint-matrix/cases/c14"
-  - description: "c15"
-    vars:
-      fixture_dir: "evals/lint-matrix/cases/c15"
   - description: "c16"
     vars:
       fixture_dir: "evals/lint-matrix/cases/c16"

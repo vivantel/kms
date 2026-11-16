@@ -8,12 +8,16 @@ name: Eval skill changes
 # further and skips the autonomous Kilo run against fork content entirely, secrets or not.
 
 on:
+  push:
   pull_request:
     types: [opened]
-    branches: [master, study/base]
+    branches: [master]
     paths:
       - "plugins/kms/skills/**"
       - "plugins/kms/shared/**"
+      - "evals/lint/**"
+      - "evals/lint-matrix/**"
+      - "evals/admission/**"
   issue_comment:
     types: [created]
 
@@ -22,6 +26,19 @@ permissions:
   pull-requests: write
 
 jobs:
+  unit:
+    name: unit tests
+    if: github.event_name != 'issue_comment'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyyaml
+      - run: python3 -m unittest discover -s evals/lint -t .
+      - run: python3 -m unittest discover -s evals/lint-matrix
+      - run: python3 -m unittest discover -s evals/admission
+      - run: python3 evals/lint-matrix/build.py --check
+      - run: python3 evals/admission/build.py --check
+
   eval:
     name: eval (${{ matrix.case }})
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
@@ -30,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, capture, lint, attribute]
+        case: [bootstrap, roadmap, decide, capture, lint, attribute]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -38,6 +55,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: pip install pyyaml
       - run: npm install
       - run: npm install -g @kilocode/cli
       - uses: promptfoo/promptfoo-action@v1
@@ -117,7 +135,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, capture, lint, attribute]
+        case: [bootstrap, roadmap, decide, capture, lint, attribute]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -127,6 +145,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: pip install pyyaml
       - run: npm install
       - run: npm install -g @kilocode/cli
       - uses: promptfoo/promptfoo-action@v1

@@ -1,6 +1,6 @@
 ---
 name: roadmap
-description: Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, intents/decisions, guardrails, procedures) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. "interview me and save this as knowledge", "capture this as an ADR", "turn this into a roadmap".
+description: "Deprecated: moved to go-getter, removed in 0.19. Use `decide` for records. Interview the user about a plan or decision, then capture the outcome as durable knowledge-management artifacts (facts, decisions, guardrails, procedures) plus a self-sufficient standalone roadmap. Use when the user wants a decision captured as project knowledge — not just discussed — e.g. \"interview me and save this as knowledge\", \"capture this as an ADR\", \"turn this into a roadmap\"."
 ---
 
 Interview the user relentlessly about every aspect of the plan or decision until you reach a shared understanding, then convert that understanding into durable knowledge artifacts on disk. This skill shares its interview mechanics with the `clarify` skill but does not stop at shared understanding — its job is to generate and save new knowledge as artifacts, following whatever structure the project already uses.
@@ -23,7 +23,7 @@ When a decision has discrete options:
 ## Detect the project's knowledge structure
 
 Before writing anything, determine how this project already stores knowledge:
-1. Look for a known convention (e.g. a knowledge-steward-style skill file describing fact/intent/guardrail/skill formats and directories).
+1. Look for a known convention (e.g. a skill file describing fact/decision/guardrail/procedure formats and directories).
 2. If none is found, look for existing decisions/ADR, facts, or guardrails directories and infer the format from real examples already there.
 3. If neither exists, ask the user where and in what format to write, before proceeding further.
 
@@ -37,13 +37,11 @@ Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md` — 4-digit, 1-based,
 
 Do not tag or classify decisions while the interview is running — keep the interview itself as uncluttered as the base `clarify` skill. Once every question is resolved, classify each one into exactly one mode:
 - **Descriptive** — this is what is true right now (an environmental fact, or a value the team chose)
-- **Axiomatic** — this is what the team commits to, with context and rationale (an intent / decision record)
+- **Axiomatic** — this is what the team commits to, with context and rationale (a decision record)
 - **Normative** — this is what must or must not happen, derived from an axiomatic commitment plus a descriptive fact (a guardrail)
 - **Procedural** — this is how to decide or act (a procedure)
 
-Decisions carry a `track`: **product** — what the project is for and
-who it serves; or **process** — how it's built, organized, or shipped.
-Exactly one value, never both. Any of the four types may be bounded or
+Any of the four types may be bounded or
 provisional: add `expires` (a date or condition — when it stops being
 current). `status` is one of `draft | active | superseded | deprecated`;
 `superseded` also requires `superseded-by: <decision-id>`. A decision
@@ -52,16 +50,11 @@ party, not necessarily whoever runs the commit. If
 `docs/skills/tags.md` exists, check any tag against it before
 assigning; propose additions there when none fit.
 
-If `docs/skills/product-track-roles.md` or `process-track-roles.md`
-exists for the decision's track, read it and weigh those perspectives
-before finalizing the recommendation. If it doesn't exist, proceed as
-today — don't require it.
-
 ## What must be captured
 
-- Every explicit or implicit intent (a presupposition unambiguous enough to count as a commitment) is checked against the artifact model's Admission section — never silently dropped.
-- An intent that passes becomes a record of its natural type. One that fails is not recorded as an artifact; list it in the plan under "Not recorded" with the failed gate, so the omission is visible and the author can overrule it.
-- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format and economy (`../../shared/artifact-model.md`) — not just labeled in a summary. The plan file itself is exempt from that economy rule, same as a decision.
+- Every explicit or implicit commitment (a presupposition unambiguous enough to count as one) is checked against `../../shared/admission.md` — never silently dropped.
+- A commitment that passes becomes a record of its natural type. One that fails is not recorded as an artifact; list it in the plan under "Not recorded" with the failed gate, so the omission is visible and the author can overrule it.
+- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format (`../../shared/artifact-model.md`) and economy (`../../shared/admission.md`) — not just labeled in a summary. The plan file itself is exempt from that economy rule, same as a decision.
 
 ## Avoid duplicates
 
@@ -71,7 +64,7 @@ Before writing any artifact, search existing artifacts (by title, topic, frontma
 
 Alongside the four knowledge artifacts, produce one more file: a changeset implementation plan for the change the interview was about. This file must be self-sufficient for a **completely fresh session with zero prior context** — not just a resumed one. Every step spells out the full context a cold agent would need: exact file paths, what to do, why it matters, and what "done" looks like — never a reference like "as discussed above." Each step carries a status marker (e.g. done / pending / blocked) updated in place as work progresses, so re-reading the file alone tells any session — the same one, a resumed one, or a brand new one — exactly what remains.
 
-A plan is not a 5th artifact type: it carries no `track`, no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it acts on, it's actually a plan.
+A plan is not a 5th artifact type: it carries no `status` from the enum above, and no `expires` — only its own per-step done/pending/blocked legend. The test for which bucket content belongs in: a procedure doesn't name the specific objects it acts on — those are supplied at invocation. A plan does — it names concrete files, decisions, and steps for one occasion. If a candidate procedure hardcodes the files/decisions it acts on, it's actually a plan.
 
 Before finalizing this file, verify each step's Done-when against each named file's actual content — not memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan, like any other error.
 
@@ -81,7 +74,7 @@ Follow the same structure-detection rule for this file: reuse an existing plans/
 
 ## Before writing anything
 
-List every file this session intends to create or update — path and artifact type (fact / intent / guardrail / skill / plan) — and get one explicit go-ahead before touching disk. This is a wider blast radius than a single-file change, so the extra checkpoint is cheap insurance.
+List every file this session intends to create or update — path and artifact type (fact / decision / guardrail / procedure / plan) — and get one explicit go-ahead before touching disk. This is a wider blast radius than a single-file change, so the extra checkpoint is cheap insurance.
 
 ## Hard limits
 

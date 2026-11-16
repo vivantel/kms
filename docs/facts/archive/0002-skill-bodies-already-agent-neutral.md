@@ -4,8 +4,6 @@ title: The fourteen SKILL.md bodies contain no Claude/Anthropic/tool-specific la
 status: deprecated
 date: 2026-08-30
 tags: [kms, agent-agnostic, audit]
-kind: environmental
-governed-by: 0006-agent-agnostic-scope
 ---
 
 As of 2026-08-30, an audit of all fourteen skill instruction bodies —

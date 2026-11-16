@@ -1,0 +1,10 @@
+{
+ "args": [],
+ "findings": [
+  {
+   "check": 17,
+   "file": "docs/decisions/0002-stale.md",
+   "severity": "error"
+  }
+ ]
+}

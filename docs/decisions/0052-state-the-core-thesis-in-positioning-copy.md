@@ -4,7 +4,6 @@ title: State kms's core thesis in its own positioning copy, not just its feature
 status: active
 date: 2026-09-12
 tags: [kms, discoverability, marketing]
-track: product
 ---
 
 ## Decision

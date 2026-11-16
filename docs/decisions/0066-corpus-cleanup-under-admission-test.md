@@ -5,7 +5,6 @@ status: active
 accepted-by: Sergei Strebulaev
 date: 2026-11-08
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision

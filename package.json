@@ -6,6 +6,8 @@
     "promptfoo": "0.122.2"
   },
   "scripts": {
-    "eval": "for d in evals/*/; do [ -f \"$d/promptfooconfig.yaml\" ] || continue; echo \"=== $d ===\"; npx promptfoo eval -c \"$d/promptfooconfig.yaml\" \"$@\" || exit 1; done"
+    "eval": "sh evals/run-all.sh",
+    "eval:matrix": "npx promptfoo eval -c evals/lint-matrix/promptfooconfig.yaml",
+    "eval:admission": "npx promptfoo eval -c evals/admission/promptfooconfig.yaml"
   }
 }

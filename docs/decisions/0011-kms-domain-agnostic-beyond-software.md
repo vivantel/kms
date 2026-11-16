@@ -4,7 +4,6 @@ title: Generalize clarify/roadmap/bootstrap/steward beyond software projects
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, agent-agnostic]
-track: product
 ---
 
 ## Decision

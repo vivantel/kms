@@ -4,8 +4,8 @@ title: Kilo Code CLI's headless execution mode and multi-provider model configur
 status: active
 date: 2026-09-04
 tags: [kilo, automation]
-kind: environmental
-governed-by: 0043-eval-harness-for-shipped-skill-changes
+source: "kilo run --help"
+last-verified: 2026-09-04
 ---
 
 Confirmed 2026-09-04 via current aggregator/documentation sources: Kilo

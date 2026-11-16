@@ -21,7 +21,7 @@ prompts:
     knowledge base or NO if you did not:
 
     LINT_CHECK_DANGLING_REF: YES|NO
-    LINT_CHECK_MISSING_TRACK: YES|NO
+    LINT_CHECK_MISSING_FIELD: YES|NO
     LINT_CHECK_STALE_PATH: YES|NO
 
 providers:
@@ -29,7 +29,7 @@ providers:
     config:
       fixture_dir: "evals/lint/fixture"
       model: "cohere/north-mini-code:free"
-      timeout_seconds: 1440
+      timeout_seconds: 600
 
 defaultTest:
   assert:
@@ -38,9 +38,9 @@ defaultTest:
     # instead of choosing one — "YES" followed by "|" doesn't count as a real answer.
     - type: regex
       value: "LINT_CHECK_DANGLING_REF: YES(?!\\|)"
-    # Check 2: 0001-weekly-releases.md is missing the required `track` field.
+    # Check 2: 0001-weekly-releases.md is missing the required `date` field.
     - type: regex
-      value: "LINT_CHECK_MISSING_TRACK: YES(?!\\|)"
+      value: "LINT_CHECK_MISSING_FIELD: YES(?!\\|)"
     # Check 9: stale prose reference to a guardrail file that doesn't exist.
     - type: regex
       value: "LINT_CHECK_STALE_PATH: YES(?!\\|)"

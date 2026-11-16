@@ -12,8 +12,8 @@
 
 **What happens:** The contradiction is surfaced and the session isn't closed out as clean — either the guardrail is reconciled, the new behavior is rejected, or the conflict is explicitly deferred with a written note. Never silently left open.
 
-## 3. A new decision reveals a role gap
+## 3. A decision supersedes an older one
 
 **Prompt:** "Capture what we just decided about the payment provider."
 
-**What happens:** A decision stub is drafted (`track: product`, `status: draft`). If the decision's domain suggests a review role not yet on `docs/skills/product-track-roles.md`, adding it is proposed in the same pass — a role that's simply gone unused for a long time, unrelated to today's session, is left for `lint` to catch instead.
+**What happens:** A decision stub is drafted (`status: draft`). Because it replaces the earlier provider decision, that decision's `status` becomes `superseded` with `superseded-by` pointing at the new one in the same pass, so two `active` decisions never sit on one topic.

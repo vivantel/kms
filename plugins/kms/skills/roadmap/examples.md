@@ -16,4 +16,4 @@
 
 **Prompt:** "Turn this into a roadmap: we agreed to rename the `worker` service to `job-runner`."
 
-**What happens:** The rename fails the Admission section: it is easily reversible, unsurprising, visible in the diff and affects no one else. It is not written as an artifact; the plan lists it under "Not recorded" with the failed gate.
+**What happens:** The rename fails the **Not already carried** gate: a rename is visible in the diff. It is not written as an artifact; the plan lists it under "Not recorded" with the failed gate.

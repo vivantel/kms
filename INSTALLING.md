@@ -7,6 +7,8 @@ mechanism differs. Pick yours:
 - [Codex](#codex)
 - [Kilo Code CLI](#kilo-code-cli)
 
+`kms` works alone. To coordinate humans and agents on top of it, see [go-getter](https://github.com/vivantel/go-getter), which pins the same knowledge-base core ([contract](docs/skills/core-contract.md)).
+
 ## Claude Code
 
 Add this repo as a marketplace source, then install the `kms` plugin:

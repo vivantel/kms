@@ -4,8 +4,10 @@ title: Add an optional operationalizes field to Procedure, plus a lint check for
 status: active
 date: 2026-09-10
 tags: [kms, knowledge-management, taxonomy, guardrail]
-track: process
-fitness-functions: ["lint check 23 (unoperationalized guardrail) is itself the automation for this decision's normative half — no separate manual check needed once it ships."]
+fitness-functions:
+  - check: "lint check 23 (unoperationalized guardrail) is itself the automation for this decision's normative half — no separate manual check needed once it ships."
+    enforced-by: lint check 23 (plugins/kms/skills/lint/SKILL.md)
+    last-verified: 2026-11-15
 ---
 
 ## Decision

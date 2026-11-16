@@ -4,15 +4,14 @@ title: Every fact, guardrail, and procedure must be maximally economical
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0026-token-economy-guardrail
-grounded-in: [0026-token-economy-guardrail]
+governed-by: [0026-token-economy-guardrail]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
-  Given decision 0026 (token economy is a real, checked guardrail, not
-  unenforced prose), any fact, guardrail, or procedure more
-  verbose than needed is incomplete, the same way one missing a required
-  field is incomplete.
+  Given decision 0026 (token economy is a real, checked guardrail), any fact,
+  guardrail, or procedure more verbose than needed is incomplete.
+pinned:
+  0026-token-economy-guardrail: "994a1eb2d1e4"
 ---
 
 ## Guardrail

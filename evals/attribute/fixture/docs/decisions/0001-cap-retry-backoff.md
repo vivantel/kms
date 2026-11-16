@@ -4,7 +4,6 @@ title: Cap retry backoff at 5 attempts with exponential delay
 status: active
 date: 2026-07-15
 tags: [reliability]
-track: process
 ---
 
 ## Decision

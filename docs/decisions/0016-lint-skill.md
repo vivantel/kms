@@ -4,7 +4,6 @@ title: Add lint — an on-demand, full-repo validation skill, separate from stew
 status: active
 date: 2026-08-30
 tags: [kms, knowledge-management]
-track: process
 ---
 
 ## Decision

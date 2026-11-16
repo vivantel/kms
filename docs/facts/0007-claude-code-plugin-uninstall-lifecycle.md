@@ -4,8 +4,8 @@ title: Claude Code has no plugin uninstall/disable lifecycle hook
 status: active
 date: 2026-08-30
 tags: [kms, packaging, claude-code, hooks]
-kind: environmental
-governed-by: 0030-uninstall-skill
+source: "https://code.claude.com/docs/en/plugins-reference.md"
+last-verified: 2026-08-30
 ---
 
 Confirmed 2026-08-30 via Claude Code's own docs

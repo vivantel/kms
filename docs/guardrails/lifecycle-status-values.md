@@ -4,12 +4,14 @@ title: status must be draft, active, superseded, or deprecated — for any of th
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, guardrail]
-governed-by: 0039-unify-lifecycle-and-drop-scope
-grounded-in: [0001-knowledge-artifact-storage-convention]
+governed-by: [0039-unify-lifecycle-and-drop-scope, 0073-lifecycle-words-defined]
 derivation-note: >
-  Given decision 0039 (status is unified into one enum across all four
-  artifact types), any fact/decision/guardrail/procedure file must carry
-  a status value from that enum, not a type-specific or free-text one.
+  Given decisions 0039 (one status enum across all four artifact types) and
+  0073 (what each word means), any artifact's `status` must be one of the
+  four defined values.
+pinned:
+  0039-unify-lifecycle-and-drop-scope: "350c1d6c874d"
+  0073-lifecycle-words-defined: "859c60f82c92"
 ---
 
 ## Guardrail
@@ -27,7 +29,7 @@ them from this lifecycle model; their own per-step legend is unaffected.
 - **Axiomatic basis**: `docs/decisions/0039-unify-lifecycle-and-drop-scope.md`
   — the team committed to one shared lifecycle vocabulary across the
   four governed types.
-- **Descriptive basis**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
+- **Context**: `docs/decisions/0001-knowledge-artifact-storage-convention.md`
   establishes the base frontmatter (including `status`) this guardrail's
   enum constrains.
 - **Normative conclusion**: therefore any of the four governed types'

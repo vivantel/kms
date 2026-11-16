@@ -4,7 +4,6 @@ title: Unify status and expires across all four artifact types; add superseded-b
 status: active
 date: 2026-09-01
 tags: [kms, knowledge-management, taxonomy]
-track: process
 ---
 
 ## Decision
@@ -100,3 +99,7 @@ reliable as a direct consequence.
 - **Chosen: one shared `status` enum and generalized `expires` across
   all 4 types; `scope` dropped; `superseded-by` added to decisions
   only.**
+
+## Amendment 2026-11-15 (draft, per 0073)
+
+`superseded-by` is allowed on all four types, `deprecated` means retired without replacement, and `expires` (date) splits from `expires-when` (condition). See `0073-lifecycle-words-defined`. The `## Decision` text above is unchanged.

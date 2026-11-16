@@ -1,6 +1,6 @@
+<!-- kms-registry: index -->
 <!-- kms-generated: true -->
 # Decisions index (CSV)
-
 id,title,tags,status
 0001-knowledge-artifact-storage-convention,"Knowledge artifacts live under docs/{facts,decisions,guardrails,skills}/","kms, roadmap, knowledge-management",active
 0002-commit-pr-attribution-skill-design,"Split commit/PR/changelog work into two skills, added to the kms plugin","kms, git, commit-messages, pull-requests",active
@@ -10,10 +10,8 @@ id,title,tags,status
 0007-claude-md-agents-md-symlink,"Rewrite CLAUDE.md as AGENTS.md, keep CLAUDE.md as a symlink","kms, agent-agnostic, claude-md, agents-md",active
 0008-native-codex-plugin-support,"Ship a native Codex plugin manifest for the kms skill set; keep the current directory layout; defer Cursor","kms, agent-agnostic, codex, packaging",active
 0009-bootstrap-and-steward-skills,"Add bootstrap and steward as two skills, not one combined skill","kms, knowledge-management",active
-0010-decision-track-field,"Add a track field (product | process) to decisions","kms, knowledge-management",active
 0011-kms-domain-agnostic-beyond-software,"Generalize clarify/roadmap/bootstrap/steward beyond software projects","kms, knowledge-management, agent-agnostic",active
 0012-no-redundant-guardrails,"A guardrail must not be a pure restatement of one skill's own procedure","kms, knowledge-management",active
-0013-ai-agent-role-lists-per-track,"bootstrap creates, steward maintains, product/process role lists for reviewing decisions","kms, knowledge-management",active
 0014-decision-scope-and-expires-fields,"Add optional scope and expires fields to decisions","kms, knowledge-management",active
 0015-facts-must-not-be-audit-log-records,"Facts must not be audit-log records","kms, knowledge-management",active
 0016-lint-skill,"Add lint — an on-demand, full-repo validation skill, separate from steward","kms, knowledge-management",active
@@ -38,7 +36,6 @@ id,title,tags,status
 0035-native-kilo-code-support,"Ship a self-hosted Kilo remote-skills index; list on kilo-marketplace; no directory restructuring","kms, agent-agnostic, kilo, packaging",active
 0036-standalone-installing-doc,"Extract per-agent install steps into a standalone INSTALLING.md","kms, discoverability, packaging",active
 0037-plans-not-a-governed-artifact-type,"Plans are not a 5th governed artifact type","kms, knowledge-management, taxonomy",active
-0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",active
 0039-unify-lifecycle-and-drop-scope,"Unify status and expires across all four artifact types; add superseded-by; drop scope","kms, knowledge-management, taxonomy",active
 0040-lint-contradiction-and-staleness-checks,"Add lint checks for cross-artifact contradiction, stale debt, and stale fitness-functions","kms, knowledge-management, taxonomy",active
 0042-tag-vocabulary-and-scoped-contradiction-check,"Add a canonical tag vocabulary; scope the contradiction check to tag overlap","kms, knowledge-management, scale",active
@@ -49,12 +46,10 @@ id,title,tags,status
 0048-tag-git-releases-matching-plugin-version,"Tag git releases with the same version as plugin.json, not a separate sequence","kms, git, release, packaging",active
 0049-plain-csv-index-not-toon,"Define the per-type index as plain, strictly-specified CSV, not TOON","kms, knowledge-management, scale, eval-harness",active
 0050-version-bump-changelog-linkage,"Require a CHANGELOG entry for every plugin manifest version bump","kms, git, changelog, release, packaging",active
-0051-grounded-in-may-hold-a-decision,"A guardrail's grounded-in may point at a decision or guardrail, not only a fact","kms, knowledge-management, taxonomy, guardrail",active
 0052-state-the-core-thesis-in-positioning-copy,"State kms's core thesis in its own positioning copy, not just its feature list","kms, discoverability, marketing",active
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
-0056-eval-gate-covers-study-base,"Run the eval gate on pull requests into study/base as well as master","kms, eval-harness, automation",active
 0057-pin-eval-model-north-mini-code,"Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn","kms, eval-harness, kilo",active
 0058-deterministic-structural-lint-checks,"Run lint's structural checks in a script, not through the model","kms, knowledge-management, eval-harness",active
 0059-lint-matrix-eval,"Measure lint per check with a clean control and one seeded violation per check","kms, eval-harness, knowledge-management",active
@@ -62,6 +57,20 @@ id,title,tags,status
 0061-label-lint-checks-structural-or-judgment,"Each lint check carries a structural or judgment label, checked by a second rater","kms, eval-harness, knowledge-management",active
 0062-pin-edge-targets-by-content-hash,"Edges pin their targets by content hash in a parallel pinned map, compared by the checker","kms, knowledge-management, eval-harness",active
 0063-typed-scope-on-facts,"Facts carry an optional typed scope of component, environment and version","kms, knowledge-management, taxonomy",active
-0064-fact-kind-is-environmental-or-decision,"Fact kind is environmental or decision, chosen by how the fact is verified","kms, knowledge-management, taxonomy",active
 0065-admission-test-for-new-records,"New records pass an admission test of hard gates and three estimated signals","kms, knowledge-management, taxonomy",active
 0066-corpus-cleanup-under-admission-test,"Six facts that fail the admission test are deprecated; the other contested records stay","kms, knowledge-management, taxonomy",active
+0068-eval-gate-master-only,"Run the eval gate on pull requests into master only","kms, eval-harness, automation",active
+0069-kms-owns-durable-knowledge-not-specs-or-coordination,"kms owns durable knowledge artifacts and their validation; specs and coordination artifacts stay outside","kms, scope",active
+0070-kms-is-the-knowledge-base-core-consumed-by-pin,"kms is the knowledge-base core; go-getter consumes it by pinned schema version instead of forking it","kms, scope, packaging",active
+0071-facts-carry-no-outgoing-edges,"Facts carry no outgoing edges; plain facts become admissible","kms, knowledge-management, taxonomy",active
+0072-guardrail-derivation-edges-are-honest,"Guardrail derivation edges are lists of decisions plus optional fact grounding","kms, knowledge-management, taxonomy",active
+0073-lifecycle-words-defined,"Lifecycle words (immutability, deprecated, superseded, draft, expires) are defined once","kms, knowledge-management, taxonomy",active
+0074-registries-by-marker,"Registries are identified by marker; the fitness-function inventory lives on decisions","kms, knowledge-management, taxonomy",active
+0075-settle-names-keep-directories,"Settle the artifact names without renaming directories","kms, knowledge-management, taxonomy",active
+0076-admission-reconciled-with-existing-rules,"Reconcile the admission test with the rules it contradicts","kms, knowledge-management, taxonomy",active
+0077-more-structural-lint-checks-optional-pins,"Make four more lint checks structural; keep pins optional","kms, knowledge-management, eval-harness",active
+0078-open-questions-are-draft-decisions,"Open questions and hypotheses are draft decisions with expires-when","kms, knowledge-management, taxonomy",active
+0079-drop-track-field,"Drop the decision track field and the role lists built on it","kms, knowledge-management, taxonomy",active
+0080-core-is-vendored-by-pin,"go-getter consumes the knowledge-base core by vendoring it at a pinned release tag","kms, packaging",active
+0081-skill-moves-and-deprecation-window,"Five skills leave kms after a one-release deprecation window; roadmap becomes decide","kms, scope, packaging",active
+0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",active

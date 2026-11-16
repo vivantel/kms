@@ -20,6 +20,10 @@ role, checkable by a shipped skill rather than trusted to a probability
 score. [The full argument is here](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a);
 this file is about how `kms` actually implements it.
 
+## Relationship to go-getter and OpenSpec
+
+`kms` is the reference implementation of the knowledge-base core (schema, checker, conformance fixtures; [`docs/skills/core-contract.md`](docs/skills/core-contract.md)) and works on its own. [go-getter](https://github.com/vivantel/go-getter) pins the core by schema version and owns the coordination artifacts (briefs, units, meters, charters, harness config) that `kms` does not store. Product specs belong to a spec tool such as OpenSpec; a `kms` record points at a change with `source`.
+
 ## The artifact model
 
 Four governed types, each answering a different question:
@@ -34,19 +38,13 @@ Four governed types, each answering a different question:
 Every artifact carries base frontmatter — `id`, `title`, `status`,
 `date`, `tags` — plus type-specific fields (a fact's `kind` and
 `governed-by`; a guardrail's `governed-by`, `grounded-in`, and
-`derivation-note`; a decision's `track` and optional `accepted-by`; a
+`derivation-note`; a decision's optional `accepted-by`; a
 procedure's optional `operationalizes`).
-
-A decision's `track` says which kind of claim it is: **product** — what
-the project is for and who it serves — or **process** — how it's built,
-organized, or shipped. Exactly one value, never both; a rollup spanning
-several decisions is computed at read time, never stored as a third
-value (`docs/decisions/0038-track-field-mutual-exclusivity.md`).
 
 `status` moves through one shared lifecycle, with an optional `expires`
 (a date or condition) triggering early re-evaluation instead of letting
 a bounded decision stand as current past its own stated limit
-(`docs/guardrails/decision-expires-must-be-reevaluated.md`):
+(`docs/guardrails/artifact-expires-must-be-reevaluated.md`):
 
 ```mermaid
 stateDiagram-v2

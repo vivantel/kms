@@ -4,13 +4,13 @@ title: A fact, guardrail, or derivation-note doing two things must be split
 status: active
 date: 2026-08-30
 tags: [knowledge-management, guardrail]
-governed-by: 0027-baseline-guardrail-seeding
-grounded-in: [0027-baseline-guardrail-seeding]
+governed-by: [0027-baseline-guardrail-seeding]
 kms-seeded: true
 kms-template-version: 1
 derivation-note: >
-  Seeded from kms's shipped guardrail templates, per
-  docs/decisions/0027-baseline-guardrail-seeding.md.
+  Given decision 0027 (baseline guardrails), one artifact must carry one claim so each can be verified and retired alone.
+pinned:
+  0027-baseline-guardrail-seeding: "6145614bf934"
 ---
 
 ## Guardrail
