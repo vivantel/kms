@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-E3 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-F2 done (D3 blocked); branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -194,7 +194,7 @@ kms keeps: `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attri
 
 **Done when.** The kms decision exists as a draft (go-getter twin in D0); the go-getter `eval` change is made in D3.
 
-### F2 [pending] [kms] Close the evidence gaps that the review found
+### F2 [done] [kms] Close the evidence gaps that the review found
 
 **What.** Already covered by kms redesign phase 4 (eval cases for unmeasured skills; lint matrix re-run on the pinned model; evidence in or out of the repo). Add one item: a conformance check that fails if go-getter's vendored checker and kms's disagree on any fixture.
 
@@ -344,4 +344,5 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-16 D2 [done]: 21 facts given a `source`; core checker clean (advisory warnings only); npm test 1438 pass, check:generated/docs-consistency/indexes/versions/core-pin ok (go-getter a37d4ea)
 - 2026-11-16 D3 [blocked]: `npm run eval`, `eval:bypass` and `e2e:lifecycle` call real model providers (cost, ~/.claude token); not run. Offline `npm test` 1438 pass stands in
 - 2026-11-16 E3 [done]: five skills kept (count unchanged, 17); bootstrap/capture/lint/roadmap and examples drop `track`, role lists and restated field rules; lint check 2 defers to the core checker; build and npm test 1438 pass. Not done: folding clarify into discover and changelog into release (no `release` skill exists; kept as is, left to the owner with 0213) (go-getter 4aabae4)
+- 2026-11-16 F2 [done]: conformance fixtures run in kms CI (existing) and in go-getter `npm test` (new core-pin test, CHECKER=vendored checker); pin moved to kms fdd1bba; npm test 1439 pass (kms fdd1bba / go-getter c24e10b)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
