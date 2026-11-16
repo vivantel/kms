@@ -1,0 +1,28 @@
+# Eval case: `conform` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# Fixture: a staged diff that violates one guardrail (DEBUG = True) and changes the port a fact
+# `source`s. The sentinel lines are a grading convenience added to the invocation prompt only, as
+# in evals/lint. Not run locally in this change: no Kilo CLI was available when the case was written.
+# Run standalone: npx promptfoo eval -c evals/conform/promptfooconfig.yaml
+description: "kms conform — names the violated guardrail and the fact to re-verify"
+
+prompts:
+  - >
+    Check whether the staged changes conform to our guardrails. After completing your analysis,
+    end your response with exactly these two lines (ids comma-separated, or NONE):
+
+    CONFORM_VIOLATIONS: <ids of guardrails the diff violates>
+    CONFORM_REVERIFY: <ids of facts to re-verify because of the diff>
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/conform/fixture"
+      model: "cohere/north-mini-code:free"
+      timeout_seconds: 480
+
+defaultTest:
+  assert:
+    - type: regex
+      value: "CONFORM_VIOLATIONS:[^\\n]*no-debug-flag-in-server"
+    - type: regex
+      value: "CONFORM_REVERIFY:[^\\n]*0001-server-port"

@@ -1,0 +1,32 @@
+# Eval case: `lint` clean control — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# The `evals/lint` fixture with its three planted violations repaired. A pass means `lint` says
+# NO to all three sentinels on a clean corpus (a false alarm fails it). Not run locally in this
+# change: no Kilo CLI was available when the case was written.
+# Run standalone: npx promptfoo eval -c evals/lint-clean/promptfooconfig.yaml
+description: "kms lint — clean control, no planted violation to report"
+
+prompts:
+  - >
+    Lint the knowledge base. After completing your analysis, end your response with exactly
+    these three lines, each followed by YES if you identified that specific violation in this
+    knowledge base or NO if you did not:
+
+    LINT_CHECK_DANGLING_REF: YES|NO
+    LINT_CHECK_MISSING_FIELD: YES|NO
+    LINT_CHECK_STALE_PATH: YES|NO
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/lint-clean/fixture"
+      model: "cohere/north-mini-code:free"
+      timeout_seconds: 600
+
+defaultTest:
+  assert:
+    - type: regex
+      value: "LINT_CHECK_DANGLING_REF: NO(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_MISSING_FIELD: NO(?!\\|)"
+    - type: regex
+      value: "LINT_CHECK_STALE_PATH: NO(?!\\|)"
