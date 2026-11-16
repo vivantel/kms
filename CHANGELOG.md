@@ -1,10 +1,16 @@
 # Changelog
 
+## [0.16.1] - 2026-11-16
+
+### Fixed
+
+- The 0.16.0 notes said decisions 0071 to 0078 were drafts; 0069 to 0082 are accepted. No behaviour change; schema stays `1.0.0` (tag `kms-schema-1.0.0`).
+
 ## [0.16.0] - 2026-11-16
 
 ### Changed
 
-- The artifact model is now schema `1.0.0` (first line of `plugins/kms/shared/artifact-model.md`), split into schema and `admission.md`; facts carry no outgoing edges, guardrail derivation edges are honest (optional `grounded-in`, optional `enforced-by`), lifecycle words are defined, registries are found by marker, skipped numbers are advisory. Decisions 0071 to 0078 (drafts until accepted).
+- The artifact model is now schema `1.0.0` (first line of `plugins/kms/shared/artifact-model.md`), split into schema and `admission.md`; facts carry no outgoing edges, guardrail derivation edges are honest (optional `grounded-in`, optional `enforced-by`), lifecycle words are defined, registries are found by marker, skipped numbers are advisory. Decisions 0071 to 0078.
 - The decision `track` field and the product/process role lists are gone (0079). Run `python3 plugins/kms/shared/migrate.py --docs docs` once: it is idempotent and removes `track:` lines. A bare-string `fitness-functions` entry becomes `{check: ...}` with no `last-verified`; check 18 then asks for the date, and the script prints each one.
 - The checker gained structural checks and optional pins; checks 14 and 15 are retired (numbers stay unused). `lint_check.py --version` prints the schema version.
 
