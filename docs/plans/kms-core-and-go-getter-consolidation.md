@@ -1,7 +1,7 @@
 ---
 id: kms-core-and-go-getter-consolidation
 title: Narrow kms to process knowledge, make it the knowledge-base core, and have go-getter consume it instead of its fork
-status: in progress; A1-A4 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
+status: in progress; A1-D2 done; branch feat/kms-core-consolidation (kms) and feat/adopt-kms-core (go-getter, worktree)
 date: 2026-11-15
 ---
 
@@ -144,7 +144,7 @@ All `[go-getter]` steps run in the worktree `feat/adopt-kms-core` (see Execution
 
 **Done when.** `npm run check:core-pin` passes, the vendored files are byte-identical to the kms tag, and `rg "own the knowledge-base tooling" docs` returns only archived text.
 
-### D2 [blocked: 21 facts need an owner call; npm test not re-verified, disk full] [go-getter] Migrate go-getter's corpus
+### D2 [done] [go-getter] Migrate go-getter's corpus
 
 **What.** Run the core checker over go-getter's `docs/` (about 200 decision files plus facts, guardrails, procedures and meters). Fix findings in batches by class: field renames, dropped `track`, fact narrowing, lifecycle words. Do not rewrite decision content. Anything go-getter uses that the core lacks (for example fields on its harness packs' decisions) either becomes an additive optional field proposed to the core (C1 minor release) or moves out of the knowledge artifact into the pack config.
 
@@ -340,5 +340,6 @@ A1, A2, A3. This yields the measurement, the kms-side boundary draft and the Ope
 - 2026-11-15 E2 [done]: decide skill added (SKILL.md, examples.md, eval case evals/decide, CI matrix); roadmap, refactor-plan, brainstorm, clarify, changelog marked deprecated; README and index.json updated; versions untouched. The decide eval has not been run (blocked: no kilo CLI here)
 - 2026-11-15 D0 [done]: go-getter worktree created; five twin drafts 0210-0214 on feat/adopt-kms-core; check:indexes, docs-consistency, tags ok (go-getter 750fc14)
 - 2026-11-15 D1 [done]: core pinned at kms a47033c (src/core-pin.json); check core-pin, core update/status, core-pin test; artifact-extensions.md holds go-getter additions; npm test 1438 pass. Not done: 0066 remains active until the owner accepts 0211 (go-getter 9ea0f2b)
-- 2026-11-16 D2 [blocked]: corpus migrated (go-getter branch tip); 21 facts lack source/citer; tests unverified because disk is full. Stopped; see docs/plans/archive/consolidation-handover.md
+- 2026-11-16 D2 [blocked]: superseded by the line below (cleared in a later session)
+- 2026-11-16 D2 [done]: 21 facts given a `source`; core checker clean (advisory warnings only); npm test 1438 pass, check:generated/docs-consistency/indexes/versions/core-pin ok (go-getter a37d4ea)
 - Format for new lines: `YYYY-MM-DD <step id> [done|blocked: reason]: <one line> (kms <sha> / go-getter <sha>)`.
