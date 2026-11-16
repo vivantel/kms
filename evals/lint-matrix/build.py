@@ -106,7 +106,7 @@ def add_guardrail(files, id, title, body, **extra):
 
 def m1(f): sub(f, "governed-by: 0001-weekly-releases", "governed-by: 0099-nonexistent", "docs/facts/0001-release-cadence.md")
 def m2(f): sub(f, re.compile(r"^date: .*\n", re.M), "", "docs/decisions/0003-pr-before-merge.md")
-def m3(f): rename_id(f, "0002-ci-runs-on-pr", "0003-ci-runs-on-pr")
+def m3(f): rename_id(f, "0002-ci-runs-on-pr", "0001-ci-runs-on-pr")  # duplicate number; a gap is advisory only
 def m4(f): sub(f, re.compile(r"^(tags: .*\n)", re.M), r"\1expires: 2026-06-01\n", "docs/decisions/0003-pr-before-merge.md")
 def m5(f): add_guardrail(f, "changelog-skill-writes-entry", "The changelog skill writes a Keep a Changelog entry",
                          "## Guardrail\n\nWhenever the changelog skill runs, it writes a Keep a Changelog entry and nothing else.\n\n## Derivation\n\nOnly restates that skill's own procedure.")

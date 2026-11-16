@@ -1,5 +1,5 @@
 ---
-id: 0003-ci-runs-on-pr
+id: 0001-ci-runs-on-pr
 title: CI runs on every pull request
 status: active
 date: '2026-10-01'

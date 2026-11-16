@@ -5,7 +5,7 @@ status: active
 date: '2026-10-01'
 tags: [git]
 governed-by: 0003-pr-before-merge
-grounded-in: [0003-ci-runs-on-pr, 0003-pr-before-merge]
+grounded-in: [0001-ci-runs-on-pr, 0003-pr-before-merge]
 derivation-note: PR-only merges plus CI-on-PR imply CI gates every merge.
 ---
 ## Guardrail
