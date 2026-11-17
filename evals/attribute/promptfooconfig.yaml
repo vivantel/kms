@@ -5,7 +5,7 @@
 description: "kms attribute — commit message with a Refs: trailer and Conventional Commits type"
 
 prompts:
-  - "Commit this with attribution."
+  - "Use the attribute skill to commit the staged change. I confirm in advance whatever knowledge artifacts you propose as Refs, so do not ask me anything: write the message with Refs trailers and run git commit."
 
 providers:
   - id: "exec:../providers/kilo-runner.sh"
