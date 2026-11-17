@@ -27,13 +27,16 @@ providers:
 defaultTest:
   assert:
     - type: regex
-      value: "UNINSTALL_SEEDED:[^\\n]*token-economy"
+      value: "UNINSTALL_SEEDED[*\\s]*:[*\\s]*[^\\n]*token-economy"
     - type: regex
-      value: "UNINSTALL_DRAFTS:[^\\n]*0001-adopt-feature-flags"
+      value: "UNINSTALL_DRAFTS[*\\s]*:[*\\s]*[^\\n]*0001-adopt-feature-flags"
     - type: regex
-      value: "UNINSTALL_REGISTRIES_FOUND: YES(?!\\|)"
+      value: "UNINSTALL_REGISTRIES_FOUND[*\\s]*:[*\\s]*YES(?!\\|)"
     - type: regex
-      value: "UNINSTALL_WROTE: NO(?!\\|)"
+      value: "UNINSTALL_WROTE[*\\s]*:[*\\s]*NO(?!\\|)"
     # Nothing written or changed in the scratch project.
-    - type: contains
-      value: "=== FILES CREATED/MODIFIED ===\n(none)"
+    # The runner itself creates ./.kilo/; anything else changed means uninstall wrote.
+    - type: javascript
+      value: |
+        const f = (output.split('=== FILES CREATED/MODIFIED ===')[1] || '').split('=== RECENT')[0];
+        return f.split('\n').map(l => l.trim()).filter(l => l && l !== '(none)' && !l.startsWith('./.kilo/')).length === 0;

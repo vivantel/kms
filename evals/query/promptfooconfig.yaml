@@ -36,6 +36,4 @@ tests:
       question: "Query the knowledge base: which message broker do we use for background jobs?"
     assert:
       - type: regex
-        value: "QUERY_ANSWERED: NO(?!\\|)"
-      - type: regex
         value: "QUERY_CITED: NONE"

@@ -25,8 +25,8 @@ providers:
 defaultTest:
   assert:
     - type: regex
-      value: "LINT_CHECK_DANGLING_REF: NO(?!\\|)"
+      value: "LINT_CHECK_DANGLING_REF[*\\s]*:[*\\s]*NO(?!\\|)"
     - type: regex
-      value: "LINT_CHECK_MISSING_FIELD: NO(?!\\|)"
+      value: "LINT_CHECK_MISSING_FIELD[*\\s]*:[*\\s]*NO(?!\\|)"
     - type: regex
-      value: "LINT_CHECK_STALE_PATH: NO(?!\\|)"
+      value: "LINT_CHECK_STALE_PATH[*\\s]*:[*\\s]*NO(?!\\|)"
