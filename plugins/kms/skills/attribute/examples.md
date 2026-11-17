@@ -4,7 +4,7 @@
 
 **Prompt:** "Commit this with attribution."
 
-**What happens:** The staged diff is inspected, candidate knowledge artifacts it likely implements are proposed and confirmed with the user, then a message is drafted: `type: summary`, a body paragraph on intent (not just what changed), and one `Refs: docs/decisions/00XX-....md` trailer per confirmed artifact — never an issue number or prose mention in its place.
+**What happens:** The staged diff is inspected, the knowledge artifacts it clearly implements are picked (the user is asked only if candidates conflict or none clearly match), then a message is drafted: `type: summary`, a body paragraph on intent (not just what changed), and one `Refs: docs/decisions/00XX-....md` trailer per chosen artifact — never an issue number or prose mention in its place.
 
 ## 2. Writing a PR description
 

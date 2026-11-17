@@ -9,14 +9,15 @@ This skill only runs when explicitly invoked. Never apply its conventions to a p
 
 ## Writing a commit message
 
-1. Inspect the staged diff with `git diff --staged`.
-2. Propose candidate knowledge artifacts based on what the diff touches, then confirm the list with the user before committing — never guess silently; they may add, remove, or reject any.
+1. Run `git diff --staged` yourself; never ask the user for the changes. If nothing is staged, say so and stop.
+2. Search `docs/{facts,decisions,guardrails,skills}/` for artifacts the diff touches or implements. If one or more clearly match, use them: list them in the trailers. Ask the user (once, before committing) only when candidates conflict or none clearly match.
 3. Draft the message:
    - Summary line: `type: summary`, where `type` is one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
    - Blank line.
    - A body paragraph explaining the intent — not merely what changed.
    - Blank line.
-   - One `Refs: <repo-relative-path>` git trailer per confirmed artifact (e.g. `Refs: docs/decisions/000X-slug.md`). Never use an issue number or a prose mention in place of this trailer.
+   - One `Refs: <repo-relative-path>` git trailer per chosen artifact (e.g. `Refs: docs/decisions/000X-slug.md`). Never use an issue number or a prose mention in place of this trailer. Omit only if no artifact applies.
+4. Run `git commit` with that message.
 
 ## Writing a PR description
 
