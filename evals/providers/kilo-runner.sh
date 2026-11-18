@@ -113,6 +113,12 @@ done
 
 AFTER_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 CHANGED_FILES="$(LC_ALL=C comm -13 <(echo "$BEFORE_FILES") <(echo "$AFTER_FILES"))"
+# Still rate-limited after every retry, or nothing came back at all: that is the gateway, not the
+# skill, so fail loudly instead of grading an empty transcript.
+if echo "$TRANSCRIPT" | grep -q "Too Many Requests" || [ -z "$TRANSCRIPT" ]; then
+  echo "=== HARNESS ERROR: kilo unavailable (rate limit or no response after 6 tries) ==="
+  exit 1
+fi
 GIT_LOG="$(git log --format='%s' -n 5 2>/dev/null)"
 LAST_BODY="$(git log -1 --format='%b' 2>/dev/null)"
 

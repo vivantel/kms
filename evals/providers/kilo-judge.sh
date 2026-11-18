@@ -9,6 +9,7 @@
 # needed — confirmed by testing) on a *different* model than any case's runner, to avoid a model
 # grading its own class of mistakes. See docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
 set -u
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 PROMPT="${1:-}"
 JUDGE_MODEL="${KMS_EVAL_JUDGE_MODEL:-nvidia/nemotron-3-ultra-550b-a55b:free}"
@@ -30,7 +31,19 @@ cd "$SCRATCH" || exit 1
 # because of a malformed one). --agent summary can't call a tool at all, so it always just
 # answers. Timeout raised from 90s to 150s too — large transcripts genuinely take longer even
 # without a tool detour (confirmed: ~98s for a 19KB prompt with --agent summary).
-RAW="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto --agent summary -m "kilo/${JUDGE_MODEL}" "$PROMPT" 2>&1)"
+# A rate limit (429) or an empty response is an infrastructure failure, not a verdict: wait and ask
+# again (up to 5 tries, as kilo-runner.sh does), and if the judge is still unavailable, say so as one
+# HARNESS ERROR line and exit non-zero so promptfoo records an error, not a failed assertion.
+for attempt in 1 2 3 4 5; do
+  STARTED_MS=$(( $(date +%s) * 1000 ))
+  RAW="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto --agent summary -m "kilo/${JUDGE_MODEL}" "$PROMPT" 2>&1)"
+  if [ -n "$RAW" ] && ! echo "$RAW" | grep -q "Too Many Requests"; then break; fi
+  if [ "$attempt" -eq 5 ]; then
+    echo "=== HARNESS ERROR: judge unavailable (rate limit or no response after 5 tries) ==="
+    exit 1
+  fi
+  sleep $(( $(python3 "$HERE/retry_after.py" "$STARTED_MS" $(( 30 * 2 ** (attempt - 1) )) ) + RANDOM % 10 ))
+done
 
 # promptfoo's llm-rubric grader needs a response it can extract a {"pass":...} JSON object
 # from. Kilo's own decorative banner ("> code · <model>") and ANSI color codes sometimes broke
