@@ -4,7 +4,7 @@
 
 **Prompt:** "Run the knowledge check." (after a session that added a new retry timeout and touched an existing guardrail's grounding fact)
 
-**What happens:** A new decision stub is drafted for the retry-timeout choice; the fact it changed gets its `last-verified` bumped; any doc-drift on watched paths is proposed as a specific update. Whether the touched guardrail itself needs re-deriving is `lint`'s job now, not checked here.
+**What happens:** A new decision stub is drafted for the retry-timeout choice; the fact it changed is re-observed against its `source` and only then gets `last-verified` bumped; any doc-drift on watched paths is proposed as a specific update. Whether the touched guardrail itself needs re-deriving is `lint`'s job now, not checked here.
 
 ## 2. A contradiction blocks the session
 
