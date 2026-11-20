@@ -27,12 +27,19 @@ marketplace's registered name and install as `kms@<that-name>` instead.
 Codex ships the same skill set via the plugin manifest at
 [`plugins/kms/.codex-plugin/plugin.json`](plugins/kms/.codex-plugin/plugin.json).
 
-The exact end-user install command isn't confirmed. Codex's own docs
-describe an interactive `codex /plugins` browser (browse/install from
-configured marketplace sources), with no documented git-URL or
-local-path syntax for adding a custom source as an end user — see
+Add this repo as a marketplace source, then install the plugin
+(verified 2026-11-20 with `codex-cli 0.166.0`):
+
+```
+codex plugin marketplace add vivantel/kms
+codex plugin add kms@kms
+```
+
+Codex copies the whole plugin root, so the skills, `shared/` and
+`templates/` arrive together. See
 [`docs/facts/0003-codex-plugin-manifest-schema.md`](docs/facts/0003-codex-plugin-manifest-schema.md)
-for exactly what is and isn't verified about Codex's plugin system.
+for what was and was not tested (the `owner/repo` form and hook execution
+are untested; a local checkout path was tested).
 
 ## Kilo Code CLI
 
@@ -50,6 +57,6 @@ Kilo re-fetches automatically whenever a skill's version changes — see
 ## What each agent receives
 
 - **Claude Code** installs the whole plugin: skills, `shared/` (schema, writing guide, checker, migration script), `templates/` and the two `SessionStart` nudge hooks.
-- **Codex** points at `plugins/kms/skills/` only. Whether `shared/` and `templates/` are installed beside it is unconfirmed (no Codex CLI test has been run); install the plugin root whole, and run the nudges' recipe by hand (`docs/skills/automating-capture.md`).
+- **Codex** installs the whole plugin root: skills, `shared/` and `templates/` arrive (tested 2026-11-20). Whether it runs the nudge hooks is untested; use the recipe by hand (`docs/skills/automating-capture.md`).
 - **Kilo Code CLI** fetches only what `plugins/kms/skills/index.json` lists: `SKILL.md` and `examples.md` per skill. `shared/` and `templates/` are not delivered through the remote-skills channel, so skills that read them (`bootstrap`, `capture`, `lint`, `uninstall`, `decide`) need a checkout of this repo or the files copied beside the skills. No hooks.
 - **`lint`'s checker** needs `python3` plus PyYAML on every agent.
