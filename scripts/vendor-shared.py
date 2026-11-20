@@ -22,7 +22,6 @@ NEEDS = {  # skill -> (shared files, whether it reads templates/)
     "capture": (WRITE, False),
     "decide": (WRITE, False),
     "lint": (MODEL + ["lint_check.py"], True),
-    "roadmap": (WRITE, False),
     "uninstall": ([], True),
 }
 

@@ -62,7 +62,7 @@ must not happen, derived from the first two), and procedural notes. If
 your change is a real decision (hard to reverse, non-obvious, or the
 result of a real tradeoff), consider capturing it as a decision record
 alongside your PR — see `docs/decisions/` for the format and existing
-examples, or use this plugin's own `roadmap` skill to generate one.
+examples, or use this plugin's own `decide` skill to generate one.
 
 ## Governance
 

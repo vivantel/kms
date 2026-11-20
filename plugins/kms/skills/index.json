@@ -2,7 +2,7 @@
   "skills": [
     {
       "name": "attribute",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -10,7 +10,7 @@
     },
     {
       "name": "bootstrap",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -24,16 +24,8 @@
       ]
     },
     {
-      "name": "brainstorm",
-      "version": "0.16.3",
-      "files": [
-        "SKILL.md",
-        "examples.md"
-      ]
-    },
-    {
       "name": "capture",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -42,24 +34,8 @@
       ]
     },
     {
-      "name": "changelog",
-      "version": "0.16.3",
-      "files": [
-        "SKILL.md",
-        "examples.md"
-      ]
-    },
-    {
-      "name": "clarify",
-      "version": "0.16.3",
-      "files": [
-        "SKILL.md",
-        "examples.md"
-      ]
-    },
-    {
       "name": "conform",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -67,7 +43,7 @@
     },
     {
       "name": "decide",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -77,7 +53,7 @@
     },
     {
       "name": "lint",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -92,7 +68,7 @@
     },
     {
       "name": "onboard",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -100,7 +76,7 @@
     },
     {
       "name": "query",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -108,33 +84,15 @@
     },
     {
       "name": "quickstart",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md"
-      ]
-    },
-    {
-      "name": "refactor-plan",
-      "version": "0.16.3",
-      "files": [
-        "SKILL.md",
-        "examples.md"
-      ]
-    },
-    {
-      "name": "roadmap",
-      "version": "0.16.3",
-      "files": [
-        "SKILL.md",
-        "examples.md",
-        "shared/admission.md",
-        "shared/artifact-model.md"
       ]
     },
     {
       "name": "uninstall",
-      "version": "0.16.3",
+      "version": "0.17.0",
       "files": [
         "SKILL.md",
         "examples.md",

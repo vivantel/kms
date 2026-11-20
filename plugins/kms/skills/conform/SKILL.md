@@ -21,4 +21,4 @@ No argument and something's staged: the staged diff (`git diff --staged`). No ar
 
 ## Out of scope
 
-Judging the content of the knowledge base's own artifacts — `lint`/`capture`'s job; step 5 only relays the checker. Fixing anything — this skill only reports. Planning a refactor (`refactor-plan`) or drafting a commit message (`attribute`) — this skill checks a diff that already exists, for any reason, not just a refactor, and never writes prose about it.
+Judging the content of the knowledge base's own artifacts — `lint`/`capture`'s job; step 5 only relays the checker. Fixing anything — this skill only reports. Planning a refactor or drafting a commit message (`attribute`) — this skill checks a diff that already exists, for any reason, not just a refactor, and never writes prose about it.

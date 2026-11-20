@@ -37,3 +37,7 @@ go-getter twin: written in D0. Accepted 2026-11-16 by the owner. Plan: `kms-core
 ## Amendment 2026-11-16
 
 The deprecation window is one minor release, which makes the removal release 0.17 (deprecated in 0.16), not 0.19 as the paragraph above and the skill descriptions said. The "0.19" was a slip carried from the plan (E1), not a longer window. The descriptions now say "removed in 0.17" (shipped in 0.16.3). The removal ships in 0.17, the next minor release.
+
+## Amendment 2026-11-20
+
+The deprecation window closed with 0.17.0: the five skills (`roadmap`, `brainstorm`, `clarify`, `refactor-plan`, `changelog`) were removed from kms, along with their eval case and index rows. `decide` is the kms replacement for `roadmap`'s records; the rest live in go-getter.
