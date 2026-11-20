@@ -1,6 +1,7 @@
 import os, sys, unittest
 sys.path.insert(0, os.path.dirname(__file__))
-from summary_lib import is_infra, split_failures
+import re
+from summary_lib import is_infra, split_failures, advisory_cases
 
 
 class T(unittest.TestCase):
@@ -17,6 +18,17 @@ class T(unittest.TestCase):
         rs = [{"success": True}, {"success": False, "response": {"output": "=== HARNESS ERROR: x"}}, {"success": False, "response": {"output": "x"}}]
         skill, infra = split_failures(rs)
         self.assertEqual((len(skill), len(infra)), (1, 1))
+
+
+    def test_workflow_lists_equal_the_file(self):
+        root = os.path.join(os.path.dirname(__file__), "..", "..")
+        want = advisory_cases(os.path.join(root, "evals", "advisory-cases.txt"))
+        wf = open(os.path.join(root, ".github", "workflows", "eval-skills.yml")).read()
+        lists = re.findall(r"fromJSON\('(\[[^']*\])'\), matrix\.case", wf)
+        self.assertEqual(len(lists), 2)
+        import json
+        for l in lists:
+            self.assertEqual(set(json.loads(l)), want)
 
 
 if __name__ == "__main__":
