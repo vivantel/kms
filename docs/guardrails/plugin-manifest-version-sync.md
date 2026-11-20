@@ -14,7 +14,7 @@ derivation-note: >
 pinned:
   0008-native-codex-plugin-support: "533e650d6413"
   0003-codex-plugin-manifest-schema: "d60219c4a153"
-  0008-kilo-code-skills-spec: "b3a953909e58"
+  0008-kilo-code-skills-spec: "a592d29bb53e"
 ---
 
 ## Guardrail
