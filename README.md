@@ -42,6 +42,8 @@ Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 | `attribute` | Writes commit messages and PR descriptions that lead with intent, not just what changed, and keeps them traceable to the knowledge artifacts they implement. | [examples](plugins/kms/skills/attribute/examples.md) |
 | `uninstall` | Finds everything `bootstrap`/`capture` added and offers to detach or remove it — run manually before uninstalling the plugin. | [examples](plugins/kms/skills/uninstall/examples.md) |
 
+`roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog` moved to go-getter in 0.17; use `decide` for records.
+
 ## Installing
 
 Supports Claude Code, Codex, and Kilo Code CLI — full per-agent steps
