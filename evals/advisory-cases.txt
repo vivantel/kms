@@ -2,3 +2,4 @@
 # Keep equal to the fromJSON list in .github/workflows/eval-skills.yml.
 bootstrap
 uninstall
+attribute
