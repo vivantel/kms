@@ -94,9 +94,9 @@ fi
 
 BEFORE_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 
-# A model named `nvidia/...` is a Kilo provider of its own (own API key); anything else goes through
+# A model named `nvidia/nvidia/...` is the keyed NVIDIA provider of its own (decision 0085); anything else goes through
 # the Kilo gateway.
-case "$MODEL" in nvidia/*) MODEL_ID="$MODEL" ;; *) MODEL_ID="kilo/${MODEL}" ;; esac
+case "$MODEL" in nvidia/nvidia/*) MODEL_ID="$MODEL" ;; *) MODEL_ID="kilo/${MODEL}" ;; esac
 
 # A rate-limit error is an infrastructure failure, not an answer: wait and run again (up to 6
 # tries) so it is not graded as the model's output. The wait is the response's Retry-After when

@@ -50,7 +50,6 @@ id,title,tags,status
 0053-decision-accepted-by-field,"Add an optional accepted-by field recording who is accountable for a decision","kms, knowledge-management, taxonomy",active
 0054-defer-business-domain-dimension,"Defer a business-domain dimension until kms operates on a real multi-domain monorepo","kms, knowledge-management, scale",active
 0055-automate-lint-nudge-hook,"Ship a Claude Code SessionStart hook that nudges toward lint on KB churn","kms, automation, claude-code, hooks",active
-0057-pin-eval-model-north-mini-code,"Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn","kms, eval-harness, kilo",active
 0058-deterministic-structural-lint-checks,"Run lint's structural checks in a script, not through the model","kms, knowledge-management, eval-harness",active
 0059-lint-matrix-eval,"Measure lint per check with a clean control and one seeded violation per check","kms, eval-harness, knowledge-management",active
 0060-lint-checker-path-from-project-root,"The lint skill names the checker path so it resolves from the project root","kms, eval-harness, knowledge-management",active
@@ -76,3 +75,4 @@ id,title,tags,status
 0082-core-evals-live-in-kms,"Core skill evals stay in kms; go-getter runs conformance fixtures and its own harness evals","kms, eval-harness",active
 0083-conform-covers-whole-changeset,"conform checks the whole changeset, including knowledge-base files and the facts a diff may falsify","kms, knowledge-management",active
 0084-study-tags-and-unmerged-branches,"Study tags are measurement snapshots exempt from the release-tag rule; three study branches were not merged","kms, packaging",active
+0085-pin-eval-model-nemotron-lightning,"Pin the eval harness to nvidia/nemotron-3.5-lightning:free after north-mini-code was withdrawn","kms, eval-harness, kilo",active

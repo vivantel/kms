@@ -72,6 +72,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-16 5.7 [done early]: the three parked branches deleted from origin at the owner's request; tip SHAs in 5.7; 3.6, 5.3 and 5.4 still pending and now cite SHAs
 - 2026-11-16 reconciled with the consolidation: phases 0-2 and 1.6 shipped as 0.16.0-0.16.3 (`kms-schema-1.0.0`); 3.1 superseded; 3.5, 3.6, 4.1, 5.1, 5.5, 5.2 re-scoped; this plan's release is 0.18.0 because 0.17 removes the deprecated skills (0081). Open: 1.1, 1.3, 1.4 (blocked), 3.2-3.4, 4.2-4.3, 5.1-5.7, 5.8
 - 2026-11-20 1.4 [done]: runner prints HARNESS ERROR on Model not found/sign-in/auth; summary labels infra (evals/providers/summary_lib.py + test); kilo pinned 7.8.32, promptfoo-action pinned promptfoo-action-v1.3.5; judge model verified; fact 0012 re-verified. FOUND: `cohere/north-mini-code:free` (0057's pin, every case) is gone from the gateway; a successor needs a new decision superseding 0057
+- 2026-11-20 model: decision 0085 pins `nvidia/nemotron-3.5-lightning:free` (supersedes 0057); runner and judge route only `nvidia/nvidia/*` to the keyed provider; all case configs changed; `query` eval 2/2 on it. 5.5 done; 5.6 checker half only; bootstrap ask-once WIP discarded
 - 2026-11-20 1.3 [done]: live Codex install (isolated CODEX_HOME, codex 0.166.0) delivers 15 skills, shared/, templates/, hooks/; fact 0003 re-verified; INSTALLING.md Codex section rewritten
 
 ## Phase 0 — Housekeeping
@@ -391,17 +392,21 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The decision is active and names the three branches (deleted 2026-11-16, tips in 5.7) and two tags.
 
-### 5.5 [pending, mostly absorbed: the consolidation dispositioned 0067-0082; re-run the three queries and paste them] Verify the decision corpus is consistent
+### 5.5 [done 2026-11-20, mostly absorbed: the consolidation dispositioned 0067-0082; re-run the three queries and paste them] Verify the decision corpus is consistent
 
 **What.** Verification only (dispositions were done inside 2.1-2.8 and 3.2): `python3 plugins/kms/shared/lint_check.py --root .` exits 0; `query` "what governs fact fields", "what is a registry", "may a guardrail be grounded in a decision" each land on the phase-2 decision, not the superseded one; no two active decisions on the taxonomy tags state opposite rules (read them; this is a judgment pass, record the result).
 
 **Done when.** The three query answers are pasted into this step with their `Refs:` lines.
 
-### 5.6 [pending] Full `lint` and `conform` pass on the repo
+**Result 2026-11-20** (read from the decision files by hand, not through a model run; `lint_check.py --strict` exits 0): *What governs fact fields?* Facts carry no `kind` or `governed-by`; optional `source` and `last-verified` (active). Refs: 0071-facts-carry-no-outgoing-edges. *What is a registry?* A file identified by a `kms-registry` marker, excluded from the four types' checks. Refs: 0074-registries-by-marker. *May a guardrail be grounded in a decision?* No: `grounded-in` is optional and fact-only; decisions go in `governed-by`. Refs: 0072-guardrail-derivation-edges-are-honest. All three are active and none points at a superseded record (0064 and 0051 are archived).
+
+### 5.6 [partial 2026-11-20: checker half only] Full `lint` and `conform` pass on the repo
 
 **What.** Run the shipped `lint` (checker plus judgment checks) on kms, and `conform` on the whole phase-2/3 diff against tag `0.16.0`; fix or explicitly defer every finding with a one-line note here.
 
 **Done when.** Counts per check are pasted here and every finding has a resolution line.
+
+**Result 2026-11-20:** the structural half ran: `lint_check.py --root . --strict` prints no findings, exit 0. The judgment checks (5, 6, 8, 10, 11, 14, 16, 22, 23) and `conform` against tag `0.16.0` were not run: they are model passes and the owner should run `lint` and `conform` in a session.
 
 ### 5.7 [done 2026-11-16, early, at the owner's request: 3.6, 5.3 and 5.4 had not run] Delete the three parked branches
 

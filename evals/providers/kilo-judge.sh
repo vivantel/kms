@@ -36,7 +36,7 @@ cd "$SCRATCH" || exit 1
 # HARNESS ERROR line and exit non-zero so promptfoo records an error, not a failed assertion.
 for attempt in 1 2 3 4 5; do
   STARTED_MS=$(( $(date +%s) * 1000 ))
-  case "$JUDGE_MODEL" in nvidia/*) JUDGE_ID="$JUDGE_MODEL" ;; *) JUDGE_ID="kilo/${JUDGE_MODEL}" ;; esac
+  case "$JUDGE_MODEL" in nvidia/nvidia/*) JUDGE_ID="$JUDGE_MODEL" ;; *) JUDGE_ID="kilo/${JUDGE_MODEL}" ;; esac
   RAW="$(timeout "${TIMEOUT_SECONDS}s" kilo run --auto --agent summary -m "$JUDGE_ID" "$PROMPT" 2>&1)"
   if [ -n "$RAW" ] && ! echo "$RAW" | grep -q "Too Many Requests"; then break; fi
   if [ "$attempt" -eq 5 ]; then

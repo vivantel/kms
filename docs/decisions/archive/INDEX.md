@@ -13,3 +13,4 @@ id,title,tags,status
 0038-track-field-mutual-exclusivity,"track values are mutually exclusive; ""both""/""mixed"" is never stored","kms, knowledge-management, taxonomy",superseded
 0013-ai-agent-role-lists-per-track,"bootstrap creates, steward maintains, product/process role lists for reviewing decisions","kms, knowledge-management",superseded
 0067-kms-is-standalone-from-go-getter,"kms stays a standalone knowledge-system plugin; go-getter owns its fork","kms, scope, packaging",superseded
+0057-pin-eval-model-north-mini-code,"Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn","kms, eval-harness, kilo",superseded

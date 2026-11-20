@@ -1,7 +1,8 @@
 ---
 id: 0057-pin-eval-model-north-mini-code
 title: Pin the eval harness to cohere/north-mini-code:free after laguna-s-2.1 was withdrawn
-status: active
+status: superseded
+superseded-by: 0085-pin-eval-model-nemotron-lightning
 date: 2026-11-08
 tags: [kms, eval-harness, kilo]
 ---
