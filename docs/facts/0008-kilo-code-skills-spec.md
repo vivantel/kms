@@ -73,3 +73,6 @@ first this branch's raw-GitHub `index.json`, then a local HTTP copy edited per c
 - An index entry that lists no `SKILL.md` (a `shared` pseudo-skill) is ignored: never
   fetched, no error.
 So only 1.1's option (b) works: vendor the shared files inside each skill that reads them.
+
+Verified 2026-11-20 after vendoring (`scripts/vendor-shared.py`): serving `plugins/kms/skills/` over a local HTTP server as `skills.urls`, `kilo debug skill` lists all 15 skills; the cache holds each skill's `shared/` and `templates/` files; the cached `lint/shared/lint_check.py` equals the source and exits 0 on this repo with `--strict`.
+

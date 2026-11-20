@@ -52,9 +52,9 @@ assigning; propose additions there when none fit.
 
 ## What must be captured
 
-- Every explicit or implicit commitment (a presupposition unambiguous enough to count as one) is checked against `../../shared/admission.md` — never silently dropped.
+- Every explicit or implicit commitment (a presupposition unambiguous enough to count as one) is checked against `shared/admission.md` — never silently dropped.
 - A commitment that passes becomes a record of its natural type. One that fails is not recorded as an artifact; list it in the plan under "Not recorded" with the failed gate, so the omission is visible and the author can overrule it.
-- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format (`../../shared/artifact-model.md`) and economy (`../../shared/admission.md`) — not just labeled in a summary. The plan file itself is exempt from that economy rule, same as a decision.
+- Descriptive, Normative, and Procedural decisions are written as real artifacts too (facts, guardrails, procedures respectively), in the detected format (`shared/artifact-model.md`) and economy (`shared/admission.md`) — not just labeled in a summary. The plan file itself is exempt from that economy rule, same as a decision.
 
 ## Avoid duplicates
 
@@ -68,7 +68,7 @@ A plan is not a 5th artifact type: it carries no `status` from the enum above, a
 
 Before finalizing this file, verify each step's Done-when against each named file's actual content — not memory or assumption. A Done-when that can't be satisfied by its own preceding steps is a defect in the plan, like any other error.
 
-After writing any fact, decision, guardrail, or procedure to disk, add or update its row in that type's `INDEX.md` — format defined in `../../shared/artifact-model.md` — if one exists.
+After writing any fact, decision, guardrail, or procedure to disk, add or update its row in that type's `INDEX.md` — format defined in `shared/artifact-model.md` — if one exists.
 
 Follow the same structure-detection rule for this file: reuse an existing plans/tasks directory convention if the project has one; otherwise default to `docs/plans/<slug>.md`.
 

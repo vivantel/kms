@@ -73,18 +73,10 @@ cd "$SCRATCH" || exit 1
 # Project-level `.kilo/skills/` is Kilo's highest-priority local skill source
 # (docs/facts/0008-kilo-code-skills-spec.md) — copying this checkout's own skills/ there, rather
 # than relying on this repo's published `skills.urls` (which always serves master), is what makes
-# a before/after comparison of an uncommitted skill-body change possible at all. `shared/` and
-# `templates/` are mirrored alongside it (not nested under `skills/`) because skill bodies
-# reference them by relative path (e.g. `../../shared/artifact-model.md`, two levels up from a
-# skill's own directory) — confirmed by testing: omitting this broke that Read for `capture`.
+# # a before/after comparison of an uncommitted skill-body change possible at all. Each skill carries its
+# own `shared/` and `templates/` copies (scripts/vendor-shared.py), as in a Kilo remote-skills cache.
 mkdir -p .kilo/skills
 cp -a "$REPO_ROOT/plugins/kms/skills/." .kilo/skills/
-for sibling in shared templates; do
-  if [ -d "$REPO_ROOT/plugins/kms/$sibling" ]; then
-    mkdir -p ".kilo/$sibling"
-    cp -a "$REPO_ROOT/plugins/kms/$sibling/." ".kilo/$sibling/"
-  fi
-done
 
 export REPO_ROOT
 if [ -x "./setup.sh" ]; then

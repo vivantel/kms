@@ -9,13 +9,13 @@ Checks scan the live set; `archive/` is excluded unless a deep pass is requested
 
 ## Run the checker first
 
-Run `python3 <checker> --root <project root>` before anything else (needs PyYAML; add `--docs <dir>` if the knowledge directory is not `docs/`). `<checker>` is `shared/lint_check.py` two directories above this skill's directory; else `find . ~ -name lint_check.py`. It does checks 1, 2, 3, 4, 7, 9, 12, 17, 18, 19, 20, 21, 24, 25 and the pinned part of 13 (`pinned` map; see `../../shared/artifact-model.md`), printing `check N: <file>: <problem>` per violation, exit 1 if any. Report its lines as findings; don't re-derive or second-guess them, and don't skip a check because its list is empty. If it can't run, say so and do those checks by hand. Every other check is yours to judge, including 13 for unpinned edges.
+Run `python3 <checker> --root <project root>` before anything else (needs PyYAML; add `--docs <dir>` if the knowledge directory is not `docs/`). `<checker>` is `shared/lint_check.py` in this skill's directory. It does checks 1, 2, 3, 4, 7, 9, 12, 17, 18, 19, 20, 21, 24, 25 and the pinned part of 13 (`pinned` map; see `shared/artifact-model.md`), printing `check N: <file>: <problem>` per violation, exit 1 if any. Report its lines as findings; don't re-derive or second-guess them, and don't skip a check because its list is empty. If it can't run, say so and do those checks by hand. Every other check is yours to judge, including 13 for unpinned edges.
 
 Check 9 skips placeholders (`NNNN`) and decision files but reports a conditionally-optional file or a reference a plan annotates as preserved history; dismiss those two when presenting.
 
 ## Checks
 
-Edge and field rules are in `../../shared/artifact-model.md`.
+Edge and field rules are in `shared/artifact-model.md`.
 
 1. **Dangling references** [structural] — `governed-by`, `grounded-in`, `superseded-by`, `governed-facts` or `operationalizes` naming an id that doesn't exist (targets typed per the model).
 2. **Missing required fields** [structural] — base frontmatter (`id`, `title`, `status`, `date`, `tags`) absent; guardrail without `governed-by`/`grounded-in`/`derivation-note`; `status` outside `draft | active | superseded | deprecated`; decision `superseded` without `superseded-by`; `scope` not a non-empty `component | environment | version` string mapping, or on a non-fact; `grounded-in`/`governed-facts`/`operationalizes` not a YAML list.
@@ -28,7 +28,7 @@ Edge and field rules are in `../../shared/artifact-model.md`.
 9. **Stale prose references** [structural] — an inline `docs/{facts,decisions,guardrails,skills}/` path (optionally with `archive/`) that doesn't exist, in a live artifact, `README.md`, `AGENTS.md`, `CONTRIBUTING.md` or a live `docs/plans/*.md`. Not a violation: placeholders, conditionally-optional files, history a plan annotates as preserved.
 10. **Verbose artifacts** [advisory] — a fact, guardrail or procedure (not decisions/plans) using several sentences for one idea, or restating itself.
 11. **Unsplit statements** [advisory] — one fact, guardrail or derivation-note doing two jobs.
-12. **Baseline out of sync** [structural] — compare each `../../templates/<type>/` with this project's `docs/<type>/` by `id`: a template missing here (unless in the AGENTS.md block's `kms-declined:` line); a `kms-seeded: true` file behind its `template-version`, or whose template is gone. Files without `kms-seeded: true` are project-owned; never flag. A fix refreshes only the content section (guardrail: `## Guardrail`), never `## Derivation`.
+12. **Baseline out of sync** [structural] — compare each `templates/<type>/` with this project's `docs/<type>/` by `id`: a template missing here (unless in the AGENTS.md block's `kms-declined:` line); a `kms-seeded: true` file behind its `template-version`, or whose template is gone. Files without `kms-seeded: true` are project-owned; never flag. A fix refreshes only the content section (guardrail: `## Guardrail`), never `## Derivation`.
 13. **Derived artifact stale** [judgment] — a guardrail grounded in a since-superseded decision, changed fact, or superseded/deprecated/changed sibling guardrail. A source already flagged by a `pinned` mismatch is the checker's finding. Re-apply the derivation recipe and propose new text.
 14–15. *(retired; numbers unused)*
 16. **Cross-artifact contradiction** [advisory] — two `active` decisions, or a decision and its derived guardrail, sharing a non-`(umbrella)` tag from `docs/skills/tags.md` and contradicting on overlapping matter.

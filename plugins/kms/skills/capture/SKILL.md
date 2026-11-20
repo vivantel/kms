@@ -7,7 +7,7 @@ If the project has no knowledge system yet, run `bootstrap` first — this skill
 
 ## Artifact model
 
-This skill's siblings `../../shared/artifact-model.md` (the schema: types, fields, lifecycle) and `../../shared/admission.md` (the gates and economy rule for anything drafted here) — read both before drafting anything.
+In this skill's directory: `shared/artifact-model.md` (the schema: types, fields, lifecycle) and `shared/admission.md` (the gates and economy rule for anything drafted here) — read both before drafting anything.
 
 ## Checks, one pass per invocation
 

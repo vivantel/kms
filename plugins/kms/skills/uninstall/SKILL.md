@@ -7,7 +7,7 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 
 ## What to scan for
 
-1. **`kms-seeded: true` files** — anywhere under `docs/`, matching this skill's sibling `../../templates/` (one subdirectory per artifact type; currently just `guardrails/`).
+1. **`kms-seeded: true` files** — anywhere under `docs/`, matching this skill's `templates/` (one subdirectory per artifact type; currently just `guardrails/`).
 2. **`kms-generated: true` files** — scan for the marker anywhere under `docs/`, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time.
 3. **Registries** — files carrying `kms-registry` (indexes, `tags.md`, the docs manifest), reported as one group; usually also `kms-generated`.
 3b. **The `<!-- kms:start -->`/`<!-- kms:end -->` block** in the project's agent-instructions file (`AGENTS.md` or whatever host-specific equivalent it uses), if present.

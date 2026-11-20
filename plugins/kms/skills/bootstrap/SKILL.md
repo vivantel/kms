@@ -5,7 +5,7 @@ description: One-time setup of a fact/decision/guardrail/procedure knowledge sys
 
 Set up the knowledge system this plugin's other skills assume: decisions (commitments), facts (what's true), guardrails (what must or must not happen, derived from the first two), procedures (how to act). Run once per project, or as a gap-fill on an incomplete one; `capture` maintains it afterward.
 
-Read first: `../../shared/artifact-model.md` (schema: types, fields, lifecycle) and `../../shared/admission.md` (gates and economy rule for the stubs written here).
+Read first: `shared/artifact-model.md` (schema: types, fields, lifecycle) and `shared/admission.md` (gates and economy rule for the stubs written here).
 
 ## How to run
 
@@ -67,7 +67,7 @@ Ask before writing. Compile `docs/skills/tags.md` from every tag already in use 
 
 ### 8. Seed baseline artifacts
 
-`../../templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it directly: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>`. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision.
+`templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it directly: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>`. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision.
 
 ### 9. Wire into the agent-instructions file
 
@@ -91,7 +91,7 @@ The markers let `uninstall` remove exactly this block.
 
 ### 10. Per-type index
 
-For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `../../shared/artifact-model.md`. Mark it `kms-generated: true` in a leading comment line so `uninstall` recognizes it. Match the shape of any existing `INDEX.md`.
+For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`. Mark it `kms-generated: true` in a leading comment line so `uninstall` recognizes it. Match the shape of any existing `INDEX.md`.
 
 ## Out of scope
 

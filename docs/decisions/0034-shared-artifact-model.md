@@ -48,3 +48,8 @@ schema), so this was specifically a two-file, not a plugin-wide, problem.
   project — different audiences, different lifecycle. Rejected.
 - **Chosen: a new `plugins/kms/shared/artifact-model.md`, read via the
   same sibling-reference pattern already proven for `templates/`.**
+
+## Amendment 2026-11-20
+
+The sibling reference `../../shared/` does not survive a Kilo remote-skills install: Kilo caches only the files a skill's `files` list names, inside that skill's own directory (`..` entries drop the skill; entries without a `SKILL.md` are ignored; see `docs/facts/0008-kilo-code-skills-spec.md`). `plugins/kms/shared/` and `plugins/kms/templates/` stay the single source; `scripts/vendor-shared.py` copies what each of `bootstrap`, `capture`, `decide`, `lint`, `roadmap` and `uninstall` reads into that skill's own `shared/` and `templates/`, and the skills read those paths. A unit test fails when a copy drifts. The one-file-per-fact property of this decision holds for the source; the copies are generated.
+
