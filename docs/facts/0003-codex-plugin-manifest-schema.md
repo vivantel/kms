@@ -5,7 +5,7 @@ status: active
 date: 2026-07-29
 tags: [kms, agent-agnostic, codex, packaging]
 source: "https://developers.openai.com/codex/plugins/build"
-last-verified: 2026-07-29
+last-verified: 2026-11-20
 ---
 
 Confirmed 2026-07-29 via OpenAI's own developer docs
@@ -70,3 +70,15 @@ this fact should not be treated as settling how a `kms` user actually
 installs the Codex plugin. `docs/decisions/0008-native-codex-plugin-
 support.md`'s manifest-file claims (location, schema, required fields)
 are unaffected — only the *installation command* was ever in question.
+
+Re-verified 2026-11-20 by a live install with `codex-cli 0.166.0`, using an
+isolated `CODEX_HOME`: `codex plugin marketplace add <repo checkout>`, then
+`codex plugin add kms@kms`. Result: the install is a copy of the whole
+plugin root (`plugins/cache/kms/kms/0.16.3/`) containing
+`.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, all 15
+`skills/*/SKILL.md`, `shared/` (model, admission, `lint_check.py`,
+`migrate.py`), `templates/` and `hooks/`. So the end-user install command
+exists (`codex plugin marketplace add`, then `codex plugin add
+<plugin>@<marketplace>`; it reads `.claude-plugin/marketplace.json`), and
+sibling directories are delivered. Not tested: whether Codex runs the
+`hooks/` files, and a remote (git URL) marketplace source.

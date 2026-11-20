@@ -15,8 +15,10 @@ No argument and something's staged: the staged diff (`git diff --staged`). No ar
 2. For each relevant guardrail, check whether the diff's actual changes appear to violate it. Cite the guardrail by path; cite the decision behind it too, for context on *why*, the same way `query` cites a superseding decision alongside the original.
 3. If nothing relevant is found, say so plainly rather than implying the knowledge base had an opinion it doesn't.
 4. A `status: draft` guardrail or decision is reported as "proposed", never as a violation.
-5. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong.
+5. If the diff touches the knowledge directory, run `lint_check.py` on the post-diff tree (staged: the working tree; a range: a temporary checkout of its head) and report its lines too.
+6. List facts whose `source` or `scope.component` path-overlaps the diff as "re-verify". Flag a fact whose body names a value the diff changes as "may be falsified" — advisory, never a claim.
+7. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong.
 
 ## Out of scope
 
-Changes to the knowledge base's own artifacts (`docs/{facts,decisions,guardrails,skills}/`) — that's `lint`/`capture`'s job, not this skill's; if the diff touches those, say so and defer, don't check them here. Fixing anything — this skill only reports. Planning a refactor (`refactor-plan`) or drafting a commit message (`attribute`) — this skill checks a diff that already exists, for any reason, not just a refactor, and never writes prose about it.
+Judging the content of the knowledge base's own artifacts — `lint`/`capture`'s job; step 5 only relays the checker. Fixing anything — this skill only reports. Planning a refactor (`refactor-plan`) or drafting a commit message (`attribute`) — this skill checks a diff that already exists, for any reason, not just a refactor, and never writes prose about it.

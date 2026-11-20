@@ -23,7 +23,7 @@ Every artifact: `id`, `title`, `status`, `date`, `tags`. Optional: `expires: <da
 - `date`: creation date; never moves.
 - `tags`: from `docs/skills/tags.md` when it exists. A new tag is proposed (name, meaning, why nothing fits) and confirmed before use.
 - `superseded-by: <id>`: any type; required when `status: superseded`.
-- Fact: optional `source: <url | path | command>`, `last-verified: <date>` (moves only on re-observation), `scope: {component, environment, version}` (any non-empty subset; set whenever the claim is limited).
+- Fact: optional `source: <url | path | command>`, `last-verified: <date>` (moves only on re-observation; a URL or command `source` older than the stale threshold, or a path `source` that is gone, is stale), `scope: {component, environment, version}` (any non-empty subset; set whenever the claim is limited).
 - Guardrail: `governed-by: [<decision-id>, ...]` (non-superseded decisions), `derivation-note: <one sentence naming every id in both edges: given X and Y, Z must or must not follow>`; optional `enforced-by: <code path | ci job | hook>` (the check that enforces it, which also keeps it from counting as orphaned); optional `grounded-in: [<fact-id>, ...]` (absent means a direct consequence of the governing decisions); optional `pinned: {<id>: <revision>}`.
 - Decision: optional `governed-facts: [<fact-id>, ...]`, `fitness-functions: [{check, enforced-by, last-verified}, ...]`, `accepted-by: <name | role>` (who is accountable; set when `status` first becomes `active`).
 - Procedure: optional `governed-by`, `operationalizes: [<guardrail-id>, ...]`.

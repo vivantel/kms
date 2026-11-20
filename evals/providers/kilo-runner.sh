@@ -73,18 +73,10 @@ cd "$SCRATCH" || exit 1
 # Project-level `.kilo/skills/` is Kilo's highest-priority local skill source
 # (docs/facts/0008-kilo-code-skills-spec.md) — copying this checkout's own skills/ there, rather
 # than relying on this repo's published `skills.urls` (which always serves master), is what makes
-# a before/after comparison of an uncommitted skill-body change possible at all. `shared/` and
-# `templates/` are mirrored alongside it (not nested under `skills/`) because skill bodies
-# reference them by relative path (e.g. `../../shared/artifact-model.md`, two levels up from a
-# skill's own directory) — confirmed by testing: omitting this broke that Read for `capture`.
+# # a before/after comparison of an uncommitted skill-body change possible at all. Each skill carries its
+# own `shared/` and `templates/` copies (scripts/vendor-shared.py), as in a Kilo remote-skills cache.
 mkdir -p .kilo/skills
 cp -a "$REPO_ROOT/plugins/kms/skills/." .kilo/skills/
-for sibling in shared templates; do
-  if [ -d "$REPO_ROOT/plugins/kms/$sibling" ]; then
-    mkdir -p ".kilo/$sibling"
-    cp -a "$REPO_ROOT/plugins/kms/$sibling/." ".kilo/$sibling/"
-  fi
-done
 
 export REPO_ROOT
 if [ -x "./setup.sh" ]; then
@@ -94,9 +86,9 @@ fi
 
 BEFORE_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 
-# A model named `nvidia/...` is a Kilo provider of its own (own API key); anything else goes through
+# A model named `nvidia/nvidia/...` is the keyed NVIDIA provider of its own (decision 0085); anything else goes through
 # the Kilo gateway.
-case "$MODEL" in nvidia/*) MODEL_ID="$MODEL" ;; *) MODEL_ID="kilo/${MODEL}" ;; esac
+case "$MODEL" in nvidia/nvidia/*) MODEL_ID="$MODEL" ;; *) MODEL_ID="kilo/${MODEL}" ;; esac
 
 # A rate-limit error is an infrastructure failure, not an answer: wait and run again (up to 6
 # tries) so it is not graded as the model's output. The wait is the response's Retry-After when
@@ -113,7 +105,21 @@ done
 
 AFTER_FILES="$(find . -type f -not -path './.git/*' | LC_ALL=C sort)"
 CHANGED_FILES="$(LC_ALL=C comm -13 <(echo "$BEFORE_FILES") <(echo "$AFTER_FILES"))"
+# Still rate-limited after every retry, or nothing came back at all: that is the gateway, not the
+# skill, so fail loudly instead of grading an empty transcript.
+if echo "$TRANSCRIPT" | grep -q "Too Many Requests" || [ -z "$TRANSCRIPT" ]; then
+  echo "=== HARNESS ERROR: kilo unavailable (rate limit or no response after 6 tries) ==="
+  exit 1
+fi
+# A wrong model id or a missing sign-in is the harness, not the skill (2026-11-08: five cases
+# failed with `Model not found` and read as five regressions): say so and exit non-zero.
+HARNESS_REASON="$(echo "$TRANSCRIPT" | grep -m1 -E 'Model not found|You need to sign in|Unauthorized|Invalid API key' | sed 's/\x1b\[[0-9;]*m//g')"
+if [ -n "$HARNESS_REASON" ]; then
+  echo "=== HARNESS ERROR: ${HARNESS_REASON} ==="
+  exit 1
+fi
 GIT_LOG="$(git log --format='%s' -n 5 2>/dev/null)"
+LAST_BODY="$(git log -1 --format='%b' 2>/dev/null)"
 
 # The graded output reaches the judge as one argv string, and Linux caps a single argument at 128 KiB
 # (spawn E2BIG), so a long transcript keeps its tail, where the model's conclusion is.
@@ -135,5 +141,8 @@ fi
 echo
 echo "=== RECENT GIT LOG (subject lines) ==="
 echo "$GIT_LOG"
+echo
+echo "=== LAST COMMIT BODY ==="
+echo "$LAST_BODY"
 
 exit 0

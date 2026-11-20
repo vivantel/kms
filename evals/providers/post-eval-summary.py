@@ -26,7 +26,11 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from summary_lib import split_failures, advisory_cases
+
 results_dir, pr_number, run_url = sys.argv[1:4]
+ADVISORY = advisory_cases(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "advisory-cases.txt"))
 
 
 def truncate(text, limit, head=False):
@@ -49,12 +53,23 @@ for path in sorted(glob.glob(os.path.join(results_dir, "eval-result-*.json"))):
         eval_id = data.get("evalId")
         shared = bool(os.environ.get("PROMPTFOO_API_KEY"))
         link = f"https://www.promptfoo.app/eval/{eval_id}" if (shared and eval_id) else run_url
-        icon = "✅" if failed == 0 else "❌"
+        skill_bad, infra_bad = split_failures(data["results"]["results"])
+        advisory = case in ADVISORY
+        if failed == 0:
+            icon = "✅"
+        elif advisory:
+            icon = "⚠️ advisory (does not block)"
+        elif not skill_bad and infra_bad:
+            icon = "🛠️ infra (harness error, not a skill failure)"
+        else:
+            icon = "❌"
         rows.append((case, icon, f"{passed} passed / {failed} failed", link))
 
         if failed:
             for result in data["results"]["results"]:
                 if result.get("success"):
+                    continue
+                if result in infra_bad:
                     continue
                 prompt = result.get("prompt", {}).get("raw", "")
                 output = result.get("response", {}).get("output", "")

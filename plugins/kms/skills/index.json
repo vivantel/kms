@@ -13,7 +13,14 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/admission.md",
+        "shared/artifact-model.md",
+        "templates/guardrails/no-redundant-guardrails.md",
+        "templates/guardrails/no-unenforced-guardrail.md",
+        "templates/guardrails/one-statement-one-job.md",
+        "templates/guardrails/tags-from-canonical-list.md",
+        "templates/guardrails/token-economy.md"
       ]
     },
     {
@@ -29,7 +36,9 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/admission.md",
+        "shared/artifact-model.md"
       ]
     },
     {
@@ -61,7 +70,9 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/admission.md",
+        "shared/artifact-model.md"
       ]
     },
     {
@@ -69,7 +80,14 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/artifact-model.md",
+        "shared/lint_check.py",
+        "templates/guardrails/no-redundant-guardrails.md",
+        "templates/guardrails/no-unenforced-guardrail.md",
+        "templates/guardrails/one-statement-one-job.md",
+        "templates/guardrails/tags-from-canonical-list.md",
+        "templates/guardrails/token-economy.md"
       ]
     },
     {
@@ -109,7 +127,9 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/admission.md",
+        "shared/artifact-model.md"
       ]
     },
     {
@@ -117,7 +137,12 @@
       "version": "0.16.3",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "templates/guardrails/no-redundant-guardrails.md",
+        "templates/guardrails/no-unenforced-guardrail.md",
+        "templates/guardrails/one-statement-one-job.md",
+        "templates/guardrails/tags-from-canonical-list.md",
+        "templates/guardrails/token-economy.md"
       ]
     }
   ]

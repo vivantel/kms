@@ -12,7 +12,13 @@
 
 **What happens:** For `token-economy.md`, detach is chosen — its `kms-seeded`/`kms-template-version` fields are stripped, the file and its `## Guardrail` text stay exactly as they are, now just a normal project guardrail no longer tracked by `kms`. The other four are removed. The AGENTS.md block and generated files are handled the same way as any other finding, asked about individually.
 
-## 3. Nothing to clean up
+## 3. A team that deleted a seeded guardrail on purpose
+
+**Prompt:** "We removed `token-economy` deliberately; make sure kms doesn't bring it back."
+
+**What happens:** Its id is added to the AGENTS.md block's `kms-declined:` line, which `lint` check 12 and `bootstrap` step 8 honour, so it is neither re-seeded nor flagged as missing again.
+
+## 4. Nothing to clean up
 
 **Prompt:** "Check what kms left behind before I uninstall it."
 

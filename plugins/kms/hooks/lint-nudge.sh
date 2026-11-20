@@ -15,10 +15,19 @@ threshold=5      # commits touching the KB in that window
 inside_work_tree=$(git rev-parse --is-inside-work-tree 2>/dev/null)
 [ "$inside_work_tree" = "true" ] || exit 0
 
+# Knowledge directory: docs/ when present, else the first top-level
+# directory holding decisions/ (the artifact model's detection rule).
+kb=docs
+if [ ! -d docs ]; then
+  for d in */; do
+    if [ -d "${d}decisions" ]; then kb=${d%/}; break; fi
+  done
+fi
+
 count=$(git log --oneline --since="${window_days} days ago" -- \
-  docs/facts docs/decisions docs/guardrails docs/skills 2>/dev/null \
+  "$kb/facts" "$kb/decisions" "$kb/guardrails" "$kb/skills" 2>/dev/null \
   | wc -l | tr -d ' ')
 
 if [ "$count" -ge "$threshold" ]; then
-  echo "This knowledge base has had $count commit(s) touching docs/{facts,decisions,guardrails,skills}/ in the last $window_days days. If relevant, mention to the user that running this plugin's lint skill would check the whole knowledge base for drift, contradictions, or stale debt that individual sessions wouldn't catch."
+  echo "This knowledge base has had $count commit(s) touching $kb/{facts,decisions,guardrails,skills}/ in the last $window_days days. If relevant, mention to the user that running this plugin's lint skill would check the whole knowledge base for drift, contradictions, or stale debt that individual sessions wouldn't catch."
 fi

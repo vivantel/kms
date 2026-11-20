@@ -1,16 +1,16 @@
 id	group	gold	case
 c01	trivial	none	Drop the invalid `(?i)` inline regex flag from the lint eval case (real kms 6fd3348).
-c02	significant	decision	Tag git releases independently of the plugin version, starting fresh at 0.1.0 (real kms 1fe279c, decision 0046).
+c02	significant	decision	Tag git releases independently of the plugin version, starting fresh at 0.1.0 (real kms 1fe279c).
 c04	pointer	procedure	To get the sensor calibration log, ask the lab technician.
 c05	trivial	none	Add `.env` to `.gitignore` for local secrets (real kms a113c91).
 c07	transient	none	CI run 4821 failed on a flaky test.
 c08	pointer	none	Alice owns the billing service.
 c10	significant	decision	Pin edge targets by content hash and compare pinned edges in lint check 13 (real kms 712dc5f).
-c11	transient	none	The kms step 8 rerun scored capture 2/5 at the head (real kms 9bfe0ee, a log row).
+c11	transient	none	The kms step 8 rerun scored capture 2/5 at the head (real kms 9bfe0ee).
 c13	trivial	none	Close the fixture frontmatter and clear the checker's findings on the repo (real kms 40016d5).
 c14	significant	decision	Move the eval harness to a free-tier `north-mini-code` model (real kms b361485).
 c16	pointer	procedure	Security sign-off goes through the security channel and takes about two days.
-c17	trivial	none	Record 'kms step 5 done' as a row in this repo's plan Log (real, this repo 24795ac).
+c17	trivial	none	Record 'kms step 5 done' in the tracker (real, this repo 24795ac).
 c19	transient	none	PR 73 was merged at 14:02.
 c20	pointer	none	John asked to be pinged when the report is done.
 c22	significant	guardrail	Require a CHANGELOG entry per version bump (real kms ca888d4).

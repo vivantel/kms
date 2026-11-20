@@ -1,0 +1,42 @@
+# Eval case: `uninstall` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# Fixture: one seeded guardrail, one untouched draft decision stub, generated registries. The
+# case grades the report (what it finds) and that nothing was written. The sentinel lines are a
+# grading convenience added to the invocation prompt only, as in evals/lint. Not run locally in
+# this change: no Kilo CLI was available when the case was written.
+# Run standalone: npx promptfoo eval -c evals/uninstall/promptfooconfig.yaml
+description: "kms uninstall — reports seeded guardrail, draft stub and registries, writes nothing"
+
+prompts:
+  - >
+    We're about to uninstall kms. Scan this project and report what it added, but do not detach
+    or remove anything; stop at the report. End your response with exactly these lines (ids
+    comma-separated, or NONE; YES|NO answered with one of them):
+
+    UNINSTALL_SEEDED: <ids of seeded guardrails found>
+    UNINSTALL_DRAFTS: <ids of draft decisions found>
+    UNINSTALL_REGISTRIES_FOUND: YES|NO
+    UNINSTALL_WROTE: YES|NO
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/uninstall/fixture"
+      model: "nvidia/nemotron-3.5-super-vl:free"
+      timeout_seconds: 480
+
+defaultTest:
+  assert:
+    - type: regex
+      value: "UNINSTALL_SEEDED[*\\s]*:[*\\s]*[^\\n]*token-economy"
+    - type: regex
+      value: "UNINSTALL_DRAFTS[*\\s]*:[*\\s]*[^\\n]*0001-adopt-feature-flags"
+    - type: regex
+      value: "UNINSTALL_REGISTRIES_FOUND[*\\s]*:[*\\s]*YES(?!\\|)"
+    - type: regex
+      value: "UNINSTALL_WROTE[*\\s]*:[*\\s]*NO(?!\\|)"
+    # Nothing written or changed in the scratch project.
+    # The runner itself creates ./.kilo/; anything else changed means uninstall wrote.
+    - type: javascript
+      value: |
+        const f = (output.split('=== FILES CREATED/MODIFIED ===')[1] || '').split('=== RECENT')[0];
+        return f.split('\n').map(l => l.trim()).filter(l => l && l !== '(none)' && !l.startsWith('./.kilo/')).length === 0;

@@ -25,3 +25,7 @@ Two fresh model raters (agreement 81 of 98, kappa 0.69) failed 6 records in both
 ## Limits
 
 Model raters, one family. The effect of the cleanup on evals that read the knowledge base (lint, query) was not measured (author decision, 2026-11-08: the baselines are too weak to show a change); do not credit a change in those evals to the rule alone.
+
+## Amendment 2026-11-16
+
+The rater verdict files cited under Why (`docs/plans/knowledge-boundary/step6b/` in the author's working repo) are not committed to this repository. The figures (81 of 98 agreement, kappa 0.69, 6 and 20 failures) are the author's recorded summary, not reproducible from the repo.

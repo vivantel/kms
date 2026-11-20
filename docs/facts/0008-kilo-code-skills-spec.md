@@ -5,7 +5,7 @@ status: active
 date: 2026-08-30
 tags: [kms, agent-agnostic, kilo, packaging]
 source: "https://kilo.ai/docs/customize/skills"
-last-verified: 2026-08-30
+last-verified: 2026-11-20
 ---
 
 Confirmed 2026-08-30 via Kilo's own docs (`kilo.ai/docs/customize/skills`,
@@ -60,3 +60,19 @@ This is the descriptive basis for
 fast-evolving, externally-owned spec (same caution as
 `docs/facts/0003-codex-plugin-manifest-schema.md`), re-verify against
 Kilo's primary docs before relying on it again if much time has passed.
+
+Re-verified 2026-11-20 with `kilo` 7.8.32, a scratch `HOME`, `kilo debug skill`, and
+first this branch's raw-GitHub `index.json`, then a local HTTP copy edited per case:
+- A remote skill lands flat in `~/.cache/kilo/skills/<name>/`; only the files its
+  `files` list names arrive. `../../shared/` from a cached skill therefore points at
+  `~/.cache/kilo/shared/`, which nothing fills: the five skills that read `shared/` or
+  `templates/` are broken for a `skills.urls` user.
+- A `files` entry may be a subpath inside the skill (`sub/artifact-model.md` arrived at
+  `skills/lint/sub/artifact-model.md`).
+- A `files` entry containing `..` makes Kilo drop the whole skill silently.
+- An index entry that lists no `SKILL.md` (a `shared` pseudo-skill) is ignored: never
+  fetched, no error.
+So only 1.1's option (b) works: vendor the shared files inside each skill that reads them.
+
+Verified 2026-11-20 after vendoring (`scripts/vendor-shared.py`): serving `plugins/kms/skills/` over a local HTTP server as `skills.urls`, `kilo debug skill` lists all 15 skills; the cache holds each skill's `shared/` and `templates/` files; the cached `lint/shared/lint_check.py` equals the source and exits 0 on this repo with `--strict`.
+

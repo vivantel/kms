@@ -17,3 +17,9 @@
 **Prompt:** "Check this branch against what we've decided." (branch only touches a CSS file)
 
 **What happens:** No decision or guardrail in the knowledge base is relevant to a CSS-only change — the report says so plainly rather than fabricating a concern.
+
+## Example: diff changing a sourced fact
+
+**Trigger:** "conform check my staged changes" — the diff changes `PORT` in `config/server.yaml` and also adds a raw SQL string that a guardrail forbids.
+
+**Output:** one violation under the guardrail (hunk plus governing decision), then `Re-verify: docs/facts/0003-server-port.md (source: config/server.yaml overlaps the diff)`. If the fact's body names `8080` and the diff sets `9090`, it is also flagged "may be falsified" — advisory only. Nothing is edited.

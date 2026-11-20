@@ -29,7 +29,7 @@ class Matrix(unittest.TestCase):
 
     def test_one_case_per_check_plus_clean(self):
         self.assertEqual(sorted(LABELS["cases"]), sorted(["clean"] + [f"c{n:02d}" for n in sorted(ALL)] + PINNED))
-        self.assertEqual(ALL, set(range(1, 25)) - {14, 15})  # 14 and 15 retired (decision 0079)
+        self.assertEqual(ALL, set(range(1, 26)) - {14, 15})  # 14 and 15 retired (decision 0079)
 
     def test_oracle_scores_perfectly(self):
         rep = score.score(runs(lambda c: set(LABELS["cases"][c]["expected"])), LABELS)

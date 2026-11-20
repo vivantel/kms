@@ -36,18 +36,20 @@ jobs:
       - run: python3 -m unittest discover -s evals/lint -t .
       - run: python3 -m unittest discover -s evals/lint-matrix
       - run: python3 -m unittest discover -s evals/admission
+      - run: python3 -m unittest discover -s evals/providers -p "test_*.py"
       - run: python3 evals/lint-matrix/build.py --check
       - run: python3 evals/admission/build.py --check
 
   eval:
     name: eval (${{ matrix.case }})
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+    continue-on-error: ${{ contains(fromJSON('["bootstrap","uninstall"]'), matrix.case) }}  # advisory cases: keep equal to evals/advisory-cases.txt (unit-tested)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, decide, capture, lint, attribute]
+        case: [bootstrap, roadmap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -57,8 +59,8 @@ jobs:
           node-version: 22
       - run: pip install pyyaml
       - run: npm install
-      - run: npm install -g @kilocode/cli
-      - uses: promptfoo/promptfoo-action@v1
+      - run: npm install -g @kilocode/cli@7.8.32  # pinned 2026-11-20 (step 1.4); bump on purpose
+      - uses: promptfoo/promptfoo-action@promptfoo-action-v1.3.5
         with:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
@@ -130,12 +132,13 @@ jobs:
     name: eval-recheck (${{ matrix.case }})
     needs: eval-recheck-fork-check
     if: needs.eval-recheck-fork-check.outputs.is_fork == 'false'
+    continue-on-error: ${{ contains(fromJSON('["bootstrap","uninstall"]'), matrix.case) }}  # advisory cases: keep equal to evals/advisory-cases.txt (unit-tested)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, decide, capture, lint, attribute]
+        case: [bootstrap, roadmap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -147,8 +150,8 @@ jobs:
           node-version: 22
       - run: pip install pyyaml
       - run: npm install
-      - run: npm install -g @kilocode/cli
-      - uses: promptfoo/promptfoo-action@v1
+      - run: npm install -g @kilocode/cli@7.8.32  # pinned 2026-11-20 (step 1.4); bump on purpose
+      - uses: promptfoo/promptfoo-action@promptfoo-action-v1.3.5
         with:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml

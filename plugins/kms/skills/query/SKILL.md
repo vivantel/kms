@@ -11,7 +11,7 @@ Search `docs/{facts,decisions,guardrails,skills}/` for the artifacts relevant to
 2. If nothing relevant is found, say so plainly — don't guess or synthesize an answer the knowledge base doesn't actually support.
 3. If a decision has been superseded, follow `superseded-by` transitively until reaching a decision whose own `status` isn't `superseded` — cite that final active decision alongside the original, not just the next hop.
 4. A `status: draft` decision or guardrail is reported as "proposed", never as the answer.
-5. Answer in prose, then list every artifact the answer drew from as `Refs: <repo-relative-path>` — one per artifact, matching `attribute`'s trailer format so this plugin has one citation convention.
+5. Answer in prose, then list every artifact the answer drew from as `Refs: <repo-relative-path>` — one per artifact, matching `attribute`'s trailer format so this plugin has one citation convention. Print a fact's `last-verified` beside its citation when older than the model's staleness threshold.
 
 ## Out of scope
 

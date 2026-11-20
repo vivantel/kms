@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "plugins" / "kms" / "shared"))
 from lint_check import Linter, split_frontmatter  # noqa: E402
 
-STRUCTURAL = [1, 2, 3, 4, 7, 9, 12, 17, 18, 19, 20, 21, 24]  # checks run by lint_check.py (decisions 0058, 0077); 14 and 15 are retired (0079)
+STRUCTURAL = [1, 2, 3, 4, 7, 9, 12, 17, 18, 19, 20, 21, 24, 25]  # checks run by lint_check.py (decisions 0058, 0077); 14 and 15 are retired (0079)
 JUDGMENT = [5, 6, 8, 10, 11, 13, 16, 22, 23]
 TODAY = "2026-11-08"  # fixed so date-based checks do not depend on when the generator runs
 
@@ -144,6 +144,9 @@ def m22(f): sub(f, "git — git workflow", "git — git workflow\nlegacy-api —
 def m23(f): add_guardrail(f, "tag-and-push-every-release", "Every release is tagged and the tag pushed",
                           "## Guardrail\n\nFor each release: create an annotated tag, push it, confirm CI picked it up, then announce it.\n\n## Derivation\n\nWeekly cadence.")
 def m24(f): sub(f, "### 2. [pending] Add the tag step", "### 2. [done] Add the tag step", "docs/plans/release-automation.md")
+def m25(f):
+    f["docs/facts/0003-vendor-limit.md"] = art("0003-vendor-limit", "The vendor API allows 100 requests a minute", ["release"],
+                                              "The vendor's documented rate limit.", source="https://vendor.example/docs/limits", **{"last-verified": "2025-01-15"})
 
 
 def p19(f): sub(f, "Ship a release every week", "Ship a release every day", "docs/decisions/INDEX.md")
@@ -154,7 +157,7 @@ MUTATIONS = {  # check -> (pre, post, cofires)
     6: (m6, None, [7]), 7: (m7, None, []), 8: (m8, None, []), 9: (m9, None, []), 10: (m10, None, []),
     11: (m11, None, []), 12: (m12, None, []), 13: (m13, None, []),
     16: (m16, None, []), 17: (m17, None, []), 18: (m18, None, []), 19: (m19, p19, []), 20: (m20, None, []),
-    21: (m21, None, []), 22: (m22, None, []), 23: (m23, None, []), 24: (m24, None, []),
+    21: (m21, None, []), 22: (m22, None, []), 23: (m23, None, []), 24: (m24, None, []), 25: (m25, None, []),
 }
 
 
@@ -212,7 +215,7 @@ def make_case(target):
 
 PROMPT = (
     "Lint the knowledge base. After completing your analysis, end your response with exactly one line, "
-    "`LINT_FINDINGS:` followed by the comma-separated numbers of every lint check (1-24) for which you found at "
+    "`LINT_FINDINGS:` followed by the comma-separated numbers of every lint check (1-25) for which you found at "
     "least one violation, or `NONE` if the knowledge base has no violations: write `LINT_FINDINGS: NONE`, never a bare "
     "`NONE`. Report only what you verified."
 )

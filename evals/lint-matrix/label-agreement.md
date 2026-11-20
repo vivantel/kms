@@ -2,7 +2,7 @@
 
 Rater 1 (author's labels, fixed before rater 2 answered): structural = 1, 2, 3, 7, 9, 12, 15, 19, 20, 21 (the checks `shared/lint_check.py` runs); judgment = the other 14.
 
-Rater 2: a fresh subagent with no repository access, given only the 24 check texts (`## What to check`, no labels) and the two definitions in decision 0061. Structural = 1, 2, 3, 7, 12, 15, 19, 20, 21, 24.
+Rater 2 (a model, so this shows the check texts are classifiable by a model reader, not inter-rater reliability between people): a fresh subagent with no repository access, given only the 24 check texts (`## What to check`, no labels) and the two definitions in decision 0061. Structural = 1, 2, 3, 7, 12, 15, 19, 20, 21, 24.
 
 | Measure | Value |
 |---|---|

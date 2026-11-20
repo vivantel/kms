@@ -3,7 +3,7 @@ name: onboard
 description: Creates a role-specific onboarding plan from a project's existing knowledge artifacts, without writing anything. Use when the user wants a ramp-up plan for a specific role, e.g. "onboard me as a frontend developer for this project", "what should a new QA hire read first here".
 ---
 
-Read `docs/{facts,decisions,guardrails,skills}/` and produce a 5-day, role-tailored onboarding plan — without writing to disk.
+Read `docs/{facts,decisions,guardrails,skills}/` and produce a role-tailored onboarding plan (the user may give a duration; default five days) — without writing to disk.
 
 ## Before producing a plan
 
@@ -16,7 +16,7 @@ Read `docs/{facts,decisions,guardrails,skills}/` and produce a 5-day, role-tailo
 
 5 days, each stating:
 - **Goal** — what the person should understand or do by end of day, specific to the role.
-- **Read** — links to the specific artifacts for that day and role (`docs/decisions/000X-....md`, not "the decisions folder").
+- **Read** — links to the specific artifacts for that day and role (`docs/decisions/000X-....md`, not "the decisions folder"); print a fact's `last-verified` beside it when older than the model's staleness threshold.
 - **Run** — which of this plugin's skills to try and why.
 
 A reasonable shape (adjust to what actually exists for this role — don't force artifacts onto a day that doesn't need them):

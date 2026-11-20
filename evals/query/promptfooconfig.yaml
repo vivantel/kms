@@ -1,0 +1,39 @@
+# Eval case: `query` — docs/decisions/0043-eval-harness-for-shipped-skill-changes.md.
+# Two prompts: one answerable from the planted artifacts (must cite both the decision and the
+# guardrail), one the knowledge base cannot answer (must say so). The sentinel lines are a
+# grading convenience added to the invocation prompt only, as in evals/lint. Not run locally in
+# this change: no Kilo CLI was available when the case was written.
+# Run standalone: npx promptfoo eval -c evals/query/promptfooconfig.yaml
+description: "kms query — cites what answers, says so when nothing does"
+
+prompts:
+  - >
+    {{question}} After answering, end your response with exactly these two lines:
+
+    QUERY_ANSWERED: YES|NO
+    QUERY_CITED: <comma-separated ids of the artifacts you cited, or NONE>
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/query/fixture"
+      model: "nvidia/nemotron-3.5-super-vl:free"
+      timeout_seconds: 480
+
+tests:
+  - description: answerable, cites decision and guardrail
+    vars:
+      question: "Query the knowledge base: how long may a web session sit idle, and what rule enforces it?"
+    assert:
+      - type: regex
+        value: "QUERY_ANSWERED: YES(?!\\|)"
+      - type: regex
+        value: "QUERY_CITED:[^\\n]*0001-session-ttl-30-minutes"
+      - type: regex
+        value: "QUERY_CITED:[^\\n]*no-session-ttl-above-hour"
+  - description: unanswerable, says nothing relevant
+    vars:
+      question: "Query the knowledge base: which message broker do we use for background jobs?"
+    assert:
+      - type: regex
+        value: "QUERY_CITED: NONE"
