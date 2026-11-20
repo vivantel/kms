@@ -23,3 +23,15 @@ On 2026-11-20 `cohere/north-mini-code:free` (the pin of 0057) was no longer in t
 - **Chosen: a named free model, plus a harness that reports withdrawal as infrastructure.** Withdrawal will recur; the harness now prints `=== HARNESS ERROR ===` and the PR summary labels it infra, so the next one is a one-line change here, not a red gate that looks like skill regressions.
 
 Supersedes 0057. Baselines recorded on north-mini-code are not comparable; re-record on this model.
+
+## Amendment 2026-11-20
+
+The first CI `/eval` on `nemotron-3.5-lightning:free` passed 2 of 6 cases (`bootstrap`, `lint`), and a 14-request routing eval hit about 86% with a different two misses each run. A trial of the four failing cases (`decide`, `capture`, `roadmap`, `attribute`), 4 runs each, `--repeat 4`, kilo 7.8.32, on this tree:
+
+| Model | Passed of 16 | Notes |
+|---|---|---|
+| `nvidia/nemotron-3.5-super-vl:free` | 15 | decide 3/4, the others 4/4 |
+| `inclusionai/ling-3.2-flash:free` | 1 | provider errors on roadmap |
+
+Every CI case now pins `nvidia/nemotron-3.5-super-vl:free`. The id of this file keeps the lightning name because ids do not change; the Decision text above names the first choice, which this amendment replaces. The `lint`, `bootstrap`, `query`, `conform` and `uninstall` cases have not yet run on the new model.
+

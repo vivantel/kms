@@ -28,7 +28,7 @@ providers:
   - id: "exec:../providers/kilo-runner.sh"
     config:
       fixture_dir: "evals/lint/fixture"
-      model: "nvidia/nemotron-3.5-lightning:free"
+      model: "nvidia/nemotron-3.5-super-vl:free"
       timeout_seconds: 600
 
 defaultTest:
