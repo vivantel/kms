@@ -1,6 +1,6 @@
 ---
 name: capture
-description: Turn what a work session produced into durable knowledge — draft new decisions, update changed facts, flag contradictions, catch human-doc drift. Use after a work session that touched decisions, facts, or documented behavior, e.g. "run the knowledge check", "did anything here need capturing as a decision or fact".
+description: Turn what a work session produced into durable knowledge — draft new decisions, update changed facts, flag contradictions, catch human-doc drift. Use after a work session that touched decisions, facts, or documented behavior, e.g. "capture what this session decided", "run the knowledge check on what this session changed", "did anything here need capturing as a decision or fact". Writes records; for whole-repo health use lint, for a diff before commit use conform.
 ---
 
 If the project has no knowledge system yet, run `bootstrap` first — this skill maintains what that one sets up. For whole-knowledge-base health, independent of any one session, run `lint` instead — this skill only reasons about what just happened.

@@ -1,0 +1,86 @@
+# Manual, advisory: about 86% (12 of 14) on nemotron-3.5-lightning, with a different 2 failing each run, so it is not in run-all.sh or the CI matrix. Run with --repeat 3 to compare description edits.
+# Eval case: `routing` — does the right skill load for a plain user request? A skill is chosen from
+# its `description` alone, so overlapping descriptions (capture/lint, conform/attribute/capture,
+# bootstrap/quickstart/decide) show up here as the wrong `Skill "<name>"` line in the transcript.
+# The prompt asks the model to stop right after loading, so each run is short.
+# Run standalone: npx promptfoo eval -c evals/routing/promptfooconfig.yaml
+description: "kms routing — each request loads the intended skill first"
+
+prompts:
+  - >
+    {{request}}
+
+    (Routing test: load the skill that fits this request, then stop and reply only with the word ROUTED. Do not carry out the task.)
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/query/fixture"
+      model: "nvidia/nemotron-3.5-lightning:free"
+      timeout_seconds: 300
+
+defaultTest:
+  assert:
+    - type: javascript
+      value: |
+        const m = output.match(/Skill "([a-z-]+)"/);
+        const ok = !!m && m[1] === context.vars.expected;
+        return { pass: ok, score: ok ? 1 : 0, reason: 'first skill loaded: ' + (m ? m[1] : 'none') + ', expected ' + context.vars.expected };
+
+tests:
+  - description: "capture: capture what we just decided in this session"
+    vars:
+      request: "capture what we just decided in this session"
+      expected: capture
+  - description: "capture: did anything in this session need capturing as a d"
+    vars:
+      request: "did anything in this session need capturing as a decision or fact?"
+      expected: capture
+  - description: "lint: lint the knowledge base"
+    vars:
+      request: "lint the knowledge base"
+      expected: lint
+  - description: "lint: check the whole docs tree for problems"
+    vars:
+      request: "check the whole docs tree for problems"
+      expected: lint
+  - description: "conform: does this diff conform to our guardrails?"
+    vars:
+      request: "does this diff conform to our guardrails?"
+      expected: conform
+  - description: "conform: check my staged changes against what we've decided"
+    vars:
+      request: "check my staged changes against what we've decided before I commit"
+      expected: conform
+  - description: "attribute: commit this with attribution"
+    vars:
+      request: "commit this with attribution"
+      expected: attribute
+  - description: "attribute: write a PR description for this branch"
+    vars:
+      request: "write a PR description for this branch"
+      expected: attribute
+  - description: "query: what did we decide about the database choice?"
+    vars:
+      request: "what did we decide about the database choice?"
+      expected: query
+  - description: "bootstrap: set up the knowledge system here"
+    vars:
+      request: "set up the knowledge system here"
+      expected: bootstrap
+  - description: "quickstart: get me started with this plugin, I have never used"
+    vars:
+      request: "get me started with this plugin, I have never used it"
+      expected: quickstart
+  - description: "decide: we just decided to use postgres for jobs; record t"
+    vars:
+      request: "we just decided to use postgres for jobs; record that decision"
+      expected: decide
+  - description: "uninstall: we are uninstalling kms, clean up what it added"
+    vars:
+      request: "we are uninstalling kms, clean up what it added"
+      expected: uninstall
+  - description: "onboard: onboard me as a backend developer for this project"
+    vars:
+      request: "onboard me as a backend developer for this project"
+      expected: onboard

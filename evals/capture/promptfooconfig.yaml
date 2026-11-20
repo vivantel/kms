@@ -3,7 +3,7 @@
 description: "kms capture — surfacing a contradiction from a work session"
 
 prompts:
-  - "Run the knowledge check on what this session changed."
+  - "Use the capture skill on what this session changed."
 
 providers:
   - id: "exec:../providers/kilo-runner.sh"

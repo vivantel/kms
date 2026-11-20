@@ -1,6 +1,6 @@
 ---
 name: lint
-description: Full-repo validation pass over a project's fact/decision/guardrail/procedure knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, verbosity, and stale derived artifacts — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems".
+description: Full-repo validation pass over a project's fact/decision/guardrail/procedure knowledge system — dangling references, stale prose cross-references, missing required fields, numbering collisions, expired decisions, redundant guardrails, audit-log-style facts, verbosity, and stale derived artifacts — independent of what changed this session. Use when the user wants the whole knowledge base checked for health, e.g. "lint the knowledge base", "check the whole docs/ tree for problems". Read-only; for what one session changed use capture.
 ---
 
 Scan every fact, decision, guardrail and procedure, not just recent changes, and report each violation. `capture` handles what a session just produced; this is everything else, checked here only.
