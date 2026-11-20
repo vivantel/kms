@@ -149,7 +149,7 @@ def render(name):
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text(text, encoding="utf-8")
         lin = Linter(d, strict="--strict" in args, today=TODAY)
-        found = sorted({(c, fl) for c, fl, _ in lin.run()})
+        found = sorted({(c, fl) for c, fl, _ in lin.run() if c != 25})  # 25 is a kms extension beyond the core contract
     exp = {"args": args, "findings": [{"check": c, "file": fl, "severity": "error"} for c, fl in found]}
     return f, json.dumps(exp, indent=1) + "\n"
 

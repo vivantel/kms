@@ -22,9 +22,11 @@ class Conformance(unittest.TestCase):
                 exp = json.loads((HERE / "cases" / f"{name}.expected.json").read_text())
                 r = subprocess.run([sys.executable, CHECKER, "--root", str(HERE / "cases" / name), "--json", "--today", "2026-11-08", *exp["args"]],
                                    capture_output=True, text=True)
-                got = sorted({(x["check"], x["file"]) for x in json.loads(r.stdout)})
+                # Check 25 (source freshness) is a kms extension beyond the shared core contract, which
+                # a vendored checker need not implement; its own cases live in evals/lint/unit and lint-matrix.
+                got = sorted({(x["check"], x["file"]) for x in json.loads(r.stdout) if x["check"] != 25})
                 self.assertEqual(got, sorted({(x["check"], x["file"]) for x in exp["findings"]}))
-                self.assertEqual(r.returncode, 1 if exp["findings"] else 0)
+                self.assertEqual(r.returncode, 1 if (exp["findings"] or any(x["check"] == 25 for x in json.loads(r.stdout))) else 0)
 
     @unittest.skipUnless((HERE / "build.py").exists(), "generator is kms-only; not vendored")
     def test_generator_is_current(self):
