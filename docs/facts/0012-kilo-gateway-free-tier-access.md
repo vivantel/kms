@@ -5,7 +5,7 @@ status: active
 date: 2026-09-10
 tags: [kms, kilo]
 source: 'kilo run --auto -m kilo/<model>:free "<prompt>" --print-logs'
-last-verified: 2026-09-10
+last-verified: 2026-11-20
 scope:
   component: Kilo Code CLI built-in gateway
 ---
@@ -34,3 +34,17 @@ docs mention "500+ models via the Kilo Gateway" without a free/paid breakdown). 
 this is anti-abuse-throttled per IP/machine rather than per account; if the eval harness starts
 failing with an auth or rate-limit error where it previously worked, re-verify this fact before
 assuming the harness itself broke.
+
+Re-verified 2026-11-20 with `kilo` 7.8.32 (`kilo models`, `kilo run --auto`). The
+free tier is not a stable promise: it held in CI 2026-09-10; `poolside/laguna-s-2.1:free`
+was withdrawn by 2026-11-08 (every case failed `Model not found`; the harness
+now prints one `=== HARNESS ERROR: ... ===` line for that and the PR summary
+labels it infra); and `cohere/north-mini-code:free`, the model every CI case
+pins, is **no longer in the catalog** on 2026-11-20. The judge model
+`kilo/nvidia/nemotron-3-ultra-550b-a55b:free` still exists and answers. The
+catalog's `:free` models that day: baidu/ernie-5.5-flash-preview,
+dots-studio/dots-3-note-preview, inclusionai/ling-3.2-flash, liquid/lfm-3-1.7b,
+nvidia/nemotron-3-nano-omni-30b-a3b-reasoning, nvidia/nemotron-3-ultra-550b-a55b,
+nvidia/nemotron-3.5-lightning, nvidia/nemotron-3.5-super-vl, particle-ai/particle-1,
+recursive/flint-v1.0. Sign-up and usage limits (0059's amendment) apply from some
+machines; "no account or API key" held only for the dates above.

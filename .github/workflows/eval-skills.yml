@@ -36,6 +36,7 @@ jobs:
       - run: python3 -m unittest discover -s evals/lint -t .
       - run: python3 -m unittest discover -s evals/lint-matrix
       - run: python3 -m unittest discover -s evals/admission
+      - run: python3 -m unittest discover -s evals/providers -p "test_*.py"
       - run: python3 evals/lint-matrix/build.py --check
       - run: python3 evals/admission/build.py --check
 
@@ -57,8 +58,8 @@ jobs:
           node-version: 22
       - run: pip install pyyaml
       - run: npm install
-      - run: npm install -g @kilocode/cli
-      - uses: promptfoo/promptfoo-action@v1
+      - run: npm install -g @kilocode/cli@7.8.32  # pinned 2026-11-20 (step 1.4); bump on purpose
+      - uses: promptfoo/promptfoo-action@promptfoo-action-v1.3.5
         with:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml
@@ -147,8 +148,8 @@ jobs:
           node-version: 22
       - run: pip install pyyaml
       - run: npm install
-      - run: npm install -g @kilocode/cli
-      - uses: promptfoo/promptfoo-action@v1
+      - run: npm install -g @kilocode/cli@7.8.32  # pinned 2026-11-20 (step 1.4); bump on purpose
+      - uses: promptfoo/promptfoo-action@promptfoo-action-v1.3.5
         with:
           github-token: ${{ github.token }}
           config: evals/${{ matrix.case }}/promptfooconfig.yaml

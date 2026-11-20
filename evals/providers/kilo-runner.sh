@@ -119,6 +119,13 @@ if echo "$TRANSCRIPT" | grep -q "Too Many Requests" || [ -z "$TRANSCRIPT" ]; the
   echo "=== HARNESS ERROR: kilo unavailable (rate limit or no response after 6 tries) ==="
   exit 1
 fi
+# A wrong model id or a missing sign-in is the harness, not the skill (2026-11-08: five cases
+# failed with `Model not found` and read as five regressions): say so and exit non-zero.
+HARNESS_REASON="$(echo "$TRANSCRIPT" | grep -m1 -E 'Model not found|You need to sign in|Unauthorized|Invalid API key' | sed 's/\x1b\[[0-9;]*m//g')"
+if [ -n "$HARNESS_REASON" ]; then
+  echo "=== HARNESS ERROR: ${HARNESS_REASON} ==="
+  exit 1
+fi
 GIT_LOG="$(git log --format='%s' -n 5 2>/dev/null)"
 LAST_BODY="$(git log -1 --format='%b' 2>/dev/null)"
 
