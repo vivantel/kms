@@ -408,13 +408,15 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Result 2026-11-20** (read from the decision files by hand, not through a model run; `lint_check.py --strict` exits 0): *What governs fact fields?* Facts carry no `kind` or `governed-by`; optional `source` and `last-verified` (active). Refs: 0071-facts-carry-no-outgoing-edges. *What is a registry?* A file identified by a `kms-registry` marker, excluded from the four types' checks. Refs: 0074-registries-by-marker. *May a guardrail be grounded in a decision?* No: `grounded-in` is optional and fact-only; decisions go in `governed-by`. Refs: 0072-guardrail-derivation-edges-are-honest. All three are active and none points at a superseded record (0064 and 0051 are archived).
 
-### 5.6 [partial 2026-11-20: checker half only] Full `lint` and `conform` pass on the repo
+### 5.6 [done 2026-11-20: checker plus a by-hand judgment pass; deferrals listed] Full `lint` and `conform` pass on the repo
 
 **What.** Run the shipped `lint` (checker plus judgment checks) on kms, and `conform` on the whole phase-2/3 diff against tag `0.16.0`; fix or explicitly defer every finding with a one-line note here.
 
 **Done when.** Counts per check are pasted here and every finding has a resolution line.
 
 **Result 2026-11-20:** the structural half ran: `lint_check.py --root . --strict` prints no findings, exit 0. The judgment checks (5, 6, 8, 10, 11, 14, 16, 22, 23) and `conform` against tag `0.16.0` were not run: they are model passes and the owner should run `lint` and `conform` in a session.
+
+**Judgment pass 2026-11-20** (read by hand from the corpus, one session, not a repeatable model run; 6 facts, 16 guardrails): check 5 none (the broad guardrails apply to many skills; seeded ones are deliberate); check 6 none; check 8 none for the seeded guardrails; check 10 advisory: the `## Derivation` blocks of `every-skill-ships-examples`, `agent-agnostic-skill-content` and `no-redundant-guardrails` run long, defer (decision-style rationale, low cost); check 11 advisory: `fact-governance-fields` states two rules (carry `source` or a citer; carry no `kind`/`governed-by`) and `every-skill-ships-examples` states two (the file; the README link): defer, splitting adds files for no behaviour change; check 13 none (re-derived 2026-11-16); check 16 none found on the tags read; check 22 not assessed; check 23 advisory: `plugin-manifest-version-sync` and `version-bump-requires-changelog-entry` describe a recurring release action with no procedure and no automated check, defer to 5.8 (which is that action) and consider a `docs/skills/` release procedure afterwards. `conform` against `0.16.0` by hand: manifests agree at 0.16.3 with a CHANGELOG entry; every skill ships `examples.md`; no agent name or tool name in a `SKILL.md`; words 8041 against 8757 at 0.16.0; decisions changed since the tag only by appended amendments (no deleted body lines) plus the 0057 archive move. No violation.
 
 ### 5.7 [done 2026-11-16, early, at the owner's request: 3.6, 5.3 and 5.4 had not run] Delete the three parked branches
 
