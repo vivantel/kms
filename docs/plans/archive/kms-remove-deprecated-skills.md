@@ -1,7 +1,7 @@
 ---
 id: kms-remove-deprecated-skills
 title: Remove the five kms skills deprecated in favour of go-getter
-status: done 2026-11-21 (PR #92 merged; the owner tags 0.17.0); shipped in 0.17, the minor release after the deprecation (decision 0081, amended 2026-11-16)
+status: done 2026-11-21 (PR #92); shipped in 0.17, the minor release after the deprecation (decision 0081, amended 2026-11-16)
 date: 2026-11-16
 ---
 
