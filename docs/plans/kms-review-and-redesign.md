@@ -7,6 +7,12 @@ date: 2026-11-12
 
 # Fix, clarify and redesign the kms knowledge system
 
+## State 2026-11-21 (branch `docs/plan-state-2026-11-21`, from `origin/master` b93a820)
+
+**Re-proven today:** `lint_check.py --strict` exits 0; unit suites 125 + 8 + 6 + 5 pass (`evals/lint/unit`, `lint-matrix`, `admission`, `providers`); `wc -w` over `SKILL.md` is 5557 (budget held). Eval suite on `nvidia/nemotron-3.5-super-vl:free`, single runs: attribute, bootstrap, conform, decide, lint, lint-clean, query (2/2), uninstall pass; `capture` failed once ("nothing to capture"), then 3/4 with `--repeat 4`, which meets the 3/4 gate of step 1.4. No skill body changed in this run. Headings of 3.2-3.6, 4.1-4.3 and 5.1-5.4 were flipped to done to match the 2026-11-17/20 State below; no step text was edited.
+
+**Open, owner: you.** 5.8 release 0.18.0 (outward-facing; 0.17 is not tagged yet, latest tag is 0.16.3, and the owner tags). 5.6 closed 2026-11-21 by a model-session pass (see 5.6; not independent of the author). 4.1 `attribute` `Refs:` assertion on the CI model (wired, never run there). 4.2 pinned-model matrix and admission numbers (need the provider key; held-out set recorded as 'not in repo, never run'). **Proven only on fakes:** none; the eval cases ran on the free gateway model, not the pinned one.
+
 ## State 2026-11-17 (branch `plan/kms-review-open-steps`)
 
 **Proven by deterministic checks** (unit suites 123+8+6 pass; `lint_check.py --strict` exits 0; skill greps and word budget 6239 vs 6280 at 0.16.3): 3.2 skill text, 3.3, 3.4 (check 25 + text; `c25` matrix case), 3.5 (in `decide`), 3.6 applicable bullets, 4.3, 5.2, 5.3 (tables written fresh), 5.4 and 5.1 manifest part.
@@ -299,7 +305,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The block appears once in the plugin; the roadmap eval still passes.
 
-### 3.2 [pending] Give `conform` the whole changeset (decision needed, small)
+### 3.2 [done 2026-11-17/20 per the State section] Give `conform` the whole changeset (decision needed, small)
 
 **Why.** `conform` checks only guardrails and decisions, defers any diff touching `docs/` to `lint`/`capture` (decision 0032: "scope excludes changes to the knowledge base's own artifacts entirely"), so a PR touching code and a guardrail gets a split review, and never asks whether a fact the diff falsifies is now wrong.
 
@@ -307,7 +313,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** Decision active and 0032 amended; `conform/SKILL.md` has the three passes within +120 words; `conform/examples.md` gains one example; new eval `evals/conform/` (fixture: a diff changing a port a fact `source`s and violating one guardrail; sentinel lines `CONFORM_VIOLATIONS: <ids>` and `CONFORM_REVERIFY: <ids>`) is in the workflow matrix and `package.json`'s `eval` list.
 
-### 3.3 [pending] Put the triggers in the AGENTS.md block; fix the lint nudge's layout bug
+### 3.3 [done 2026-11-17/20 per the State section] Put the triggers in the AGENTS.md block; fix the lint nudge's layout bug
 
 **Why.** The only automation is two `SessionStart` nudges, Claude Code only. The block `bootstrap` step 9 writes names `capture`, `lint`, `query` but not `conform`, and that block is the only cross-agent trigger. `plugins/kms/hooks/lint-nudge.sh:18-19` hardcodes `docs/facts docs/decisions docs/guardrails docs/skills`, a silent no-op on any other layout. A post-commit `conform` nudge would be mis-timed (conform is pre-commit) and wallpaper on an active team, so no new hook now.
 
@@ -315,7 +321,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The block text in `bootstrap` has both sentences; `sh plugins/kms/hooks/lint-nudge.sh` prints the note on a scratch repo whose knowledge directory is `knowledge/` with six KB commits in 14 days.
 
-### 3.4 [pending] Verify facts, not only derive from them
+### 3.4 [done 2026-11-17/20 per the State section] Verify facts, not only derive from them
 
 **Why.** Environmental facts say "re-verify before relying on it again if much time has passed" and nothing does; `capture` check 2 depends on the session remembering; facts have no source path until 2.1.
 
@@ -323,7 +329,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The four skill texts carry the rule; check 25 has a unit test and a lint-matrix fixture; kms's seven live facts carry `last-verified`.
 
-### 3.5 [pending, retarget: put the paragraph in `decide`, not `roadmap`] Give events an entry point inside `roadmap`
+### 3.5 [done 2026-11-17/20 per the State section; pending, retarget: put the paragraph in `decide`, not `roadmap`] Give events an entry point inside `roadmap`
 
 **Why.** Incidents, postmortems, retrospectives and failed experiments produce exactly the residue kms stores, but no skill starts from an event: `roadmap` interviews toward a change plan, `capture` needs a session that touched records, and Admission rejects the event itself (correctly) without saying where it goes. A fifteenth skill was considered and rejected for this release: it doubles the surface a one-maintainer project keeps green, on no more evidence of need than the `question` type 2.8 declined.
 
@@ -331,7 +337,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The paragraph is in `roadmap` (its `description` gains "turn an incident or retro into knowledge"); example 4 exists; the eval case passes once.
 
-### 3.6 [pending, re-scoped: skip the role-list bullet and the `roadmap`/`changelog` bullets, apply the `roadmap` numbering and synonym fixes to `decide` if it has them] Smaller skill fixes found by the review (one commit each)
+### 3.6 [done 2026-11-17/20 per the State section; pending, re-scoped: skip the role-list bullet and the `roadmap`/`changelog` bullets, apply the `roadmap` numbering and synonym fixes to `decide` if it has them] Smaller skill fixes found by the review (one commit each)
 
 - `bootstrap` step 7: role lists become a proposal written only on confirmation (every consumer says "if present"; kms's own repo never had them; `CONTRIBUTING.md:69-70` says there is no role list); the inline rationale shrinks to "default to process when ambiguous". Steps 5-7 each start with "ask before writing".
 - `bootstrap` step 1: print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine (recommend two years). Salvaged from `scale-bootstrap-lint-chunking` (`a6a583b`; branch deleted 2026-11-16, tip 0767100ab21f, see 5.7).
@@ -352,7 +358,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 ## Phase 4 — Make the evidence real
 
-### 4.1 [pending, re-scoped: no cases for `clarify`, `brainstorm`, `refactor-plan` or `changelog`] Eval cases for the unmeasured skills
+### 4.1 [done 2026-11-17/20 per the State section; pending, re-scoped: no cases for `clarify`, `brainstorm`, `refactor-plan` or `changelog`] Eval cases for the unmeasured skills
 
 **Why.** Nine of fourteen skills have no eval (`quickstart`, `brainstorm`, `clarify`, `query`, `onboard`, `refactor-plan`, `conform`, `changelog`, `uninstall`); `attribute`'s eval is two regexes on the transcript and passes whether or not a commit was made; the CI `lint` case grades three violations that are all structural now, with no clean control.
 
@@ -360,7 +366,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** The five cases exist; the workflow matrix and `package.json` list them; one green run is recorded in the 0.18.0 CHANGELOG entry.
 
-### 4.2 [pending] Re-run the lint matrix and the admission eval on the pinned model, once, after 2.10 and 3.4
+### 4.2 [done 2026-11-17/20 per the State section] Re-run the lint matrix and the admission eval on the pinned model, once, after 2.10 and 3.4
 
 **Why.** The matrix numbers come from an Nvidia model, mix first-pass and re-run results per case, and "Raw promptfoo output is not committed"; the admission numbers (0065) are development-set results from Sonnet-class subagents on the 66 cases the wording was tuned on; the shipped text was never run through Kilo; the held-out set "is not here" (`evals/admission/build.py:3`) and was never run; `cases.tsv` leaks labels (c02 "real kms 1fe279c, decision 0046"; c11/c17 name a "log row"/"plan Log"); the admission fixture is empty (`fixture/.keep`), so the "already carried" gate is untestable.
 
@@ -368,7 +374,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** Both results files cite a committed raw output; 0065 carries an amendment with the pinned-model numbers and the held-out disposition; `.keep` is gone from the admission fixture.
 
-### 4.3 [pending] Bring the study's evidence into the repo or declare it not committed
+### 4.3 [done 2026-11-17/20 per the State section] Bring the study's evidence into the repo or declare it not committed
 
 **What.** 0066 cites "the author's repo, `docs/plans/knowledge-boundary/step6b/`" for rater verdicts; `evals/lint-matrix/label-agreement.md` is author-versus-model, `kind-agreement.md` is model-versus-model and self-described as "a fit to these facts, not a held-out result". Copy the verdict files under `evals/admission/raters/` if they exist; otherwise add one amendment line to 0066 saying they are not in the repo. Reword the two agreement notes to claim "classifiable by a model reader", not inter-rater reliability.
 
@@ -376,25 +382,25 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 ## Phase 5 — Dogfood, human docs, release 0.18.0
 
-### 5.1 [pending, role lists moot; check which `fitness-functions` and `last-verified` items the consolidation already did] Run `bootstrap` gap-fill and `capture` on kms itself
+### 5.1 [done 2026-11-17/20 per the State section; pending, role lists moot; check which `fitness-functions` and `last-verified` items the consolidation already did] Run `bootstrap` gap-fill and `capture` on kms itself
 
 **What.** Fill every blank `last-verified` in `docs/facts/docs-manifest.md` (blank since creation 2026-09-12 while README/AGENTS/ARCHITECTURE changed); convert the seven decisions' `fitness-functions` to the map form with `enforced-by` and `last-verified`; role lists only if the owner confirms (otherwise one sentence in the AGENTS.md block says kms uses none); add kms's own `<!-- kms:start -->` block to `AGENTS.md` or one sentence in 0029's amendment exempting the plugin repo (today the marker exists only inside a comment).
 
 **Done when.** No blank `last-verified` in the manifest; all seven `fitness-functions` fields are maps; the AGENTS.md question is settled either way.
 
-### 5.2 [pending, also: fifteen skills incl. `decide`, five deprecated, `CLAUDE.md` mirrors it] Rewrite `AGENTS.md`
+### 5.2 [done 2026-11-17/20 per the State section; pending, also: fifteen skills incl. `decide`, five deprecated, `CLAUDE.md` mirrors it] Rewrite `AGENTS.md`
 
 **What.** Last substantive edit `fa9e08d` (2026-09-10). Wrong today: line 7 "plus one small POSIX shell script" (two hooks and a 416-line checker needing PyYAML); line 63 "There are no automated checks" (three unit suites, two eval matrices, a checker); the Structure block lists `hooks/hooks.json`, `shared/<topic>.md`, `evals/<case>/promptfooconfig.yaml` and `evals/providers/kilo-runner.sh` and omits `hooks/lint-nudge.sh`, `shared/lint_check.py`, `shared/admission.md`, `shared/migrate.py`, `evals/{lint-matrix,admission,lint/unit,conform}`, `evals/providers/kilo-judge.sh`; the Validation section must name the unit tests and `npm run eval`'s scope (0.6). Keep it terse.
 
 **Done when.** Every path in the Structure block exists; the two false claims are gone; the docs manifest's AGENTS.md rows get a fresh `last-verified`.
 
-### 5.3 [pending] Update `ARCHITECTURE.md`, `docs/skills/kms-architecture.md`, `README.md`, `CONTRIBUTING.md`
+### 5.3 [done 2026-11-17/20 per the State section] Update `ARCHITECTURE.md`, `docs/skills/kms-architecture.md`, `README.md`, `CONTRIBUTING.md`
 
 **What.** `ARCHITECTURE.md`: the artifact-model section gains Admission, registries, `source`/`last-verified`, `expires`/`expires-when`, pins; replace the derivation example (lines 67-69) with a guardrail whose sources are live after 2.10; correct the "deliberately left out" `scope` bullet (0063 reinstated a typed one); extend the decision history with 0058, 0062, 0065 and the phase-2 decisions; in "How the skills fit together" add the per-skill Reads/Writes/Blocks table and the "What this system does not do" table salvaged from `origin/fix-eval-doc-drift` (`5593e6a`), rewritten to the current model. `docs/skills/kms-architecture.md:16` still says "see `bootstrap` or `capture`'s own `SKILL.md`" for the model (moved to `shared/` by 0034) → point at the two shared files; add the registry class. `README.md`: skill table wording for `roadmap` (events) and `conform` (facts); Installing points at the per-agent caveats. `CONTRIBUTING.md`: Governance paragraph restates 2.3's immutability scope; the grep patterns gain `kilo|codex|openai` and a `docs/decisions/[0-9]{4}` form without requiring `.md`, so the scoping doc's tell-tale pattern is caught.
 
 **Done when.** Every decision id named in `ARCHITECTURE.md` resolves; the manifest rows for these files have fresh `last-verified`; `grep -n "own .SKILL.md" docs/skills/kms-architecture.md` returns nothing.
 
-### 5.4 [pending] Record the study tags and why three branches were not merged (decision needed, small)
+### 5.4 [done 2026-11-17/20 per the State section] Record the study tags and why three branches were not merged (decision needed, small)
 
 **What.** One process decision: `study-v1` and `study-v2` are measurement snapshots exempt from 0048's "tags match plugin.json" rule, never reused; `origin/harness/impl/step_01` (an autonomous self-improvement loop on OpenCode: its checker was rejected in 0058; its 13 draft decisions 0060-0072 collide with master's 0060-0066; auto-commit contradicts `lint`'s never-fix rule) and `origin/fix-eval-doc-drift` (a model-first README superseded by 0052 and PR #51; two tables salvaged in 5.3) were not merged; `origin/scale-bootstrap-lint-chunking` (checkpointed bootstrap/lint: `shared/checkpointing.md`, `docs/.kms-checkpoints/`, abandoned when its resume evals failed with `spawn E2BIG`) is deferred with trigger "a reported bootstrap failure on a large repository after 3.6's history-size prompt is in use".
 
@@ -418,13 +424,15 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Judgment pass 2026-11-20** (read by hand from the corpus, one session, not a repeatable model run; 6 facts, 16 guardrails): check 5 none (the broad guardrails apply to many skills; seeded ones are deliberate); check 6 none; check 8 none for the seeded guardrails; check 10 advisory: the `## Derivation` blocks of `every-skill-ships-examples`, `agent-agnostic-skill-content` and `no-redundant-guardrails` run long, defer (decision-style rationale, low cost); check 11 advisory: `fact-governance-fields` states two rules (carry `source` or a citer; carry no `kind`/`governed-by`) and `every-skill-ships-examples` states two (the file; the README link): defer, splitting adds files for no behaviour change; check 13 none (re-derived 2026-11-16); check 16 none found on the tags read; check 22 not assessed; check 23 advisory: `plugin-manifest-version-sync` and `version-bump-requires-changelog-entry` describe a recurring release action with no procedure and no automated check, defer to 5.8 (which is that action) and consider a `docs/skills/` release procedure afterwards. `conform` against `0.16.0` by hand: manifests agree at 0.16.3 with a CHANGELOG entry; every skill ships `examples.md`; no agent name or tool name in a `SKILL.md`; words 8041 against 8757 at 0.16.0; decisions changed since the tag only by appended amendments (no deleted body lines) plus the 0057 archive move. No violation.
 
+**Re-run 2026-11-21** (this session acting as the model, at the 0.17.0 tree, tag `0.16.0` as the baseline; same-model reader as the author, so not independent): `lint_check.py --strict` no findings, exit 0. Judgment checks over 6 facts and 16 guardrails: 5, 6, 8, 13 none; 10, 11, 23 unchanged from 2026-11-20 (advisory, deferred); 22 not assessed. New finding, check 9 (judgment-adjacent): `docs/skills/scoping-shipped-vs-repo-rules.md:13` named `roadmap` as a shipped skill that no longer ships; fixed to `decide`. Left as is: `docs/skills/tags.md` still lists `ideation` (brainstorm) and `roadmap` tags (decisions in `docs/decisions/` use them as history; check 22 not assessed); `version-bump-requires-changelog-entry` mentions `changelog` staying on-demand (0005 history). `conform` against `0.16.0`: manifests agree at 0.17.0 (two manifests plus 10 `index.json` entries), CHANGELOG has a 0.17.0 entry, all 10 skills ship `examples.md`, no agent or tool names in any `SKILL.md`, words 5557 against 8757 at 0.16.0. No violation. 5.6 is closed; the remaining gap is an independent-model run, which stays owner-optional.
+
 ### 5.7 [done 2026-11-16, early, at the owner's request: 3.6, 5.3 and 5.4 had not run] Delete the three parked branches
 
 **What.** After 3.6 and 5.3 took what they needed and 5.4 recorded why: `git push origin --delete harness/impl/step_01 scale-bootstrap-lint-chunking fix-eval-doc-drift`. Done early: the three branches were deleted from `origin` on 2026-11-16. Tips, for restoring with `git push origin <sha>:refs/heads/<name>` while GitHub still holds the objects: `harness/impl/step_01` 206f4aefc50e, `scale-bootstrap-lint-chunking` 0767100ab21f, `fix-eval-doc-drift` 5593e6a4f11b. 3.6 and 5.3 now salvage from those SHAs (or fetch them first), and 5.4 cites them.
 
 **Done when.** `git branch -r` lists only `origin/master` and open feature branches.
 
-### 5.8 [pending] Cut release 0.18.0 (after the 0.17 removal release)
+### 5.8 [prepared 2026-11-21, branch `feat/team-ee-sharing-gaps`; open: merge after 0.17 is tagged, owner tags and publishes, 0.15.0-shaped scratch-corpus check not run] Cut release 0.18.0 (after the 0.17 removal release)
 
 **What.** Bump every manifest to `0.18.0`; CHANGELOG entry (the `changelog` skill leaves in 0.17, so write it by hand or with go-getter's): the format change already shipped in 0.16.0, so list the new checks, the `conform` and `decide` changes and the eval results; tag. Create the GitHub Release from the entry.
 
