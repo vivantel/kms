@@ -432,7 +432,7 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** `git branch -r` lists only `origin/master` and open feature branches.
 
-### 5.8 [pending] Cut release 0.18.0 (after the 0.17 removal release)
+### 5.8 [prepared 2026-11-21, branch `feat/team-ee-sharing-gaps`; open: merge after 0.17 is tagged, owner tags and publishes, 0.15.0-shaped scratch-corpus check not run] Cut release 0.18.0 (after the 0.17 removal release)
 
 **What.** Bump every manifest to `0.18.0`; CHANGELOG entry (the `changelog` skill leaves in 0.17, so write it by hand or with go-getter's): the format change already shipped in 0.16.0, so list the new checks, the `conform` and `decide` changes and the eval results; tag. Create the GitHub Release from the entry.
 
