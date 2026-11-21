@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.0] - 2026-11-20
+
+### Removed
+
+- `roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog`, deprecated in 0.16 and moved to go-getter (decision 0081, deprecation window closed). Their directories, the `roadmap` eval case and CI rows, and their `index.json` and README rows are gone. Upgrade: use `decide` in place of `roadmap` for records; install go-getter for the others.
+
+### Changed
+
+- `decide`, `query`, `onboard` and `conform` no longer point at the removed skills. The seeded `tags-from-canonical-list` guardrail names `decide` instead of `roadmap`.
+- The `attribute` eval case reports as advisory and does not block a merge (it has not run on the CI model).
+- Ten skills remain: `quickstart`, `bootstrap`, `capture`, `lint`, `query`, `onboard`, `conform`, `attribute`, `decide`, `uninstall`.
+
 ## [0.16.3] - 2026-11-16
 
 ### Fixed

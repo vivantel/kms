@@ -155,7 +155,6 @@ flowchart LR
     end
     subgraph "Session-scoped"
         capture
-        roadmap
         decide
     end
     subgraph "On-demand validation"
@@ -165,13 +164,9 @@ flowchart LR
     subgraph "Read-only planning"
         query
         onboard
-        refactor-plan
-        brainstorm
-        clarify
     end
     subgraph "Git history"
         attribute
-        changelog
     end
     uninstall["uninstall (reverses bootstrap)"]
 
@@ -179,7 +174,7 @@ flowchart LR
     quickstart --> capture
     bootstrap -.->|sets up| capture
     capture -.->|feeds| lint
-    roadmap -.->|writes into the same KB as| capture
+    decide -.->|writes into the same KB as| capture
 ```
 
 `bootstrap` sets a project's knowledge base up once, or gap-fills an
@@ -189,10 +184,8 @@ demand, independent of any one session, and owns every check that
 isn't genuinely session-scoped. `conform` is the odd one out — the only
 skill that reads code or content *outside* `docs/` and checks it
 against the knowledge base, rather than validating the knowledge base
-itself. `query`/`onboard` read and answer; `decide` interviews the user to one decision record; the older
-`roadmap`/`refactor-plan`/`brainstorm`/`clarify`
-plan without writing (except `roadmap`, which does) and leave in 0.17 (`0081`); `attribute`/`changelog`
-write git history; `uninstall` reverses everything `bootstrap` added.
+itself. `query`/`onboard` read and answer; `decide` interviews the user to one decision record; `attribute`
+writes git history; the five skills deprecated in 0.16 (`roadmap`, `brainstorm`, `clarify`, `refactor-plan`, `changelog`) left in 0.17 for go-getter (`0081`); `uninstall` reverses everything `bootstrap` added.
 
 Reads, writes and blocks, per skill:
 

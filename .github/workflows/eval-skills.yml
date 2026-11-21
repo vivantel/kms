@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
+        case: [bootstrap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:
@@ -138,7 +138,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        case: [bootstrap, roadmap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
+        case: [bootstrap, decide, capture, lint, lint-clean, attribute, conform, query, uninstall]
     env:
       PROMPTFOO_API_KEY: ${{ secrets.PROMPTFOO_API_KEY }}
     steps:

@@ -17,7 +17,7 @@ pinned:
 
 When `docs/skills/tags.md` exists, any fact, decision, guardrail, or
 procedure file's `tags` MUST all be entries from that list — whether the
-file was written by `bootstrap`/`capture`/`roadmap` or by hand. A tag
+file was written by `bootstrap`/`capture`/`decide` or by hand. A tag
 found that isn't on the list MUST be flagged as debt: either the list is
 missing a genuinely new tag (propose adding it, with a one-line meaning)
 or the file should use an existing tag instead of a near-duplicate.
