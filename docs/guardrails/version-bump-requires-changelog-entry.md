@@ -18,7 +18,7 @@ pinned:
 Whenever `docs/guardrails/plugin-manifest-version-sync.md` fires,
 `CHANGELOG.md` MUST gain a `## [x.y.z] - date` heading for that version
 before the bump is considered done — never deferred to "later." Scope is
-narrow: `changelog` stays on-demand (`docs/decisions/0005-...`), and
+narrow: the entry is written by hand (the on-demand `changelog` skill left kms in 0.17, `docs/decisions/0005-...`), and
 unnamed/exploratory work between versions still needs no entry.
 
 ## Derivation
