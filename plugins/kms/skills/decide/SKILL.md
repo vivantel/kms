@@ -3,7 +3,7 @@ name: decide
 description: Interview the user about a decision, then write the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) — records only, no plan file. Use when the user wants a decision captured as project knowledge, not just discussed, or turn an incident or retro into knowledge, e.g. "interview me and save this as knowledge", "capture this as an ADR", "record what we decided".
 ---
 
-Interview the user about every aspect of a decision until you reach a shared understanding, then write that understanding as durable knowledge artifacts on disk, in the structure the project already uses. It does not stop at shared understanding: it writes records only: no plan file, no step list.
+Interview the user about every aspect of a decision until you reach a shared understanding, then write that understanding as durable knowledge artifacts on disk, in the structure the project already uses. It does not stop at shared understanding. It writes records only: no plan file, no step list.
 
 ## Interview mechanics
 

@@ -19,7 +19,7 @@ agents-md — concerns the AGENTS.md cross-agent convention file
 automation — concerns a mechanism that runs without human invocation (hooks, CI, scheduled jobs)
 audit — concerns an audit trail or verification record
 branding — concerns the project's display name or public identity
-changelog — concerns the CHANGELOG.md generation design
+changelog — concerns CHANGELOG.md entries and their generation (the `changelog` skill left kms in 0.17)
 claude-code — specific to Claude Code's plugin/hooks mechanisms
 claude-md — concerns the CLAUDE.md/AGENTS.md file and its conventions
 codex — concerns Codex plugin manifest or packaging
@@ -31,7 +31,7 @@ git — concerns git workflow, history, or conventions
 github-models — concerns GitHub Models' free-tier API or GITHUB_TOKEN-based access
 guardrail — a normative artifact (in guardrails/) or a decision about guardrails
 hooks — concerns Claude Code SessionStart/PreToolUse/etc. hooks
-ideation — concerns the brainstorm skill or generative, write-nothing workflows
+ideation — concerns generative, write-nothing workflows (the `brainstorm` skill left kms in 0.17)
 kms (umbrella) — the kms plugin itself; its skills, packaging, or architecture
 knowledge-management (umbrella) — the fact/decision/guardrail/skill knowledge system this plugin manages
 kilo — concerns Kilo Code CLI's skill format or remote-skills mechanism
@@ -43,7 +43,7 @@ packaging — concerns plugin manifests, templates, version sync, or distributio
 procedural — a procedure artifact (in skills/) or a decision about procedures
 pull-requests — concerns PR description generation or review
 release — concerns version numbering, git tags, or the release/changelog process
-roadmap — concerns the roadmap skill or decision-capture workflow
+roadmap — concerns planning and decision-capture workflows (the `roadmap` skill left kms in 0.17; `decide` records decisions)
 scale — concerns knowledge-base scalability (index, archive, tag vocabulary, scoped checks)
 scope — concerns the bounds or applicability of a decision (legacy tag, retained for 0006)
 taxonomy — concerns the artifact-type model, lifecycle fields, or track exclusivity

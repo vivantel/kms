@@ -7,12 +7,16 @@ body:
     attributes:
       label: Affected skill (if applicable)
       options:
-        - clarify
-        - roadmap
+        - quickstart
         - bootstrap
-        - steward
+        - capture
+        - decide
+        - lint
+        - query
+        - onboard
+        - conform
         - attribute
-        - changelog
+        - uninstall
         - Not skill-specific (manifest, marketplace, packaging)
     validations:
       required: false
