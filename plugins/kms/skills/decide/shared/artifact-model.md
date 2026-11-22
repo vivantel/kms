@@ -12,7 +12,7 @@ schema-version: 1.0.0
 
 A fact is true of the environment or the process, not a restatement of product behaviour. Behaviour that must hold is a guardrail; what a product should do is a spec, kept in a spec tool. A guardrail is valid only while its sources are current.
 
-The knowledge directory is the one containing `decisions/`, normally `docs/`. Retired files move to `<type>/archive/`, which has its own `INDEX.md`.
+The knowledge directory is the one containing `decisions/`. Resolve it once, in order: `--docs`; the `kms-dir:` line inside the AGENTS.md kms block; `.vivantel/akasha/docs/` if it exists; `docs/` if it holds `decisions/`; the first root-level directory holding `decisions/`. A new project's `bootstrap` writes `kms-dir:`. Retired files move to `<type>/archive/`, which has its own `INDEX.md`.
 
 ## Fields
 

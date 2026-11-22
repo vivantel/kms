@@ -82,8 +82,10 @@ class Nudge(unittest.TestCase):
         env = dict(os.environ, GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@t", GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t")
         subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True, env=env)
 
-    def nudge(self, kb, commits=6):
+    def nudge(self, kb, commits=6, agents=None):
         self.git("init", "-q")
+        if agents:
+            (Path(self.root) / "AGENTS.md").write_text(agents)
         (Path(self.root) / kb / "decisions").mkdir(parents=True)
         for i in range(commits):
             (Path(self.root) / kb / "decisions" / f"{i:04d}-x.md").write_text(str(i))
@@ -98,6 +100,13 @@ class Nudge(unittest.TestCase):
 
     def test_docs_still_works(self):
         self.assertIn("docs/", self.nudge("docs"))
+
+    def test_new_default_path_is_counted(self):
+        self.assertIn(".vivantel/akasha/docs/", self.nudge(".vivantel/akasha/docs"))
+
+    def test_kms_dir_line_is_counted(self):
+        out = self.nudge("kb/x", agents="<!-- kms:start -->\nkms-dir: kb/x\n<!-- kms:end -->\n")
+        self.assertIn("kb/x/", out)
 
     def test_below_threshold_is_silent(self):
         self.assertEqual(self.nudge("knowledge", commits=3), "")

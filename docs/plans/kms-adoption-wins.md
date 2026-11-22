@@ -40,6 +40,9 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 owner chose `.vivantel/akasha/docs/` as the default knowledge directory for new projects only, resolved via a `kms-dir:` line in the AGENTS.md block rather than hardcoded, shipped in one release with the procedures rename. Decision 0086 recorded; implementation is step 8, not started (large: stop and resume in a fresh session).
 - 2026-11-22 `/eval` on PR #98 at `20938e9`-era skills (commit `48d8b3f`): run green; attribute, bootstrap, capture, conform, decide, lint, lint-clean, query pass; `uninstall` advisory-fail (known ~1/4). `rejected-option`, `quickstart` and `onboard` are not in the PR summary, so no CI number for them yet (blocks dropping `rejected-option` from the advisory lists). Step 0(c) gate met; merge is the owner's call. Open owner decisions: step 2 lite mode, rename wording (in step 8), step 5 CI template, step 6 demo, step 7 release.
 - 2026-11-22 owner ordered PR #98 merged (merge commit, as the repo does). Step 0 is done once `gh pr view 98` shows MERGED; remaining open work starts at step 8(a) (new path) after the owner answers: step 2 lite mode, step 5 CI template, step 6 demo; step 7 release is the owner's. Self-check on resume: this log, then each step heading, then its "Done when".
+- 2026-11-22 step 8(a) done (worktree `adoption-wins-2`, branch `worktree-adoption-wins-2`): `lint_check.py` resolves `--docs`, `kms-dir:` in the kms block (relative, no `..`), `.vivantel/akasha/docs`, `docs/` with `decisions/`, first root dir; artifact-model states the order once; `evals/lint/unit/test_kms_dir.py` (8 cases); vendored copies synced; 133 tests pass, checker silent. Next: 8(b) bootstrap + hooks.
+- 2026-11-22 step 8(b), hook half done: `lint-nudge.sh` resolves `kms-dir:`, `.vivantel/akasha/docs`, `docs/`, first root dir (`capture-nudge.sh` names no path); 2 cases added to `test_checks_25_nudge.py`. Left for (b): `bootstrap/SKILL.md` creates the new path, writes `kms-dir:` in the block (line ~77), offers a user-chosen path, step 11 drops `--docs` advice; re-read the whole file; then (c)-(h). STOPPED here: (c) touches 33 skill files and needs fresh context plus the owner's rename-wording answer before (e).
+- 2026-11-22 owner answered the open decisions: rename `docs/skills/` to `docs/procedures/` (detect both for one release, `migrate.py` rewrites); step 2 lite quickstart: yes (new decision amending 0027/0072 still to be recorded with `accepted-by`); step 5: ship an opt-in `plugins/kms/templates/ci/` (amends 0027 and the uninstall inventory; record as a decision); step 6: use the `rejected-option` run as the real example. Step 7 release stays the owner's. Order: 8(b)-(h), then 2, 5, 6, 7.
 
 ## Steps
 
@@ -103,7 +106,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
 
-### 8. [pending] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+### 8. [partial: (a) done, (b) hook half done 2026-11-22; rest open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
 
 **Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
 

@@ -154,10 +154,16 @@ class Linter:
             self.warnings.append(f"no {'/'.join(TYPES)} directories under {self.dn}/: nothing was checked (use --docs DIR)")
 
     def find_docs(self, docs):
+        """--docs wins; else `kms-dir:` in AGENTS.md's kms block; else .vivantel/akasha/docs; else docs/ holding decisions/; else the first root-level directory holding decisions/."""
         if docs:
             d = Path(docs)
             return d.resolve() if d.is_absolute() else self.root / d
-        if (self.root / "docs").is_dir():
+        kd = self.kms_dir()
+        if kd:
+            return self.root / kd
+        if (self.root / ".vivantel" / "akasha" / "docs").is_dir():
+            return self.root / ".vivantel" / "akasha" / "docs"
+        if (self.root / "docs" / "decisions").is_dir():
             return self.root / "docs"
         try:
             for d in sorted(p for p in self.root.iterdir() if p.is_dir() and not p.name.startswith(".")):
@@ -166,6 +172,19 @@ class Linter:
         except OSError:
             pass
         return self.root / "docs"
+
+    def kms_dir(self):
+        """The relative path on a `kms-dir:` line inside the kms block of AGENTS.md, or None."""
+        try:
+            text = (self.root / "AGENTS.md").read_text(encoding="utf-8")
+        except OSError:
+            return None
+        m = re.search(r"<!-- kms:start -->(.*?)<!-- kms:end -->", text, re.S)
+        k = re.search(r"^\s*kms-dir:\s*(\S+)\s*$", m.group(1), re.M) if m else None
+        if not k:
+            return None
+        rel = Path(k.group(1).strip("`\"'").rstrip("/"))
+        return None if rel.is_absolute() or ".." in rel.parts else rel.as_posix()
 
     def add(self, check, rel, msg):
         self.findings.append((check, str(rel), msg))
@@ -611,7 +630,7 @@ class Linter:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
-    ap.add_argument("--docs", metavar="DIR", help="knowledge directory (default: docs/, else the first root-level directory holding decisions/)")
+    ap.add_argument("--docs", metavar="DIR", help="knowledge directory (default: kms-dir: in AGENTS.md, else .vivantel/akasha/docs/, else docs/, else the first root-level directory holding decisions/)")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--pin", metavar="FILE", help="record the current revision of FILE's edge targets")
     ap.add_argument("--refs", metavar="ID", help="list the files that cite ID")
