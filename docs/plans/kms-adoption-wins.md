@@ -43,6 +43,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 8(a) done (worktree `adoption-wins-2`, branch `worktree-adoption-wins-2`): `lint_check.py` resolves `--docs`, `kms-dir:` in the kms block (relative, no `..`), `.vivantel/akasha/docs`, `docs/` with `decisions/`, first root dir; artifact-model states the order once; `evals/lint/unit/test_kms_dir.py` (8 cases); vendored copies synced; 133 tests pass, checker silent. Next: 8(b) bootstrap + hooks.
 - 2026-11-22 step 8(b), hook half done: `lint-nudge.sh` resolves `kms-dir:`, `.vivantel/akasha/docs`, `docs/`, first root dir (`capture-nudge.sh` names no path); 2 cases added to `test_checks_25_nudge.py`. Left for (b): `bootstrap/SKILL.md` creates the new path, writes `kms-dir:` in the block (line ~77), offers a user-chosen path, step 11 drops `--docs` advice; re-read the whole file; then (c)-(h). STOPPED here: (c) touches 33 skill files and needs fresh context plus the owner's rename-wording answer before (e).
 - 2026-11-22 owner answered the open decisions: rename `docs/skills/` to `docs/procedures/` (detect both for one release, `migrate.py` rewrites); step 2 lite quickstart: yes (new decision amending 0027/0072 still to be recorded with `accepted-by`); step 5: ship an opt-in `plugins/kms/templates/ci/` (amends 0027 and the uninstall inventory; record as a decision); step 6: use the `rejected-option` run as the real example. Step 7 release stays the owner's. Order: 8(b)-(h), then 2, 5, 6, 7.
+- 2026-11-22 step 8(b) done (worktree `adoption-wins-3`): `bootstrap/SKILL.md` uses K (the knowledge directory), defaults a new project to `.vivantel/akasha/docs/`, states K in its opening line (user may redirect), writes `kms-dir: <K>` in the block (omitted for `docs`), step 11 relies on `kms-dir:`; whole file re-read. Checks: vendor OK, checker silent, 135 unit tests pass. Next: 8(c) (33 skill files say "the knowledge directory"); STOPPED after (b) because (c) needs fresh context.
 
 ## Steps
 
@@ -106,7 +107,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
 
-### 8. [partial: (a) done, (b) hook half done 2026-11-22; rest open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+### 8. [partial: (a), (b) done 2026-11-22; (c)-(h) open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
 
 **Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
 
