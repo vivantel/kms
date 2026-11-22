@@ -15,13 +15,24 @@ threshold=5      # commits touching the KB in that window
 inside_work_tree=$(git rev-parse --is-inside-work-tree 2>/dev/null)
 [ "$inside_work_tree" = "true" ] || exit 0
 
-# Knowledge directory: docs/ when present, else the first top-level
-# directory holding decisions/ (the artifact model's detection rule).
-kb=docs
-if [ ! -d docs ]; then
-  for d in */; do
-    if [ -d "${d}decisions" ]; then kb=${d%/}; break; fi
-  done
+# Knowledge directory, in the artifact model's order: `kms-dir:` in the
+# AGENTS.md kms block, .vivantel/akasha/docs, docs/ holding decisions/,
+# else the first top-level directory holding decisions/.
+kb=
+if [ -f AGENTS.md ]; then
+  kb=$(sed -n '/<!-- kms:start -->/,/<!-- kms:end -->/{s/^[[:space:]]*kms-dir:[[:space:]]*\([^[:space:]]*\).*/\1/p;}' AGENTS.md | head -n 1)
+  kb=${kb%/}
+  case "$kb" in /*|*..*) kb= ;; esac
+fi
+if [ -z "$kb" ]; then
+  if [ -d .vivantel/akasha/docs ]; then kb=.vivantel/akasha/docs
+  elif [ -d docs/decisions ]; then kb=docs
+  else
+    kb=docs
+    for d in */; do
+      if [ -d "${d}decisions" ]; then kb=${d%/}; break; fi
+    done
+  fi
 fi
 
 count=$(git log --oneline --since="${window_days} days ago" -- \
