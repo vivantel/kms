@@ -21,7 +21,7 @@ For discrete options:
 
 Before writing, find how the project stores knowledge: a known convention (a skill file describing the formats), else existing decisions/facts/guardrails directories whose format you infer from real examples, else ask the user where and in what format. Never invent a directory convention.
 
-Facts and decisions: `docs/{facts,decisions}/NNNN-slug.md`, 4-digit, 1-based, per directory (next number = highest across the directory and its `archive/`, plus one). Guardrails and procedures: `docs/{guardrails,skills}/slug.md`, no numeric prefix.
+Facts and decisions: `<knowledge dir>/{facts,decisions}/NNNN-slug.md`, 4-digit, 1-based, per directory (next number = highest across the directory and its `archive/`, plus one). Guardrails and procedures: `<knowledge dir>/{guardrails,skills}/slug.md`, no numeric prefix.
 
 ## When the input is an event
 
@@ -35,7 +35,7 @@ Keep the interview uncluttered. Once every question is resolved, classify each o
 - **Normative**: what must or must not happen, derived from a decision plus a fact (a guardrail)
 - **Procedural**: how to decide or act (a procedure)
 
-Field definitions, lifecycle and the index rule are in `shared/artifact-model.md`; if `docs/skills/tags.md` exists, take tags from it.
+Field definitions, lifecycle and the index rule are in `shared/artifact-model.md`; if `<knowledge dir>/skills/tags.md` exists, take tags from it.
 
 ## What must be captured
 

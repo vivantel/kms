@@ -15,7 +15,7 @@ derivation-note: >
 
 A guardrail describing behavior a shipped skill or prescription should
 perform is incomplete until that skill/prescription's own body actually
-says so too — a guardrail alone in `docs/guardrails/` never reaches
+says so too — a guardrail alone in the guardrails directory never reaches
 whoever only reads or runs the skill itself.
 
 ## Derivation

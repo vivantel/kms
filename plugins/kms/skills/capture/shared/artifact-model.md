@@ -21,7 +21,7 @@ Every artifact: `id`, `title`, `status`, `date`, `tags`. Optional: `expires: <da
 - `id`: `NNNN-slug` for facts and decisions (4-digit, 1-based, per directory); `slug` for guardrails and procedures. Matches the file name.
 - `status`: `draft` (proposed, not binding) | `active` | `superseded` (replaced by a named successor) | `deprecated` (retired without replacement; the body's first line says why).
 - `date`: creation date; never moves.
-- `tags`: from `docs/skills/tags.md` when it exists. A new tag is proposed (name, meaning, why nothing fits) and confirmed before use.
+- `tags`: from `skills/tags.md` in the knowledge directory when it exists. A new tag is proposed (name, meaning, why nothing fits) and confirmed before use.
 - `superseded-by: <id>`: any type; required when `status: superseded`.
 - Fact: optional `source: <url | path | command>`, `last-verified: <date>` (moves only on re-observation; a URL or command `source` older than the stale threshold, or a path `source` that is gone, is stale), `scope: {component, environment, version}` (any non-empty subset; set whenever the claim is limited).
 - Guardrail: `governed-by: [<decision-id>, ...]` (non-superseded decisions), `derivation-note: <one sentence naming every id in both edges: given X and Y, Z must or must not follow>`; optional `enforced-by: <code path | ci job | hook>` (the check that enforces it, which also keeps it from counting as orphaned); optional `grounded-in: [<fact-id>, ...]` (absent means a direct consequence of the governing decisions); optional `pinned: {<id>: <revision>}`.
@@ -40,7 +40,7 @@ Stale threshold: 180 days, overridable by one line in the project's AGENTS.md bl
 
 ## Registries and markers
 
-A registry is a non-governed file: `INDEX.md`, `docs/skills/tags.md`, role lists, the docs manifest. It carries `kms-registry: <name>` in frontmatter, or `<!-- kms-registry: <name> -->` as the first line of a pure CSV, and is skipped by the type checks. Other markers: `kms-seeded`, `kms-generated`, same two forms.
+A registry is a non-governed file: `INDEX.md`, `skills/tags.md` in the knowledge directory, role lists, the docs manifest. It carries `kms-registry: <name>` in frontmatter, or `<!-- kms-registry: <name> -->` as the first line of a pure CSV, and is skipped by the type checks. Other markers: `kms-seeded`, `kms-generated`, same two forms.
 
 `INDEX.md` per type: CSV, header `id, title, tags, status`, one row per artifact; a value with a comma is double-quoted, and a multi-tag `tags` cell joins its items with comma and space inside the quotes (`"kms, naming"`), exactly as the checker compares it. After writing an artifact, add or update its row.
 
