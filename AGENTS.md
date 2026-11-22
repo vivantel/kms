@@ -66,6 +66,10 @@ A change to `plugins/kms/skills/**` or `plugins/kms/shared/**` should pass the e
 
 Manifests have no schema check: verify JSON validity (`python3 -m json.tool <file>` or `jq . <file>`) and that each `SKILL.md` has well-formed frontmatter. Automated checks that do exist: `python3 plugins/kms/shared/lint_check.py --root . --strict` (the knowledge base); `python3 -m unittest discover -s evals/lint/unit` (also `evals/lint-matrix`, `evals/admission`); and `npm run eval`, which runs only the skill cases under `evals/` listed in `evals/run-all.sh` (the matrix and admission evals run via `npm run eval:matrix` / `eval:admission`).
 
+## Plans
+
+New plans, and any plan that crosses projects (kms, go-getter, virage), are filed in `vivantel/akasha` under `docs/plans/`; each step names the repo it lands in. Plans already in this repo finish here.
+
 <!-- kms:start -->
 ## Knowledge base
 
