@@ -9,7 +9,7 @@ Read first: `shared/artifact-model.md` (schema: types, fields, lifecycle) and `s
 
 ## How to run
 
-Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 9 and 10 now, writing files directly (your first turn creates files under `docs/`). Steps 3, 5, 6, 7 and 8 each ask before writing; batch those asks into one question at the end, after the other steps are done. Finish with step 11 and list what you wrote.
+Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 9 and 10 now, writing files directly (your first turn creates files under `docs/`; say in one line first which directories and files you are about to write, and that `uninstall` reverses it). Steps 3, 5, 6, 7 and 8 each ask before writing; batch those asks into one question at the end, after the other steps are done. Finish with step 11 and list what you wrote.
 
 ## Before starting
 
@@ -28,7 +28,7 @@ Print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine 
 
 ### 2. Fact extraction
 
-Classify every table, value list or configuration default embedded in a skill or guardrail file; a value restating a decision is not a fact. Apply `admission.md`, then one stub per admitted fact: base frontmatter plus `source` where one exists. Write location or aggregation facts (a path, a count) only when asked, and state the cap.
+Classify every table, value list or configuration default embedded in a procedure or guardrail file; a value restating a decision is not a fact. Apply `admission.md`, then one stub per admitted fact: base frontmatter plus `source` where one exists. Write location or aggregation facts (a path, a count) only when asked, and state the cap.
 
 ### 3. Doc manifest
 
@@ -40,11 +40,11 @@ For each guardrail missing `governed-by`, `grounded-in` or `derivation-note`: fl
 
 ### 5. Fitness functions
 
-List rules already enforced (CI/build config, review checklists, approval gates) for confirmation before writing. Add rules in skill/guardrail files that could be automated but aren't as `{check, enforced-by: none, last-verified}` on the governing decision's `fitness-functions`, or draft a `status: draft` decision stub when none governs. Ask before writing.
+List rules already enforced (CI/build config, review checklists, approval gates) for confirmation before writing. Add rules in procedure/guardrail files that could be automated but aren't as `{check, enforced-by: none, last-verified}` on the governing decision's `fitness-functions`, or draft a `status: draft` decision stub when none governs. Ask before writing.
 
-### 6. Skill gap detection
+### 6. Procedure gap detection
 
-Propose domains needing their own skill:
+Propose domains needing their own procedure:
 
 | Signal in the repo | Domain to cover | Likely review role |
 |---|---|---|
@@ -54,8 +54,8 @@ Propose domains needing their own skill:
 | Test suite, quality gates | Correctness verification, release criteria | QA/Test Owner |
 | Roadmap, pricing tiers, access control | Product scope, positioning | Product Strategist |
 | Recurring manual process, no written procedure | Process/procedure documentation | Process Owner |
-| External compliance, regulatory, or ethical requirement | Compliance/review skill | Compliance Reviewer |
-| Repeated reviewer or stakeholder feedback pattern | Review/quality skill | Quality Reviewer |
+| External compliance, regulatory, or ethical requirement | Compliance/review procedure | Compliance Reviewer |
+| Repeated reviewer or stakeholder feedback pattern | Review/quality procedure | Quality Reviewer |
 | Data provenance, method choice, literature claim | Sourcing and method rules | Domain Lead |
 | Approval or publication gate | Sign-off procedure | Approver |
 
@@ -99,4 +99,4 @@ Run `python3 shared/lint_check.py --root .` (this skill's directory; needs `pyth
 
 ## Out of scope
 
-Finalizing decision records, choosing which proposed domains become skills, arbitrating domain conflicts — surface to the team.
+Finalizing decision records, choosing which proposed domains become procedures, arbitrating domain conflicts — surface to the team.
