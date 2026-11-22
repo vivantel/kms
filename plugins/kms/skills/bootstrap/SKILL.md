@@ -67,7 +67,7 @@ Ask before writing. Compile `docs/skills/tags.md` from every tag already in use 
 
 ### 8. Seed baseline artifacts
 
-Ask before writing: list the ids with one line each (they are rules about keeping knowledge short, derived and unduplicated; recommend yes when the team will keep using kms, else no). `templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it on a yes: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>` right after `date`. On a no, list the ids in the block's `kms-declined:` line. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision.
+Ask before writing: list the ids with one line each (they are rules about keeping knowledge short, derived and unduplicated; recommend yes when the team will keep using kms, else no). `templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it on a yes: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>` right after `date`. On a no, list the ids in the block's `kms-declined:` line. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision; the checker accepts `TBD`, so say it is expected, unfinished work.
 
 ### 9. Wire into the agent-instructions file
 
@@ -91,7 +91,7 @@ The markers let `uninstall` remove exactly this block.
 
 ### 10. Per-type index
 
-For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`: no space after commas, a value with a comma double-quoted, no row for a registry such as `tags.md`. Start the file with the two comment lines `<!-- kms-registry: index -->` and `<!-- kms-generated: true -->` (the second lets `uninstall` recognize it), then the header and rows, e.g. `0001-use-postgres,Use Postgres,"data, storage",active`. Match the shape of any existing `INDEX.md`.
+For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`: no space after commas, a value with a comma double-quoted, no row for a registry such as `tags.md`. Start the file with the two comment lines `<!-- kms-registry: index -->` and `<!-- kms-generated: true -->` (the second lets `uninstall` recognize it), then the header and rows, e.g. `0001-use-postgres,Use Postgres,"data, storage",active`. An empty type gets the header only. Match the shape of any existing `INDEX.md`.
 
 ### 11. Check what you wrote
 

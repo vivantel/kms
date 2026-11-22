@@ -36,6 +36,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 4(b) done: `bootstrap`, `capture`, `lint`, `conform` and `onboard` each close in plain words (one added sentence each; `quickstart` already did). Checks: `lint_check.py --strict` silent, vendor check and lint unit tests pass. Skill-text change: needs the CI eval suite on PR #98. Left for 4: (c) rename decision (owner).
 - 2026-11-22 step 1: second planted case (read-through cache on `listOrders`) added to `evals/rejected-option`. NOT measured: this session cannot run the eval suite. Open: 3/4 on all three tests with `--repeat 4` on the CI model, the README rate sentence, advisory lists.
 - 2026-11-22 step 1 measured (owner allowed the run): `rejected-option`, `--repeat 4 --no-cache`, `nvidia/nemotron-3.5-super-vl:free`, local kilo: 12/12 (both planted phrasings 4/4, control 4/4). README states the rate with date and model. Kept advisory: one run is a thin basis against the CI gateway flakes; drop it from `advisory-cases.txt` and both `fromJSON` lists once CI shows it stable.
+- 2026-11-22 step 3 cold starts (tomli Python, ky JS, itsdangerous with a Sphinx `docs/`; fresh agents following `quickstart` literally, human self-played; scratch clones under /tmp/kms-cold, nothing committed): 10-12 tool calls, 5-6 self-answered questions each; checker silent on first try in all three. Recurring friction (in 2-3 runs each): `quickstart` "run bootstrap" vs bootstrap's own ask and close; where the checker lives; empty `INDEX.md` for an empty type; `governed-by: TBD` read as an error; jargon (admission, gate, registry, derivation). Fixed in `quickstart` and `bootstrap` text (one sentence each). Seen once, NOT fixed: an existing Sphinx `docs/` gets `docs/facts` etc. written beside the .rst files with no warning or `--docs` offer; seeding five guardrails into a JS library felt like noise (step 2's lite-mode decision). Fixes not re-run cold.
 
 ## Steps
 
@@ -65,7 +66,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The decision is active with `accepted-by`; a cold `quickstart` on a scratch repo (repeat step 3's test) writes at most one decision, `AGENTS.md`, four `INDEX.md` files and nothing seeded without a yes, in 15 tool calls or fewer, and the checker prints nothing.
 
-### 3. [partial: fixes made, not re-verified cold] Remove sharp edges that make first runs fail
+### 3. [partial: cold starts run, recurring fixes made, not re-verified; existing-docs/ case open] Remove sharp edges that make first runs fail
 
 **Why.** Both cold starts hit: checker not reachable (now vendored into bootstrap, capture, decide, conform and run at the end), INDEX format contradicted the checker (literal row added), a confirmed decision left `draft` (now `active` with `accepted-by`), "ask once" in bootstrap against "one question per turn" in decide (bootstrap batches asks at the end; decide asks one at a time; unchanged, documented only by the order of steps), a `docs/` that is already a Sphinx tree (not handled), and unclear status for a decision whose reason sits only in a commit message (admission "carried" is hard to apply to history).
 
