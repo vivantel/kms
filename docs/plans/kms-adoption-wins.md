@@ -21,7 +21,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 ## Resume protocol
 
-1. `cd` to the worktree `/home/sergei/projects/vivantel/kms/.claude/worktrees/adoption-review` (or recreate: `git worktree add .claude/worktrees/adoption-review feat/adoption-review`), `git status`; a dirty tree other than `package-lock.json` means a step was interrupted: finish or `git restore` it.
+1. PR #98 (branch `feat/adoption-review`) was merged into `master` by merge commit on 2026-11-22 (check `gh pr view 98 --json state`; if it is still OPEN, the owner has not merged yet and the old worktree `.claude/worktrees/adoption-review` is the place to work). After the merge: start from fresh `master` (`git pull`), cut a new branch (`feat/adoption-wins-2`, or the name the owner gives) in a new worktree, and open a new PR; `git status`, a dirty tree other than `package-lock.json` means an interrupted step: finish or `git restore` it. Remove the stale worktree `.claude/worktrees/adoption-review` and its branch once merged (step 0d).
 2. Read the Progress log below, then take the first step heading not marked `[done]` whose predecessors are done.
 3. Re-run that step's "Done when" first; if it already holds, mark it `[done]`.
 4. Do the step, run its checks (`python3 plugins/kms/shared/lint_check.py --root . --strict`, `python3 -m unittest discover -s evals/lint/unit`, `python3 scripts/vendor-shared.py --check`; eval cases with `npx promptfoo eval -c evals/<case>/promptfooconfig.yaml --repeat 4 --no-cache --no-share`), flip the heading, add one Progress-log line, and commit code and plan update together. One step, one commit.
@@ -39,10 +39,11 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 3 cold starts (tomli Python, ky JS, itsdangerous with a Sphinx `docs/`; fresh agents following `quickstart` literally, human self-played; scratch clones under /tmp/kms-cold, nothing committed): 10-12 tool calls, 5-6 self-answered questions each; checker silent on first try in all three. Recurring friction (in 2-3 runs each): `quickstart` "run bootstrap" vs bootstrap's own ask and close; where the checker lives; empty `INDEX.md` for an empty type; `governed-by: TBD` read as an error; jargon (admission, gate, registry, derivation). Fixed in `quickstart` and `bootstrap` text (one sentence each). Seen once, NOT fixed: an existing Sphinx `docs/` gets `docs/facts` etc. written beside the .rst files with no warning or `--docs` offer; seeding five guardrails into a JS library felt like noise (step 2's lite-mode decision). Fixes not re-run cold.
 - 2026-11-22 owner chose `.vivantel/akasha/docs/` as the default knowledge directory for new projects only, resolved via a `kms-dir:` line in the AGENTS.md block rather than hardcoded, shipped in one release with the procedures rename. Decision 0086 recorded; implementation is step 8, not started (large: stop and resume in a fresh session).
 - 2026-11-22 `/eval` on PR #98 at `20938e9`-era skills (commit `48d8b3f`): run green; attribute, bootstrap, capture, conform, decide, lint, lint-clean, query pass; `uninstall` advisory-fail (known ~1/4). `rejected-option`, `quickstart` and `onboard` are not in the PR summary, so no CI number for them yet (blocks dropping `rejected-option` from the advisory lists). Step 0(c) gate met; merge is the owner's call. Open owner decisions: step 2 lite mode, rename wording (in step 8), step 5 CI template, step 6 demo, step 7 release.
+- 2026-11-22 owner ordered PR #98 merged (merge commit, as the repo does). Step 0 is done once `gh pr view 98` shows MERGED; remaining open work starts at step 8(a) (new path) after the owner answers: step 2 lite mode, step 5 CI template, step 6 demo; step 7 release is the owner's. Self-check on resume: this log, then each step heading, then its "Done when".
 
 ## Steps
 
-### 0. [partial: (b) done] Land PR #98
+### 0. [done once PR #98 is MERGED; (d) worktree removal left] Land PR #98
 
 **Why.** Everything else builds on it; CI is red for reasons that look like infra and a known flake, not a regression, but that is unproven.
 
