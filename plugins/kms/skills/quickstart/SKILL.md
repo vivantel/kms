@@ -7,11 +7,11 @@ Run `bootstrap`'s setup, then immediately capture one real, current decision as 
 
 ## Step 1: setup
 
-If no knowledge directory exists (detected as `bootstrap` does, not by testing `docs/` literally) or is clearly incomplete, run `bootstrap`. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
+If no knowledge directory exists (detected as `bootstrap` does, not by testing `docs/` literally) or is clearly incomplete, run `bootstrap`. On its batched ask, recommend only the seeded guardrails and the tag vocabulary; say the doc manifest, fitness functions and domain proposals can wait for a later `bootstrap` run. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
 
 ## Step 2: find one real decision
 
-Ask what decision or plan is currently live for the user — something they're actually facing, not a hypothetical. If they don't have one in mind, look for a candidate: an open question in recent git history, a TODO, or a choice `bootstrap`'s own decision-stub extraction flagged as ambiguous.
+Ask what decision or plan is currently live for the user — something they're actually facing, not a hypothetical. With no human to ask (a script or eval), take the best-evidenced candidate and say so. If they don't have one in mind, look for a candidate: an open question in recent git history, a TODO, or a choice `bootstrap`'s own decision-stub extraction flagged as ambiguous.
 
 ## Step 3: capture it
 
@@ -19,7 +19,7 @@ Run `decide`'s interview and artifact-writing process on that one decision, in f
 
 ## Step 4: show what just happened
 
-Close by pointing at the artifact(s) written and naming 2-3 next skills relevant to what just happened (typically `query` to retrieve what was just captured, `capture` for next session, `onboard` if a teammate needs ramping up).
+Close in plain words: what was written and where, that the history stubs are drafts a person still has to finish, then name 2-3 next skills relevant to what just happened (typically `query` to retrieve what was just captured, `capture` for next session, `onboard` if a teammate needs ramping up).
 
 ## Out of scope
 

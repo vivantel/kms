@@ -18,9 +18,10 @@ ROOT = Path(__file__).resolve().parents[1] / "plugins" / "kms"
 MODEL = ["artifact-model.md"]
 WRITE = ["artifact-model.md", "admission.md"]
 NEEDS = {  # skill -> (shared files, whether it reads templates/)
-    "bootstrap": (WRITE, True),
-    "capture": (WRITE, False),
-    "decide": (WRITE, False),
+    "bootstrap": (WRITE + ["lint_check.py"], True),
+    "capture": (WRITE + ["lint_check.py"], False),
+    "conform": (["lint_check.py"], False),
+    "decide": (WRITE + ["lint_check.py"], False),
     "lint": (MODEL + ["lint_check.py"], True),
     "uninstall": ([], True),
 }
