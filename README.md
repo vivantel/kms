@@ -23,7 +23,7 @@ agent:  1. Add Redis client + connection pool to the orders service.
 With `kms`, the rejection is a recorded decision. `bootstrap` adds a line to your `AGENTS.md` telling the agent to `query` before designing anything that touches one, so it finds it first:
 
 ```
-agent:  (reads docs/decisions/0001-..., docs/facts/0001-..., docs/guardrails/no-cache-before-slo-breach.md)
+agent:  (reads the fixture's decision, fact and guardrail files)
         2. Decision 0001-no-cache-layer-until-latency-slo-breach blocks any cache layer
            (Redis included) until p95 exceeds 400 ms for a week.
         3. Guardrail no-cache-before-slo-breach enforces this in CI, so the change would fail.
