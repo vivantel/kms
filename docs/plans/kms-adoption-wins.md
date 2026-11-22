@@ -31,10 +31,11 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 ## Progress log
 
 - 2026-11-22 plan saved. Cold-start test done (two repos); README, skill fixes and the `rejected-option` eval written and pushed in PR #98; step 0 and the rest open.
+- 2026-11-22 step 0(b) done: `summary_lib.harness_reason` plus the runner label the kilo sqlite start-up collision as `=== HARNESS ERROR: kilo start-up collision ===` (exit 1); unit-tested. Branch note: the owner's `feat/team-ee-sharing-gaps` does not exist and is unrelated to this plan; work stays on `feat/adoption-review`. Open for step 0: (a) local numbers, (c) merge (owner), (d) worktree removal after merge.
 
 ## Steps
 
-### 0. [pending] Land PR #98
+### 0. [partial: (b) done] Land PR #98
 
 **Why.** Everything else builds on it; CI is red for reasons that look like infra and a known flake, not a regression, but that is unproven.
 
