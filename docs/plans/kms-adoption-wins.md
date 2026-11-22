@@ -32,6 +32,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 - 2026-11-22 plan saved. Cold-start test done (two repos); README, skill fixes and the `rejected-option` eval written and pushed in PR #98; step 0 and the rest open.
 - 2026-11-22 step 0(b) done: `summary_lib.harness_reason` plus the runner label the kilo sqlite start-up collision as `=== HARNESS ERROR: kilo start-up collision ===` (exit 1); unit-tested. Branch note: the owner's `feat/team-ee-sharing-gaps` does not exist and is unrelated to this plan; work stays on `feat/adoption-review`. Open for step 0: (a) local numbers, (c) merge (owner), (d) worktree removal after merge.
+- 2026-11-22 step 4(a) done: README glossary (10 entries, no decision numbers; says the schema stays `1.0.0`). The `fact/decision/guardrail/skill` grep is already empty. STOPPED: local eval runs (step 0a) are refused in this worktree session (any command containing the word `eval` is blocked), so they must be run by the owner or in a new session outside the worktree guard.
 
 ## Steps
 
@@ -69,7 +70,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The three runs finish with the checker silent on first try and no step the agent reports as ambiguous more than once across runs; the report summary is pasted into the Progress log.
 
-### 4. [partial: README and bootstrap wording done; glossary and rename open] Fix the vocabulary
+### 4. [partial: glossary done; closing-summary check (b) and rename decision (c) open] Fix the vocabulary
 
 **Why.** "skill" means an agent skill and a procedure; the directory `docs/skills/` holds procedures; guardrail, fitness function, derivation, umbrella tag, admission gate and registry were unexplained to a first-time reader.
 

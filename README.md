@@ -39,6 +39,19 @@ What stays manual: `capture` (after a work session), `lint` (whenever you want t
 
 Works for any git-based project — software, technical documentation, even long-form writing — not just code. The skill content is agent-neutral, so any agent that can follow instructions from a file can use it; `kms` ships one-command packaging for Claude Code, Codex and Kilo Code CLI.
 
+## Words you will see
+
+- **Fact**: something true now (a version, a limit, a behavior); it changes when reality changes.
+- **Decision**: a choice you committed to, with the reason and the options you rejected.
+- **Guardrail**: a rule (must / must not) that follows from a decision or fact and says how it is enforced.
+- **Procedure**: how to act in a recurring situation; lives in `docs/skills/`, not to be confused with an agent skill.
+- **Skill** (agent skill): one of this plugin's instruction files, such as `capture`; the thing you invoke.
+- **Fitness function**: an automated check (a test, a lint rule, a CI job) that enforces a guardrail.
+- **Derivation**: the link from a guardrail back to the decision or fact it comes from.
+- **Admission test**: the check a new artifact must pass before it is written, so it adds something not already recorded.
+- **Tag / umbrella tag**: a label from `docs/tags.md`; an umbrella tag groups related tags.
+- **Schema version**: the format of the artifacts (currently `1.0.0`); it stays stable, so existing knowledge bases keep working.
+
 ## Skills
 
 | Skill | What it does | Examples |
