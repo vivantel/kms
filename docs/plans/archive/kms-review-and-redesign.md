@@ -1,9 +1,11 @@
 ---
 id: kms-review-and-redesign
 title: Fix, clarify and redesign the kms knowledge system after the 2026-11 whole-repo review
-status: reconciled 2026-11-16 with the consolidation (0.16.0-0.16.3 shipped phases 0-2); open: 1.1 (blocked: pushed branch), phases 3-5 re-scoped below; next release 0.18.0, because 0.17 removes the deprecated skills (decision 0081)
+status: complete 2026-11-22; 0.18.0 released. Residual owner items (not blocking): pinned-model numbers (4.2, need a provider key), the `attribute` `Refs:` assertion on the CI model (4.1), an independent-model lint/conform pass (5.6)
 date: 2026-11-12
 ---
+
+> Archived 2026-11-22: all steps done or superseded; 0.18.0 released. Residual owner items are listed in `status:` above.
 
 # Fix, clarify and redesign the kms knowledge system
 
@@ -88,6 +90,7 @@ On 2026-11-12 a whole-repo review was run: one pass by the planning session over
 - 2026-11-20 1.1 [done]: `scripts/vendor-shared.py` copies shared/ and templates/ into bootstrap, capture, decide, lint, roadmap, uninstall and rewrites index.json `files`; skills read `shared/…` and `templates/…` in their own directory (no `../../`); unit test `test_vendored.py`; 0034 amended; INSTALLING.md updated; runner no longer copies by hand; live Kilo check from a local copy of the index: 15 skills, files cached, cached checker exits 0. Evals on the new layout run via `/eval` on the PR
 - 2026-11-20 `/eval` after vendoring (run on master's workflow: old 7-case matrix, no advisory handling yet): lint, attribute, capture, decide, roadmap pass; bootstrap fails (advisory by the new rule); unit tests pass. conform/query/uninstall/lint-clean run only once the new workflow is on master or the PR is reopened
 - 2026-11-20 1.3 [done]: live Codex install (isolated CODEX_HOME, codex 0.166.0) delivers 15 skills, shared/, templates/, hooks/; fact 0003 re-verified; INSTALLING.md Codex section rewritten
+- 2026-11-22 5.8 [done]: 0.17.0 and 0.18.0 tagged and released; plan complete and archived
 
 ## Phase 0 — Housekeeping
 
@@ -432,11 +435,13 @@ Budget rule for this phase: the sum of `wc -w` over all fourteen `SKILL.md` file
 
 **Done when.** `git branch -r` lists only `origin/master` and open feature branches.
 
-### 5.8 [prepared 2026-11-21, branch `feat/team-ee-sharing-gaps`; open: merge after 0.17 is tagged, owner tags and publishes, 0.15.0-shaped scratch-corpus check not run] Cut release 0.18.0 (after the 0.17 removal release)
+### 5.8 [done 2026-11-21: 0.17.0 and 0.18.0 tagged and released] Cut release 0.18.0 (after the 0.17 removal release)
 
 **What.** Bump every manifest to `0.18.0`; CHANGELOG entry (the `changelog` skill leaves in 0.17, so write it by hand or with go-getter's): the format change already shipped in 0.16.0, so list the new checks, the `conform` and `decide` changes and the eval results; tag. Create the GitHub Release from the entry.
 
 **Done when.** Same checks as 1.6 for `0.18.0`; the checker run with `--strict` exits 0 on this repo and without `--strict` exits 0 on a 0.15.0-shaped scratch corpus (`kind: mixed`, scalar `governed-by`, no pins) with only advisory lines.
+
+**Result 2026-11-21/22:** PR #95 merged (all 9 eval cases and the unit tests green); tags `0.17.0` (`b93a820`) and `0.18.0` (`2399759`) pushed; GitHub Releases created from the CHANGELOG entries. `--strict` exits 0 on this repo. A scratch 0.15.0-shaped corpus (a decision with `track` and a bare-string `fitness-functions`, a fact with `kind: mixed` and `governed-by`, a guardrail with scalar `governed-by`, no pins, five seeded templates, a 0.15-style `tags.md`) gave without `--strict` four advisory lines (unpinned; older shape for the decision, fact and guardrail) and exit 0; with `--strict` the older-shape lines become check 2 findings and it exits 1, as designed. Unmigrated old fixtures first reported check 7, 12, 19 and 9 lines, all faults of the hand-built fixture (missing index rows, unseeded templates, no tag list), not of the old format; the scratch corpus is not committed.
 
 ## Minimal path (two weekends)
 
