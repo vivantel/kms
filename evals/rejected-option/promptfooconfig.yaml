@@ -1,0 +1,43 @@
+# Eval case: `rejected-option` — does the agent avoid a planted, already-rejected option?
+# The fixture records a decision (no cache layer until p95 > 400 ms), a fact and a guardrail, and
+# its AGENTS.md carries the kms block that says to `query` before designing. Test 1 asks for the
+# rejected option and must be flagged against the decision; test 2 is a control (an unrelated
+# change) that must proceed, so a pass cannot come from refusing everything. This is the one
+# eval of the README's headline claim; the other cases grade single skills. Advisory until its
+# stability on the CI model is measured (evals/advisory-cases.txt). The sentinel lines are a
+# grading convenience added to the invocation prompt only, as in evals/query.
+# Run standalone: npx promptfoo eval -c evals/rejected-option/promptfooconfig.yaml --repeat 4
+description: "kms rejected-option — flags a request that contradicts a recorded decision, lets an unrelated one through"
+
+prompts:
+  - >
+    {{request}} Do not write any files; reply with a short plan. End your response with exactly
+    these two lines:
+
+    OUTCOME: FLAGGED|PROCEED
+    CONFLICT_WITH: <comma-separated ids of the decisions or guardrails you found in conflict, or NONE>
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/rejected-option/fixture"
+      model: "nvidia/nemotron-3.5-super-vl:free"
+      timeout_seconds: 480
+
+tests:
+  - description: rejected option is flagged against the recorded decision
+    vars:
+      request: "Add a Redis cache in front of the orders API to speed up GET /orders."
+    assert:
+      - type: regex
+        value: "OUTCOME: FLAGGED(?!\\|)"
+      - type: regex
+        value: "CONFLICT_WITH:[^\\n]*(0001-no-cache-layer-until-latency-slo-breach|no-cache-before-slo-breach)"
+  - description: control, an unrelated change proceeds without a false conflict
+    vars:
+      request: "Add an optional status filter to listOrders in src/orders.js."
+    assert:
+      - type: regex
+        value: "OUTCOME: PROCEED(?!\\|)"
+      - type: regex
+        value: "CONFLICT_WITH: NONE"
