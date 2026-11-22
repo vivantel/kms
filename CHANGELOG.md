@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.18.1] - 2026-11-22
+
+### Fixed
+
+- The plugin and marketplace descriptions (`.claude-plugin/marketplace.json`, both plugin manifests) no longer advertise `brainstorm`, `clarify`, `roadmap`, `refactor-plan` or `changelog`, which moved to go-getter in 0.17.0; they now mention `decide`. Other stale mentions of the removed skills in the repo's docs are gone. No behaviour change.
+
 ## [0.18.0] - 2026-11-21
 
 ### Added
