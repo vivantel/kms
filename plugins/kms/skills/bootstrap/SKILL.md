@@ -9,7 +9,7 @@ Read first: `shared/artifact-model.md` (schema: types, fields, lifecycle) and `s
 
 ## How to run
 
-Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 9 and 10 now, writing files directly (your first turn creates files under `docs/`; say in one line first which directories and files you are about to write, and that `uninstall` reverses it). Steps 3, 5, 6, 7 and 8 each ask before writing; batch those asks into one question at the end, after the other steps are done. Finish with step 11 and list what you wrote.
+Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 9 and 10 now, writing files directly (your first turn creates files under `docs/`; say in one line first which directories and files you are about to write, and that `uninstall` reverses it). Steps 3, 5, 6, 7 and 8 each ask before writing; batch those asks into one question at the end, after the other steps are done. Finish with step 11, then close in plain words: what you wrote and where, which stubs are drafts a person must finish, and the next skill to try.
 
 ## Before starting
 

@@ -17,7 +17,7 @@ No argument and something's staged: the staged diff (`git diff --staged`). No ar
 4. A `status: draft` guardrail or decision is reported as "proposed", never as a violation.
 5. If the diff touches the knowledge directory, run `shared/lint_check.py` (this skill's directory) on the post-diff tree (staged: the working tree; a range: a temporary checkout of its head) and report its lines too.
 6. List facts whose `source` or `scope.component` path-overlaps the diff as "re-verify". Flag a fact whose body names a value the diff changes as "may be falsified" — advisory, never a claim.
-7. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong.
+7. Report every finding — don't stop at the first. Group by guardrail violated, one line per finding with the file/hunk and what's wrong. End with one plain line: safe to commit, or what to fix first.
 
 ## Out of scope
 
