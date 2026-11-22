@@ -2,7 +2,7 @@
   "skills": [
     {
       "name": "attribute",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -10,7 +10,7 @@
     },
     {
       "name": "bootstrap",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -25,7 +25,7 @@
     },
     {
       "name": "capture",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -35,7 +35,7 @@
     },
     {
       "name": "conform",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -43,7 +43,7 @@
     },
     {
       "name": "decide",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -53,7 +53,7 @@
     },
     {
       "name": "lint",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md",
@@ -68,7 +68,7 @@
     },
     {
       "name": "onboard",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -76,7 +76,7 @@
     },
     {
       "name": "query",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -84,7 +84,7 @@
     },
     {
       "name": "quickstart",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md"
@@ -92,7 +92,7 @@
     },
     {
       "name": "uninstall",
-      "version": "0.18.0",
+      "version": "0.18.1",
       "files": [
         "SKILL.md",
         "examples.md",
