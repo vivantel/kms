@@ -1,0 +1,8 @@
+#!/bin/sh
+# kms-generated: true
+# Opt-in recipe (copy to .git/hooks/pre-commit, or .githooks/pre-commit with `git config core.hooksPath .githooks`).
+# Blocks a commit that breaks the knowledge base. Needs python3, PyYAML and .vivantel/akasha/lint_check.py
+# (copied from the kms plugin's shared/ directory). Skips quietly when any is missing.
+checker=.vivantel/akasha/lint_check.py
+[ -f "$checker" ] && command -v python3 >/dev/null 2>&1 && python3 -c 'import yaml' 2>/dev/null || exit 0
+exec python3 "$checker" --root . --strict

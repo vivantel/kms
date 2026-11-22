@@ -11,6 +11,7 @@ Run this *before* uninstalling the `kms` plugin — nothing can act automaticall
 2. **`kms-generated: true` files** — scan for the marker anywhere under the knowledge directory, the same way as category 1; don't hardcode which files carry it, since `bootstrap` may stamp more of them over time.
 3. **Registries** — files carrying `kms-registry` (indexes, `tags.md`, the docs manifest), reported as one group; usually also `kms-generated`.
 3b. **The `<!-- kms:start -->`/`<!-- kms:end -->` block** in the project's agent-instructions file (`AGENTS.md` or whatever host-specific equivalent it uses), if present (its `kms-dir:` line goes with it). After removals, offer to delete a now-empty knowledge directory or `.vivantel/`.
+3c. **CI recipes** — `.git/hooks/pre-commit`, `.githooks/pre-commit` and `.github/workflows/kms-lint.yml`, only when they carry a `kms-generated: true` comment; also `.vivantel/akasha/lint_check.py` if present. Offer to remove (detach: delete the marker comment).
 4. **Still-`status: draft` decisions** — a proposal (from `bootstrap` or from `capture`'s own check 1, which drafts stubs the same way) that nobody has acted on yet. Skip a draft that carries `expires-when`: that is an open question the team is keeping. Report these separately from categories 1-3 and note plainly that they carry no `kms-seeded`/`kms-generated` marker — they're identified by status, not by marker.
 
 ## Report first, then act

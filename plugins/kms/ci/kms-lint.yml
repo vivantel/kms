@@ -1,0 +1,15 @@
+# kms-generated: true
+# Opt-in recipe (copy to .github/workflows/kms-lint.yml). Deterministic checker only: no model, no key.
+# Needs lint_check.py copied from the kms plugin's shared/ directory to .vivantel/akasha/lint_check.py.
+name: kms-lint
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyyaml
+      - run: python3 .vivantel/akasha/lint_check.py --root . --strict

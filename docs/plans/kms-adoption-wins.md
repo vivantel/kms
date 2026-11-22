@@ -50,6 +50,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 8(f) done: the `bootstrap` eval (fresh fixture, no docs/) now asserts `.vivantel/akasha/docs` and `kms-dir:`; every other fixture keeps `docs/` as the back-compat proof (resolution unit-tested in `test_kms_dir.py`). Not run: the suite runs once at the end of step 8, owner/CI. Next: (g) document this repo's own docs/ exception, (h) rename decision.
 - 2026-11-22 step 8(g)+(h) done: decision 0087 records the rename and this repo's own `docs/skills/` as the one exception (no move). CHANGELOG entry deferred to step 7. Step 8 needs one suite run on a PR (CI). Next: step 2 lite quickstart (decision to record first), then 5, 6, 7.
 - 2026-11-22 step 2 implemented: decision 0088 (amends 0027/0072, `accepted-by`); `quickstart` runs `bootstrap` in lite mode (steps 1, 2, 9, 10, 11, no asks, every template id into `kms-declined:`); `bootstrap` gets the lite sentence, the commit-message-only stub fails admission, and `tags.md` never lists kms's own meta-tags; net words -2 across both skills; quickstart `examples.md` updated. NOT done: a cold quickstart re-run (the 15-call target is unmeasured) and a `quickstart` eval case (needs run-all, both workflow lists and advisory list; do as its own step, advisory first). Checker silent, 138 tests pass.
+- 2026-11-22 step 5 done: decision 0089 (amends 0027, uninstall inventory); `plugins/kms/ci/{pre-commit,kms-lint.yml}` (outside `templates/` so they are not vendored or read as an artifact type); INSTALLING.md section; `uninstall` category 3c; `bootstrap` close mentions them. Scratch test (hook run directly, plain `sh`, in a scratch tree with the checker at `.vivantel/akasha/lint_check.py`): clean tree exit 0; a decision missing `date`/`status`/`tags` and its INDEX row exit 1 with checks 2 and 19. The workflow YAML itself was not run on GitHub. Next: step 6 demo, then 7 (owner).
 
 ## Steps
 
@@ -95,7 +96,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README glossary exists; the grep `grep -rn "fact/decision/guardrail/skill" plugins README.md AGENTS.md docs/skills` returns nothing; the rename decision is recorded either way.
 
-### 5. [pending] Make the automation real outside Claude Code
+### 5. [done 2026-11-22] Make the automation real outside Claude Code
 
 **Why.** The only automation is two `SessionStart` hooks, Claude Code only. The README now says so, but a team on Codex or Kilo, or one that never runs a skill, has no trigger.
 
