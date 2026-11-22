@@ -3,12 +3,12 @@ name: onboard
 description: Creates a role-specific onboarding plan from a project's existing knowledge artifacts, without writing anything. Use when the user wants a ramp-up plan for a specific role, e.g. "onboard me as a frontend developer for this project", "what should a new QA hire read first here".
 ---
 
-Read `docs/{facts,decisions,guardrails,skills}/` and produce a role-tailored onboarding plan (the user may give a duration; default five days) — without writing to disk.
+Read `<knowledge dir>/{facts,decisions,guardrails,procedures}/` and produce a role-tailored onboarding plan (the user may give a duration; default five days) — without writing to disk.
 
 ## Before producing a plan
 
 1. Ask for the role if not given — it shapes everything else, don't guess it.
-2. Read each type's `INDEX.md` first, if present, to identify what's relevant to the role — ignore any `(umbrella)`-marked tag when matching (same exclusion `lint` check 16 applies). Read all four artifact directories directly when no index exists, or when the index-narrowed set looks thin for a role this broad (same staleness caveat `query` applies). If `docs/skills/{product,process}-track-roles.md` exists and lists the given role, weigh its stated scope; otherwise use judgment about what the role would need.
+2. Read each type's `INDEX.md` first, if present, to identify what's relevant to the role — ignore any `(umbrella)`-marked tag when matching (same exclusion `lint` check 16 applies). Read all four artifact directories directly when no index exists, or when the index-narrowed set looks thin for a role this broad (same staleness caveat `query` applies). If `<knowledge dir>/procedures/{product,process}-track-roles.md` exists and lists the given role, weigh its stated scope; otherwise use judgment about what the role would need.
 3. **Warn if critical artifacts are missing** before producing the plan — most importantly, no facts at all, but also an empty `decisions/` or `guardrails/` if the project claims to use this system. Say plainly the plan is built on an incomplete base; don't let it read as if the knowledge base were complete when it isn't.
 4. No knowledge base at all? Say so and stop — recommend `bootstrap`, don't improvise a plan from nothing.
 
@@ -16,7 +16,7 @@ Read `docs/{facts,decisions,guardrails,skills}/` and produce a role-tailored onb
 
 5 days, each stating:
 - **Goal** — what the person should understand or do by end of day, specific to the role.
-- **Read** — links to the specific artifacts for that day and role (`docs/decisions/000X-....md`, not "the decisions folder"); print a fact's `last-verified` beside it when older than the model's staleness threshold.
+- **Read** — links to the specific artifacts for that day and role (`<knowledge dir>/decisions/000X-....md`, not "the decisions folder"); print a fact's `last-verified` beside it when older than the model's staleness threshold.
 - **Run** — which of this plugin's skills to try and why.
 
 A reasonable shape (adjust to what actually exists for this role — don't force artifacts onto a day that doesn't need them):

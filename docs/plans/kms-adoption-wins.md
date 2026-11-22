@@ -43,6 +43,16 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 8(a) done (worktree `adoption-wins-2`, branch `worktree-adoption-wins-2`): `lint_check.py` resolves `--docs`, `kms-dir:` in the kms block (relative, no `..`), `.vivantel/akasha/docs`, `docs/` with `decisions/`, first root dir; artifact-model states the order once; `evals/lint/unit/test_kms_dir.py` (8 cases); vendored copies synced; 133 tests pass, checker silent. Next: 8(b) bootstrap + hooks.
 - 2026-11-22 step 8(b), hook half done: `lint-nudge.sh` resolves `kms-dir:`, `.vivantel/akasha/docs`, `docs/`, first root dir (`capture-nudge.sh` names no path); 2 cases added to `test_checks_25_nudge.py`. Left for (b): `bootstrap/SKILL.md` creates the new path, writes `kms-dir:` in the block (line ~77), offers a user-chosen path, step 11 drops `--docs` advice; re-read the whole file; then (c)-(h). STOPPED here: (c) touches 33 skill files and needs fresh context plus the owner's rename-wording answer before (e).
 - 2026-11-22 owner answered the open decisions: rename `docs/skills/` to `docs/procedures/` (detect both for one release, `migrate.py` rewrites); step 2 lite quickstart: yes (new decision amending 0027/0072 still to be recorded with `accepted-by`); step 5: ship an opt-in `plugins/kms/templates/ci/` (amends 0027 and the uninstall inventory; record as a decision); step 6: use the `rejected-option` run as the real example. Step 7 release stays the owner's. Order: 8(b)-(h), then 2, 5, 6, 7.
+- 2026-11-22 step 8(b) done (worktree `adoption-wins-3`): `bootstrap/SKILL.md` uses K (the knowledge directory), defaults a new project to `.vivantel/akasha/docs/`, states K in its opening line (user may redirect), writes `kms-dir: <K>` in the block (omitted for `docs`), step 11 relies on `kms-dir:`; whole file re-read. Checks: vendor OK, checker silent, 135 unit tests pass. Next: 8(c) (33 skill files say "the knowledge directory"); STOPPED after (b) because (c) needs fresh context.
+- 2026-11-22 step 8(b) bootstrap half done (4324337); step 8(c) done: shipped SKILL.md files, artifact-model and seeded templates say `<knowledge dir>` instead of `docs/` (plan paths `docs/plans/` and examples.md unchanged); vendored copies synced; checker silent, 135 unit tests pass. Next: 8(d) templates/uninstall know `kms-dir:`, then (e) rename, which needs a fresh session.
+- 2026-11-22 step 8(d) done: templates already path-free after (c); `uninstall` notes `kms-dir:` leaves with the block and offers to delete an emptied knowledge dir or `.vivantel/`. STOPPED before (e): the procedures rename touches checker types, `migrate.py`, INDEX handling, tags location and every skill; resume in a fresh session.
+- 2026-11-22 step 8(e) done: `lint_check.py` reads `procedures/` and `skills/` (tags list from either, prose refs match both); `migrate.py --rename` (opt-in) moves `skills/` to `procedures/` and rewrites `<dir>/skills/` mentions, refuses if both exist; artifact-model, skills and the lint hook say `procedures`; `test_procedures_rename.py` (3 cases); 138 tests pass, checker silent. Next: 8(f) fixtures + bootstrap eval assertion, (g), (h), then one suite run.
+- 2026-11-22 step 8(f) done: the `bootstrap` eval (fresh fixture, no docs/) now asserts `.vivantel/akasha/docs` and `kms-dir:`; every other fixture keeps `docs/` as the back-compat proof (resolution unit-tested in `test_kms_dir.py`). Not run: the suite runs once at the end of step 8, owner/CI. Next: (g) document this repo's own docs/ exception, (h) rename decision.
+- 2026-11-22 step 8(g)+(h) done: decision 0087 records the rename and this repo's own `docs/skills/` as the one exception (no move). CHANGELOG entry deferred to step 7. Step 8 needs one suite run on a PR (CI). Next: step 2 lite quickstart (decision to record first), then 5, 6, 7.
+- 2026-11-22 step 2 implemented: decision 0088 (amends 0027/0072, `accepted-by`); `quickstart` runs `bootstrap` in lite mode (steps 1, 2, 9, 10, 11, no asks, every template id into `kms-declined:`); `bootstrap` gets the lite sentence, the commit-message-only stub fails admission, and `tags.md` never lists kms's own meta-tags; net words -2 across both skills; quickstart `examples.md` updated. NOT done: a cold quickstart re-run (the 15-call target is unmeasured) and a `quickstart` eval case (needs run-all, both workflow lists and advisory list; do as its own step, advisory first). Checker silent, 138 tests pass.
+- 2026-11-22 step 5 done: decision 0089 (amends 0027, uninstall inventory); `plugins/kms/ci/{pre-commit,kms-lint.yml}` (outside `templates/` so they are not vendored or read as an artifact type); INSTALLING.md section; `uninstall` category 3c; `bootstrap` close mentions them. Scratch test (hook run directly, plain `sh`, in a scratch tree with the checker at `.vivantel/akasha/lint_check.py`): clean tree exit 0; a decision missing `date`/`status`/`tags` and its INDEX row exit 1 with checks 2 and 19. The workflow YAML itself was not run on GitHub. Next: step 6 demo, then 7 (owner).
+- 2026-11-22 step 6 NOT done: capturing a real `rejected-option` transcript needs `npx promptfoo eval`, which the worktree guard refuses (any command containing `eval`). Run it outside the worktree (e.g. `npx promptfoo eval -c evals/rejected-option/promptfooconfig.yaml --filter-first-n 1 --no-cache --no-share -o out.json`, plus a copy of the fixture without the AGENTS.md kms block for the 'without kms' half), then replace the README's illustrative block with it. Also still open: step 8's one suite run on a PR, a cold quickstart re-run, a `quickstart` eval case, step 7 (owner).
+- 2026-11-22 step 6 done: the guard did not block the run in this session. Captured `rejected-option` request 1 with kms (FLAGGED, cites decision and guardrail) and on a copy of the fixture with only `src/` and a bare AGENTS.md (PROCEED, plans Redis); README now shows both, trimmed, with date and model, and links the fixture docs. One run each; the owner has not yet seen it. Left: step 8's suite run on a PR, a cold quickstart re-run, a `quickstart` eval case, step 7 (owner).
 
 ## Steps
 
@@ -62,7 +72,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** Two flagged cases and one control each pass 3 of 4 runs on the CI model, recorded in the Progress log; the README states the rate with date and model; `evals/advisory-cases.txt` and the two workflow `fromJSON` lists match the measured stability (unit-tested).
 
-### 2. [partial: seeding asks and quickstart steers lighter; no real lite mode] Cut the first-run cost
+### 2. [done 2026-11-22 except the cold re-run and a quickstart eval case] Cut the first-run cost
 
 **Why.** The cold starts took about 25 tool calls, 7 to 10 questions, and produced mostly stubs (draft decisions that restate commit messages, a docs manifest for a one-README repo, five meta-guardrails with `governed-by: TBD`, `tags.md` carrying the meta-tags `knowledge-management` and `guardrail`).
 
@@ -88,7 +98,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README glossary exists; the grep `grep -rn "fact/decision/guardrail/skill" plugins README.md AGENTS.md docs/skills` returns nothing; the rename decision is recorded either way.
 
-### 5. [pending] Make the automation real outside Claude Code
+### 5. [done 2026-11-22] Make the automation real outside Claude Code
 
 **Why.** The only automation is two `SessionStart` hooks, Claude Code only. The README now says so, but a team on Codex or Kilo, or one that never runs a skill, has no trigger.
 
@@ -98,7 +108,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** A scratch repo with the recipe fails a commit that breaks a pin and passes a clean one (recorded in the Progress log with commands); `uninstall` knows about any shipped file; INSTALLING.md names it per agent.
 
-### 6. [partial: illustrative README example only] Show, don't tell
+### 6. [done 2026-11-22 except owner review] Show, don't tell
 
 **Why.** The README's before/after is invented ("illustrative"). A real run is stronger and is also the proof for step 1.
 
@@ -106,7 +116,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
 
-### 8. [partial: (a) done, (b) hook half done 2026-11-22; rest open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+### 8. [done 2026-11-22 except the final suite run (CI/owner)] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
 
 **Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
 

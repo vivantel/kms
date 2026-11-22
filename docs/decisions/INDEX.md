@@ -77,3 +77,6 @@ id,title,tags,status
 0084-study-tags-and-unmerged-branches,"Study tags are measurement snapshots exempt from the release-tag rule; three study branches were not merged","kms, packaging",active
 0085-pin-eval-model-nemotron-lightning,"Pin the eval harness to nvidia/nemotron-3.5-lightning:free after north-mini-code was withdrawn","kms, eval-harness, kilo",active
 0086-default-knowledge-directory-vivantel-akasha,"New projects get their knowledge base at .vivantel/akasha/docs/; the path is resolved, not hardcoded","kms, packaging",active
+0087-procedures-replaces-skills-type-directory,"The procedure type directory is named procedures/; skills/ is read for one release and migrated on request","kms, packaging",active
+0088-quickstart-runs-a-lite-bootstrap,"quickstart runs a lite bootstrap that seeds nothing and asks nothing; bootstrap by name keeps the full path","kms, onboarding, packaging",active
+0089-opt-in-ci-recipes-ship-in-plugin-ci-dir,"Ship opt-in pre-commit and GitHub Actions recipes in plugins/kms/ci/; they run only the deterministic checker","kms, packaging, automation",active

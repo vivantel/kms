@@ -1,9 +1,9 @@
 ---
 name: attribute
-description: "Write commit messages and PR descriptions that lead with intent (why, not what), using Conventional Commits type prefixes and Refs: trailers linking to docs/{facts,decisions,guardrails,skills}/ artifacts. Use when the user wants to commit changes with attribution, or generate a PR description, e.g. \"commit this with attribution\", \"write a PR description for this branch\"."
+description: "Write commit messages and PR descriptions that lead with intent (why, not what), using Conventional Commits type prefixes and Refs: trailers linking to <knowledge dir>/{facts,decisions,guardrails,procedures}/ artifacts. Use when the user wants to commit changes with attribution, or generate a PR description, e.g. \"commit this with attribution\", \"write a PR description for this branch\"."
 ---
 
-Commit messages and PR descriptions that lead with *why* and trace to `docs/{facts,decisions,guardrails,skills}/` artifacts. Runs only when invoked; never apply to a plain `git commit`.
+Commit messages and PR descriptions that lead with *why* and trace to `<knowledge dir>/{facts,decisions,guardrails,procedures}/` artifacts. Runs only when invoked; never apply to a plain `git commit`.
 
 ## Commit
 

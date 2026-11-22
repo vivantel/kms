@@ -14,6 +14,8 @@ written, line endings are kept, and a fitness function that was a bare string be
               become `{check: ...}` maps
   registries  INDEX.md gets a first-line `kms-registry` comment; tags.md and docs-manifest.md get
               a `kms-registry` frontmatter field, and their rows leave the sibling INDEX.md
+  --rename    also renames the type directory `skills/` to `procedures/` (refused when both exist) and rewrites
+              `<dir>/skills/` path mentions inside the knowledge directory; without it nothing is renamed
 Requires PyYAML.
 """
 
@@ -26,7 +28,7 @@ from pathlib import Path
 
 import yaml
 
-TYPES = ("facts", "decisions", "guardrails", "skills")
+TYPES = ("facts", "decisions", "guardrails", "skills", "procedures")
 REGISTRY_FILES = {"tags.md": "tags", "docs-manifest.md": "docs-manifest"}
 
 
@@ -176,11 +178,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", required=True, metavar="DIR")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--rename", action="store_true")
     args = ap.parse_args()
     docs = Path(args.docs)
+    renamed = False
+    if args.rename and (docs / "skills").is_dir():
+        if (docs / "procedures").exists():
+            sys.exit("both skills/ and procedures/ exist under " + str(docs) + ": merge them by hand, then re-run")
+        renamed = True
+        if not args.dry_run:
+            (docs / "skills").rename(docs / "procedures")
     ids = kinds_by_id(docs)
     notes, pending = [], []
     for t in TYPES:
+        if renamed and args.dry_run and t == "procedures":
+            continue
         for d in (docs / t, docs / t / "archive"):
             if not d.is_dir():
                 continue
@@ -201,6 +213,13 @@ def main():
                     new = migrate_file(p, t, ids, notes)
                 if new != text:
                     pending.append((p, new))
+    if renamed:  # path mentions follow the directory: `<name>/skills/` becomes `<name>/procedures/`
+        pat = re.compile(rf"(?<![\w\-])({re.escape(docs.name)}/)skills/")
+        for p in sorted(docs.rglob("*.md")):
+            cur = dict(pending).get(p) or read(p)
+            new = pat.sub(r"\1procedures/", cur)
+            if new != cur:
+                pending = [(a, b) for a, b in pending if a != p] + [(p, new)]
     if not args.dry_run:
         for p, new in pending:
             write(p, new)

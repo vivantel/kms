@@ -36,9 +36,9 @@ if [ -z "$kb" ]; then
 fi
 
 count=$(git log --oneline --since="${window_days} days ago" -- \
-  "$kb/facts" "$kb/decisions" "$kb/guardrails" "$kb/skills" 2>/dev/null \
+  "$kb/facts" "$kb/decisions" "$kb/guardrails" "$kb/skills" "$kb/procedures" 2>/dev/null \
   | wc -l | tr -d ' ')
 
 if [ "$count" -ge "$threshold" ]; then
-  echo "This knowledge base has had $count commit(s) touching $kb/{facts,decisions,guardrails,skills}/ in the last $window_days days. If relevant, mention to the user that running this plugin's lint skill would check the whole knowledge base for drift, contradictions, or stale debt that individual sessions wouldn't catch."
+  echo "This knowledge base has had $count commit(s) touching $kb/{facts,decisions,guardrails,procedures}/ in the last $window_days days. If relevant, mention to the user that running this plugin's lint skill would check the whole knowledge base for drift, contradictions, or stale debt that individual sessions wouldn't catch."
 fi

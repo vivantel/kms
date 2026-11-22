@@ -13,7 +13,7 @@ derivation-note: >
 
 ## Guardrail
 
-When `docs/skills/tags.md` exists, any fact, decision, guardrail, or
+When `skills/tags.md` in the knowledge directory exists, any fact, decision, guardrail, or
 procedure file's `tags` MUST all be entries from that list — whether the
 file was written by `bootstrap`/`capture`/`decide` or by hand. A tag
 found that isn't on the list MUST be flagged as debt: either the list is
