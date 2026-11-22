@@ -7,7 +7,7 @@ Run `bootstrap`'s setup, then immediately capture one real, current decision as 
 
 ## Step 1: setup
 
-If no knowledge directory exists (detected as `bootstrap` does, not by testing `docs/` literally) or is clearly incomplete, run `bootstrap` through its checker step, skipping its own close (step 4 here closes) and asking nothing beyond its one batched ask; `shared/lint_check.py` is in `bootstrap`'s directory. On that ask, recommend only the seeded guardrails and the tag vocabulary; say the doc manifest, fitness functions and domain proposals can wait for a later `bootstrap` run. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
+If no knowledge directory exists (detected as `bootstrap` does, not by testing `docs/` literally) or is clearly incomplete, run `bootstrap` in lite mode: its steps 1, 2, 9, 10 and 11 only, no setup question, skipping its own close (step 4 here closes); `shared/lint_check.py` is in `bootstrap`'s directory. Seed nothing: write every template id into the block's `kms-declined:` line. Say the doc manifest, tags, fitness functions, domain proposals and seeded guardrails wait for a full `bootstrap` run. If it already exists and looks populated, say so and skip straight to step 2 — don't redo setup that's already done.
 
 ## Step 2: find one real decision
 
@@ -15,7 +15,7 @@ Ask what decision or plan is currently live for the user — something they're a
 
 ## Step 3: capture it
 
-Run `decide`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. `decide` writes records only, so no plan file is written. Don't shortcut it; the point is a real, complete artifact, not a demo.
+Run `decide`'s interview and artifact-writing process on that one decision, in full — same interview mechanics, same before-writing-anything file-list checkpoint, same classification-at-the-end discipline, including its Admission test. If the chosen decision fails that test, say which gate failed and pick another. `decide` writes records only, so no plan file is written. The point is a real, complete artifact, not a demo.
 
 ## Step 4: show what just happened
 

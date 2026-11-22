@@ -49,6 +49,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 8(e) done: `lint_check.py` reads `procedures/` and `skills/` (tags list from either, prose refs match both); `migrate.py --rename` (opt-in) moves `skills/` to `procedures/` and rewrites `<dir>/skills/` mentions, refuses if both exist; artifact-model, skills and the lint hook say `procedures`; `test_procedures_rename.py` (3 cases); 138 tests pass, checker silent. Next: 8(f) fixtures + bootstrap eval assertion, (g), (h), then one suite run.
 - 2026-11-22 step 8(f) done: the `bootstrap` eval (fresh fixture, no docs/) now asserts `.vivantel/akasha/docs` and `kms-dir:`; every other fixture keeps `docs/` as the back-compat proof (resolution unit-tested in `test_kms_dir.py`). Not run: the suite runs once at the end of step 8, owner/CI. Next: (g) document this repo's own docs/ exception, (h) rename decision.
 - 2026-11-22 step 8(g)+(h) done: decision 0087 records the rename and this repo's own `docs/skills/` as the one exception (no move). CHANGELOG entry deferred to step 7. Step 8 needs one suite run on a PR (CI). Next: step 2 lite quickstart (decision to record first), then 5, 6, 7.
+- 2026-11-22 step 2 implemented: decision 0088 (amends 0027/0072, `accepted-by`); `quickstart` runs `bootstrap` in lite mode (steps 1, 2, 9, 10, 11, no asks, every template id into `kms-declined:`); `bootstrap` gets the lite sentence, the commit-message-only stub fails admission, and `tags.md` never lists kms's own meta-tags; net words -2 across both skills; quickstart `examples.md` updated. NOT done: a cold quickstart re-run (the 15-call target is unmeasured) and a `quickstart` eval case (needs run-all, both workflow lists and advisory list; do as its own step, advisory first). Checker silent, 138 tests pass.
 
 ## Steps
 
@@ -68,7 +69,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** Two flagged cases and one control each pass 3 of 4 runs on the CI model, recorded in the Progress log; the README states the rate with date and model; `evals/advisory-cases.txt` and the two workflow `fromJSON` lists match the measured stability (unit-tested).
 
-### 2. [partial: seeding asks and quickstart steers lighter; no real lite mode] Cut the first-run cost
+### 2. [done 2026-11-22 except the cold re-run and a quickstart eval case] Cut the first-run cost
 
 **Why.** The cold starts took about 25 tool calls, 7 to 10 questions, and produced mostly stubs (draft decisions that restate commit messages, a docs manifest for a one-README repo, five meta-guardrails with `governed-by: TBD`, `tags.md` carrying the meta-tags `knowledge-management` and `guardrail`).
 

@@ -4,7 +4,7 @@
 
 **Prompt:** "Get me started with this plugin."
 
-**What happens:** `bootstrap` runs first, creating `docs/{facts,decisions,guardrails,skills}/`. Then the user is asked what decision is currently live for them — they mention they're deciding between two auth providers. `roadmap`'s full interview runs on that decision, ending with a real decision record on disk. The session closes by pointing at that file and suggesting `query` to retrieve it later and `capture` for next session.
+**What happens:** `bootstrap` runs first in lite mode: history stubs, `AGENTS.md` block, four `INDEX.md` files and a silent checker, with nothing seeded and no questions (everything else waits for a full `bootstrap`). Then the user is asked what decision is currently live for them — they mention they're deciding between two auth providers. `decide`'s full interview runs on that decision, ending with a real decision record on disk. The session closes by pointing at that file and suggesting `query` to retrieve it later and `capture` for next session.
 
 ## 2. Knowledge system already exists
 
