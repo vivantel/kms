@@ -185,7 +185,7 @@ isn't genuinely session-scoped. `conform` is the odd one out — the only
 skill that reads code or content *outside* `docs/` and checks it
 against the knowledge base, rather than validating the knowledge base
 itself. `query`/`onboard` read and answer; `decide` interviews the user to one decision record; `attribute`
-writes git history; the five skills deprecated in 0.16 (`roadmap`, `brainstorm`, `clarify`, `refactor-plan`, `changelog`) left in 0.17 for go-getter (`0081`); `uninstall` reverses everything `bootstrap` added.
+writes git history; `uninstall` reverses everything `bootstrap` added.
 
 Reads, writes and blocks, per skill:
 

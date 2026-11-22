@@ -64,3 +64,7 @@ separate manual rename step later that this skill doesn't own.
 - **Flat list by raw commit type** vs. **Keep a Changelog category
   mapping**: the mapped/grouped form was chosen as more readable to a
   human consumer.
+
+## Amendment 2026-11-21
+
+The `changelog` skill this decision designed left kms in 0.17 for go-getter (decision 0081). The grouping and tag-based-range choices above stay as the design go-getter inherits; kms itself no longer ships a generator, so entries here are written by hand.

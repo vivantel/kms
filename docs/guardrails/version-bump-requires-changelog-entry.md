@@ -18,14 +18,15 @@ pinned:
 Whenever `docs/guardrails/plugin-manifest-version-sync.md` fires,
 `CHANGELOG.md` MUST gain a `## [x.y.z] - date` heading for that version
 before the bump is considered done — never deferred to "later." Scope is
-narrow: `changelog` stays on-demand (`docs/decisions/0005-...`), and
-unnamed/exploratory work between versions still needs no entry.
+narrow: how the entry is produced is free (by hand, or any
+tool), and unnamed/exploratory work between versions still needs no
+entry.
 
 ## Derivation
 
 - **Axiomatic basis**: `docs/decisions/0050-version-bump-changelog-linkage.md`
   — the team committed to treating a version bump and its changelog entry
-  as one unit of work, without reopening `0005`'s on-demand design.
+  as one unit of work, without reopening how the entry is generated.
 - **Background (retired fact)**: `docs/facts/archive/0013-changelog-lagged-four-version-bumps.md`
   — four manifest version bumps landed with zero corresponding entries
   before this rule existed.
