@@ -1,0 +1,33 @@
+# Eval case: `quickstart` — the lite first run (adoption wins step 2, decision 0088).
+# Same fixture as `bootstrap`. Advisory until measured on the CI model (evals/advisory-cases.txt).
+# Run standalone: npx promptfoo eval -c evals/quickstart/promptfooconfig.yaml --repeat 4
+description: "kms quickstart — lite setup (no seeding, kms-declined written) plus one captured decision"
+
+prompts:
+  - "Get me started with kms. There is no human to ask: take the best-evidenced decision from the git history and say so."
+
+providers:
+  - id: "exec:../providers/kilo-runner.sh"
+    config:
+      fixture_dir: "evals/quickstart/fixture"
+      model: "nvidia/nemotron-3.5-super-vl:free"
+      timeout_seconds: 1440
+
+defaultTest:
+  options:
+    provider: "exec:../providers/kilo-judge.sh"
+  assert:
+    - type: contains
+      value: ".vivantel/akasha/docs"
+    - type: contains
+      value: "kms-dir:"
+    - type: contains
+      value: "kms-declined:"
+    - type: llm-rubric
+      value: >
+        The transcript and file listing show a lite first run: a knowledge directory with decisions/,
+        facts/ and guardrails/ (INDEX.md files), an AGENTS.md block, and exactly one decision written
+        as a full artifact drawn from the fixture's history (sync interval or retry cap). It must NOT
+        show seeded guardrail files copied from templates (no-redundant-guardrails, token-economy,
+        one-statement-one-job, no-unenforced-guardrail, tags-from-canonical-list), a docs manifest,
+        or fitness-function scripts. The closing summary is in plain words and mentions the checker.

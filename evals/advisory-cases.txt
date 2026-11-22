@@ -4,3 +4,4 @@ bootstrap
 uninstall
 attribute
 rejected-option
+quickstart
