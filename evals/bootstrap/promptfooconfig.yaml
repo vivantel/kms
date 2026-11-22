@@ -22,10 +22,15 @@ defaultTest:
       value: "docs/decisions"
     - type: contains
       value: "docs/guardrails"
+    # a new project defaults to the new layout and records it (adoption wins step 8)
+    - type: contains
+      value: ".vivantel/akasha/docs"
+    - type: contains
+      value: "kms-dir:"
     - type: llm-rubric
       value: >
         The transcript and file listing show a fact/decision/guardrail/skill knowledge base
-        being created (docs/facts/, docs/decisions/, docs/guardrails/ at minimum) with at least
+        being created (facts/, decisions/, guardrails/ at minimum, under .vivantel/akasha/docs/ with a kms-dir: line in the AGENTS.md block) with at least
         one decision stub plausibly drawn from the fixture's git history (the sync-interval
         change, its warehouse-outage rationale, and the retry-cap tradeoff). Draft/stub quality
         is fine — this checks the extraction happened at all, not prose polish.
