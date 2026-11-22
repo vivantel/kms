@@ -16,6 +16,7 @@
         "examples.md",
         "shared/admission.md",
         "shared/artifact-model.md",
+        "shared/lint_check.py",
         "templates/guardrails/no-redundant-guardrails.md",
         "templates/guardrails/no-unenforced-guardrail.md",
         "templates/guardrails/one-statement-one-job.md",
@@ -30,7 +31,8 @@
         "SKILL.md",
         "examples.md",
         "shared/admission.md",
-        "shared/artifact-model.md"
+        "shared/artifact-model.md",
+        "shared/lint_check.py"
       ]
     },
     {
@@ -38,7 +40,8 @@
       "version": "0.18.1",
       "files": [
         "SKILL.md",
-        "examples.md"
+        "examples.md",
+        "shared/lint_check.py"
       ]
     },
     {
@@ -48,7 +51,8 @@
         "SKILL.md",
         "examples.md",
         "shared/admission.md",
-        "shared/artifact-model.md"
+        "shared/artifact-model.md",
+        "shared/lint_check.py"
       ]
     },
     {

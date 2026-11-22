@@ -26,7 +26,7 @@ A reasonable shape (adjust to what actually exists for this role — don't force
 4. First real task, using `query` to resolve anything unclear from days 1-3.
 5. Practice a decision end-to-end with `decide`, run `capture` afterward if they touched anything.
 
-Tailor content, not just headings — two roles should get visibly different reading lists and goals, not the same plan with the role name swapped in.
+Explain a term (guardrail, procedure) in a few words on first use. Tailor content, not just headings — two roles should get visibly different reading lists and goals, not the same plan with the role name swapped in.
 
 ## Out of scope
 

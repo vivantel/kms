@@ -114,6 +114,7 @@ fi
 # A wrong model id or a missing sign-in is the harness, not the skill (2026-11-08: five cases
 # failed with `Model not found` and read as five regressions): say so and exit non-zero.
 HARNESS_REASON="$(echo "$TRANSCRIPT" | grep -m1 -E 'Model not found|You need to sign in|Unauthorized|Invalid API key' | sed 's/\x1b\[[0-9;]*m//g')"
+[ -z "$HARNESS_REASON" ] && HARNESS_REASON="$(echo "$TRANSCRIPT" | python3 "$REPO_ROOT/evals/providers/summary_lib.py")"
 if [ -n "$HARNESS_REASON" ]; then
   echo "=== HARNESS ERROR: ${HARNESS_REASON} ==="
   exit 1

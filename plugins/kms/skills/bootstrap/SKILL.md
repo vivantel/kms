@@ -9,7 +9,7 @@ Read first: `shared/artifact-model.md` (schema: types, fields, lifecycle) and `s
 
 ## How to run
 
-Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 8, 9 and 10 now, writing files directly (your first turn creates files under `docs/`). Steps 3, 5, 6 and 7 each ask before writing; batch those asks into one question at the end, after the other steps are done. Close by listing what you wrote.
+Act; never ask which step to start with or whether to proceed. Read the model, inspect the repo, then do steps 1, 2, 4, 9 and 10 now, writing files directly (your first turn creates files under `docs/`; say in one line first which directories and files you are about to write, and that `uninstall` reverses it). Steps 3, 5, 6, 7 and 8 each ask before writing; batch those asks into one question at the end, after the other steps are done. Finish with step 11, then close in plain words: what you wrote and where, which stubs are drafts a person must finish, and the next skill to try.
 
 ## Before starting
 
@@ -28,7 +28,7 @@ Print `git rev-list --count HEAD`; above 1,000 commits ask how far back to mine 
 
 ### 2. Fact extraction
 
-Classify every table, value list or configuration default embedded in a skill or guardrail file; a value restating a decision is not a fact. Apply `admission.md`, then one stub per admitted fact: base frontmatter plus `source` where one exists. Write location or aggregation facts (a path, a count) only when asked, and state the cap.
+Classify every table, value list or configuration default embedded in a procedure or guardrail file; a value restating a decision is not a fact. Apply `admission.md`, then one stub per admitted fact: base frontmatter plus `source` where one exists. Write location or aggregation facts (a path, a count) only when asked, and state the cap.
 
 ### 3. Doc manifest
 
@@ -40,11 +40,11 @@ For each guardrail missing `governed-by`, `grounded-in` or `derivation-note`: fl
 
 ### 5. Fitness functions
 
-List rules already enforced (CI/build config, review checklists, approval gates) for confirmation before writing. Add rules in skill/guardrail files that could be automated but aren't as `{check, enforced-by: none, last-verified}` on the governing decision's `fitness-functions`, or draft a `status: draft` decision stub when none governs. Ask before writing.
+List rules already enforced (CI/build config, review checklists, approval gates) for confirmation before writing. Add rules in procedure/guardrail files that could be automated but aren't as `{check, enforced-by: none, last-verified}` on the governing decision's `fitness-functions`, or draft a `status: draft` decision stub when none governs. Ask before writing.
 
-### 6. Skill gap detection
+### 6. Procedure gap detection
 
-Propose domains needing their own skill:
+Propose domains needing their own procedure:
 
 | Signal in the repo | Domain to cover | Likely review role |
 |---|---|---|
@@ -54,8 +54,8 @@ Propose domains needing their own skill:
 | Test suite, quality gates | Correctness verification, release criteria | QA/Test Owner |
 | Roadmap, pricing tiers, access control | Product scope, positioning | Product Strategist |
 | Recurring manual process, no written procedure | Process/procedure documentation | Process Owner |
-| External compliance, regulatory, or ethical requirement | Compliance/review skill | Compliance Reviewer |
-| Repeated reviewer or stakeholder feedback pattern | Review/quality skill | Quality Reviewer |
+| External compliance, regulatory, or ethical requirement | Compliance/review procedure | Compliance Reviewer |
+| Repeated reviewer or stakeholder feedback pattern | Review/quality procedure | Quality Reviewer |
 | Data provenance, method choice, literature claim | Sourcing and method rules | Domain Lead |
 | Approval or publication gate | Sign-off procedure | Approver |
 
@@ -67,7 +67,7 @@ Ask before writing. Compile `docs/skills/tags.md` from every tag already in use 
 
 ### 8. Seed baseline artifacts
 
-`templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it directly: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>`. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision.
+Ask before writing: list the ids with one line each (they are rules about keeping knowledge short, derived and unduplicated; recommend yes when the team will keep using kms, else no). `templates/` has one subdirectory per artifact type kms seeds (currently `guardrails/`). For each template whose `id` is absent from this project's `docs/<type>/` and not in the AGENTS.md block's `kms-declined:` line, write it on a yes: copy as-is, replace `date: TBD` with today, drop `template-version`, add `kms-seeded: true` and `kms-template-version: <its template-version>` right after `date`. On a no, list the ids in the block's `kms-declined:` line. Leave the type's debt-marking fields (per the model, e.g. `governed-by`/`grounded-in` for a guardrail) as `TBD` until the team drafts a decision; the checker accepts `TBD`, so say it is expected, unfinished work.
 
 ### 9. Wire into the agent-instructions file
 
@@ -91,8 +91,12 @@ The markers let `uninstall` remove exactly this block.
 
 ### 10. Per-type index
 
-For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`. Mark it `kms-generated: true` in a leading comment line so `uninstall` recognizes it. Match the shape of any existing `INDEX.md`.
+For each of `docs/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`: no space after commas, a value with a comma double-quoted, no row for a registry such as `tags.md`. Start the file with the two comment lines `<!-- kms-registry: index -->` and `<!-- kms-generated: true -->` (the second lets `uninstall` recognize it), then the header and rows, e.g. `0001-use-postgres,Use Postgres,"data, storage",active`. An empty type gets the header only. Match the shape of any existing `INDEX.md`.
+
+### 11. Check what you wrote
+
+Run `python3 shared/lint_check.py --root .` (this skill's directory; needs `python3` and PyYAML, else say so and skip; add `--docs <dir>` for a non-`docs/` layout). Fix every finding about a file you just wrote; report any other as existing debt.
 
 ## Out of scope
 
-Finalizing decision records, choosing which proposed domains become skills, arbitrating domain conflicts — surface to the team.
+Finalizing decision records, choosing which proposed domains become procedures, arbitrating domain conflicts — surface to the team.

@@ -76,3 +76,4 @@ id,title,tags,status
 0083-conform-covers-whole-changeset,"conform checks the whole changeset, including knowledge-base files and the facts a diff may falsify","kms, knowledge-management",active
 0084-study-tags-and-unmerged-branches,"Study tags are measurement snapshots exempt from the release-tag rule; three study branches were not merged","kms, packaging",active
 0085-pin-eval-model-nemotron-lightning,"Pin the eval harness to nvidia/nemotron-3.5-lightning:free after north-mini-code was withdrawn","kms, eval-harness, kilo",active
+0086-default-knowledge-directory-vivantel-akasha,"New projects get their knowledge base at .vivantel/akasha/docs/; the path is resolved, not hardcoded","kms, packaging",active

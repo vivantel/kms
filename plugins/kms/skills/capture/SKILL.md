@@ -18,6 +18,7 @@ In this skill's directory: `shared/artifact-model.md` (the schema: types, fields
 5. **Human-doc drift?** If watched paths overlap what changed this session, propose the specific update; if the doc's still accurate, bump its verified date.
 6. *(retired; the number stays unused)*
 7. **Index entry?** Add or update the row for anything drafted or edited this pass, per the artifact model's index rule.
+8. **Checker.** Run `python3 shared/lint_check.py --root .` (this skill's directory; needs PyYAML, else say so) and fix findings in files you touched. Close in plain words: what changed and why, what still needs a person.
 
 ## Recommending a new skill
 

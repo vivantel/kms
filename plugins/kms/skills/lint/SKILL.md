@@ -44,7 +44,7 @@ Edge and field rules are in `shared/artifact-model.md`.
 
 ## Output
 
-Group by check, one line per violation: path and problem; label judgment checks "advisory". Never fix silently: propose and wait for confirmation.
+Group by check, one line per violation: path and problem; label judgment checks "advisory". Never fix silently: propose and wait for confirmation. End with one plain line: the finding count and which to fix first.
 
 ## Out of scope
 
