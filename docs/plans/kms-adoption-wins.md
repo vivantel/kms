@@ -109,7 +109,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
 
-### 8. [partial: (a), (b) done 2026-11-22; (c)-(h) open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+### 8. [partial: (a)-(d) done 2026-11-22; (e)-(h) open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
 
 **Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
 
