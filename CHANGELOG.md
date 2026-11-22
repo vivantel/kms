@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.18.0] - 2026-11-21
+
+### Added
+
+- Kilo `skills.urls` installs now work: `shared/` and `templates/` are vendored into each skill that reads them and listed in `index.json`; a unit test fails when a copy drifts from its original (`scripts/vendor-shared.py`).
+- `lint` structural check 25: a fact whose `source` is a URL or command with a stale `last-verified`, or whose repo-path `source` is gone; a fact never verified is reported once as advisory.
+- `conform` runs a docs pass and a fact re-verification pass over the changeset; `capture` re-observes facts whose `source` or scope the session touched; `decide` takes an event (incident, retrospective) as input.
+- The lint nudge hook finds the knowledge directory on any layout, not only `docs/`.
+- Eval cases for `query`, `conform`, `uninstall` and a clean `lint` control; `evals/routing` (manual) checks which skill a request reaches first.
+
+### Changed
+
+- `attribute` runs the staged diff itself, commits, and asks only when candidate artifacts conflict or none match (was: always confirm). Its eval is advisory.
+- `lint` (1431 to 995 words), `bootstrap` (1288 to 1131) and `attribute` (to 191) bodies are shorter with the same rules. `capture`'s trigger phrase no longer reads as `lint`'s.
+- Eval harness: a wrong model id or sign-in error prints `HARNESS ERROR` and the PR summary labels it infra; cases that pass under 3 of 4 runs (`bootstrap`, `uninstall`) are advisory; kilo and promptfoo-action are pinned; the free CI model is `nvidia/nemotron-3.5-super-vl:free`.
+
+### Upgrade
+
+No format change since 0.16.0 (schema `1.0.0`). Re-run `lint`; expect check 25 lines for facts with an old or missing `last-verified`.
+
 ## [0.17.0] - 2026-11-20
 
 ### Removed
