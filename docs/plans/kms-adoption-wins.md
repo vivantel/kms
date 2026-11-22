@@ -37,6 +37,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 1: second planted case (read-through cache on `listOrders`) added to `evals/rejected-option`. NOT measured: this session cannot run the eval suite. Open: 3/4 on all three tests with `--repeat 4` on the CI model, the README rate sentence, advisory lists.
 - 2026-11-22 step 1 measured (owner allowed the run): `rejected-option`, `--repeat 4 --no-cache`, `nvidia/nemotron-3.5-super-vl:free`, local kilo: 12/12 (both planted phrasings 4/4, control 4/4). README states the rate with date and model. Kept advisory: one run is a thin basis against the CI gateway flakes; drop it from `advisory-cases.txt` and both `fromJSON` lists once CI shows it stable.
 - 2026-11-22 step 3 cold starts (tomli Python, ky JS, itsdangerous with a Sphinx `docs/`; fresh agents following `quickstart` literally, human self-played; scratch clones under /tmp/kms-cold, nothing committed): 10-12 tool calls, 5-6 self-answered questions each; checker silent on first try in all three. Recurring friction (in 2-3 runs each): `quickstart` "run bootstrap" vs bootstrap's own ask and close; where the checker lives; empty `INDEX.md` for an empty type; `governed-by: TBD` read as an error; jargon (admission, gate, registry, derivation). Fixed in `quickstart` and `bootstrap` text (one sentence each). Seen once, NOT fixed: an existing Sphinx `docs/` gets `docs/facts` etc. written beside the .rst files with no warning or `--docs` offer; seeding five guardrails into a JS library felt like noise (step 2's lite-mode decision). Fixes not re-run cold.
+- 2026-11-22 owner chose `.vivantel/akasha/docs/` as the default knowledge directory for new projects only, resolved via a `kms-dir:` line in the AGENTS.md block rather than hardcoded, shipped in one release with the procedures rename. Decision 0086 recorded; implementation is step 8, not started (large: stop and resume in a fresh session).
 
 ## Steps
 
@@ -99,6 +100,14 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 **What.** Use the output of step 1's `rejected-option` run, or a real small repo with the owner's permission, to write a real before/after (agent proposes the rejected option without `kms`; is stopped with a citation with it). Commit the transcript excerpt under `docs/` or the README, with date, model and agent. Add a sample `docs/` tree link (the `evals/rejected-option/fixture` is a candidate; it passes `lint_check.py --strict` apart from check 12). Outward-facing if published elsewhere (blog, release notes): owner's call.
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
+
+### 8. [pending] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+
+**Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
+
+**What.** (a) Artifact model: define the resolution order and the `kms-dir:` line once; `lint_check.py` reads `kms-dir:` from AGENTS.md (`--docs` still wins), with a unit test per rule. (b) `bootstrap` creates the new path, writes `kms-dir:`, offers a user-chosen path; the hooks read `kms-dir:`. (c) The 33 skill files that mention `docs/` say "the knowledge directory"; examples keep concrete paths. (d) Templates and `uninstall` know the new path and `kms-dir:`. (e) Rename the type directory `skills/` to `procedures/`, detecting both for one release: checker types, `migrate.py`, INDEX handling, tags registry location. (f) Evals: existing fixtures keep `docs/` (back-compat proof); add one fixture on the new path and a `bootstrap` assertion for it. (g) This repo's own `docs/`: recommend no move, one documented exception. (h) Record the rename as its own decision. One commit per sub-step; one suite run at the end.
+
+**Done when.** A fresh scratch repo bootstraps into `.vivantel/akasha/docs/` with `kms-dir:` set and the checker silent; an old `docs/` project passes unchanged; unit tests cover resolution; `uninstall` removes the new layout; the CHANGELOG notes the change for adopters; the suite is green.
 
 ### 7. [pending] Release the lot
 
