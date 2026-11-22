@@ -25,18 +25,18 @@ Edge and field rules are in `shared/artifact-model.md`.
 6. **Audit-log facts** [advisory] — a timestamped event that grounds and is referenced by nothing.
 7. **Orphans** [structural] — a fact or guardrail nothing references.
 8. **Unenforced guardrails** [advisory] — describes behavior a shipped skill should perform that its body doesn't say.
-9. **Stale prose references** [structural] — an inline `<knowledge dir>/{facts,decisions,guardrails,skills}/` path (optionally with `archive/`) that doesn't exist, in a live artifact, `README.md`, `AGENTS.md`, `CONTRIBUTING.md` or a live `docs/plans/*.md`. Not a violation: placeholders, conditionally-optional files, history a plan annotates as preserved.
+9. **Stale prose references** [structural] — an inline `<knowledge dir>/{facts,decisions,guardrails,procedures}/` path (optionally with `archive/`) that doesn't exist, in a live artifact, `README.md`, `AGENTS.md`, `CONTRIBUTING.md` or a live `docs/plans/*.md`. Not a violation: placeholders, conditionally-optional files, history a plan annotates as preserved.
 10. **Verbose artifacts** [advisory] — a fact, guardrail or procedure (not decisions/plans) using several sentences for one idea, or restating itself.
 11. **Unsplit statements** [advisory] — one fact, guardrail or derivation-note doing two jobs.
 12. **Baseline out of sync** [structural] — compare each `templates/<type>/` with this project's `<knowledge dir>/<type>/` by `id`: a template missing here (unless in the AGENTS.md block's `kms-declined:` line); a `kms-seeded: true` file behind its `template-version`, or whose template is gone. Files without `kms-seeded: true` are project-owned; never flag. A fix refreshes only the content section (guardrail: `## Guardrail`), never `## Derivation`.
 13. **Derived artifact stale** [judgment] — a guardrail grounded in a since-superseded decision, changed fact, or superseded/deprecated/changed sibling guardrail. A source already flagged by a `pinned` mismatch is the checker's finding. Re-apply the derivation recipe and propose new text.
 14–15. *(retired; numbers unused)*
-16. **Cross-artifact contradiction** [advisory] — two `active` decisions, or a decision and its derived guardrail, sharing a non-`(umbrella)` tag from `<knowledge dir>/skills/tags.md` and contradicting on overlapping matter.
+16. **Cross-artifact contradiction** [advisory] — two `active` decisions, or a decision and its derived guardrail, sharing a non-`(umbrella)` tag from `<knowledge dir>/procedures/tags.md` and contradicting on overlapping matter.
 17. **Stale unresolved debt** [structural] — `governed-by: TBD`, `grounded-in: TBD` or `status: draft` older than 180 days (the model's stale threshold), except a draft with `expires-when` (an open question).
 18. **Stale fitness-functions** [structural] — an entry with no `last-verified`, or older than the threshold.
 19. **Index out of sync** [structural] — an `INDEX.md` (live or `archive/`) missing a row for a file in its directory, holding a row for a missing file, or whose `id`/`title`/`tags`/`status` differ from frontmatter.
 20. **Archive candidate** [structural] — a `superseded` or `deprecated` artifact still live. Propose moving it to `archive/` (name and `id` unchanged), moving its index row, and updating path references elsewhere except inside decision files (frozen history).
-21. **Tag off the list** [structural] — a tag in use not in `<knowledge dir>/skills/tags.md`, when that file exists.
+21. **Tag off the list** [structural] — a tag in use not in `<knowledge dir>/procedures/tags.md`, when that file exists.
 22. **Tag gone cold** [judgment] — a listed tag unused by any artifact for a long time.
 23. **Unoperationalized guardrail** [judgment] — a guardrail describing a recurring or multi-step action (not a one-line prohibition) that no procedure's `operationalizes` points to and nothing else (CI, hook, skill logic) already carries out. "Never commit secrets" never triggers; "every release must be tagged" does, unless enforced.
 24. **Completed plan not archived** [structural] — a live `docs/plans/*.md` whose step legend shows every step `done`. The only plan check; it reads just the legend. Propose moving to `docs/plans/archive/` (a plan without frontmatter first gets minimal frontmatter).

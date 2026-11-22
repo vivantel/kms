@@ -13,7 +13,7 @@ Act; never ask which step to start with or whether to proceed. Read the model, i
 
 ## Before starting
 
-Look for existing `decisions/`, `facts/`, `guardrails/`, `skills/` directories and infer format from real examples (as `decide` does); else (a new project) use the model's layout under K. K is the existing knowledge directory per the model's resolution order; a new project's is `.vivantel/akasha/docs/` unless the user chose another path, which step 9 records. Extend what exists; don't duplicate. Note the highest number in `facts/` and `decisions/` so stubs continue the sequence. Write files directly; extend a file that already covers the ground.
+Look for existing `decisions/`, `facts/`, `guardrails/`, `procedures/` (or older `skills/`) directories and infer format from real examples (as `decide` does); else (a new project) use the model's layout under K. K is the existing knowledge directory per the model's resolution order; a new project's is `.vivantel/akasha/docs/` unless the user chose another path, which step 9 records. Extend what exists; don't duplicate. Note the highest number in `facts/` and `decisions/` so stubs continue the sequence. Write files directly; extend a file that already covers the ground.
 
 ## Steps
 
@@ -63,7 +63,7 @@ Per domain: one paragraph on what it owns, one hard constraint, one fitness-func
 
 ### 7. Tag vocabulary
 
-Ask before writing. Compile `<K>/skills/tags.md` from every tag already in use (or, in a fresh project, domain vocabulary from existing docs), one per line as `tag — meaning` (the checker also reads `- tag — meaning`, `tag - meaning`, `tag: meaning`). Mark a tag carried by over half of active decisions `(umbrella)`, computed from the scan, since `lint` check 16 excludes umbrella tags. Frontmatter: base fields, `kms-generated: true`, `kms-registry: tags`.
+Ask before writing. Compile `<K>/procedures/tags.md` from every tag already in use (or, in a fresh project, domain vocabulary from existing docs), one per line as `tag — meaning` (the checker also reads `- tag — meaning`, `tag - meaning`, `tag: meaning`). Mark a tag carried by over half of active decisions `(umbrella)`, computed from the scan, since `lint` check 16 excludes umbrella tags. Frontmatter: base fields, `kms-generated: true`, `kms-registry: tags`.
 
 ### 8. Seed baseline artifacts
 
@@ -80,7 +80,7 @@ If `<!-- kms:start -->` is absent, insert this section into `AGENTS.md` (or the 
 kms-dir: <K>
 
 This project uses kms's fact/decision/guardrail/procedure knowledge system.
-See `<K>/{facts,decisions,guardrails,skills}/` — facts (what's true),
+See `<K>/{facts,decisions,guardrails,procedures}/` — facts (what's true),
 decisions (what's committed to and why), guardrails (what must/must not
 happen), procedures (how to act). Maintained via `capture`
 after work sessions; validated via `lint` on demand; queried via
@@ -93,7 +93,7 @@ Write K relative to the repo root in place of `<K>` throughout the block (the `k
 
 ### 10. Per-type index
 
-For each of `<K>/{facts,decisions,guardrails,skills}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`: no space after commas, a value with a comma double-quoted, no row for a registry such as `tags.md`. Start the file with the two comment lines `<!-- kms-registry: index -->` and `<!-- kms-generated: true -->` (the second lets `uninstall` recognize it), then the header and rows, e.g. `0001-use-postgres,Use Postgres,"data, storage",active`. An empty type gets the header only. Match the shape of any existing `INDEX.md`.
+For each of `<K>/{facts,decisions,guardrails,procedures}/`, write `INDEX.md`: one row per artifact (excluding `INDEX.md` and `archive/`), fields `id, title, tags, status` from frontmatter, in the CSV format in `shared/artifact-model.md`: no space after commas, a value with a comma double-quoted, no row for a registry such as `tags.md`. Start the file with the two comment lines `<!-- kms-registry: index -->` and `<!-- kms-generated: true -->` (the second lets `uninstall` recognize it), then the header and rows, e.g. `0001-use-postgres,Use Postgres,"data, storage",active`. An empty type gets the header only. Match the shape of any existing `INDEX.md`.
 
 ### 11. Check what you wrote
 

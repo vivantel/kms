@@ -46,6 +46,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 8(b) done (worktree `adoption-wins-3`): `bootstrap/SKILL.md` uses K (the knowledge directory), defaults a new project to `.vivantel/akasha/docs/`, states K in its opening line (user may redirect), writes `kms-dir: <K>` in the block (omitted for `docs`), step 11 relies on `kms-dir:`; whole file re-read. Checks: vendor OK, checker silent, 135 unit tests pass. Next: 8(c) (33 skill files say "the knowledge directory"); STOPPED after (b) because (c) needs fresh context.
 - 2026-11-22 step 8(b) bootstrap half done (4324337); step 8(c) done: shipped SKILL.md files, artifact-model and seeded templates say `<knowledge dir>` instead of `docs/` (plan paths `docs/plans/` and examples.md unchanged); vendored copies synced; checker silent, 135 unit tests pass. Next: 8(d) templates/uninstall know `kms-dir:`, then (e) rename, which needs a fresh session.
 - 2026-11-22 step 8(d) done: templates already path-free after (c); `uninstall` notes `kms-dir:` leaves with the block and offers to delete an emptied knowledge dir or `.vivantel/`. STOPPED before (e): the procedures rename touches checker types, `migrate.py`, INDEX handling, tags location and every skill; resume in a fresh session.
+- 2026-11-22 step 8(e) done: `lint_check.py` reads `procedures/` and `skills/` (tags list from either, prose refs match both); `migrate.py --rename` (opt-in) moves `skills/` to `procedures/` and rewrites `<dir>/skills/` mentions, refuses if both exist; artifact-model, skills and the lint hook say `procedures`; `test_procedures_rename.py` (3 cases); 138 tests pass, checker silent. Next: 8(f) fixtures + bootstrap eval assertion, (g), (h), then one suite run.
 
 ## Steps
 
@@ -109,7 +110,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** The README example is replaced by a captured one with date and model; the fixture or sample tree is linked from the README; owner has seen it.
 
-### 8. [partial: (a)-(d) done 2026-11-22; (e)-(h) open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
+### 8. [partial: (a)-(e) done 2026-11-22; (f)-(h) open] Resolve the knowledge directory; default new projects to `.vivantel/akasha/docs/`; rename procedures
 
 **Why.** Decision 0086. A cold start showed a Sphinx `docs/` collision; the owner chose to bundle the rename (step 4c) into the same release. Confirm the rename wording ("procedures") before building (e).
 

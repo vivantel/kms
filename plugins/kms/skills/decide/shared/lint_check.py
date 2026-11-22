@@ -36,7 +36,7 @@ from pathlib import Path
 
 import yaml
 
-TYPES = ("facts", "decisions", "guardrails", "skills")
+TYPES = ("facts", "decisions", "guardrails", "skills", "procedures")  # procedures: the new name of skills; both are read for one release
 BASE_FIELDS = ("id", "title", "status", "date", "tags")
 TYPE_FIELDS = {
     "guardrails": ("governed-by", "derivation-note"),
@@ -143,7 +143,7 @@ class Linter:
         except ValueError:
             self.dn = self.docs.as_posix()
         self.prose_ref = re.compile(
-            r"(?<![\w\-/])(?:\.{1,2}/)*" + re.escape(self.dn) + r"/(facts|decisions|guardrails|skills)/(?:archive/)?([\w.\-]+\.md)"
+            r"(?<![\w\-/])(?:\.{1,2}/)*" + re.escape(self.dn) + r"/(facts|decisions|guardrails|skills|procedures)/(?:archive/)?([\w.\-]+\.md)"
         )
         self.findings = []  # (check, path, message)
         self.warnings = []
@@ -235,8 +235,8 @@ class Linter:
                         self.broken.add((t, archived, p.stem))
 
     def tags_list(self):
-        p = self.docs / "skills" / "tags.md"
-        if not p.exists():
+        p = next((q for q in (self.docs / "procedures" / "tags.md", self.docs / "skills" / "tags.md") if q.exists()), None)
+        if p is None:
             return None
         tags = set()
         lines = read(p).splitlines()
@@ -600,7 +600,7 @@ class Linter:
                 tags = [tags]
             for tag in tags if isinstance(tags, list) else []:
                 if str(tag) not in allowed:
-                    self.add(21, a["rel"], f"tag `{tag}` is not in {self.dn}/skills/tags.md")
+                    self.add(21, a["rel"], f"tag `{tag}` is not in the tags list ({self.dn}/procedures/tags.md or skills/tags.md)")
 
     def run(self):
         self.load()
