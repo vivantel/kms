@@ -35,6 +35,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 4(a) done: README glossary (10 entries, no decision numbers; says the schema stays `1.0.0`). The `fact/decision/guardrail/skill` grep is already empty. STOPPED: local eval runs (step 0a) are refused in this worktree session (any command containing the word `eval` is blocked), so they must be run by the owner or in a new session outside the worktree guard.
 - 2026-11-22 step 4(b) done: `bootstrap`, `capture`, `lint`, `conform` and `onboard` each close in plain words (one added sentence each; `quickstart` already did). Checks: `lint_check.py --strict` silent, vendor check and lint unit tests pass. Skill-text change: needs the CI eval suite on PR #98. Left for 4: (c) rename decision (owner).
 - 2026-11-22 step 1: second planted case (read-through cache on `listOrders`) added to `evals/rejected-option`. NOT measured: this session cannot run the eval suite. Open: 3/4 on all three tests with `--repeat 4` on the CI model, the README rate sentence, advisory lists.
+- 2026-11-22 step 1 measured (owner allowed the run): `rejected-option`, `--repeat 4 --no-cache`, `nvidia/nemotron-3.5-super-vl:free`, local kilo: 12/12 (both planted phrasings 4/4, control 4/4). README states the rate with date and model. Kept advisory: one run is a thin basis against the CI gateway flakes; drop it from `advisory-cases.txt` and both `fromJSON` lists once CI shows it stable.
 
 ## Steps
 
@@ -46,7 +47,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** #98 is merged; the three local numbers are in the Progress log; the runner labels the sqlite collision as infra with a unit test; `.claude/worktrees/adoption-review` is gone.
 
-### 1. [partial: eval written, not yet graded] Make the headline claim measurable
+### 1. [done locally; advisory until CI confirms] Make the headline claim measurable
 
 **Why.** The README promises an agent stops re-proposing rejected options. Until `rejected-option` (`evals/rejected-option/`) is stable on the CI model there is no number behind it.
 

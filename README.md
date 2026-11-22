@@ -24,6 +24,8 @@ agent:  Not yet: decision 0012 (2026-09-03) rejects a cache layer until p95 > 40
         Refs: 0012-no-cache-until-slo-breach, no-unbounded-caches, 0007-orders-p95
 ```
 
+Measured, not just claimed: on 2026-11-22 an agent running `nvidia/nemotron-3.5-super-vl:free` through Kilo flagged the planted rejected option in 8 of 8 runs (two phrasings) and let an unrelated change through in 4 of 4 ([`evals/rejected-option`](evals/rejected-option)). One run of a small fixture; read it as a smoke test.
+
 That is the whole idea: four typed artifacts — **facts** (what is true now), **decisions** (what you committed to and why), **guardrails** (what must or must not happen, derived from the first two) and **procedures** (how to act) — plain Markdown in `docs/`, checked by a script, so knowledge stays durable instead of a half-remembered guess. [The full case →](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a)
 
 ## Start here
