@@ -46,7 +46,7 @@ This plan is executed end to end by an agent on **feature branches**, in as many
 
 ## Relationship to the redesign plan
 
-`docs/plans/kms-review-and-redesign.md` has phases 2 to 5 pending. This plan **executes redesign steps 2.1 to 2.10 inside its own order** (see "Order of execution"), following that plan's step text, on this branch, and flips their headings there when done (log lines in both plans). Redesign phases 3, 4 and 5 are not prerequisites; 5.1 to 5.3 doc updates are folded into phase G here. Redesign 1.6 and the release steps are `[blocked]`, so versions stay at `0.15.0` on this branch until the owner releases. Wherever step text below says "0.17.0" or "0.6.0", read it as "the next release the owner cuts"; the agent only prepares the changelog entry and does not bump versions.
+`docs/plans/archive/kms-review-and-redesign.md` has phases 2 to 5 pending. This plan **executes redesign steps 2.1 to 2.10 inside its own order** (see "Order of execution"), following that plan's step text, on this branch, and flips their headings there when done (log lines in both plans). Redesign phases 3, 4 and 5 are not prerequisites; 5.1 to 5.3 doc updates are folded into phase G here. Redesign 1.6 and the release steps are `[blocked]`, so versions stay at `0.15.0` on this branch until the owner releases. Wherever step text below says "0.17.0" or "0.6.0", read it as "the next release the owner cuts"; the agent only prepares the changelog entry and does not bump versions.
 
 ## Phase A — Measure and decide (read-only, then three decisions)
 
