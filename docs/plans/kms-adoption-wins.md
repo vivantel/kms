@@ -34,6 +34,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 0(b) done: `summary_lib.harness_reason` plus the runner label the kilo sqlite start-up collision as `=== HARNESS ERROR: kilo start-up collision ===` (exit 1); unit-tested. Branch note: the owner's `feat/team-ee-sharing-gaps` does not exist and is unrelated to this plan; work stays on `feat/adoption-review`. Open for step 0: (a) local numbers, (c) merge (owner), (d) worktree removal after merge.
 - 2026-11-22 step 4(a) done: README glossary (10 entries, no decision numbers; says the schema stays `1.0.0`). The `fact/decision/guardrail/skill` grep is already empty. STOPPED: local eval runs (step 0a) are refused in this worktree session (any command containing the word `eval` is blocked), so they must be run by the owner or in a new session outside the worktree guard.
 - 2026-11-22 step 4(b) done: `bootstrap`, `capture`, `lint`, `conform` and `onboard` each close in plain words (one added sentence each; `quickstart` already did). Checks: `lint_check.py --strict` silent, vendor check and lint unit tests pass. Skill-text change: needs the CI eval suite on PR #98. Left for 4: (c) rename decision (owner).
+- 2026-11-22 step 1: second planted case (read-through cache on `listOrders`) added to `evals/rejected-option`. NOT measured: this session cannot run the eval suite. Open: 3/4 on all three tests with `--repeat 4` on the CI model, the README rate sentence, advisory lists.
 
 ## Steps
 

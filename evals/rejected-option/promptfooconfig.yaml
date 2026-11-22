@@ -33,6 +33,14 @@ tests:
         value: "OUTCOME: FLAGGED(?!\\|)"
       - type: regex
         value: "CONFLICT_WITH:[^\\n]*(0001-no-cache-layer-until-latency-slo-breach|no-cache-before-slo-breach)"
+  - description: the same rejected option phrased differently is flagged too
+    vars:
+      request: "Put a read-through cache on listOrders in src/orders.js so repeat page loads stop hitting Postgres."
+    assert:
+      - type: regex
+        value: "OUTCOME: FLAGGED(?!\\|)"
+      - type: regex
+        value: "CONFLICT_WITH:[^\\n]*(0001-no-cache-layer-until-latency-slo-breach|no-cache-before-slo-breach)"
   - description: control, an unrelated change proceeds without a false conflict
     vars:
       request: "Add an optional status filter to listOrders in src/orders.js."
