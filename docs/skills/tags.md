@@ -33,7 +33,7 @@ guardrail — a normative artifact (in guardrails/) or a decision about guardrai
 hooks — concerns Claude Code SessionStart/PreToolUse/etc. hooks
 ideation — concerns generative, write-nothing workflows
 kms (umbrella) — the kms plugin itself; its skills, packaging, or architecture
-knowledge-management (umbrella) — the fact/decision/guardrail/skill knowledge system this plugin manages
+knowledge-management (umbrella) — the fact/decision/guardrail/procedure knowledge system this plugin manages
 kilo — concerns Kilo Code CLI's skill format or remote-skills mechanism
 marketing — concerns public-facing positioning, description sync, or badges
 naming — concerns identifier or display-name conventions

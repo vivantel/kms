@@ -6,34 +6,46 @@ facts, and guardrails it won't forget, contradict, or re-litigate.*
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-5A32FB.svg)](https://code.claude.com/docs/en/plugins.md)
 
-**The problem isn't that your agent forgets — it's that it has no
-language for knowledge.** A vector database can retrieve a
-similar-looking snippet, but it can't tell a settled decision from a
-stale guess, or a hard constraint from a passing note, so it keeps
-re-suggesting what you already rejected. `kms` gives agents that
-vocabulary: four typed artifacts — facts, decisions, guardrails,
-procedures — each with its own fields, lifecycle, and role, so
-knowledge stays durable, checkable, and shareable instead of a
-half-remembered guess. [Read the full case for
-it →](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a)
+## What it looks like
 
-Vivantel KMS (Knowledge Management System) — for any git-based
-project, capture decisions, facts, guardrails, and procedures as durable, traceable artifacts,
-maintained automatically as the project evolves. Works for software
-repos, technical documentation, even long-form writing like research
-papers, not just code.
+Without `kms`, an agent re-proposes what you already rejected:
 
-The skill content itself is agent-neutral — no product-specific language
-or tooling assumptions — so any AI coding agent that can read and follow
-instructions from a file can use it. `kms` additionally ships one-command
-install packaging for three: a Claude Code plugin marketplace, a native
-Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
+```
+you:    add a Redis cache in front of the orders API
+agent:  Sure — I'll add Redis.
+```
+
+With `kms` (illustrative output), the rejection is a recorded decision. `bootstrap` adds a line to your `AGENTS.md` telling the agent to `query` before designing anything that touches one, so it finds it first:
+
+```
+you:    add a Redis cache in front of the orders API
+agent:  Not yet: decision 0012 (2026-09-03) rejects a cache layer until p95 > 400 ms,
+        and guardrail `no-unbounded-caches` derives from it. Current p95 (fact 0007): 210 ms.
+        Refs: 0012-no-cache-until-slo-breach, no-unbounded-caches, 0007-orders-p95
+```
+
+That is the whole idea: four typed artifacts — **facts** (what is true now), **decisions** (what you committed to and why), **guardrails** (what must or must not happen, derived from the first two) and **procedures** (how to act) — plain Markdown in `docs/`, checked by a script, so knowledge stays durable instead of a half-remembered guess. [The full case →](https://medium.com/@strebulaev/taxonomy-is-a-language-why-your-ai-agent-needs-a-vocabulary-not-more-memory-000b8023a40a)
+
+## Start here
+
+```
+/plugin marketplace add vivantel/kms
+/plugin install kms
+```
+
+then ask your agent: **"get me started with kms"** (the `quickstart` skill). In one sitting it sets up `docs/`, then interviews you about one decision you are actually facing and writes it down. Every other skill is optional afterwards. Other agents (Codex, Kilo Code CLI): [`INSTALLING.md`](INSTALLING.md).
+
+What stays manual: `capture` (after a work session), `lint` (whenever you want the whole base checked) and `conform` (before committing) run when you or your agent's instructions call for them. On Claude Code, two session-start hooks nudge you; on Codex and Kilo there is no automatic nudge, see [`docs/skills/automating-capture.md`](docs/skills/automating-capture.md).
+
+Works for any git-based project — software, technical documentation, even long-form writing — not just code. The skill content is agent-neutral, so any agent that can follow instructions from a file can use it; `kms` ships one-command packaging for Claude Code, Codex and Kilo Code CLI.
+
+## Skills
 
 | Skill | What it does | Examples |
 |---|---|---|
 | `quickstart` | Sets up the knowledge system and captures one real decision live, in the same sitting — for a first-time user. | [examples](plugins/kms/skills/quickstart/examples.md) |
 | `decide` | Interviews you about a decision, then writes the outcome as durable knowledge artifacts (facts, decisions, guardrails, procedures) — records only, no plan file. | [examples](plugins/kms/skills/decide/examples.md) |
-| `bootstrap` | One-time setup of a fact/decision/guardrail/skill knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. | [examples](plugins/kms/skills/bootstrap/examples.md) |
+| `bootstrap` | One-time setup of a fact/decision/guardrail/procedure knowledge system in a project that has none yet, or a gap-fill pass over an incomplete one. | [examples](plugins/kms/skills/bootstrap/examples.md) |
 | `capture` | Turns a work session's output into decisions and facts: new decisions, changed facts, contradictions, doc drift. | [examples](plugins/kms/skills/capture/examples.md) |
 | `lint` | Full-repo validation on demand — dangling references, missing fields, expired decisions, stale derived artifacts — independent of what changed this session. | [examples](plugins/kms/skills/lint/examples.md) |
 | `query` | Answers a question from the knowledge base, with citations, instead of from memory. | [examples](plugins/kms/skills/query/examples.md) |
@@ -43,16 +55,6 @@ Codex plugin, and a self-hosted remote-skills manifest for Kilo Code CLI.
 | `uninstall` | Finds everything `bootstrap`/`capture` added and offers to detach or remove it — run manually before uninstalling the plugin. | [examples](plugins/kms/skills/uninstall/examples.md) |
 
 `roadmap`, `brainstorm`, `clarify`, `refactor-plan` and `changelog` moved to go-getter in 0.17; use `decide` for records.
-
-## Installing
-
-Supports Claude Code, Codex, and Kilo Code CLI — full per-agent steps
-in [`INSTALLING.md`](INSTALLING.md) (which also says what each agent does and does not receive: the checker needs `python3` plus PyYAML, and the `SessionStart` nudges are Claude Code only). Quick start for Claude Code:
-
-```
-/plugin marketplace add vivantel/kms
-/plugin install kms
-```
 
 ## The knowledge-base core
 
