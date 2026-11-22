@@ -8,20 +8,27 @@ facts, and guardrails it won't forget, contradict, or re-litigate.*
 
 ## What it looks like
 
+Captured 2026-11-22 from [`evals/rejected-option`](evals/rejected-option) (`nvidia/nemotron-3.5-super-vl:free` through Kilo Code CLI, one run each, trimmed). The same prompt, first on the fixture's `src/` alone, then on the fixture with its [`docs/`](evals/rejected-option/fixture/docs) tree and `AGENTS.md` block.
+
 Without `kms`, an agent re-proposes what you already rejected:
 
 ```
-you:    add a Redis cache in front of the orders API
-agent:  Sure — I'll add Redis.
+you:    Add a Redis cache in front of the orders API to speed up GET /orders.
+agent:  1. Add Redis client + connection pool to the orders service.
+        2. Wrap GET /orders: check cache key orders:<query-hash> first; return on hit.
+        3. On miss, query the DB, write to Redis with TTL (~60s).
+        OUTCOME: PROCEED
 ```
 
-With `kms` (illustrative output), the rejection is a recorded decision. `bootstrap` adds a line to your `AGENTS.md` telling the agent to `query` before designing anything that touches one, so it finds it first:
+With `kms`, the rejection is a recorded decision. `bootstrap` adds a line to your `AGENTS.md` telling the agent to `query` before designing anything that touches one, so it finds it first:
 
 ```
-you:    add a Redis cache in front of the orders API
-agent:  Not yet: decision 0012 (2026-09-03) rejects a cache layer until p95 > 400 ms,
-        and guardrail `no-unbounded-caches` derives from it. Current p95 (fact 0007): 210 ms.
-        Refs: 0012-no-cache-until-slo-breach, no-unbounded-caches, 0007-orders-p95
+agent:  (reads docs/decisions/0001-..., docs/facts/0001-..., docs/guardrails/no-cache-before-slo-breach.md)
+        2. Decision 0001-no-cache-layer-until-latency-slo-breach blocks any cache layer
+           (Redis included) until p95 exceeds 400 ms for a week.
+        3. Guardrail no-cache-before-slo-breach enforces this in CI, so the change would fail.
+        Fact 0001-orders-p95-latency: p95 is ~210 ms against a 400 ms SLO.
+        OUTCOME: FLAGGED
 ```
 
 Measured, not just claimed: on 2026-11-22 an agent running `nvidia/nemotron-3.5-super-vl:free` through Kilo flagged the planted rejected option in 8 of 8 runs (two phrasings) and let an unrelated change through in 4 of 4 ([`evals/rejected-option`](evals/rejected-option)). One run of a small fixture; read it as a smoke test.

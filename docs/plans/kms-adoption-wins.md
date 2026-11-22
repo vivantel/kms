@@ -52,6 +52,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 - 2026-11-22 step 2 implemented: decision 0088 (amends 0027/0072, `accepted-by`); `quickstart` runs `bootstrap` in lite mode (steps 1, 2, 9, 10, 11, no asks, every template id into `kms-declined:`); `bootstrap` gets the lite sentence, the commit-message-only stub fails admission, and `tags.md` never lists kms's own meta-tags; net words -2 across both skills; quickstart `examples.md` updated. NOT done: a cold quickstart re-run (the 15-call target is unmeasured) and a `quickstart` eval case (needs run-all, both workflow lists and advisory list; do as its own step, advisory first). Checker silent, 138 tests pass.
 - 2026-11-22 step 5 done: decision 0089 (amends 0027, uninstall inventory); `plugins/kms/ci/{pre-commit,kms-lint.yml}` (outside `templates/` so they are not vendored or read as an artifact type); INSTALLING.md section; `uninstall` category 3c; `bootstrap` close mentions them. Scratch test (hook run directly, plain `sh`, in a scratch tree with the checker at `.vivantel/akasha/lint_check.py`): clean tree exit 0; a decision missing `date`/`status`/`tags` and its INDEX row exit 1 with checks 2 and 19. The workflow YAML itself was not run on GitHub. Next: step 6 demo, then 7 (owner).
 - 2026-11-22 step 6 NOT done: capturing a real `rejected-option` transcript needs `npx promptfoo eval`, which the worktree guard refuses (any command containing `eval`). Run it outside the worktree (e.g. `npx promptfoo eval -c evals/rejected-option/promptfooconfig.yaml --filter-first-n 1 --no-cache --no-share -o out.json`, plus a copy of the fixture without the AGENTS.md kms block for the 'without kms' half), then replace the README's illustrative block with it. Also still open: step 8's one suite run on a PR, a cold quickstart re-run, a `quickstart` eval case, step 7 (owner).
+- 2026-11-22 step 6 done: the guard did not block the run in this session. Captured `rejected-option` request 1 with kms (FLAGGED, cites decision and guardrail) and on a copy of the fixture with only `src/` and a bare AGENTS.md (PROCEED, plans Redis); README now shows both, trimmed, with date and model, and links the fixture docs. One run each; the owner has not yet seen it. Left: step 8's suite run on a PR, a cold quickstart re-run, a `quickstart` eval case, step 7 (owner).
 
 ## Steps
 
@@ -107,7 +108,7 @@ On 2026-11-22 a whole-design review of kms (design, uniqueness, usefulness, onbo
 
 **Done when.** A scratch repo with the recipe fails a commit that breaks a pin and passes a clean one (recorded in the Progress log with commands); `uninstall` knows about any shipped file; INSTALLING.md names it per agent.
 
-### 6. [partial: illustrative README example only] Show, don't tell
+### 6. [done 2026-11-22 except owner review] Show, don't tell
 
 **Why.** The README's before/after is invented ("illustrative"). A real run is stronger and is also the proof for step 1.
 
