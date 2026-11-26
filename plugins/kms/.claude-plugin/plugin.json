@@ -2,7 +2,7 @@
   "name": "kms",
   "displayName": "Vivantel KMS",
   "description": "Give your AI coding agent durable, checkable knowledge — decisions, facts, and guardrails it won't forget, contradict, or re-litigate. Get started fast with quickstart, then bootstrap a project's fact/decision/guardrail system, capture each session's decisions into it, record a decision with decide, lint it for structural rot, query it with citations, and onboard a role from it — plus check a pending change conforms, attribute commits, and uninstall cleanly.",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "author": {
     "name": "sergemso"
   }
