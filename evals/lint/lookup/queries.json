@@ -1,0 +1,17 @@
+[
+  {"name": "decision-by-number", "text": "decision 0001", "ids": ["0001-alpha"]},
+  {"name": "fact-by-number", "text": "fact 0001", "ids": ["0001-fact-one"]},
+  {"name": "type-keeps-numbers-apart", "text": "decision 0001 and fact 0001", "ids": ["0001-alpha", "0001-fact-one"]},
+  {"name": "list-of-numbers", "text": "decisions 0001 and 0003", "ids": ["0001-alpha", "0003-gamma"]},
+  {"name": "range-skips-superseded", "text": "decisions 0001-0003", "ids": ["0001-alpha", "0003-gamma"]},
+  {"name": "superseded-alone-is-kept", "text": "decision 0002", "ids": ["0002-beta"]},
+  {"name": "archive-by-number", "text": "decision 0004", "ids": ["0004-old"]},
+  {"name": "item-suffix-ignored", "text": "decision 0001 item 2", "ids": ["0001-alpha"]},
+  {"name": "unknown-number", "text": "decision 0099", "ids": []},
+  {"name": "guardrails-by-id", "text": "guardrails `no-x`, `no-y`", "ids": ["no-x", "no-y"]},
+  {"name": "unknown-guardrail", "text": "guardrail `nope`", "ids": []},
+  {"name": "live-path", "text": "see docs/decisions/0003-gamma.md", "ids": ["0003-gamma"]},
+  {"name": "skill-path", "text": "docs/skills/s-one.md", "ids": ["s-one"]},
+  {"name": "archive-path-not-read", "text": "docs/decisions/archive/0004-old.md", "ids": [], "note": "today's behaviour: the path pattern stops at the first slash after the type"},
+  {"name": "index-is-no-artifact", "text": "docs/decisions/INDEX.md", "ids": []}
+]
