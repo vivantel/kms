@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.18.2] - 2026-11-26
+
+### Added
+
+- `evals/lint/frontmatter/`: 12 parse fixtures (`<case>.md` with `<case>.expected.json`) and `test_frontmatter.py`, so a second reader of frontmatter (go-getter's JS reader) can be held to the checker's own reading. One case, `yaml-1-1-words`, sits in `undecided/` until the schema decides what an unquoted `yes` or `no` means.
+- `evals/lint/lookup/`: a small artifact corpus and 15 `(text -> artifact ids)` cases that pin how a number, id or path in plan text resolves to an artifact, `archive/` included, with a self-consistency test.
+
+### Upgrade
+
+No schema or checker change (schema stays `1.0.0`); only test fixtures were added. A consumer that vendors the core may now also vendor these two directories.
+
 ## [0.18.1] - 2026-11-22
 
 ### Fixed
